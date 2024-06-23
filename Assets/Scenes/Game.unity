@@ -718,6 +718,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1879759789}
   - component: {fileID: 1879759790}
+  - component: {fileID: 1879759791}
   m_Layer: 0
   m_Name: CharacterController
   m_TagString: Untagged
@@ -754,10 +755,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputManager: {fileID: 1134805361}
   character: {fileID: 4414282821800802397}
-  gameManager: {fileID: 3951702117947426123}
   _bulletSystem: {fileID: 363245577}
   _bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
   _fireRequired: 0
+--- !u!114 &1879759791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879759788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a348698f5ed24a028b0b436517a8b7d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 3951702117947426123}
+  _hitPointsComponent: {fileID: 3926786964592264469}
 --- !u!1 &61006797492197339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,6 +1218,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9699e7e809fd44b2bbf3d30c951ecbd2, type: 3}
+--- !u!114 &3926786964592264469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3926786964091724599, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3926786964592264468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414282821800802397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5daa1be9cc40a78a2f07cd53e5b47e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3951702117947426121
 GameObject:
   m_ObjectHideFlags: 0

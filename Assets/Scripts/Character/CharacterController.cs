@@ -7,7 +7,6 @@ namespace ShootEmUp
         [SerializeField] private InputManager _inputManager;
         
         [SerializeField] private GameObject character; 
-        [SerializeField] private GameManager gameManager;
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private BulletConfig _bulletConfig;
         
@@ -24,16 +23,12 @@ namespace ShootEmUp
         {
             _inputManager.OnMove += OnMove;
             _inputManager.OnShoot += OnShoot;
-            
-            this.character.GetComponent<HitPointsComponent>().hpEmpty += this.OnCharacterDeath;
         }
 
         private void OnDisable()
         {
             _inputManager.OnMove -= OnMove;
             _inputManager.OnShoot -= OnShoot;
-
-            this.character.GetComponent<HitPointsComponent>().hpEmpty -= this.OnCharacterDeath;
         }
         
         private void OnMove(Vector2 direction)
@@ -41,8 +36,6 @@ namespace ShootEmUp
             var offset = new Vector2(direction.x, direction.y) * Time.fixedDeltaTime;
             this._moveComponent.Move(offset);
         }
-
-        private void OnCharacterDeath(GameObject _) => this.gameManager.FinishGame();
 
         private void OnShoot()
         {
