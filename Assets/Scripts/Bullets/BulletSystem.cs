@@ -60,9 +60,8 @@ namespace ShootEmUp
             }
         }
         
-        private void OnBulletCollision(Bullet bullet, Collision2D collision)
+        private void OnBulletCollision(Bullet bullet)
         {
-            BulletUtils.DealDamage(bullet.GetArgs(), collision.gameObject);
             this.RemoveBullet(bullet);
         }
 

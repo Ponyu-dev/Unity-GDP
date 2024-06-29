@@ -5,14 +5,14 @@ namespace ShootEmUp
 {
     public interface IBullet
     {
-        event Action<Bullet, Collision2D> OnCollisionEntered;
+        event Action<Bullet> OnCollisionEntered;
         void SetArgs(Args args);
         Args GetArgs();
     }
     
     public sealed class Bullet : MonoBehaviour, IBullet
     {
-        public event Action<Bullet, Collision2D> OnCollisionEntered;
+        public event Action<Bullet> OnCollisionEntered;
         private Args _args;
 
         [SerializeField]
@@ -23,7 +23,10 @@ namespace ShootEmUp
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            this.OnCollisionEntered?.Invoke(this, collision);
+            if (collision.gameObject.TryGetComponent(out CollisionEnterComponent collisionEnterComponent))
+                collisionEnterComponent.OnCollisionEntered(_args);
+            
+            this.OnCollisionEntered?.Invoke(this);
         }
 
         public void SetArgs(Args args)

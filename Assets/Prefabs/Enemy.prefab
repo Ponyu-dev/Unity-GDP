@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5568771391735819374}
   - component: {fileID: 8186052948131603766}
   - component: {fileID: 6896809305229427933}
+  - component: {fileID: 1176662438754832721}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -212,6 +213,20 @@ MonoBehaviour:
   moveAgent: {fileID: 8186052948131603766}
   countdown: 1
   _bulletConfig: {fileID: 11400000, guid: 2140bd33888f54eeebef09a2641f1942, type: 2}
+--- !u!114 &1176662438754832721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559606060570185700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b357f4241d54b0fab3bda6b015e71f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _teamComponent: {fileID: 5568771391735819379}
+  _hitPointsComponent: {fileID: 5568771391735819373}
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0
