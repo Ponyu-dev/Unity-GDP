@@ -1,12 +1,12 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterController : MonoBehaviour
+    public sealed class CharacterShootObserver : MonoBehaviour
     {
-        [FormerlySerializedAs("_inputManager")] [SerializeField] private ShootInput shootInput;
-        [SerializeField] private WeaponComponent _weaponComponent; 
+        [SerializeField] private ShootInput shootInput;
+        [SerializeField] private WeaponComponent _weaponComponent;
+        
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private BulletConfig _bulletConfig;
         
