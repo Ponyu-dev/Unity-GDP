@@ -211,6 +211,7 @@ MonoBehaviour:
   weaponComponent: {fileID: 5568771391735819374}
   moveAgent: {fileID: 8186052948131603766}
   countdown: 1
+  _bulletConfig: {fileID: 11400000, guid: 2140bd33888f54eeebef09a2641f1942, type: 2}
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0

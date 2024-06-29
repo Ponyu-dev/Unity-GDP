@@ -31,17 +31,18 @@ namespace ShootEmUp
             this._fireRequired = false;
         }
 
+        private Args BulletArgs() => new Args(
+            isPlayer: true, 
+            physicsLayer: (int)this._bulletConfig.physicsLayer,
+            color: this._bulletConfig.color, 
+            damage: this._bulletConfig.damage, 
+            position: _weaponComponent.Position,
+            velocity: _weaponComponent.Rotation * Vector3.up * this._bulletConfig.speed
+        );
+
         private void OnFlyBullet()
         {
-            _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
-            {
-                isPlayer = true,
-                physicsLayer = (int) this._bulletConfig.physicsLayer,
-                color = this._bulletConfig.color,
-                damage = this._bulletConfig.damage,
-                position = _weaponComponent.Position,
-                velocity = _weaponComponent.Rotation * Vector3.up * this._bulletConfig.speed
-            });
+            _bulletSystem.FlyBulletByArgs(BulletArgs());
         }
     }
 }

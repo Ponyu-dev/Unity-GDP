@@ -25,7 +25,7 @@ namespace ShootEmUp
                     if (this.m_activeEnemies.Add(enemy))
                     {
                         enemy.GetComponent<HitPointsComponent>().OnDeath += this.OnDestroyed;
-                        enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
+                        enemy.GetComponent<EnemyAttackAgent>().OnFireAction += this.OnFireAction;
                     }    
                 }
             }
@@ -36,23 +36,15 @@ namespace ShootEmUp
             if (m_activeEnemies.Remove(enemy))
             {
                 enemy.GetComponent<HitPointsComponent>().OnDeath -= this.OnDestroyed;
-                enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
+                enemy.GetComponent<EnemyAttackAgent>().OnFireAction -= this.OnFireAction;
 
                 _enemyPool.UnspawnEnemy(enemy);
             }
         }
 
-        private void OnFire(GameObject enemy, Vector2 position, Vector2 direction)
+        private void OnFireAction(Args args)
         {
-            _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
-            {
-                isPlayer = false,
-                physicsLayer = (int) PhysicsLayer.ENEMY_BULLET,
-                color = Color.red,
-                damage = 1,
-                position = position,
-                velocity = direction * 2.0f
-            });
+            _bulletSystem.FlyBulletByArgs(args);
         }
     }
 }

@@ -3,12 +3,17 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class Bullet : MonoBehaviour
+    public interface IBullet
+    {
+        event Action<Bullet, Collision2D> OnCollisionEntered;
+        void SetArgs(Args args);
+        Args GetArgs();
+    }
+    
+    public sealed class Bullet : MonoBehaviour, IBullet
     {
         public event Action<Bullet, Collision2D> OnCollisionEntered;
-
-        [NonSerialized] public bool isPlayer;
-        [NonSerialized] public int damage;
+        private Args _args;
 
         [SerializeField]
         private new Rigidbody2D rigidbody2D;
@@ -21,24 +26,15 @@ namespace ShootEmUp
             this.OnCollisionEntered?.Invoke(this, collision);
         }
 
-        public void SetVelocity(Vector2 velocity)
+        public void SetArgs(Args args)
         {
-            this.rigidbody2D.velocity = velocity;
+            _args = args;
+            this.rigidbody2D.velocity = _args._velocity;
+            this.gameObject.layer = _args._physicsLayer;
+            this.transform.position = _args._position;
+            this.spriteRenderer.color = _args._color;
         }
 
-        public void SetPhysicsLayer(int physicsLayer)
-        {
-            this.gameObject.layer = physicsLayer;
-        }
-
-        public void SetPosition(Vector3 position)
-        {
-            this.transform.position = position;
-        }
-
-        public void SetColor(Color color)
-        {
-            this.spriteRenderer.color = color;
-        }
+        public Args GetArgs() => _args;
     }
 }

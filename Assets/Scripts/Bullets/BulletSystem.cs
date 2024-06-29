@@ -52,12 +52,7 @@ namespace ShootEmUp
                 bullet = Instantiate(this.prefab, this.worldTransform);
             }
 
-            bullet.SetPosition(args.position);
-            bullet.SetColor(args.color);
-            bullet.SetPhysicsLayer(args.physicsLayer);
-            bullet.damage = args.damage;
-            bullet.isPlayer = args.isPlayer;
-            bullet.SetVelocity(args.velocity);
+            bullet.SetArgs(args);
             
             if (this.m_activeBullets.Add(bullet))
             {
@@ -67,28 +62,17 @@ namespace ShootEmUp
         
         private void OnBulletCollision(Bullet bullet, Collision2D collision)
         {
-            BulletUtils.DealDamage(bullet, collision.gameObject);
+            BulletUtils.DealDamage(bullet.GetArgs(), collision.gameObject);
             this.RemoveBullet(bullet);
         }
 
         private void RemoveBullet(Bullet bullet)
         {
-            if (this.m_activeBullets.Remove(bullet))
-            {
-                bullet.OnCollisionEntered -= this.OnBulletCollision;
-                bullet.transform.SetParent(this.container);
-                this.m_bulletPool.Enqueue(bullet);
-            }
-        }
-        
-        public struct Args
-        {
-            public Vector2 position;
-            public Vector2 velocity;
-            public Color color;
-            public int physicsLayer;
-            public int damage;
-            public bool isPlayer;
+            if (!this.m_activeBullets.Remove(bullet)) return;
+            
+            bullet.OnCollisionEntered -= this.OnBulletCollision;
+            bullet.transform.SetParent(this.container);
+            this.m_bulletPool.Enqueue(bullet);
         }
     }
 }
