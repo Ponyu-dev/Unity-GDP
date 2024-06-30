@@ -210,9 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba7965842e74a9f89ba3aa66d61da46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponComponent: {fileID: 5568771391735819374}
-  moveAgent: {fileID: 8186052948131603766}
-  countdown: 1
+  _weaponComponent: {fileID: 5568771391735819374}
+  _countdown: 1
   _bulletConfig: {fileID: 11400000, guid: 2140bd33888f54eeebef09a2641f1942, type: 2}
 --- !u!114 &1176662438754832721
 MonoBehaviour:

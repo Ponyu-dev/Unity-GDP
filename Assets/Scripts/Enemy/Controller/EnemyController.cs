@@ -17,7 +17,8 @@ namespace ShootEmUp
             Transform worldTransform,
             Vector3 spawnPosition,
             Vector3 attackPosition,
-            GameObject target,
+            Vector3 targetPosition,
+            HitPointsComponent targetHitPointsComponent,
             BulletSystem bulletSystem)
         {
             _bulletSystem = bulletSystem;
@@ -26,7 +27,10 @@ namespace ShootEmUp
             transform.position = spawnPosition;
 
             _enemyMoveAgent.SetDestination(attackPosition);
-            _enemyAttackAgent.SetTarget(target);
+            _enemyAttackAgent.SetTargetPosition(targetPosition);
+            
+            _enemyAttackAgent.AppendCondition(_enemyMoveAgent.IsReached);
+            _enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
 
             _hitPointsComponent.OnDeath += OnDeath;
             _enemyAttackAgent.OnFireAction += OnFireAction;

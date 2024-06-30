@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Utils;
 
 namespace ShootEmUp
 {
@@ -7,48 +8,47 @@ namespace ShootEmUp
     {
         public Action<Args> OnFireAction;
 
-        [SerializeField] private WeaponComponent weaponComponent;
-        [SerializeField] private EnemyMoveAgent moveAgent;
-        [SerializeField] private float countdown;
+        [SerializeField] private WeaponComponent _weaponComponent;
+        [SerializeField] private float _countdown;
         [SerializeField] private BulletConfig _bulletConfig;
 
-        private GameObject target;
-        private float currentTime;
+        private Vector3 _targetPosition;
+        private float _currentTime;
 
-        public void SetTarget(GameObject target)
+        private readonly CompositeConsition _condition = new();
+
+        public void SetTargetPosition(Vector3 targetPosition)
         {
-            this.target = target;
+            this._targetPosition = targetPosition;
+        }
+
+        public void AppendCondition(Func<bool> condition)
+        {
+            _condition.Append(condition);
         }
 
         public void Reset()
         {
-            this.currentTime = this.countdown;
+            this._currentTime = this._countdown;
         }
 
         private void FixedUpdate()
         {
-            if (!this.moveAgent.IsReached)
-            {
+            if (_condition.IsAllFalse())
                 return;
-            }
-            
-            if (!this.target.GetComponent<HitPointsComponent>().IsHitPointsExists())
-            {
-                return;
-            }
 
-            this.currentTime -= Time.fixedDeltaTime;
-            if (this.currentTime <= 0)
+            this._currentTime -= Time.fixedDeltaTime;
+            if (this._currentTime <= 0)
             {
                 this.Fire();
-                this.currentTime += this.countdown;
+                this._currentTime += this._countdown;
             }
         }
 
         private void Fire()
         {
-            var startPosition = this.weaponComponent.Position;
-            var vector = (Vector2) this.target.transform.position - startPosition;
+            var startPosition = this._weaponComponent.Position;
+            var vector = (Vector2) this._targetPosition - startPosition;
             var direction = vector.normalized;
 
             this.OnFireAction.Invoke(

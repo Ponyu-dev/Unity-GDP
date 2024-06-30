@@ -59,7 +59,13 @@ namespace ShootEmUp
             var spawnPosition = this._enemyPositions.RandomSpawnPosition();
             var attackPosition = this._enemyPositions.RandomAttackPosition();
 
-            enemy.Construct(_worldTransform, spawnPosition.position, attackPosition.position, _character, _bulletSystem);
+            enemy.Construct(
+                _worldTransform,
+                spawnPosition.position,
+                attackPosition.position,
+                _character.transform.position,
+                _character.GetComponent<HitPointsComponent>(),
+                _bulletSystem);
             enemy.OnDestroyed += OnDestroyed;
             this._activeEnemies.Add(enemy);
         }
