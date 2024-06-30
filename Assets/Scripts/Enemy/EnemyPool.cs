@@ -7,42 +7,42 @@ namespace ShootEmUp
     public sealed class EnemyPool : MonoBehaviour
     {
         [SerializeField]
-        private int initialCount = 7;
+        private BulletSystem _bulletSystem;
         
         [Header("Spawn")]
         [SerializeField]
-        private EnemyPositions enemyPositions;
+        private EnemyPositions _enemyPositions;
 
         [SerializeField]
-        private GameObject character;
+        private GameObject _character;
 
         [SerializeField]
-        private Transform worldTransform;
+        private Transform _worldTransform;
 
         [Header("Pool")]
-        [SerializeField] private Transform container;
+        [SerializeField] private Transform _container;
 
         [SerializeField]
-        private GameObject prefab;
+        private EnemyController _prefab;
         
         [SerializeField]
-        private BulletSystem _bulletSystem;
+        private int _initialCount = 7;
 
-        private readonly Queue<GameObject> enemyPool = new();
-        private readonly HashSet<GameObject> m_activeEnemies = new();
+        private readonly Queue<EnemyController> _enemyPool = new();
+        private readonly HashSet<EnemyController> _activeEnemies = new();
 
         private void Awake()
         {
-            for (var i = 0; i < initialCount; i++)
+            for (var i = 0; i < _initialCount; i++)
             {
-                var enemy = Instantiate(this.prefab, this.container);
-                this.enemyPool.Enqueue(enemy);
+                var enemy = Instantiate(this._prefab, this._container);
+                this._enemyPool.Enqueue(enemy);
             }
         }
 
         private IEnumerator Start()
         {
-            for(var i = 0; i < initialCount; i++)
+            for(var i = 0; i < _initialCount; i++)
             {
                 SpawnEnemy();
                 yield return new WaitForSeconds(1);
@@ -51,50 +51,33 @@ namespace ShootEmUp
 
         private void SpawnEnemy()
         {
-            Debug.Log("SpawnEnemy");
-            if (!this.enemyPool.TryDequeue(out var enemy))
+            if (!this._enemyPool.TryDequeue(out var enemy))
             {
                 return;
             }
+            
+            var spawnPosition = this._enemyPositions.RandomSpawnPosition();
+            var attackPosition = this._enemyPositions.RandomAttackPosition();
 
-            enemy.transform.SetParent(this.worldTransform);
-
-            var spawnPosition = this.enemyPositions.RandomSpawnPosition();
-            enemy.transform.position = spawnPosition.position;
-
-            var attackPosition = this.enemyPositions.RandomAttackPosition();
-            enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
-
-            enemy.GetComponent<EnemyAttackAgent>().SetTarget(this.character);
-
-            if (this.m_activeEnemies.Add(enemy))
-            {
-                enemy.GetComponent<HitPointsComponent>().OnDeath += this.OnDestroyed;
-                enemy.GetComponent<EnemyAttackAgent>().OnFireAction += this.OnFireAction;
-            }
+            enemy.Construct(_worldTransform, spawnPosition.position, attackPosition.position, _character, _bulletSystem);
+            enemy.OnDestroyed += OnDestroyed;
+            this._activeEnemies.Add(enemy);
         }
 
-        private void OnDestroyed(GameObject enemy)
+        private void OnDestroyed(EnemyController enemy)
         {
-            if (m_activeEnemies.Remove(enemy))
+            if (_activeEnemies.Remove(enemy))
             {
-                enemy.GetComponent<HitPointsComponent>().OnDeath -= this.OnDestroyed;
-                enemy.GetComponent<EnemyAttackAgent>().OnFireAction -= this.OnFireAction;
-
+                enemy.OnDestroyed -= OnDestroyed;
                 UnspawnEnemy(enemy);
             }
         }
 
-        private void UnspawnEnemy(GameObject enemy)
+        private void UnspawnEnemy(EnemyController enemy)
         {
-            enemy.transform.SetParent(this.container);
-            this.enemyPool.Enqueue(enemy);
+            enemy.transform.SetParent(this._container);
+            this._enemyPool.Enqueue(enemy);
             SpawnEnemy();
-        }
-
-        private void OnFireAction(Args args)
-        {
-            _bulletSystem.FlyBulletByArgs(args);
         }
     }
 }

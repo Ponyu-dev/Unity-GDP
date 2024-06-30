@@ -17,7 +17,7 @@ namespace ShootEmUp
             this._hitPointsComponent.OnDeath -= OnDeath;    
         }
 
-        private void OnDeath(GameObject gameObject)
+        private void OnDeath()
         {
             this._gameManager.StopGame();
         }

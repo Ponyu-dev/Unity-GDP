@@ -395,13 +395,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdcdf257e0242258e7a67fe13d80e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCount: 7
-  enemyPositions: {fileID: 7166351703523243261}
-  character: {fileID: 4414282821800802397}
-  worldTransform: {fileID: 1683128698}
-  container: {fileID: 178513672}
-  prefab: {fileID: 559606060570185700, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
   _bulletSystem: {fileID: 363245577}
+  _enemyPositions: {fileID: 7166351703523243261}
+  _character: {fileID: 4414282821800802397}
+  _worldTransform: {fileID: 1683128698}
+  _container: {fileID: 178513672}
+  _prefab: {fileID: 554424849201168173, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
+  _initialCount: 7
 --- !u!1 &883274639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,11 +1230,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Character
-      objectReference: {fileID: 0}
-    - target: {fileID: 3926786964091724599, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
-        type: 3}
-      propertyPath: hitPoints
-      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9699e7e809fd44b2bbf3d30c951ecbd2, type: 3}

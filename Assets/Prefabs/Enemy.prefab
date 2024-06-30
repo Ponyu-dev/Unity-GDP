@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8186052948131603766}
   - component: {fileID: 6896809305229427933}
   - component: {fileID: 1176662438754832721}
+  - component: {fileID: 554424849201168173}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -226,6 +227,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _teamComponent: {fileID: 5568771391735819379}
+  _hitPointsComponent: {fileID: 5568771391735819373}
+--- !u!114 &554424849201168173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559606060570185700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d07d79a2a24852b213215aa705557b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyMoveAgent: {fileID: 8186052948131603766}
+  _enemyAttackAgent: {fileID: 6896809305229427933}
   _hitPointsComponent: {fileID: 5568771391735819373}
 --- !u!1 &2239154907127902911
 GameObject:
