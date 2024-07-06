@@ -3,17 +3,10 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public interface IBullet
-    {
-        event Action<Bullet> OnCollisionEntered;
-        void SetArgs(Args args);
-        Args GetArgs();
-    }
-    
-    public sealed class Bullet : MonoBehaviour, IBullet
+    public sealed class Bullet : MonoBehaviour
     {
         public event Action<Bullet> OnCollisionEntered;
-        private Args _args;
+        private BulletData m_BulletData;
 
         [SerializeField]
         private new Rigidbody2D rigidbody2D;
@@ -24,20 +17,18 @@ namespace ShootEmUp
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.TryGetComponent(out CollisionEnterComponent collisionEnterComponent))
-                collisionEnterComponent.OnCollisionEntered(_args);
+                collisionEnterComponent.OnCollisionEntered(m_BulletData);
             
             this.OnCollisionEntered?.Invoke(this);
         }
 
-        public void SetArgs(Args args)
+        public void Construct(BulletData bulletData)
         {
-            _args = args;
-            this.rigidbody2D.velocity = _args._velocity;
-            this.gameObject.layer = _args._physicsLayer;
-            this.transform.position = _args._position;
-            this.spriteRenderer.color = _args._color;
+            m_BulletData = bulletData;
+            this.rigidbody2D.velocity = m_BulletData.velocity;
+            this.gameObject.layer = m_BulletData.physicsLayer;
+            this.transform.position = m_BulletData.position;
+            this.spriteRenderer.color = m_BulletData.color;
         }
-
-        public Args GetArgs() => _args;
     }
 }

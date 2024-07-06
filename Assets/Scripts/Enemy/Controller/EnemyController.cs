@@ -44,11 +44,11 @@ namespace ShootEmUp
             OnDestroyed?.Invoke(this);
         }
 
-        private void OnFireAction(Args args)
+        private void OnFireAction(BulletData bulletData)
         {
             if (_bulletSystem == null) return;
             
-            _bulletSystem.FlyBulletByArgs(args);
+            _bulletSystem.FlyBulletByArgs(bulletData);
         }
     }
 }

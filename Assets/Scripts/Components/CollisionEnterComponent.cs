@@ -2,20 +2,15 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public interface ICollisionEnterComponent
+    public class CollisionEnterComponent : MonoBehaviour
     {
-        void OnCollisionEntered(Args bulletArgs);
-    }
-    
-    public class CollisionEnterComponent : MonoBehaviour, ICollisionEnterComponent
-    {
-        [SerializeField] private TeamComponent _teamComponent;
-        [SerializeField] private HitPointsComponent _hitPointsComponent;
+        [SerializeField] private TeamComponent teamComponent;
+        [SerializeField] private HitPointsComponent hitPointsComponent;
 
-        public void OnCollisionEntered(Args bulletArgs)
+        public void OnCollisionEntered(BulletData bulletData)
         {
-            if (bulletArgs._isPlayer == _teamComponent.IsPlayer) return;
-            _hitPointsComponent.TakeDamage(bulletArgs._damage);
+            if (bulletData.isPlayer == teamComponent.IsPlayer) return;
+            hitPointsComponent.TakeDamage(bulletData.damage);
         }
     }
 }

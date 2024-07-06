@@ -31,7 +31,7 @@ namespace ShootEmUp
             this._fireRequired = false;
         }
 
-        private Args BulletArgs() => new Args(
+        private BulletData BulletDataDefault() => new BulletData(
             isPlayer: true, 
             physicsLayer: (int)this._bulletConfig.physicsLayer,
             color: this._bulletConfig.color, 
@@ -42,7 +42,7 @@ namespace ShootEmUp
 
         private void OnFlyBullet()
         {
-            _bulletSystem.FlyBulletByArgs(BulletArgs());
+            _bulletSystem.FlyBulletByArgs(BulletDataDefault());
         }
     }
 }

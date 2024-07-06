@@ -6,7 +6,7 @@ namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
-        public Action<Args> OnFireAction;
+        public Action<BulletData> OnFireAction;
 
         [SerializeField] private WeaponComponent _weaponComponent;
         [SerializeField] private float _countdown;
@@ -52,7 +52,7 @@ namespace ShootEmUp
             var direction = vector.normalized;
 
             this.OnFireAction.Invoke(
-                new Args(
+                new BulletData(
                     isPlayer: false, 
                     physicsLayer: (int) _bulletConfig.physicsLayer, 
                     color: _bulletConfig.color, 
