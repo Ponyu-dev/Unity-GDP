@@ -13,7 +13,6 @@ namespace ShootEmUp
         private BulletSystem m_BulletSystem;
         
         public void Construct(
-            Transform worldTransform,
             Vector3 spawnPosition,
             Vector3 attackPosition,
             Transform targetTransform,
@@ -21,8 +20,6 @@ namespace ShootEmUp
             BulletSystem bulletSystem)
         {
             m_BulletSystem = bulletSystem;
-            
-            transform.SetParent(worldTransform);
             transform.position = spawnPosition;
 
             enemyMoveAgent.SetDestination(attackPosition);

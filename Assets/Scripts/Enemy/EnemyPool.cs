@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 namespace ShootEmUp
 {
@@ -17,17 +17,13 @@ namespace ShootEmUp
         [SerializeField] private Transform container;
         [SerializeField] private EnemyController prefab;
         [SerializeField] private int initialCount = 7;
+        [SerializeField] private bool autoExpand = false;
 
-        private readonly Queue<EnemyController> m_EnemyPool = new();
-        private readonly HashSet<EnemyController> m_ActiveEnemies = new();
+        private PoolMono<EnemyController> m_PoolMono;
 
         private void Awake()
         {
-            for (var i = 0; i < initialCount; i++)
-            {
-                var enemy = Instantiate(this.prefab, this.container);
-                this.m_EnemyPool.Enqueue(enemy);
-            }
+            m_PoolMono = new PoolMono<EnemyController>(prefab, initialCount, container, worldTransform, autoExpand);
         }
 
         private IEnumerator Start()
@@ -41,38 +37,24 @@ namespace ShootEmUp
 
         private void SpawnEnemy()
         {
-            if (!this.m_EnemyPool.TryDequeue(out var enemy))
-            {
-                return;
-            }
+            if (!m_PoolMono.TryGet(out var enemy)) return;
             
             var spawnPosition = this.enemyPositions.RandomSpawnPosition();
             var attackPosition = this.enemyPositions.RandomAttackPosition();
 
             enemy.Construct(
-                worldTransform,
                 spawnPosition.position,
                 attackPosition.position,
                 character.transform,
                 character.GetComponent<HitPointsComponent>(),
                 bulletSystem);
             enemy.OnDestroyed += OnDestroyed;
-            this.m_ActiveEnemies.Add(enemy);
         }
 
         private void OnDestroyed(EnemyController enemy)
         {
-            if (m_ActiveEnemies.Remove(enemy))
-            {
-                enemy.OnDestroyed -= OnDestroyed;
-                UnSpawnEnemy(enemy);
-            }
-        }
-
-        private void UnSpawnEnemy(EnemyController enemy)
-        {
-            enemy.transform.SetParent(this.container);
-            this.m_EnemyPool.Enqueue(enemy);
+            enemy.OnDestroyed -= OnDestroyed;
+            m_PoolMono.InactiveObject(enemy);
             SpawnEnemy();
         }
     }

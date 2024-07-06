@@ -8,15 +8,17 @@ namespace Utils
         private readonly T m_Prefab;
         private readonly Transform m_Container;
         private readonly Transform m_WorldTransform;
+        private readonly bool m_AutoExpand;
 
         private readonly Queue<T> m_Pool = new();
         private readonly HashSet<T> m_Actives = new();
 
-        public PoolMono(T prefab, int count, Transform container, Transform worldTransform)
+        public PoolMono(T prefab, int count, Transform container, Transform worldTransform, bool autoExpand)
         {
             m_Prefab = prefab;
             m_Container = container;
             m_WorldTransform = worldTransform;
+            m_AutoExpand = autoExpand;
             
             CreatePool(count);
         }
@@ -32,16 +34,19 @@ namespace Utils
 
         private T CreateObject(Transform container) => Object.Instantiate(m_Prefab, container);
 
-        public T Get()
+        public bool TryGet(out T result)
         {
             if (m_Pool.TryDequeue(out var obj))
                 obj.transform.SetParent(m_WorldTransform);
-            else
+            else if (m_AutoExpand)
                 obj = CreateObject(m_WorldTransform);
 
+            result = obj;
+            if (result == null) return false;
+            
             m_Actives.Add(obj);
 
-            return obj;
+            return true;
         }
 
         public void InactiveObject(T obj)
