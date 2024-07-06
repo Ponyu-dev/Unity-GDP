@@ -15,15 +15,15 @@ namespace ShootEmUp
         
         [Header("Pool")]
         [SerializeField] private Transform container;
-        [SerializeField] private EnemyController prefab;
+        [SerializeField] private Enemy prefab;
         [SerializeField] private int initialCount = 7;
         [SerializeField] private bool autoExpand = false;
 
-        private PoolMono<EnemyController> m_PoolMono;
+        private PoolMono<Enemy> m_PoolMono;
 
         private void Awake()
         {
-            m_PoolMono = new PoolMono<EnemyController>(prefab, initialCount, container, worldTransform, autoExpand);
+            m_PoolMono = new PoolMono<Enemy>(prefab, initialCount, container, worldTransform, autoExpand);
         }
 
         private IEnumerator Start()
@@ -48,12 +48,12 @@ namespace ShootEmUp
                 character.transform,
                 character.GetComponent<HitPointsComponent>(),
                 bulletSystem);
-            enemy.OnDestroyed += OnDestroyed;
+            enemy.OnDeathbed += OnDestroyed;
         }
 
-        private void OnDestroyed(EnemyController enemy)
+        private void OnDestroyed(Enemy enemy)
         {
-            enemy.OnDestroyed -= OnDestroyed;
+            enemy.OnDeathbed -= OnDestroyed;
             m_PoolMono.InactiveObject(enemy);
             SpawnEnemy();
         }

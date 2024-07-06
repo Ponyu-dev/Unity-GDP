@@ -9,17 +9,17 @@ namespace ShootEmUp
         [SerializeField] private WeaponComponent weaponComponent;
         [SerializeField] private float countdown;
         [SerializeField] private BulletConfig bulletConfig;
-        
-        public Action<BulletData> OnFireAction;
 
         private Transform m_TargetTransform;
         private float m_CurrentTime;
+        private BulletSystem m_BulletSystem;
 
         private readonly CompositeCondition m_Condition = new();
 
-        public void SetTargetPosition(Transform targetTransform)
+        public void Construct(BulletSystem bulletSystem,Transform targetTransform)
         {
-            this.m_TargetTransform = targetTransform;
+            m_BulletSystem = bulletSystem;
+            m_TargetTransform = targetTransform;
         }
 
         public void AppendCondition(Func<bool> condition)
@@ -51,7 +51,7 @@ namespace ShootEmUp
             var vector = (Vector2) this.m_TargetTransform.position - startPosition;
             var direction = vector.normalized;
 
-            this.OnFireAction.Invoke(
+            m_BulletSystem.CreateBullet(
                 new BulletData(
                     isPlayer: false, 
                     physicsLayer: (int) bulletConfig.physicsLayer, 
