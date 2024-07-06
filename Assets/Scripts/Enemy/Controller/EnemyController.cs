@@ -3,16 +3,15 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class EnemyController : MonoBehaviour, IEnemyController<EnemyController>
+    public class EnemyController : MonoBehaviour
     {
-        [SerializeField] private EnemyMoveAgent _enemyMoveAgent;
-        [SerializeField] private EnemyAttackAgent _enemyAttackAgent;
-        [SerializeField] private HitPointsComponent _hitPointsComponent;
-
-        private BulletSystem _bulletSystem;
-
+        [SerializeField] private EnemyMoveAgent enemyMoveAgent;
+        [SerializeField] private EnemyAttackAgent enemyAttackAgent;
+        [SerializeField] private HitPointsComponent hitPointsComponent;
         public event Action<EnemyController> OnDestroyed;
 
+        private BulletSystem m_BulletSystem;
+        
         public void Construct(
             Transform worldTransform,
             Vector3 spawnPosition,
@@ -21,34 +20,34 @@ namespace ShootEmUp
             HitPointsComponent targetHitPointsComponent,
             BulletSystem bulletSystem)
         {
-            _bulletSystem = bulletSystem;
+            m_BulletSystem = bulletSystem;
             
             transform.SetParent(worldTransform);
             transform.position = spawnPosition;
 
-            _enemyMoveAgent.SetDestination(attackPosition);
-            _enemyAttackAgent.SetTargetPosition(targetPosition);
+            enemyMoveAgent.SetDestination(attackPosition);
+            enemyAttackAgent.SetTargetPosition(targetPosition);
             
-            _enemyAttackAgent.AppendCondition(_enemyMoveAgent.IsReached);
-            _enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
+            enemyAttackAgent.AppendCondition(enemyMoveAgent.IsReached);
+            enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
 
-            _hitPointsComponent.OnDeath += OnDeath;
-            _enemyAttackAgent.OnFireAction += OnFireAction;
+            hitPointsComponent.OnDeath += OnDeath;
+            enemyAttackAgent.OnFireAction += OnFireAction;
         }
 
         private void OnDeath()
         {
-            _hitPointsComponent.OnDeath -= OnDeath;
-            _enemyAttackAgent.OnFireAction -= OnFireAction;
+            hitPointsComponent.OnDeath -= OnDeath;
+            enemyAttackAgent.OnFireAction -= OnFireAction;
             
             OnDestroyed?.Invoke(this);
         }
 
         private void OnFireAction(BulletData bulletData)
         {
-            if (_bulletSystem == null) return;
+            if (m_BulletSystem == null) return;
             
-            _bulletSystem.FlyBulletByArgs(bulletData);
+            m_BulletSystem.FlyBulletByArgs(bulletData);
         }
     }
 }

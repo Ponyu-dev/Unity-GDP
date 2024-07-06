@@ -5,12 +5,11 @@ namespace ShootEmUp
     public sealed class CharacterShootObserver : MonoBehaviour
     {
         [SerializeField] private ShootInput shootInput;
-        [SerializeField] private WeaponComponent _weaponComponent;
+        [SerializeField] private WeaponComponent weaponComponent;
+        [SerializeField] private BulletSystem bulletSystem;
+        [SerializeField] private BulletConfig bulletConfig;
         
-        [SerializeField] private BulletSystem _bulletSystem;
-        [SerializeField] private BulletConfig _bulletConfig;
-        
-        public bool _fireRequired;
+        private bool m_FireRequired;
 
         private void OnEnable()
         {
@@ -24,25 +23,20 @@ namespace ShootEmUp
 
         private void OnShoot()
         {
-            if (this._fireRequired) return;
+            if (this.m_FireRequired) return;
             
-            this._fireRequired = true;
-            this.OnFlyBullet();
-            this._fireRequired = false;
+            this.m_FireRequired = true;
+            bulletSystem.FlyBulletByArgs(BulletDataDefault());
+            this.m_FireRequired = false;
         }
 
         private BulletData BulletDataDefault() => new BulletData(
             isPlayer: true, 
-            physicsLayer: (int)this._bulletConfig.physicsLayer,
-            color: this._bulletConfig.color, 
-            damage: this._bulletConfig.damage, 
-            position: _weaponComponent.Position,
-            velocity: _weaponComponent.Rotation * Vector3.up * this._bulletConfig.speed
+            physicsLayer: (int)this.bulletConfig.physicsLayer,
+            color: this.bulletConfig.color, 
+            damage: this.bulletConfig.damage, 
+            position: weaponComponent.position,
+            velocity: weaponComponent.rotation * Vector3.up * this.bulletConfig.speed
         );
-
-        private void OnFlyBullet()
-        {
-            _bulletSystem.FlyBulletByArgs(BulletDataDefault());
-        }
     }
 }

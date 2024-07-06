@@ -6,57 +6,57 @@ namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
+        [SerializeField] private WeaponComponent weaponComponent;
+        [SerializeField] private float countdown;
+        [SerializeField] private BulletConfig bulletConfig;
+        
         public Action<BulletData> OnFireAction;
 
-        [SerializeField] private WeaponComponent _weaponComponent;
-        [SerializeField] private float _countdown;
-        [SerializeField] private BulletConfig _bulletConfig;
+        private Vector3 m_TargetPosition;
+        private float m_CurrentTime;
 
-        private Vector3 _targetPosition;
-        private float _currentTime;
-
-        private readonly CompositeConsition _condition = new();
+        private readonly CompositeCondition m_Condition = new();
 
         public void SetTargetPosition(Vector3 targetPosition)
         {
-            this._targetPosition = targetPosition;
+            this.m_TargetPosition = targetPosition;
         }
 
         public void AppendCondition(Func<bool> condition)
         {
-            _condition.Append(condition);
+            m_Condition.Append(condition);
         }
 
         public void Reset()
         {
-            this._currentTime = this._countdown;
+            this.m_CurrentTime = this.countdown;
         }
 
         private void FixedUpdate()
         {
-            if (_condition.IsAllFalse())
+            if (m_Condition.IsAllFalse())
                 return;
 
-            this._currentTime -= Time.fixedDeltaTime;
-            if (this._currentTime <= 0)
+            this.m_CurrentTime -= Time.fixedDeltaTime;
+            if (this.m_CurrentTime <= 0)
             {
                 this.Fire();
-                this._currentTime += this._countdown;
+                this.m_CurrentTime += this.countdown;
             }
         }
 
         private void Fire()
         {
-            var startPosition = this._weaponComponent.Position;
-            var vector = (Vector2) this._targetPosition - startPosition;
+            var startPosition = this.weaponComponent.position;
+            var vector = (Vector2) this.m_TargetPosition - startPosition;
             var direction = vector.normalized;
 
             this.OnFireAction.Invoke(
                 new BulletData(
                     isPlayer: false, 
-                    physicsLayer: (int) _bulletConfig.physicsLayer, 
-                    color: _bulletConfig.color, 
-                    damage: _bulletConfig.damage, 
+                    physicsLayer: (int) bulletConfig.physicsLayer, 
+                    color: bulletConfig.color, 
+                    damage: bulletConfig.damage, 
                     position: startPosition, 
                     velocity: direction * 2.0f)
                 );

@@ -2,18 +2,10 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public interface IMoveComponent
+    public sealed class MoveComponent : MonoBehaviour
     {
-        public void Move(Vector2 offset);
-    }
-    
-    public sealed class MoveComponent : MonoBehaviour, IMoveComponent
-    {
-        [SerializeField]
-        private new Rigidbody2D rigidbody2D;
-
-        [SerializeField]
-        private float speed = 5.0f;
+        [SerializeField] private new Rigidbody2D rigidbody2D;
+        [SerializeField] private float speed = 5.0f;
         
         public void Move(Vector2 offset)
         {

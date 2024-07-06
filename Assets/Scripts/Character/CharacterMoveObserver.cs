@@ -4,22 +4,22 @@ namespace ShootEmUp
 {
     public class CharacterMoveObserver : MonoBehaviour
     {
-        [SerializeField] private MoveInput _moveInput;
-        [SerializeField] private MoveComponent _moveComponent;
+        [SerializeField] private MoveInput moveInput;
+        [SerializeField] private MoveComponent moveComponent;
         
         private void OnEnable()
         {
-            this._moveInput.OnMove += OnMove;
+            this.moveInput.OnMove += OnMove;
         }
     
         private void OnDisable()
         {
-            this._moveInput.OnMove -= OnMove;
+            this.moveInput.OnMove -= OnMove;
         }
 
         private void OnMove(Vector2 offset)
         {
-            this._moveComponent.Move(offset);
+            this.moveComponent.Move(offset);
         }
     }
 }
