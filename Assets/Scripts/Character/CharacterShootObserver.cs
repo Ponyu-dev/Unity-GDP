@@ -26,7 +26,7 @@ namespace ShootEmUp
             if (this.m_FireRequired) return;
             
             this.m_FireRequired = true;
-            bulletSystem.FlyBulletByArgs(BulletDataDefault());
+            bulletSystem.CreateBullet(BulletDataDefault());
             this.m_FireRequired = false;
         }
 
