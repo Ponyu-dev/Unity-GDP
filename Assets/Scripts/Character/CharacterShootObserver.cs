@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Utils;
 
 namespace ShootEmUp
 {
@@ -11,6 +13,13 @@ namespace ShootEmUp
         
         private bool m_FireRequired;
 
+        private readonly CompositeCondition m_Condition = new();
+        
+        public void AppendCondition(Func<bool> condition)
+        {
+            m_Condition.Append(condition);
+        }
+        
         private void OnEnable()
         {
             shootInput.OnShoot += OnShoot;
@@ -23,6 +32,8 @@ namespace ShootEmUp
 
         private void OnShoot()
         {
+            if (m_Condition.IsAllFalse()) return;
+            
             if (this.m_FireRequired) return;
             
             this.m_FireRequired = true;

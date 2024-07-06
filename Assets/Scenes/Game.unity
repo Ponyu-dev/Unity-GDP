@@ -261,9 +261,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bd15923a144ffbab0333dc6e74e641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCount: 50
-  container: {fileID: 1831741369}
   prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
+  initialCount: 50
+  autoExpand: 1
+  container: {fileID: 1831741369}
   worldTransform: {fileID: 1683128698}
   levelBounds: {fileID: 2572952653776768186}
 --- !u!1 &519420028
@@ -402,6 +403,7 @@ MonoBehaviour:
   container: {fileID: 178513672}
   prefab: {fileID: 554424849201168173, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
   initialCount: 7
+  autoExpand: 0
 --- !u!1 &883274639
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +722,7 @@ GameObject:
   - component: {fileID: 1879759790}
   - component: {fileID: 1879759791}
   - component: {fileID: 1879759792}
+  - component: {fileID: 1879759793}
   m_Layer: 0
   m_Name: Character Observers
   m_TagString: Untagged
@@ -786,6 +789,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInput: {fileID: 1134805362}
   moveComponent: {fileID: 3926786964592264470}
+--- !u!114 &1879759793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879759788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef19eb0eb4814520b101677593a109a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterShootObserver: {fileID: 1879759790}
+  characterMoveObserver: {fileID: 1879759792}
+  hitPointsComponent: {fileID: 3926786964592264469}
 --- !u!1 &61006797492197339
 GameObject:
   m_ObjectHideFlags: 0
