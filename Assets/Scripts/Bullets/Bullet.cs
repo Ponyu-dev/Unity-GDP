@@ -14,8 +14,8 @@ namespace ShootEmUp
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.TryGetComponent(out CollisionEnterComponent collisionEnterComponent))
-                collisionEnterComponent.OnCollisionEntered(m_BulletData);
+            if (collision.gameObject.TryGetComponent(out DamageComponent damageComponent))
+                damageComponent.OnDamage(m_BulletData);
             
             this.OnCollisionEntered?.Invoke(this);
         }
