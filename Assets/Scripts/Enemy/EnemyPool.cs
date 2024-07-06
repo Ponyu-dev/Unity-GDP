@@ -53,7 +53,7 @@ namespace ShootEmUp
                 worldTransform,
                 spawnPosition.position,
                 attackPosition.position,
-                character.transform.position,
+                character.transform,
                 character.GetComponent<HitPointsComponent>(),
                 bulletSystem);
             enemy.OnDestroyed += OnDestroyed;

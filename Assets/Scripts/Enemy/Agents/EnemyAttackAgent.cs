@@ -12,14 +12,14 @@ namespace ShootEmUp
         
         public Action<BulletData> OnFireAction;
 
-        private Vector3 m_TargetPosition;
+        private Transform m_TargetTransform;
         private float m_CurrentTime;
 
         private readonly CompositeCondition m_Condition = new();
 
-        public void SetTargetPosition(Vector3 targetPosition)
+        public void SetTargetPosition(Transform targetTransform)
         {
-            this.m_TargetPosition = targetPosition;
+            this.m_TargetTransform = targetTransform;
         }
 
         public void AppendCondition(Func<bool> condition)
@@ -48,7 +48,7 @@ namespace ShootEmUp
         private void Fire()
         {
             var startPosition = this.weaponComponent.position;
-            var vector = (Vector2) this.m_TargetPosition - startPosition;
+            var vector = (Vector2) this.m_TargetTransform.position - startPosition;
             var direction = vector.normalized;
 
             this.OnFireAction.Invoke(

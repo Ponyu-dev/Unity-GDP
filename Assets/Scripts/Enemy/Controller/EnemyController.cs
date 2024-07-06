@@ -16,7 +16,7 @@ namespace ShootEmUp
             Transform worldTransform,
             Vector3 spawnPosition,
             Vector3 attackPosition,
-            Vector3 targetPosition,
+            Transform targetTransform,
             HitPointsComponent targetHitPointsComponent,
             BulletSystem bulletSystem)
         {
@@ -26,7 +26,7 @@ namespace ShootEmUp
             transform.position = spawnPosition;
 
             enemyMoveAgent.SetDestination(attackPosition);
-            enemyAttackAgent.SetTargetPosition(targetPosition);
+            enemyAttackAgent.SetTargetPosition(targetTransform);
             
             enemyAttackAgent.AppendCondition(enemyMoveAgent.IsReached);
             enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
@@ -47,7 +47,7 @@ namespace ShootEmUp
         {
             if (m_BulletSystem == null) return;
             
-            m_BulletSystem.FlyBulletByArgs(bulletData);
+            m_BulletSystem.CreateBullet(bulletData);
         }
     }
 }
