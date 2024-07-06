@@ -395,13 +395,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdcdf257e0242258e7a67fe13d80e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSystem: {fileID: 363245577}
-  _enemyPositions: {fileID: 7166351703523243261}
-  _character: {fileID: 4414282821800802397}
-  _worldTransform: {fileID: 1683128698}
-  _container: {fileID: 178513672}
-  _prefab: {fileID: 554424849201168173, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
-  _initialCount: 7
+  bulletSystem: {fileID: 363245577}
+  enemyPositions: {fileID: 7166351703523243261}
+  character: {fileID: 4414282821800802397}
+  worldTransform: {fileID: 1683128698}
+  container: {fileID: 178513672}
+  prefab: {fileID: 554424849201168173, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
+  initialCount: 7
 --- !u!1 &883274639
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,10 +755,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootInput: {fileID: 1134805361}
-  _weaponComponent: {fileID: 4414282821800802399}
-  _bulletSystem: {fileID: 363245577}
-  _bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
-  _fireRequired: 0
+  weaponComponent: {fileID: 4414282821800802399}
+  bulletSystem: {fileID: 363245577}
+  bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
 --- !u!114 &1879759791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -771,8 +770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a348698f5ed24a028b0b436517a8b7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 3951702117947426123}
-  _hitPointsComponent: {fileID: 3926786964592264469}
+  gameManager: {fileID: 3951702117947426123}
+  hitPointsComponent: {fileID: 3926786964592264469}
 --- !u!114 &1879759792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,8 +784,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931d812ee96947e3a2de521dd48ec3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveInput: {fileID: 1134805362}
-  _moveComponent: {fileID: 3926786964592264470}
+  moveInput: {fileID: 1134805362}
+  moveComponent: {fileID: 3926786964592264470}
 --- !u!1 &61006797492197339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,10 +1408,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5377a5d4caa94482972174d0a74ac4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_params:
-    m_startPositionY: 19
-    m_endPositionY: -38
-    m_movingSpeedY: 5
+  levelBackgroundParams:
+    startPositionY: 0
+    endPositionY: 0
+    movingSpeedY: 0
 --- !u!1 &4914023371208914563
 GameObject:
   m_ObjectHideFlags: 0

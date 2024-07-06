@@ -194,8 +194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b357f4241d54b0fab3bda6b015e71f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamComponent: {fileID: 3926786964091724597}
-  _hitPointsComponent: {fileID: 3926786964091724599}
+  teamComponent: {fileID: 3926786964091724597}
+  hitPointsComponent: {fileID: 3926786964091724599}
 --- !u!1 &3926786963072264211
 GameObject:
   m_ObjectHideFlags: 0
