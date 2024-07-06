@@ -5,28 +5,25 @@ namespace ShootEmUp
 {
     public sealed class Bullet : MonoBehaviour
     {
-        [SerializeField] private new Rigidbody2D rigidbody2D;
-        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private BulletBoundObserver bulletBoundObserver;
+        [SerializeField] private BulletCollisionObserver bulletCollisionObserver;
         
-        public event Action<Bullet> OnCollisionEntered;
-        
-        private BulletData m_BulletData;
+        public event Action<Bullet> OnInactive;
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        public void Construct(BulletData bulletData, LevelBounds levelBounds)
         {
-            if (collision.gameObject.TryGetComponent(out DamageComponent damageComponent))
-                damageComponent.OnDamage(m_BulletData);
+            bulletCollisionObserver.Construct(bulletData);
+            bulletCollisionObserver.OnCollisionEntered += Inactive;
             
-            this.OnCollisionEntered?.Invoke(this);
+            bulletBoundObserver.Construct(levelBounds);
+            bulletBoundObserver.OnExceedBounded += Inactive;
         }
 
-        public void Construct(BulletData bulletData)
+        private void Inactive()
         {
-            m_BulletData = bulletData;
-            this.rigidbody2D.velocity = m_BulletData.velocity;
-            this.gameObject.layer = m_BulletData.physicsLayer;
-            this.transform.position = m_BulletData.position;
-            this.spriteRenderer.color = m_BulletData.color;
+            bulletCollisionObserver.OnCollisionEntered -= Inactive;
+            bulletBoundObserver.OnExceedBounded -= Inactive;
+            OnInactive?.Invoke(this);
         }
     }
 }
