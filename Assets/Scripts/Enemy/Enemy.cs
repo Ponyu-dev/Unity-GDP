@@ -9,6 +9,8 @@ namespace ShootEmUp
         [SerializeField] private EnemyAttackAgent enemyAttackAgent;
         [SerializeField] private HitPointsComponent hitPointsComponent;
         
+        //Решил не выносить это в другой класс.
+        //Так как это event который уведомляет EnemySystem. О том что Enemy умер.
         public event Action<Enemy> OnDeathbed;
         
         public void Construct(

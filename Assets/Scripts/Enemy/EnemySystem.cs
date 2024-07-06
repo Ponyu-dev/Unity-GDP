@@ -4,7 +4,7 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyPool : MonoBehaviour
+    public sealed class EnemySystem : MonoBehaviour
     {
         [SerializeField] private BulletSystem bulletSystem;
         
