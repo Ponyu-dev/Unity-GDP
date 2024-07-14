@@ -5,7 +5,7 @@ namespace ShootEmUp
     [RequireComponent(typeof(GameManager))]
     public sealed class GameManagerInstaller : MonoBehaviour
     {
-        private void Awake() //Team
+        private void Awake()
         {
             var gameManager = this.GetComponent<GameManager>();
             var listeners = this.GetComponentsInChildren<IGameListener>();

@@ -4,7 +4,9 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public class CharacterMoveObserver : MonoBehaviour
+    public class CharacterMoveObserver : MonoBehaviour,
+        IGameStartListener,
+        IGameFinishListener
     {
         [SerializeField] private MoveInput moveInput;
         [SerializeField] private MoveComponent moveComponent;
@@ -16,12 +18,12 @@ namespace ShootEmUp
             m_Condition.Append(condition);
         }
         
-        private void OnEnable()
+        void IGameStartListener.OnStartGame()
         {
             this.moveInput.OnMove += OnMove;
         }
-    
-        private void OnDisable()
+
+        void IGameFinishListener.OnFinishGame()
         {
             this.moveInput.OnMove -= OnMove;
         }

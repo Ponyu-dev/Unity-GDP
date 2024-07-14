@@ -75,19 +75,17 @@ namespace ShootEmUp
             
             this.m_Listeners.Add(listener);
 
-            if (listener is IGameUpdateListener updateListener)
+            switch (listener)
             {
-                this.m_UpdateListeners.Add(updateListener);
-            }
-
-            if (listener is IGameFixedUpdateListener fixedUpdateListener)
-            {
-                this.m_FixedUpdateListeners.Add(fixedUpdateListener);
-            }
-
-            if (listener is IGameLateUpdateListener lateUpdateListener)
-            {
-                this.m_LateUpdateListeners.Add(lateUpdateListener);
+                case IGameUpdateListener updateListener:
+                    this.m_UpdateListeners.Add(updateListener);
+                    break;
+                case IGameFixedUpdateListener fixedUpdateListener:
+                    this.m_FixedUpdateListeners.Add(fixedUpdateListener);
+                    break;
+                case IGameLateUpdateListener lateUpdateListener:
+                    this.m_LateUpdateListeners.Add(lateUpdateListener);
+                    break;
             }
         }
 
@@ -101,19 +99,17 @@ namespace ShootEmUp
             
             this.m_Listeners.Remove(listener);
 
-            if (listener is IGameUpdateListener updateListener)
+            switch (listener)
             {
-                this.m_UpdateListeners.Remove(updateListener);
-            }
-
-            if (listener is IGameFixedUpdateListener fixedUpdateListener)
-            {
-                this.m_FixedUpdateListeners.Remove(fixedUpdateListener);
-            }
-
-            if (listener is IGameLateUpdateListener lateUpdateListener)
-            {
-                this.m_LateUpdateListeners.Remove(lateUpdateListener);
+                case IGameUpdateListener updateListener:
+                    this.m_UpdateListeners.Remove(updateListener);
+                    break;
+                case IGameFixedUpdateListener fixedUpdateListener:
+                    this.m_FixedUpdateListeners.Remove(fixedUpdateListener);
+                    break;
+                case IGameLateUpdateListener lateUpdateListener:
+                    this.m_LateUpdateListeners.Remove(lateUpdateListener);
+                    break;
             }
         }
 

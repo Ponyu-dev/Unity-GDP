@@ -4,7 +4,9 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterShootObserver : MonoBehaviour
+    public sealed class CharacterShootObserver : MonoBehaviour,
+        IGameStartListener,
+        IGameFinishListener
     {
         [SerializeField] private ShootInput shootInput;
         [SerializeField] private WeaponComponent weaponComponent;
@@ -20,12 +22,12 @@ namespace ShootEmUp
             m_Condition.Append(condition);
         }
         
-        private void OnEnable()
+        void IGameStartListener.OnStartGame()
         {
             shootInput.OnShoot += OnShoot;
         }
 
-        private void OnDisable()
+        void IGameFinishListener.OnFinishGame()
         {
             shootInput.OnShoot -= OnShoot;
         }
