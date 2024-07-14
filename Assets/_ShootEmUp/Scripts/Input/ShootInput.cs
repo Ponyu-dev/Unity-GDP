@@ -3,21 +3,19 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class ShootInput : MonoBehaviour
+    public sealed class ShootInput : MonoBehaviour, IGameUpdateListener
     {
         public event Action OnShoot;
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Shoot();
-            }
-        }
         
         private void Shoot()
         {
-            OnShoot?.Invoke();
+            if (Input.GetKeyDown(KeyCode.Space)) 
+                OnShoot?.Invoke();
+        }
+
+        public void OnUpdate(float deltaTime)
+        {
+            Shoot();
         }
     }
 }
