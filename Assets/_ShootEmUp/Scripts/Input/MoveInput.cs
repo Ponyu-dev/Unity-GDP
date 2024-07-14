@@ -3,25 +3,21 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class MoveInput : MonoBehaviour
+    public class MoveInput : MonoBehaviour, IGameFixedUpdateListener
     {
         public event Action<Vector2> OnMove;
-
-        private void FixedUpdate()
+        
+        private void Move(float deltaTime)
         {
             if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                Move(Vector2.left);
-            }
+                OnMove?.Invoke(Vector2.left * deltaTime);
             else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                Move(Vector2.right);
-            }
+                OnMove?.Invoke(Vector2.right * deltaTime);
         }
-        
-        private void Move(Vector2 direction)
+
+        public void OnFixedUpdate(float deltaTime)
         {
-            OnMove?.Invoke(direction * Time.fixedDeltaTime);
+            Move(deltaTime);
         }
     }
 }
