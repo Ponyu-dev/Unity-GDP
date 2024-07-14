@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace ShootEmUp
@@ -10,7 +11,7 @@ namespace ShootEmUp
     {
         [SerializeField] private ShootInput shootInput;
         [SerializeField] private WeaponComponent weaponComponent;
-        [SerializeField] private BulletSystem bulletSystem;
+        [FormerlySerializedAs("bulletSystem")] [SerializeField] private BulletSpawner bulletSpawner;
         [SerializeField] private BulletConfig bulletConfig;
         
         private bool m_FireRequired;
@@ -39,7 +40,7 @@ namespace ShootEmUp
             if (this.m_FireRequired) return;
             
             this.m_FireRequired = true;
-            bulletSystem.CreateBullet(BulletDataDefault());
+            bulletSpawner.CreateBullet(BulletDataDefault());
             this.m_FireRequired = false;
         }
 

@@ -3,7 +3,7 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSystem : MonoBehaviour
+    public sealed class BulletSpawner : MonoBehaviour
     {
         [SerializeField] private Bullet prefab;
         [SerializeField] private int initialCount = 50;

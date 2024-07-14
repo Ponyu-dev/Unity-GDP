@@ -12,13 +12,13 @@ namespace ShootEmUp
 
         private Transform m_TargetTransform;
         private float m_CurrentTime;
-        private BulletSystem m_BulletSystem;
+        private BulletSpawner m_BulletSpawner;
 
         private readonly CompositeCondition m_Condition = new();
 
-        public void Construct(BulletSystem bulletSystem,Transform targetTransform)
+        public void Construct(BulletSpawner bulletSpawner,Transform targetTransform)
         {
-            m_BulletSystem = bulletSystem;
+            m_BulletSpawner = bulletSpawner;
             m_TargetTransform = targetTransform;
         }
 
@@ -51,7 +51,7 @@ namespace ShootEmUp
             var vector = (Vector2) this.m_TargetTransform.position - startPosition;
             var direction = vector.normalized;
 
-            m_BulletSystem.CreateBullet(
+            m_BulletSpawner.CreateBullet(
                 new BulletData(
                     isPlayer: false, 
                     physicsLayer: (int) bulletConfig.physicsLayer, 

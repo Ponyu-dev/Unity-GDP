@@ -18,13 +18,13 @@ namespace ShootEmUp
             Vector3 attackPosition,
             Transform targetTransform,
             HitPointsComponent targetHitPointsComponent,
-            BulletSystem bulletSystem)
+            BulletSpawner bulletSpawner)
         {
             transform.position = spawnPosition;
 
             enemyMoveAgent.SetDestination(attackPosition);
             
-            enemyAttackAgent.Construct(bulletSystem, targetTransform);
+            enemyAttackAgent.Construct(bulletSpawner, targetTransform);
             enemyAttackAgent.AppendCondition(enemyMoveAgent.IsReached);
             enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
 

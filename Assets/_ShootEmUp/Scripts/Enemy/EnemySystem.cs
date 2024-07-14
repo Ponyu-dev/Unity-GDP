@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace ShootEmUp
 {
     public sealed class EnemySystem : MonoBehaviour
     {
-        [SerializeField] private BulletSystem bulletSystem;
+        [FormerlySerializedAs("bulletSystem")] [SerializeField] private BulletSpawner bulletSpawner;
         
         [Header("Spawn")]
         [SerializeField] private EnemyPositions enemyPositions;
@@ -47,7 +48,7 @@ namespace ShootEmUp
                 attackPosition.position,
                 character.transform,
                 character.GetComponent<HitPointsComponent>(),
-                bulletSystem);
+                bulletSpawner);
             enemy.OnDeathbed += OnDestroyed;
         }
 

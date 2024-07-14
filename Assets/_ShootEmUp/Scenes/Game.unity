@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 363245576}
   - component: {fileID: 363245577}
   m_Layer: 0
-  m_Name: BulletSystem
+  m_Name: BulletSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdcdf257e0242258e7a67fe13d80e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSystem: {fileID: 363245577}
+  bulletSpawner: {fileID: 363245577}
   enemyPositions: {fileID: 7166351703523243261}
   character: {fileID: 4414282821800802397}
   worldTransform: {fileID: 1683128698}
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootInput: {fileID: 1134805361}
   weaponComponent: {fileID: 4414282821800802399}
-  bulletSystem: {fileID: 363245577}
+  bulletSpawner: {fileID: 363245577}
   bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
 --- !u!114 &1879759791
 MonoBehaviour:
