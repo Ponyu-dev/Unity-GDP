@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -5,14 +6,24 @@ namespace ShootEmUp
     [RequireComponent(typeof(GameManager))]
     public sealed class GameManagerInstaller : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject ui;
+
+        private GameManager m_GameManager; 
+        
         private void Awake()
         {
-            var gameManager = this.GetComponent<GameManager>();
-            var listeners = this.GetComponentsInChildren<IGameListener>();
-            
-            foreach (var listener in listeners)
+            m_GameManager = this.GetComponent<GameManager>();
+
+            AddListener(this.GetComponentsInChildren<IGameListener>());
+            AddListener(ui.GetComponentsInChildren<IGameListener>());
+        }
+
+        private void AddListener(IEnumerable<IGameListener> gameListeners)
+        {
+            foreach (var listener in gameListeners)
             {
-                gameManager.AddListener(listener);
+                m_GameManager.AddListener(listener);
             }
         }
     }

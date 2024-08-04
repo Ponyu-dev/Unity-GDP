@@ -1,6 +1,16 @@
 namespace ShootEmUp
 {
     public interface IGameListener { }
+
+    public interface IInitializable : IGameListener
+    {
+        void Initialize();
+    }
+    
+    public interface IGameTimerListener : IGameListener
+    {
+        void OnStartTimer();
+    }
     
     public interface IGameStartListener : IGameListener
     {

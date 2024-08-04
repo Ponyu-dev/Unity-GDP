@@ -20,7 +20,16 @@ namespace ShootEmUp
         
         [ShowInInspector, ReadOnly]
         private readonly List<IGameLateUpdateListener> m_LateUpdateListeners = new();
-        
+
+        private void Start()
+        {
+            foreach (var listener in m_Listeners)
+            {
+                if (listener is IInitializable initializable)
+                    initializable.Initialize();
+            }
+        }
+
         private void Update()
         {
             if (this.state != GameState.PLAYING)
@@ -82,8 +91,7 @@ namespace ShootEmUp
                     break;
             }
         }
-
-
+        
         public void RemoveListener(IGameListener listener)
         {
             if (listener == null)
@@ -108,9 +116,25 @@ namespace ShootEmUp
         }
 
         [Button]
-        public void StartGame()
+        public void StartTimer()
         {
             if (state is not (GameState.NONE or GameState.FINISHED)) return;
+            
+            this.state = GameState.START_TIMER;
+            
+            foreach (var listener in this.m_Listeners)
+            {
+                if (listener is IGameTimerListener startTimerListener)
+                {
+                    startTimerListener.OnStartTimer();
+                }
+            }
+        }
+
+        [Button]
+        public void StartGame()
+        {
+            if (state is not (GameState.START_TIMER)) return;
             
             ResumeTime();
             
