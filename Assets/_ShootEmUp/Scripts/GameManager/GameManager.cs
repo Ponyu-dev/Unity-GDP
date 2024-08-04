@@ -7,7 +7,7 @@ namespace ShootEmUp
     public sealed class GameManager : MonoBehaviour
     {
         [ShowInInspector, ReadOnly]
-        public GameState State { get; private set; }
+        public GameState state { get; private set; }
 
         [ShowInInspector, ReadOnly]
         private readonly List<IGameListener> m_Listeners = new();
@@ -23,10 +23,8 @@ namespace ShootEmUp
         
         private void Update()
         {
-            if (this.State != GameState.PLAYING)
-            {
+            if (this.state != GameState.PLAYING)
                 return;
-            }
 
             var deltaTime = Time.deltaTime;
             for (int i = 0, count = this.m_UpdateListeners.Count; i < count; i++)
@@ -38,10 +36,8 @@ namespace ShootEmUp
 
         private void FixedUpdate()
         {
-            if (this.State != GameState.PLAYING)
-            {
+            if (this.state != GameState.PLAYING)
                 return;
-            }
             
             var deltaTime = Time.fixedDeltaTime;
             for (int i = 0, count = this.m_FixedUpdateListeners.Count; i < count; i++)
@@ -53,10 +49,8 @@ namespace ShootEmUp
 
         private void LateUpdate()
         {
-            if (this.State != GameState.PLAYING)
-            {
+            if (this.state != GameState.PLAYING)
                 return;
-            }
             
             var deltaTime = Time.deltaTime;
             for (int i = 0, count = this.m_LateUpdateListeners.Count; i < count; i++)
@@ -116,6 +110,10 @@ namespace ShootEmUp
         [Button]
         public void StartGame()
         {
+            if (state is not (GameState.NONE or GameState.FINISHED)) return;
+            
+            ResumeTime();
+            
             foreach (var listener in this.m_Listeners)
             {
                 if (listener is IGameStartListener startListener)
@@ -124,12 +122,16 @@ namespace ShootEmUp
                 }
             }
 
-            this.State = GameState.PLAYING;
+            this.state = GameState.PLAYING;
         }
 
         [Button]
         public void PauseGame()
         {
+            if (state != GameState.PLAYING) return;
+
+            PauseTime();
+            
             foreach (var listener in this.m_Listeners)
             {
                 if (listener is IGamePauseListener pauseListener)
@@ -138,12 +140,16 @@ namespace ShootEmUp
                 }
             }
             
-            this.State = GameState.PAUSED;
+            this.state = GameState.PAUSED;
         }
 
         [Button]
         public void ResumeGame()
         {
+            if (state != GameState.PAUSED) return;
+            
+            ResumeTime();
+            
             foreach (var listener in this.m_Listeners)
             {
                 if (listener is IGameResumeListener resumeListener)
@@ -152,12 +158,16 @@ namespace ShootEmUp
                 }
             }
             
-            this.State = GameState.PLAYING;
+            this.state = GameState.PLAYING;
         }
 
         [Button]
         public void FinishGame()
         {
+            if (state != GameState.PLAYING) return;
+            
+            PauseTime();
+            
             foreach (var listener in this.m_Listeners)
             {
                 if (listener is IGameFinishListener finishListener)
@@ -166,13 +176,17 @@ namespace ShootEmUp
                 }
             }
             
-            this.State = GameState.FINISHED;
+            this.state = GameState.FINISHED;
+        }
+
+        private void PauseTime()
+        {
+            Time.timeScale = 0f;
         }
         
-        /*public void StopGame()
+        private void ResumeTime()
         {
-            Debug.Log("Game over!");
-            Time.timeScale = 0;
-        }*/
+            Time.timeScale = 1f;
+        }
     }
 }
