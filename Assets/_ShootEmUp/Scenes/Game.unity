@@ -1888,6 +1888,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 7983466745619231302, guid: bbbfba301394749eb97eb67fc5c9cda0,
+        type: 3}
+      propertyPath: m_GameManager
+      value: 
+      objectReference: {fileID: 3951702117947426123}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbbfba301394749eb97eb67fc5c9cda0, type: 3}
 --- !u!1 &4788406047096451828
@@ -2350,6 +2355,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 964524208}
     m_Modifications:
+    - target: {fileID: 516583395535343453, guid: 3830b57243c1f454fb751b901690a8bd,
+        type: 3}
+      propertyPath: m_GameManager
+      value: 
+      objectReference: {fileID: 3951702117947426123}
     - target: {fileID: 8012831341344971916, guid: 3830b57243c1f454fb751b901690a8bd,
         type: 3}
       propertyPath: m_Pivot.x
