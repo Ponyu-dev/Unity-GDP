@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IGameFixedUpdateListener
     {
         [SerializeField] private EnemyMoveAgent enemyMoveAgent;
         [SerializeField] private EnemyAttackAgent enemyAttackAgent;
@@ -35,6 +35,12 @@ namespace ShootEmUp
         {
             hitPointsComponent.OnDeath -= OnDeath;
             OnDeathbed?.Invoke(this);
+        }
+
+        public void OnFixedUpdate(float deltaTime)
+        {
+            enemyAttackAgent.OnFixedUpdate(deltaTime);
+            enemyMoveAgent.OnFixedUpdate(deltaTime);
         }
     }
 }

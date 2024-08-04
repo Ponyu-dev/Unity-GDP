@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Utils
@@ -47,6 +48,11 @@ namespace Utils
             m_Actives.Add(obj);
 
             return true;
+        }
+
+        public T TryGetActive(int id)
+        {
+            return m_Actives.Count > 0 ? m_Actives?.ElementAt(index: id) : null;
         }
 
         public void InactiveObject(T obj)

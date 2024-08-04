@@ -5,7 +5,7 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class EnemySystem : MonoBehaviour
+    public sealed class EnemySystem : MonoBehaviour, IGameFixedUpdateListener
     {
         [FormerlySerializedAs("bulletSystem")] [SerializeField] private BulletSpawner bulletSpawner;
         
@@ -27,12 +27,11 @@ namespace ShootEmUp
             m_PoolMono = new PoolMono<Enemy>(prefab, initialCount, container, worldTransform, autoExpand);
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
             for(var i = 0; i < initialCount; i++)
             {
                 SpawnEnemy();
-                yield return new WaitForSeconds(1);
             }
         }
 
@@ -57,6 +56,16 @@ namespace ShootEmUp
             enemy.OnDeathbed -= OnDestroyed;
             m_PoolMono.InactiveObject(enemy);
             SpawnEnemy();
+        }
+
+        public void OnFixedUpdate(float deltaTime)
+        {
+            for (var i = 0; i < initialCount; i++)
+            {
+                var enemy = m_PoolMono.TryGetActive(i);
+                if (enemy != null) 
+                    enemy.OnFixedUpdate(deltaTime);
+            }
         }
     }
 }

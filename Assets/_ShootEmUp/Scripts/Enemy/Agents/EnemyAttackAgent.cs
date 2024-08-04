@@ -4,7 +4,7 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour
+    public sealed class EnemyAttackAgent : MonoBehaviour, IGameFixedUpdateListener
     {
         [SerializeField] private WeaponComponent weaponComponent;
         [SerializeField] private float countdown;
@@ -31,13 +31,13 @@ namespace ShootEmUp
         {
             this.m_CurrentTime = this.countdown;
         }
-
-        private void FixedUpdate()
+        
+        public void OnFixedUpdate(float deltaTime)
         {
             if (m_Condition.IsAllFalse())
                 return;
 
-            this.m_CurrentTime -= Time.fixedDeltaTime;
+            this.m_CurrentTime -= deltaTime;
             if (this.m_CurrentTime <= 0)
             {
                 this.Fire();
