@@ -5,7 +5,11 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class EnemySystem : MonoBehaviour, IGameFixedUpdateListener
+    public sealed class EnemySystem : MonoBehaviour,
+        IGameTimerListener,
+        IGameStartListener,
+        IGameFixedUpdateListener,
+        IGameFinishListener
     {
         [FormerlySerializedAs("bulletSystem")] [SerializeField] private BulletSpawner bulletSpawner;
         
@@ -26,8 +30,13 @@ namespace ShootEmUp
         {
             m_PoolMono = new PoolMono<Enemy>(prefab, initialCount, container, worldTransform, autoExpand);
         }
+        
+        public void OnStartTimer()
+        {
+            m_PoolMono.CreatePool(initialCount);
+        }
 
-        private void Start()
+        public void OnStartGame()
         {
             for(var i = 0; i < initialCount; i++)
             {
@@ -66,6 +75,11 @@ namespace ShootEmUp
                 if (enemy != null) 
                     enemy.OnFixedUpdate(deltaTime);
             }
+        }
+
+        public void OnFinishGame()
+        {
+            m_PoolMono.ClearPool();
         }
     }
 }

@@ -134,6 +134,7 @@ namespace ShootEmUp
         [Button]
         public void StartGame()
         {
+            Debug.Log($"StartGame {state}");
             if (state is not (GameState.START_TIMER)) return;
             
             ResumeTime();
@@ -201,6 +202,13 @@ namespace ShootEmUp
             }
             
             this.state = GameState.FINISHED;
+        }
+
+        public void RestartGame()
+        {
+            if (state != GameState.FINISHED) return;
+            
+            StartTimer();
         }
 
         private void PauseTime()

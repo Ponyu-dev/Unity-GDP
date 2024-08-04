@@ -21,10 +21,10 @@ namespace Utils
             m_WorldTransform = worldTransform;
             m_AutoExpand = autoExpand;
             
-            CreatePool(count);
+            //CreatePool(count);
         }
 
-        private void CreatePool(int count)
+        public void CreatePool(int count)
         {
             for (var i = 0; i < count; i++)
             {
@@ -61,6 +61,20 @@ namespace Utils
             
             obj.transform.SetParent(m_Container);
             this.m_Pool.Enqueue(obj);
+        }
+        
+        public void ClearPool()
+        {
+            foreach (var activeObject in m_Actives)
+            {
+                Object.Destroy(activeObject.gameObject);
+            }
+            m_Actives.Clear();
+            while (m_Pool.Count > 0)
+            {
+                var pooledObject = m_Pool.Dequeue();
+                Object.Destroy(pooledObject.gameObject);
+            }
         }
     }
 }

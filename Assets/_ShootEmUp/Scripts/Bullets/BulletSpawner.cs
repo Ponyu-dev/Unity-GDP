@@ -3,7 +3,9 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSpawner : MonoBehaviour
+    public sealed class BulletSpawner : MonoBehaviour,
+        IGameTimerListener,
+        IGameFinishListener
     {
         [SerializeField] private Bullet prefab;
         [SerializeField] private int initialCount = 50;
@@ -19,6 +21,11 @@ namespace ShootEmUp
         {
             m_PoolMono = new PoolMono<Bullet>(prefab, initialCount, container, worldTransform, autoExpand);
         }
+        
+        public void OnStartTimer()
+        {
+            m_PoolMono.CreatePool(initialCount);
+        }
 
         public void CreateBullet(BulletData bulletData)
         {
@@ -32,6 +39,11 @@ namespace ShootEmUp
         {
             bullet.OnInactive -= this.RemoveBullet;
             m_PoolMono.InactiveObject(bullet);
+        }
+
+        public void OnFinishGame()
+        {
+            m_PoolMono.ClearPool();
         }
     }
 }

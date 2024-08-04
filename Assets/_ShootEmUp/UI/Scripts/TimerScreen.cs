@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using ShootEmUp;
 using TMPro;
@@ -29,7 +30,7 @@ namespace _ShootEmUp.UI.Scripts
             for (var i = countTimer; i >= 0; i--)
             {
                 m_TextTimer.text = i.ToString();
-                await UniTask.Delay(1000);
+                await UniTask.Delay(TimeSpan.FromSeconds(1), DelayType.UnscaledDeltaTime);
             }
             
             m_GameManager.StartGame();

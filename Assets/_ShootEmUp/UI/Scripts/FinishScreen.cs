@@ -5,13 +5,13 @@ using UnityEngine.UI;
 namespace _ShootEmUp.UI.Scripts
 {
     public sealed class FinishScreen : DefaultScreen,
-        IGameStartListener,
-        IGameFinishListener
+        IGameFinishListener,
+        IGameTimerListener
     {
         [SerializeField]
         private Button btnRestart;
-        
-        public void OnStartGame()
+
+        public void OnStartTimer()
         {
             Hide();
         }
@@ -35,8 +35,7 @@ namespace _ShootEmUp.UI.Scripts
 
         private void OnClick()
         {
-            //Restart
-            //StartTimer
+            m_GameManager.RestartGame();
         }
     }
 }
