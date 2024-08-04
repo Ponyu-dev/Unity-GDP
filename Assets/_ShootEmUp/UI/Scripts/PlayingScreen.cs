@@ -7,7 +7,8 @@ namespace _ShootEmUp.UI.Scripts
     public sealed class PlayingScreen : DefaultScreen, 
         IGameStartListener, 
         IGamePauseListener, 
-        IGameResumeListener
+        IGameResumeListener,
+        IGameFinishListener
     {
         [SerializeField]
         private Button btnPause;
@@ -25,6 +26,11 @@ namespace _ShootEmUp.UI.Scripts
         public void OnResumeGame()
         {
             Show();
+        }
+
+        public void OnFinishGame()
+        {
+            Hide();
         }
 
         protected override void Show()
