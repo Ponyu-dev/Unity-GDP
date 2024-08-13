@@ -1033,6 +1033,7 @@ MonoBehaviour:
   characterShootObserver: {fileID: 1879759790}
   characterMoveObserver: {fileID: 1879759792}
   hitPointsComponent: {fileID: 3926786964592264469}
+  moveComponent: {fileID: 3926786964592264470}
 --- !u!224 &2140206852 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6146571710630618615, guid: 4f423ce8e452d4662beb3a4fbb064630,
