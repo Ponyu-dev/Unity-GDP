@@ -6,8 +6,8 @@ namespace ShootEmUp
     [RequireComponent(typeof(GameManager))]
     public sealed class GameManagerInstaller : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject ui;
+        /*[SerializeField]
+        private GameObject ui;*/
 
         private GameManager m_GameManager; 
         
@@ -16,7 +16,7 @@ namespace ShootEmUp
             m_GameManager = this.GetComponent<GameManager>();
 
             AddListener(this.GetComponentsInChildren<IGameListener>());
-            AddListener(ui.GetComponentsInChildren<IGameListener>());
+            //AddListener(ui.GetComponentsInChildren<IGameListener>());
         }
 
         private void AddListener(IEnumerable<IGameListener> gameListeners)
