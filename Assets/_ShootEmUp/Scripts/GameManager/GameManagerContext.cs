@@ -9,22 +9,49 @@ namespace ShootEmUp
     public sealed class GameManagerContext
     {
         [ShowInInspector, ReadOnly]
-        private IEnumerable<IGameListener> m_Listeners;
-
-        /*[ShowInInspector, ReadOnly]
-        private readonly IEnumerable<IGameUpdateListener> m_UpdateListeners;
+        private List<IGameListener> m_Listeners = new();
 
         [ShowInInspector, ReadOnly]
-        private readonly IEnumerable<IGameFixedUpdateListener> m_FixedUpdateListeners;
+        private List<IGameUpdateListener> m_UpdateListeners = new();
 
         [ShowInInspector, ReadOnly]
-        private readonly IEnumerable<IGameLateUpdateListener> m_LateUpdateListeners;*/
+        private List<IGameFixedUpdateListener> m_FixedUpdateListeners = new();
+
+        [ShowInInspector, ReadOnly]
+        private List<IGameLateUpdateListener> m_LateUpdateListeners= new();
         
         [Inject]
         private void Construct(IEnumerable<IGameListener> listeners)
         {
-            m_Listeners = listeners;
-            Debug.Log($"[GameManagerContext] {m_Listeners?.Count()}");
+            var listListeners = listeners.ToList();
+            for (int i = 0, count = listListeners.Count; i < count; i++)
+            {
+                AddListener(listListeners[i]);
+            }
+        }
+        
+        private void AddListener(IGameListener listener)
+        {
+            if (listener == null)
+            {
+                return;
+            }
+
+            switch (listener)
+            {
+                case IGameUpdateListener updateListener:
+                    this.m_UpdateListeners.Add(updateListener);
+                    break;
+                case IGameFixedUpdateListener fixedUpdateListener:
+                    this.m_FixedUpdateListeners.Add(fixedUpdateListener);
+                    break;
+                case IGameLateUpdateListener lateUpdateListener:
+                    this.m_LateUpdateListeners.Add(lateUpdateListener);
+                    break;
+                default:
+                    this.m_Listeners.Add(listener);
+                    break;
+            }
         }
 
         public void OnInitialize()
@@ -88,6 +115,30 @@ namespace ShootEmUp
             {
                 if (listener is IGameFinishListener resumeListener) 
                     resumeListener.OnFinishGame();
+            }
+        }
+
+        public void OnTick(float deltaTime)
+        {
+            for (int i = 0, count = this.m_UpdateListeners.Count; i < count; i++)
+            {
+                this.m_UpdateListeners[i]?.OnUpdate(deltaTime);
+            }
+        }
+
+        public void OnFixedTick(float deltaTime)
+        {
+            for (int i = 0, count = this.m_FixedUpdateListeners.Count; i < count; i++)
+            {
+                this.m_FixedUpdateListeners[i]?.OnFixedUpdate(deltaTime);
+            }
+        }
+
+        public void OnLateTick(float deltaTime)
+        {
+            for (int i = 0, count = this.m_LateUpdateListeners.Count; i < count; i++)
+            {
+                this.m_LateUpdateListeners[i]?.OnLateUpdate(deltaTime);
             }
         }
     }

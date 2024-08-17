@@ -1,11 +1,11 @@
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace ShootEmUp
 {
-    public interface IGameManager
+    public interface IGameManager : ITickable, IFixedTickable, ILateTickable
     {
         public void StartTimer();
         public void StartGame();
@@ -17,16 +17,6 @@ namespace ShootEmUp
     
     public sealed class GameManager : MonoBehaviour, IGameManager
     {
-        [ShowInInspector, ReadOnly]
-        private readonly List<IGameUpdateListener> m_UpdateListeners = new();
-        
-        [ShowInInspector, ReadOnly]
-        private readonly List<IGameFixedUpdateListener> m_FixedUpdateListeners = new();
-        
-        [ShowInInspector, ReadOnly]
-        private readonly List<IGameLateUpdateListener> m_LateUpdateListeners = new();
-        
-        
         [ShowInInspector, ReadOnly]
         public GameState state { get; private set; }
 
@@ -50,64 +40,31 @@ namespace ShootEmUp
             m_Context.OnInitialize();
         }
 
-        private void Update()
+        public void Tick()
         {
             if (this.state != GameState.PLAYING)
                 return;
 
             var deltaTime = Time.deltaTime;
-            for (int i = 0, count = this.m_UpdateListeners.Count; i < count; i++)
-            {
-                var listener = this.m_UpdateListeners[i];
-                listener.OnUpdate(deltaTime);
-            }
+            m_Context.OnTick(deltaTime);
         }
 
-        private void FixedUpdate()
+        public void FixedTick()
         {
             if (this.state != GameState.PLAYING)
                 return;
             
             var deltaTime = Time.fixedDeltaTime;
-            for (int i = 0, count = this.m_FixedUpdateListeners.Count; i < count; i++)
-            {
-                var listener = this.m_FixedUpdateListeners[i];
-                listener.OnFixedUpdate(deltaTime);
-            }
+            m_Context.OnFixedTick(deltaTime);
         }
 
-        private void LateUpdate()
+        public void LateTick()
         {
             if (this.state != GameState.PLAYING)
                 return;
             
             var deltaTime = Time.deltaTime;
-            for (int i = 0, count = this.m_LateUpdateListeners.Count; i < count; i++)
-            {
-                var listener = this.m_LateUpdateListeners[i];
-                listener.OnLateUpdate(deltaTime);
-            }
-        }
-        
-        public void AddListener(IGameListener listener)
-        {
-            if (listener == null)
-            {
-                return;
-            }
-
-            switch (listener)
-            {
-                case IGameUpdateListener updateListener:
-                    this.m_UpdateListeners.Add(updateListener);
-                    break;
-                case IGameFixedUpdateListener fixedUpdateListener:
-                    this.m_FixedUpdateListeners.Add(fixedUpdateListener);
-                    break;
-                case IGameLateUpdateListener lateUpdateListener:
-                    this.m_LateUpdateListeners.Add(lateUpdateListener);
-                    break;
-            }
+            m_Context.OnLateTick(deltaTime);
         }
 
         [Button]
