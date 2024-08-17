@@ -5,7 +5,7 @@ using VContainer.Unity;
 
 namespace ShootEmUp
 {
-    public interface IGameManager : ITickable, IFixedTickable, ILateTickable
+    public interface IGameManager
     {
         public void StartTimer();
         public void StartGame();
@@ -15,11 +15,12 @@ namespace ShootEmUp
         public void RestartGame();
     }
     
-    public sealed class GameManager : MonoBehaviour, IGameManager
+    public sealed class GameManager : MonoBehaviour, IGameManager, ITickable, IFixedTickable, ILateTickable
     {
         [ShowInInspector, ReadOnly]
         public GameState state { get; private set; }
 
+        [ShowInInspector]
         private readonly GameManagerContext m_Context = new();
 
         private IObjectResolver m_ObjectResolver;
@@ -44,7 +45,7 @@ namespace ShootEmUp
         {
             if (this.state != GameState.PLAYING)
                 return;
-
+            
             var deltaTime = Time.deltaTime;
             m_Context.OnTick(deltaTime);
         }

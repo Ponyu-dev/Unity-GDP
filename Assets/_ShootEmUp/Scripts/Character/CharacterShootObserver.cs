@@ -9,7 +9,7 @@ namespace ShootEmUp
         IGameStartListener,
         IGameFinishListener
     {
-        [SerializeField] private ShootInput shootInput;
+        //[FormerlySerializedAs("shootInput")] [SerializeField] private ShootInputMonobeh shootInputMonobeh;
         [SerializeField] private WeaponComponent weaponComponent;
         [FormerlySerializedAs("bulletSystem")] [SerializeField] private BulletSpawner bulletSpawner;
         [SerializeField] private BulletConfig bulletConfig;
@@ -25,12 +25,12 @@ namespace ShootEmUp
         
         void IGameStartListener.OnStartGame()
         {
-            shootInput.OnShoot += OnShoot;
+            //shootInputMonobeh.OnShoot += OnShoot;
         }
 
         void IGameFinishListener.OnFinishGame()
         {
-            shootInput.OnShoot -= OnShoot;
+            //shootInputMonobeh.OnShoot -= OnShoot;
         }
 
         private void OnShoot()
