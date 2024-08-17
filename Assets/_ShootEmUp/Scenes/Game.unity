@@ -225,6 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 285065121}
+  - component: {fileID: 285065122}
   m_Layer: 0
   m_Name: '[UI]'
   m_TagString: Untagged
@@ -248,6 +249,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &285065122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285065120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa2349e40b684cfd934ad62b7af7277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: _ShootEmUp.Scripts.VContainer.MainLifetimeScope
+  autoRun: 1
+  autoInjectGameObjects: []
 --- !u!1 &363245575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,9 +1665,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3951702117947426122}
+  - component: {fileID: 3951702117947426126}
   - component: {fileID: 3951702117947426124}
   - component: {fileID: 3951702117947426123}
-  - component: {fileID: 3951702117947426125}
   m_Layer: 0
   m_Name: '[GAME_SYSTEM]'
   m_TagString: Untagged
@@ -1701,7 +1718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0937d548b448879de795d887d121b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3951702117947426125
+--- !u!114 &3951702117947426126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1710,7 +1727,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3951702117947426121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaa2349e40b684cfd934ad62b7af7277, type: 3}
+  m_Script: {fileID: 11500000, guid: 9868409fb1e94113904c9cf139693e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
