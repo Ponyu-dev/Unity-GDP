@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class WeaponComponent : MonoBehaviour
+    [Serializable]
+    public sealed class WeaponData
     {
         [SerializeField] private Transform firePoint;
         

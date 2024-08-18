@@ -1,27 +1,36 @@
 using UnityEngine;
+using VContainer;
 
 namespace ShootEmUp
 {
-    public class CharacterDeathObserver : MonoBehaviour,
+    public class CharacterDeathObserver :
         IGameStartListener,
         IGameFinishListener
     {
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private HitPointsComponent hitPointsComponent;
+        private IGameManager m_GameManager;
+        private IHitPointsComponent m_HitPointsComponent;
+
+        [Inject]
+        public void Construct(IGameManager gameManager, IHitPointsComponent hitPointsComponent)
+        {
+            Debug.Log("[CharacterDeathObserver] Construct");
+            m_GameManager = gameManager;
+            m_HitPointsComponent = hitPointsComponent;
+        }
         
         void IGameStartListener.OnStartGame()
         {
-            this.hitPointsComponent.OnDeath += OnDeath;
+            this.m_HitPointsComponent.OnDeath += OnDeath;
         }
 
         void IGameFinishListener.OnFinishGame()
         {
-            this.hitPointsComponent.OnDeath -= OnDeath;
+            this.m_HitPointsComponent.OnDeath -= OnDeath;
         }
 
         private void OnDeath()
         {
-            this.gameManager.FinishGame();
+            this.m_GameManager.FinishGame();
         }
     }
 }

@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour, IGameFixedUpdateListener
     {
-        [SerializeField] private WeaponComponent weaponComponent;
+        [FormerlySerializedAs("weaponComponent")] [SerializeField] private WeaponData weaponData;
         [SerializeField] private float countdown;
         [SerializeField] private BulletConfig bulletConfig;
 
@@ -47,7 +48,7 @@ namespace ShootEmUp
 
         private void Fire()
         {
-            var startPosition = this.weaponComponent.position;
+            var startPosition = this.weaponData.position;
             var vector = (Vector2) this.m_TargetTransform.position - startPosition;
             var direction = vector.normalized;
 
