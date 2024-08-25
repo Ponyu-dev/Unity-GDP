@@ -7,6 +7,9 @@ namespace _ShootEmUp.Scripts.VContainer
 {
     public class MainLifetimeScope : LifetimeScope
     {
+        [SerializeField] private Character m_Character;
+        [SerializeField] private DamageComponent m_DamageComponent;
+        
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponentInHierarchy<GameManager>().AsImplementedInterfaces();
@@ -17,10 +20,8 @@ namespace _ShootEmUp.Scripts.VContainer
             RegisterCharacter(builder);
         }
         
-        [SerializeField] private Character m_Character;
-        [SerializeField] private DamageComponent m_DamageComponent;
-        
-        //TODO I couldn't take it out separately like I did with UILifetimeScope. Tell me if there is a way to do this.
+        //TODO I couldn't take it out separately like I did with UILifetimeScope.
+        //     Tell me if there is a way to do this.
         private void RegisterCharacter(IContainerBuilder builder)
         {
             Debug.Log("[CharacterInstaller] RegisterCharacter");
@@ -28,7 +29,7 @@ namespace _ShootEmUp.Scripts.VContainer
             builder.RegisterInstance(m_Character)
                 .AsImplementedInterfaces();
 
-            //Register Component
+            //Register Character Component
             builder.Register<HitPointsComponent>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .WithParameter(m_Character.hitPointsData);
@@ -36,7 +37,7 @@ namespace _ShootEmUp.Scripts.VContainer
                 .AsImplementedInterfaces()
                 .WithParameter(m_Character.moveData);
             
-            //Register Observer
+            //Register Character Observer
             builder.Register<CharacterMoveObserver>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             builder.Register<CharacterDeathObserver>(Lifetime.Singleton)
