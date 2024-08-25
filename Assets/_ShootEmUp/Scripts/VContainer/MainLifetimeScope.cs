@@ -1,6 +1,5 @@
 using ShootEmUp;
 using UnityEngine;
-using Utils;
 using VContainer;
 using VContainer.Unity;
 
@@ -8,12 +7,16 @@ namespace _ShootEmUp.Scripts.VContainer
 {
     public class MainLifetimeScope : LifetimeScope
     {
+        [SerializeField] private BulletSpawner bulletSpawner;
+        
         [SerializeField] private UILifetimeScope m_UILifetimeScope;
         [SerializeField] private CharacterLifetimeScope m_CharacterLifetimeScope;
         
         protected override void Configure(IContainerBuilder builder)
         {
             Debug.Log("[MainLifetimeScope] Configure");
+
+            builder.RegisterInstance(bulletSpawner).AsImplementedInterfaces();
             
             builder.RegisterComponentInHierarchy<GameManager>().AsImplementedInterfaces();
             

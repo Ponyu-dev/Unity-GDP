@@ -10,7 +10,7 @@ namespace _ShootEmUp.Scripts.VContainer
     {
         [SerializeField] private Character character;
         [SerializeField] private DamageComponent damageComponent;
-        [SerializeField] private BulletConfig m_BulletConfig;
+        [SerializeField] private BulletConfig bulletConfig;
         
         public void Configure(IContainerBuilder builder)
         {
@@ -32,11 +32,10 @@ namespace _ShootEmUp.Scripts.VContainer
                 .AsImplementedInterfaces();
             builder.Register<CharacterDeathObserver>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
-            /*builder.Register<CharacterShootObserver>(Lifetime.Singleton)
+            builder.Register<CharacterShootObserver>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
-                .WithParameter("bulletConfig", m_BulletConfig)
-                .WithParameter("weaponData", character.weaponData);
-                */
+                .WithParameter(typeof(BulletConfig), bulletConfig)
+                .WithParameter(typeof(WeaponData), character.weaponData);
             
             //Register Character DamageComponent
             builder.RegisterInstance(damageComponent)

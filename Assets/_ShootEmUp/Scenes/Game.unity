@@ -264,7 +264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &363245576
 Transform:
   m_ObjectHideFlags: 0
@@ -1538,10 +1538,11 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  bulletSpawner: {fileID: 363245577}
   m_CharacterLifetimeScope:
     character: {fileID: 3926786964592264469}
     damageComponent: {fileID: 4414282821800802401}
-    m_BulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
+    bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   m_ObjectHideFlags: 0

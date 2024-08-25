@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils;
 using VContainer;
 
@@ -16,18 +15,23 @@ namespace ShootEmUp
         private WeaponData m_WeaponData;
         private IShootInput m_ShootInput;
         
-        //private BulletSpawner bulletSpawner;
-        //private BulletConfig bulletConfig;
+        private BulletSpawner m_BulletSpawner;
+        private BulletConfig m_BulletConfig;
 
         [Inject]
         public void Construct(
             IShootInput shootInput,
             IHitPointsComponent hitPointsComponent,
+            BulletSpawner bulletSpawner,
+            BulletConfig bulletConfig,
             WeaponData weaponData)
         {
             Debug.Log("[CharacterShootObserver] Construct");
             m_ShootInput = shootInput;
             m_WeaponData = weaponData;
+
+            m_BulletSpawner = bulletSpawner;
+            m_BulletConfig = bulletConfig;
             
             AppendCondition(hitPointsComponent.IsHitPointsExists);
         }
@@ -50,22 +54,22 @@ namespace ShootEmUp
         private void OnShoot()
         {
             Debug.Log("[CharacterShootObserver] OnShoot");
-            /*if (m_Condition.IsAllFalse()) return;
+            if (m_Condition.IsAllFalse()) return;
             
             if (this.m_FireRequired) return;
             
             this.m_FireRequired = true;
-            bulletSpawner.CreateBullet(BulletDataDefault());
-            this.m_FireRequired = false;*/
+            m_BulletSpawner.CreateBullet(BulletDataDefault());
+            this.m_FireRequired = false;
         }
 
-        /*private BulletData BulletDataDefault() => new BulletData(
+        private BulletData BulletDataDefault() => new BulletData(
             isPlayer: true, 
-            physicsLayer: (int)this.bulletConfig.physicsLayer,
-            color: this.bulletConfig.color, 
-            damage: this.bulletConfig.damage, 
-            position: weaponData.position,
-            velocity: weaponData.rotation * Vector3.up * this.bulletConfig.speed
-        );*/
+            physicsLayer: (int)this.m_BulletConfig.physicsLayer,
+            color: this.m_BulletConfig.color, 
+            damage: this.m_BulletConfig.damage, 
+            position: m_WeaponData.position,
+            velocity: m_WeaponData.rotation * Vector3.up * this.m_BulletConfig.speed
+        );
     }
 }
