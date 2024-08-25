@@ -1,13 +1,17 @@
+using System;
 using _ShootEmUp.UI.Scripts;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
 namespace _ShootEmUp.Scripts.VContainer
 {
-    public class UILifetimeScope : LifetimeScope
+    [Serializable]
+    public class UILifetimeScope
     {
-        protected override void Configure(IContainerBuilder builder)
+        public void Configure(IContainerBuilder builder)
         {
+            Debug.Log("[UILifetimeScope] Configure");
             builder.RegisterComponentInHierarchy<TimerScreen>().AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<StartScreen>().AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<PlayingScreen>().AsImplementedInterfaces();
