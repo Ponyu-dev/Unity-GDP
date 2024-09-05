@@ -28,7 +28,7 @@ namespace ShootEmUp
 
         private void Awake()
         {
-            m_PoolMono = new PoolMono<Enemy>(prefab, initialCount, container, worldTransform, autoExpand);
+            m_PoolMono = new PoolMono<Enemy>(prefab, container, worldTransform, autoExpand);
         }
         
         public void OnStartTimer()

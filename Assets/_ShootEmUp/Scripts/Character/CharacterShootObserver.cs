@@ -14,15 +14,14 @@ namespace ShootEmUp
         
         private WeaponData m_WeaponData;
         private IShootInput m_ShootInput;
-        
-        private BulletSpawner m_BulletSpawner;
+        private IBulletSpawner m_BulletSpawner;
         private BulletConfig m_BulletConfig;
 
         [Inject]
         public void Construct(
             IShootInput shootInput,
             IHitPointsComponent hitPointsComponent,
-            BulletSpawner bulletSpawner,
+            IBulletSpawner bulletSpawner,
             BulletConfig bulletConfig,
             WeaponData weaponData)
         {

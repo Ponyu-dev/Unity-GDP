@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -14,14 +15,14 @@ namespace Utils
         private readonly Queue<T> m_Pool = new();
         private readonly HashSet<T> m_Actives = new();
 
-        public PoolMono(T prefab, int count, Transform container, Transform worldTransform, bool autoExpand)
+        public IReadOnlyCollection<T> Actives => new HashSet<T>(m_Actives);
+
+        public PoolMono(T prefab, Transform container, Transform worldTransform, bool autoExpand)
         {
             m_Prefab = prefab;
             m_Container = container;
             m_WorldTransform = worldTransform;
             m_AutoExpand = autoExpand;
-            
-            //CreatePool(count);
         }
 
         public void CreatePool(int count)
