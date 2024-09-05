@@ -2,7 +2,13 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
+    public interface ICharacter
+    {
+        Transform GetTransform();
+    }
+    
     public class Character : MonoBehaviour,
+        ICharacter,
         IGameTimerListener
     {
         [SerializeField] public MoveData moveData;
@@ -12,7 +18,13 @@ namespace ShootEmUp
 
         public void OnStartTimer()
         {
+            Debug.Log("[Character] OnStartTimer");
             transform.position = moveData.DefaultPosition;
+        }
+
+        public Transform GetTransform()
+        {
+            return gameObject.transform;
         }
     }
 }

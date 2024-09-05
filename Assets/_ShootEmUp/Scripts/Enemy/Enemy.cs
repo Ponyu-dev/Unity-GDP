@@ -7,7 +7,7 @@ namespace ShootEmUp
     {
         [SerializeField] private EnemyMoveAgent enemyMoveAgent;
         [SerializeField] private EnemyAttackAgent enemyAttackAgent;
-        [SerializeField] private HitPointsComponent hitPointsComponent;
+        [SerializeField] private HitPointsComponent m_HitPointsComponent;
         
         //Решил не выносить это в другой класс.
         //Так как это event который уведомляет EnemySystem. О том что Enemy умер.
@@ -17,8 +17,8 @@ namespace ShootEmUp
             Vector3 spawnPosition,
             Vector3 attackPosition,
             Transform targetTransform,
-            HitPointsComponent targetHitPointsComponent,
-            BulletSpawner bulletSpawner)
+            IHitPointsComponent targetHitPointsComponent,
+            IBulletSpawner bulletSpawner)
         {
             transform.position = spawnPosition;
 
@@ -28,12 +28,12 @@ namespace ShootEmUp
             enemyAttackAgent.AppendCondition(enemyMoveAgent.IsReached);
             enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
 
-            hitPointsComponent.OnDeath += OnDeath;
+            m_HitPointsComponent.OnDeath += OnDeath;
         }
 
         private void OnDeath()
         {
-            hitPointsComponent.OnDeath -= OnDeath;
+            m_HitPointsComponent.OnDeath -= OnDeath;
             OnDeathbed?.Invoke(this);
         }
 

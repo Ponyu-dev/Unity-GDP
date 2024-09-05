@@ -1,23 +1,22 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour, IGameFixedUpdateListener
-    {
-        [FormerlySerializedAs("weaponComponent")] [SerializeField] private WeaponData weaponData;
+    { 
+        [SerializeField] private WeaponData weaponData;
         [SerializeField] private float countdown;
         [SerializeField] private BulletConfig bulletConfig;
 
         private Transform m_TargetTransform;
         private float m_CurrentTime;
-        private BulletSpawner m_BulletSpawner;
+        private IBulletSpawner m_BulletSpawner;
 
         private readonly CompositeCondition m_Condition = new();
 
-        public void Construct(BulletSpawner bulletSpawner,Transform targetTransform)
+        public void Construct(IBulletSpawner bulletSpawner,Transform targetTransform)
         {
             m_BulletSpawner = bulletSpawner;
             m_TargetTransform = targetTransform;
@@ -39,11 +38,10 @@ namespace ShootEmUp
                 return;
 
             this.m_CurrentTime -= deltaTime;
-            if (this.m_CurrentTime <= 0)
-            {
-                this.Fire();
-                this.m_CurrentTime += this.countdown;
-            }
+            if (!(this.m_CurrentTime <= 0)) return;
+            
+            this.Fire();
+            this.m_CurrentTime += this.countdown;
         }
 
         private void Fire()

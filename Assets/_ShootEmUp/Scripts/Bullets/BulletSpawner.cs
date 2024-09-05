@@ -10,10 +10,10 @@ namespace ShootEmUp
     }
     
     public sealed class BulletSpawner :
-        IBulletSpawner,
         IGameTimerListener,
         IGameFixedUpdateListener,
-        IGameFinishListener
+        IGameFinishListener,
+        IBulletSpawner
     {
         private readonly PoolMono<Bullet> m_PoolMono;
         private readonly int m_InitialCount;
@@ -35,6 +35,7 @@ namespace ShootEmUp
         
         public void OnStartTimer()
         {
+            Debug.Log("[BulletSpawner] OnStartTimer");
             m_PoolMono.CreatePool(m_InitialCount);
         }
 
@@ -55,11 +56,13 @@ namespace ShootEmUp
 
         public void OnFinishGame()
         {
+            Debug.Log("[BulletSpawner] OnFinishGame");
             m_PoolMono.ClearPool();
         }
 
         public void OnFixedUpdate(float deltaTime)
         {
+            Debug.Log("[BulletSpawner] OnFixedUpdate");
             m_PoolMono.Actives.ForEach(it => it.OnFixedUpdate(deltaTime));
         }
     }

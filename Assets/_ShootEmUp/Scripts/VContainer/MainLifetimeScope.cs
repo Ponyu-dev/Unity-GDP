@@ -9,6 +9,7 @@ namespace _ShootEmUp.Scripts.VContainer
     {
         [SerializeField] private UILifetimeScope m_UILifetimeScope;
         [SerializeField] private CharacterLifetimeScope m_CharacterLifetimeScope;
+        [SerializeField] private EnemySpawnerLifetimeScope m_EnemySpawnerLifetimeScope;
         [SerializeField] private BulletSpawnerLifetimeScope m_BulletSpawnerLifetime;
         
         protected override void Configure(IContainerBuilder builder)
@@ -17,13 +18,14 @@ namespace _ShootEmUp.Scripts.VContainer
             
             builder.RegisterComponentInHierarchy<GameManager>().AsImplementedInterfaces();
             
+            m_UILifetimeScope.Configure(builder);
+            
             builder.Register<ShootInput>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<MoveInput>(Lifetime.Singleton).AsImplementedInterfaces();
             
             m_BulletSpawnerLifetime.Configure(builder);
-            
             m_CharacterLifetimeScope.Configure(builder);
-            m_UILifetimeScope.Configure(builder);
+            m_EnemySpawnerLifetimeScope.Configure(builder);
         }
     }
 }
