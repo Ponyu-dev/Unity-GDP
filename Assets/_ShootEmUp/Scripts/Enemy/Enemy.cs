@@ -18,6 +18,7 @@ namespace ShootEmUp
         
         //Решил не выносить это в другой класс.
         //Так как это event который уведомляет EnemySystem. О том что Enemy умер.
+        //OnDeathbed - это типо не умер. А присмерти :)
         public event Action<Enemy> OnDeath;
 
         public void Construct(
