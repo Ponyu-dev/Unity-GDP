@@ -1436,12 +1436,13 @@ MonoBehaviour:
   autoInjectGameObjects: []
   m_CharacterLifetimeScope:
     character: {fileID: 3926786964592264469}
-    damageComponent: {fileID: 4414282821800802401}
+    damageComponent: {fileID: 4414282821800802405}
     bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
   m_EnemySpawnerLifetimeScope:
     enemyPositions: {fileID: 7166351703523243261}
     worldTransform: {fileID: 1683128698}
     bulletConfig: {fileID: 11400000, guid: 2140bd33888f54eeebef09a2641f1942, type: 2}
+    countdownFire: 2
     prefab: {fileID: 554424849201168173, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
     container: {fileID: 562298204}
     initialCount: 7
@@ -1512,7 +1513,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3926786964592264468}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4414282821800802401 stripped
+--- !u!114 &4414282821800802405 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4852727029828519746, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
     type: 3}

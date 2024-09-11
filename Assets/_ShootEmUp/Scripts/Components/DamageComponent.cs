@@ -11,7 +11,6 @@ namespace ShootEmUp
         [Inject]
         public void Construct(IHitPointsComponent hitPointsComponent, TeamData teamData)
         {
-            Debug.Log("[DamageComponent] Construct");
             m_HitPointsComponent = hitPointsComponent;
             m_TeamData = teamData;
         }

@@ -2,6 +2,7 @@ using System;
 using ShootEmUp;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace _ShootEmUp.Scripts.VContainer
 {
@@ -38,8 +39,7 @@ namespace _ShootEmUp.Scripts.VContainer
                 .WithParameter(typeof(WeaponData), character.weaponData);
             
             //Register Character DamageComponent
-            builder.RegisterInstance(damageComponent)
-                .AsImplementedInterfaces()
+            builder.RegisterComponent(damageComponent)
                 .WithParameter("teamData", character.teamData);
         }
     }

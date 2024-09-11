@@ -9,12 +9,11 @@ namespace ShootEmUp
         public event Action OnDeath;
         private int m_CurrentPoints;
 
-        private HitPointsData m_HitPointsData;
+        private readonly HitPointsData m_HitPointsData;
 
         [Inject]
-        public void Construct(HitPointsData hitPointsData)
+        public HitPointsComponent(HitPointsData hitPointsData)
         {
-            Debug.Log("[HitPointsComponent] Construct");
             m_HitPointsData = hitPointsData;
         }
 
@@ -30,7 +29,6 @@ namespace ShootEmUp
 
         public void TakeDamage(int damage)
         {
-            Debug.Log("[HitPointsComponent] TakeDamage");
             m_CurrentPoints -= damage;
             if (m_CurrentPoints <= 0)
             {

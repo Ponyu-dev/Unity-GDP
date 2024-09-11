@@ -14,6 +14,7 @@ namespace _ShootEmUp.Scripts.VContainer
         
         [Header("BulletConfig")]
         [SerializeField] private BulletConfig bulletConfig;
+        [SerializeField] private float countdownFire;
 
         [Header("Pool")]
         [SerializeField] private Enemy prefab;
@@ -29,6 +30,7 @@ namespace _ShootEmUp.Scripts.VContainer
                 .WithParameter(prefab)
                 .WithParameter(initialCount)
                 .WithParameter(autoExpand)
+                .WithParameter("countdownFire", countdownFire)
                 .WithParameter("container", container)
                 .WithParameter("worldTransform", worldTransform)
                 .WithParameter("enemyPositions", enemyPositions)

@@ -10,40 +10,48 @@ namespace ShootEmUp
         [SerializeField] public TeamData teamData;
         [SerializeField] public WeaponData weaponData;
 
-        private MoveComponent m_MoveComponent = new MoveComponent();
+        private readonly MoveComponent m_MoveComponent = new();
         
         private EnemyMoveAgent m_EnemyMoveAgent;
-        //[SerializeField] private EnemyAttackAgent enemyAttackAgent;
+        private EnemyAttackAgent m_EnemyAttackAgent;
+        private IHitPointsComponent m_HitPointsComponent;
         
         //Решил не выносить это в другой класс.
         //Так как это event который уведомляет EnemySystem. О том что Enemy умер.
-        public event Action<Enemy> OnDeathbed;
-        
+        public event Action<Enemy> OnDeath;
+
         public void Construct(
             Vector3 spawnPosition,
-            Vector3 attackPosition)
-            //Transform targetTransform,
-            //IBulletSpawner bulletSpawner)
+            Vector3 attackPosition,
+            float countdown,
+            Transform targetTransform,
+            IBulletSpawner bulletSpawner,
+            BulletConfig bulletConfig)
         {
             transform.position = spawnPosition;
+
+            m_HitPointsComponent = new HitPointsComponent(hitPointsData);
+            m_HitPointsComponent.OnDeath += Death;
             
             m_MoveComponent.Construct(moveData);
             m_EnemyMoveAgent = new EnemyMoveAgent(m_MoveComponent, transform, attackPosition);
+            
+            m_EnemyAttackAgent = new EnemyAttackAgent(weaponData, countdown, bulletSpawner, bulletConfig, targetTransform);
+            m_EnemyAttackAgent.AppendCondition(m_EnemyMoveAgent.IsReached);
 
-            /*enemyMoveAgent.SetDestination(attackPosition);
-            enemyAttackAgent.Construct(bulletSpawner, targetTransform);
-            enemyAttackAgent.AppendCondition(enemyMoveAgent.IsReached);*/
-            //enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
+            var damageComponent = GetComponent<DamageComponent>();
+            damageComponent.Construct(m_HitPointsComponent, teamData);
         }
 
-        private void OnDeath()
+        private void Death()
         {
-            OnDeathbed?.Invoke(this);
+            m_HitPointsComponent.OnDeath -= Death;
+            OnDeath?.Invoke(this);
         }
 
         public void OnAttack(float deltaTime)
         {
-            //enemyAttackAgent.OnFixedUpdate(deltaTime);
+            m_EnemyAttackAgent.OnFixedUpdate(deltaTime);
         }
 
         public void OnMove(float deltaTime)
