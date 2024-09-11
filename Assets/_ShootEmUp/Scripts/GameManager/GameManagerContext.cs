@@ -32,26 +32,18 @@ namespace ShootEmUp
         
         private void AddListener(IGameListener listener)
         {
-            if (listener == null)
-            {
-                return;
-            }
+            if (listener == null) return;
 
-            switch (listener)
-            {
-                case IGameUpdateListener updateListener:
-                    this.m_UpdateListeners.Add(updateListener);
-                    break;
-                case IGameFixedUpdateListener fixedUpdateListener:
-                    this.m_FixedUpdateListeners.Add(fixedUpdateListener);
-                    break;
-                case IGameLateUpdateListener lateUpdateListener:
-                    this.m_LateUpdateListeners.Add(lateUpdateListener);
-                    break;
-                default:
-                    this.m_Listeners.Add(listener);
-                    break;
-            }
+            if (listener is IGameUpdateListener updateListener)
+                this.m_UpdateListeners.Add(updateListener);
+            
+            if (listener is IGameFixedUpdateListener fixedUpdateListener)
+                this.m_FixedUpdateListeners.Add(fixedUpdateListener);
+            
+            if (listener is IGameLateUpdateListener lateUpdateListener)
+                this.m_LateUpdateListeners.Add(lateUpdateListener);
+            
+            this.m_Listeners.Add(listener);
         }
 
         public void OnInitialize()
