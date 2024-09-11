@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7936085547460007407}
   - component: {fileID: 5568771391735819375}
   - component: {fileID: 659620479434099170}
-  - component: {fileID: 8186052948131603766}
   - component: {fileID: 6896809305229427933}
   - component: {fileID: 1176662438754832721}
   - component: {fileID: 554424849201168173}
@@ -128,18 +127,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8186052948131603766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559606060570185700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bdb5771141e4cf18c434a69ec116e09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6896809305229427933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,8 +167,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d07d79a2a24852b213215aa705557b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMoveAgent: {fileID: 8186052948131603766}
-  enemyAttackAgent: {fileID: 6896809305229427933}
+  moveData:
+    defaultPosition: {x: 0, y: 0, z: 0}
+    rigidbody2D: {fileID: 659620479434099170}
+    speed: 5
+  hitPointsData:
+    hitPoints: 3
+  teamData:
+    isPlayer: 0
+  weaponData:
+    firePoint: {fileID: 3195880656587174614}
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0

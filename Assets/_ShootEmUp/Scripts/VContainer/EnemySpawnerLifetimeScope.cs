@@ -11,6 +11,9 @@ namespace _ShootEmUp.Scripts.VContainer
         [Header("Spawn")]
         [SerializeField] private EnemyPositions enemyPositions;
         [SerializeField] private Transform worldTransform;
+        
+        [Header("BulletConfig")]
+        [SerializeField] private BulletConfig bulletConfig;
 
         [Header("Pool")]
         [SerializeField] private Enemy prefab;
@@ -29,6 +32,7 @@ namespace _ShootEmUp.Scripts.VContainer
                 .WithParameter("container", container)
                 .WithParameter("worldTransform", worldTransform)
                 .WithParameter("enemyPositions", enemyPositions)
+                .WithParameter("bulletConfig", bulletConfig)
                 .AsImplementedInterfaces();
         }
     }

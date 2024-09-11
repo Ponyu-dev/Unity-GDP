@@ -14,9 +14,10 @@ namespace ShootEmUp
         private readonly int m_InitialCount;
         private readonly EnemyPositions m_EnemyPositions;
         private readonly IBulletSpawner m_BulletSpawner;
+        private readonly BulletConfig m_BulletConfig;
 
-        private readonly IHitPointsComponent m_HitPointsComponentTarget;
-        private readonly ICharacter m_Character;
+        /*private readonly IHitPointsComponent m_HitPointsComponentTarget;
+        private readonly ICharacter m_Character;*/
         
         public EnemySpawner(
             Enemy enemyPrefab, 
@@ -25,6 +26,7 @@ namespace ShootEmUp
             Transform container, 
             Transform worldTransform, 
             EnemyPositions enemyPositions,
+            BulletConfig bulletConfig,
             IBulletSpawner bulletSpawner,
             ICharacter character,
             IHitPointsComponent hitPointsComponentTarget)
@@ -33,8 +35,11 @@ namespace ShootEmUp
             m_InitialCount = initialCount;
             m_EnemyPositions = enemyPositions;
             m_BulletSpawner = bulletSpawner;
-            m_HitPointsComponentTarget = hitPointsComponentTarget;
-            m_Character = character;
+            m_BulletConfig = bulletConfig;
+            
+            /*m_HitPointsComponentTarget = hitPointsComponentTarget;
+            m_Character = character;*/
+            
             m_PoolMono = new PoolMono<Enemy>(enemyPrefab, container, worldTransform, autoExpand);
         }
         
@@ -61,11 +66,10 @@ namespace ShootEmUp
 
             enemy.Construct(
                 spawnPosition.position,
-                attackPosition.position,
-                m_Character.GetTransform(),
-                m_HitPointsComponentTarget,
-                m_BulletSpawner);
-            enemy.OnDeathbed += OnDestroyed;
+                attackPosition.position);
+            //m_Character.GetTransform(),
+            //m_BulletSpawner);
+            //enemy.OnDeathbed += OnDestroyed;
         }
 
         private void OnDestroyed(Enemy enemy)
@@ -80,8 +84,12 @@ namespace ShootEmUp
             for (var i = 0; i < m_InitialCount; i++)
             {
                 var enemy = m_PoolMono.TryGetActive(i);
-                if (enemy != null) 
-                    enemy.OnFixedUpdate(deltaTime);
+                if (enemy == null) continue;
+                
+                enemy.OnMove(deltaTime);
+
+                /*if (m_HitPointsComponentTarget.IsHitPointsExists())
+                    enemy.OnAttack(deltaTime);*/
             }
         }
 

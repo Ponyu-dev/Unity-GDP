@@ -3,11 +3,17 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class Enemy : MonoBehaviour, IFixedUpdateGameListener
+    public class Enemy : MonoBehaviour
     {
-        [SerializeField] private EnemyMoveAgent enemyMoveAgent;
-        [SerializeField] private EnemyAttackAgent enemyAttackAgent;
-        [SerializeField] private HitPointsComponent m_HitPointsComponent;
+        [SerializeField] public MoveData moveData;
+        [SerializeField] public HitPointsData hitPointsData;
+        [SerializeField] public TeamData teamData;
+        [SerializeField] public WeaponData weaponData;
+
+        private MoveComponent m_MoveComponent = new MoveComponent();
+        
+        private EnemyMoveAgent m_EnemyMoveAgent;
+        //[SerializeField] private EnemyAttackAgent enemyAttackAgent;
         
         //Решил не выносить это в другой класс.
         //Так как это event который уведомляет EnemySystem. О том что Enemy умер.
@@ -15,32 +21,34 @@ namespace ShootEmUp
         
         public void Construct(
             Vector3 spawnPosition,
-            Vector3 attackPosition,
-            Transform targetTransform,
-            IHitPointsComponent targetHitPointsComponent,
-            IBulletSpawner bulletSpawner)
+            Vector3 attackPosition)
+            //Transform targetTransform,
+            //IBulletSpawner bulletSpawner)
         {
             transform.position = spawnPosition;
-
-            enemyMoveAgent.SetDestination(attackPosition);
             
-            enemyAttackAgent.Construct(bulletSpawner, targetTransform);
-            enemyAttackAgent.AppendCondition(enemyMoveAgent.IsReached);
-            enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
+            m_MoveComponent.Construct(moveData);
+            m_EnemyMoveAgent = new EnemyMoveAgent(m_MoveComponent, transform, attackPosition);
 
-            m_HitPointsComponent.OnDeath += OnDeath;
+            /*enemyMoveAgent.SetDestination(attackPosition);
+            enemyAttackAgent.Construct(bulletSpawner, targetTransform);
+            enemyAttackAgent.AppendCondition(enemyMoveAgent.IsReached);*/
+            //enemyAttackAgent.AppendCondition(targetHitPointsComponent.IsHitPointsExists);
         }
 
         private void OnDeath()
         {
-            m_HitPointsComponent.OnDeath -= OnDeath;
             OnDeathbed?.Invoke(this);
         }
 
-        public void OnFixedUpdate(float deltaTime)
+        public void OnAttack(float deltaTime)
         {
-            enemyAttackAgent.OnFixedUpdate(deltaTime);
-            enemyMoveAgent.OnFixedUpdate(deltaTime);
+            //enemyAttackAgent.OnFixedUpdate(deltaTime);
+        }
+
+        public void OnMove(float deltaTime)
+        {
+            m_EnemyMoveAgent.OnFixedUpdate(deltaTime);
         }
     }
 }
