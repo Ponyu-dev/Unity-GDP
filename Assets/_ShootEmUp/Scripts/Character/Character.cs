@@ -9,7 +9,7 @@ namespace ShootEmUp
     
     public class Character : MonoBehaviour,
         ICharacter,
-        IGameTimerListener
+        ITimerGameListener
     {
         [SerializeField] public MoveData moveData;
         [SerializeField] public HitPointsData hitPointsData;

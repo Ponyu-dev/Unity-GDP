@@ -8,7 +8,7 @@ namespace ShootEmUp
         public event Action OnShoot;
     }
     
-    public class ShootInput : IShootInput, IGameUpdateListener
+    public class ShootInput : IShootInput, IUpdateGameListener
     {
         public event Action OnShoot;
         

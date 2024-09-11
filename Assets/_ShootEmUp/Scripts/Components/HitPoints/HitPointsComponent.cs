@@ -4,7 +4,7 @@ using VContainer;
 
 namespace ShootEmUp
 {
-    public sealed class HitPointsComponent : IHitPointsComponent, IGameTimerListener
+    public sealed class HitPointsComponent : IHitPointsComponent, ITimerGameListener
     {
         public event Action OnDeath;
         private int m_CurrentPoints;

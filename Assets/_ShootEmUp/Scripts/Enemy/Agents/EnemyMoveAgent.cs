@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyMoveAgent : MonoBehaviour, IGameFixedUpdateListener
+    public sealed class EnemyMoveAgent : MonoBehaviour, IFixedUpdateGameListener
     {
         [SerializeField] private MoveComponent moveComponent;
         

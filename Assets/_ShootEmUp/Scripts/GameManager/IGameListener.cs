@@ -2,47 +2,47 @@ namespace ShootEmUp
 {
     public interface IGameListener { }
 
-    public interface IInitializable : IGameListener
+    public interface IInitGameListener : IGameListener
     {
         void Initialize();
     }
     
-    public interface IGameTimerListener : IGameListener
+    public interface ITimerGameListener : IGameListener
     {
         void OnStartTimer();
     }
     
-    public interface IGameStartListener : IGameListener
+    public interface IStartGameListener : IGameListener
     {
         void OnStartGame();
     }
 
-    public interface IGameFinishListener : IGameListener
+    public interface IFinishGameListener : IGameListener
     {
         void OnFinishGame();
     }
 
-    public interface IGamePauseListener : IGameListener
+    public interface IPauseGameListener : IGameListener
     {
         void OnPauseGame();
     }
 
-    public interface IGameResumeListener : IGameListener
+    public interface IResumeGameListener : IGameListener
     {
         void OnResumeGame();
     }
 
-    public interface IGameUpdateListener : IGameListener
+    public interface IUpdateGameListener : IGameListener
     {
         void OnUpdate(float deltaTime);
     }
 
-    public interface IGameFixedUpdateListener : IGameListener
+    public interface IFixedUpdateGameListener : IGameListener
     {
         void OnFixedUpdate(float deltaTime);
     }
 
-    public interface IGameLateUpdateListener : IGameListener
+    public interface ILateUpdateGameListener : IGameListener
     {
         void OnLateUpdate(float deltaTime);
     }

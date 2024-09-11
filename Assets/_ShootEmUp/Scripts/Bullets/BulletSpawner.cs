@@ -10,9 +10,9 @@ namespace ShootEmUp
     }
     
     public sealed class BulletSpawner :
-        IGameTimerListener,
-        IGameFixedUpdateListener,
-        IGameFinishListener,
+        ITimerGameListener,
+        IFixedUpdateGameListener,
+        IFinishGameListener,
         IBulletSpawner
     {
         private readonly PoolMono<Bullet> m_PoolMono;
@@ -33,6 +33,7 @@ namespace ShootEmUp
             m_PoolMono = new PoolMono<Bullet>(bulletPrefab, container, worldTransform, autoExpand);
         }
         
+        //Когда нажали на Start. И идет отсчет. Создаем пул. 
         public void OnStartTimer()
         {
             Debug.Log("[BulletSpawner] OnStartTimer");
@@ -53,7 +54,8 @@ namespace ShootEmUp
             bullet.OnInactive -= this.RemoveBullet;
             m_PoolMono.InactiveObject(bullet);
         }
-
+        
+        //При финише игры. Очищаем пул.
         public void OnFinishGame()
         {
             Debug.Log("[BulletSpawner] OnFinishGame");

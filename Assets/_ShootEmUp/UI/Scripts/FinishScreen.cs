@@ -5,8 +5,8 @@ using UnityEngine.UI;
 namespace _ShootEmUp.UI.Scripts
 {
     public sealed class FinishScreen : DefaultScreen,
-        IGameFinishListener,
-        IGameTimerListener
+        IFinishGameListener,
+        ITimerGameListener
     {
         [SerializeField]
         private Button btnRestart;

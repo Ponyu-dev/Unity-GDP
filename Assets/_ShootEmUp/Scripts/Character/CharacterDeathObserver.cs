@@ -4,8 +4,8 @@ using VContainer;
 namespace ShootEmUp
 {
     public class CharacterDeathObserver :
-        IGameStartListener,
-        IGameFinishListener
+        IStartGameListener,
+        IFinishGameListener
     {
         private IGameManager m_GameManager;
         private IHitPointsComponent m_HitPointsComponent;
@@ -18,12 +18,12 @@ namespace ShootEmUp
             m_HitPointsComponent = hitPointsComponent;
         }
         
-        void IGameStartListener.OnStartGame()
+        void IStartGameListener.OnStartGame()
         {
             this.m_HitPointsComponent.OnDeath += OnDeath;
         }
 
-        void IGameFinishListener.OnFinishGame()
+        void IFinishGameListener.OnFinishGame()
         {
             this.m_HitPointsComponent.OnDeath -= OnDeath;
         }

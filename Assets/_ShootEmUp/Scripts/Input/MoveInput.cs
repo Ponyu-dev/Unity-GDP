@@ -8,7 +8,7 @@ namespace ShootEmUp
         public event Action<Vector2> OnMove;
     }
     
-    public class MoveInput : IMoveInput, IGameFixedUpdateListener
+    public class MoveInput : IMoveInput, IFixedUpdateGameListener
     {
         public event Action<Vector2> OnMove;
         

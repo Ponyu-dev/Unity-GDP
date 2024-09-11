@@ -6,8 +6,8 @@ using VContainer;
 namespace ShootEmUp
 {
     public class CharacterMoveObserver :
-        IGameStartListener,
-        IGameFinishListener
+        IStartGameListener,
+        IFinishGameListener
     {
         private readonly CompositeCondition m_Condition = new();
         
@@ -32,12 +32,12 @@ namespace ShootEmUp
             m_Condition.Append(condition);
         }
         
-        void IGameStartListener.OnStartGame()
+        void IStartGameListener.OnStartGame()
         {
             this.m_MoveInput.OnMove += OnMove;
         }
 
-        void IGameFinishListener.OnFinishGame()
+        void IFinishGameListener.OnFinishGame()
         {
             this.m_MoveInput.OnMove -= OnMove;
         }

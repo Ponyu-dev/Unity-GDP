@@ -12,7 +12,7 @@ namespace _ShootEmUp.Scripts.VContainer
         public void Configure(IContainerBuilder builder)
         {
             Debug.Log("[UILifetimeScope] Configure");
-            builder.RegisterComponentInHierarchy<TimerScreen>().AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<Screen>().AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<StartScreen>().AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<PlayingScreen>().AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<PauseScreen>().AsImplementedInterfaces();

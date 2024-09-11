@@ -5,7 +5,7 @@ namespace ShootEmUp
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public sealed class Bullet : MonoBehaviour, IGameFixedUpdateListener
+    public sealed class Bullet : MonoBehaviour, IFixedUpdateGameListener
     {
         private Rigidbody2D m_Rigidbody2D;
         private SpriteRenderer m_SpriteRenderer;

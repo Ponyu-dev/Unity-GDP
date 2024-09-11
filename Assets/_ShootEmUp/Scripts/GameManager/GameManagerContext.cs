@@ -12,13 +12,13 @@ namespace ShootEmUp
         private List<IGameListener> m_Listeners = new();
 
         [ShowInInspector, ReadOnly]
-        private List<IGameUpdateListener> m_UpdateListeners = new();
+        private List<IUpdateGameListener> m_UpdateListeners = new();
 
         [ShowInInspector, ReadOnly]
-        private List<IGameFixedUpdateListener> m_FixedUpdateListeners = new();
+        private List<IFixedUpdateGameListener> m_FixedUpdateListeners = new();
 
         [ShowInInspector, ReadOnly]
-        private List<IGameLateUpdateListener> m_LateUpdateListeners= new();
+        private List<ILateUpdateGameListener> m_LateUpdateListeners= new();
         
         [Inject]
         private void Construct(IEnumerable<IGameListener> listeners)
@@ -34,13 +34,13 @@ namespace ShootEmUp
         {
             if (listener == null) return;
 
-            if (listener is IGameUpdateListener updateListener)
+            if (listener is IUpdateGameListener updateListener)
                 this.m_UpdateListeners.Add(updateListener);
             
-            if (listener is IGameFixedUpdateListener fixedUpdateListener)
+            if (listener is IFixedUpdateGameListener fixedUpdateListener)
                 this.m_FixedUpdateListeners.Add(fixedUpdateListener);
             
-            if (listener is IGameLateUpdateListener lateUpdateListener)
+            if (listener is ILateUpdateGameListener lateUpdateListener)
                 this.m_LateUpdateListeners.Add(lateUpdateListener);
             
             this.m_Listeners.Add(listener);
@@ -51,7 +51,7 @@ namespace ShootEmUp
             Debug.Log("[GameManagerContext] OnInitialize");
             foreach (var listener in m_Listeners)
             {
-                if (listener is IInitializable initialize)
+                if (listener is IInitGameListener initialize)
                     initialize.Initialize();
             }
         }
@@ -61,7 +61,7 @@ namespace ShootEmUp
             Debug.Log("[GameManagerContext] OnStartTimer");
             foreach (var listener in this.m_Listeners)
             {
-                if (listener is IGameTimerListener startTimerListener)
+                if (listener is ITimerGameListener startTimerListener)
                     startTimerListener.OnStartTimer();
             }
         }
@@ -72,7 +72,7 @@ namespace ShootEmUp
 
             foreach (var listener in this.m_Listeners)
             {
-                if (listener is IGameStartListener startListener)
+                if (listener is IStartGameListener startListener)
                     startListener.OnStartGame();
             }
         }
@@ -83,7 +83,7 @@ namespace ShootEmUp
 
             foreach (var listener in this.m_Listeners)
             {
-                if (listener is IGamePauseListener pauseListener)
+                if (listener is IPauseGameListener pauseListener)
                     pauseListener.OnPauseGame();
             }
         }
@@ -94,7 +94,7 @@ namespace ShootEmUp
 
             foreach (var listener in this.m_Listeners)
             {
-                if (listener is IGameResumeListener resumeListener) 
+                if (listener is IResumeGameListener resumeListener) 
                     resumeListener.OnResumeGame();
             }
         }
@@ -105,7 +105,7 @@ namespace ShootEmUp
             
             foreach (var listener in this.m_Listeners)
             {
-                if (listener is IGameFinishListener resumeListener) 
+                if (listener is IFinishGameListener resumeListener) 
                     resumeListener.OnFinishGame();
             }
         }

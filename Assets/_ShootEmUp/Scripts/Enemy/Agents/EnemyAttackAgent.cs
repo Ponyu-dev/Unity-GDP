@@ -4,7 +4,7 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour, IGameFixedUpdateListener
+    public sealed class EnemyAttackAgent : MonoBehaviour, IFixedUpdateGameListener
     { 
         [SerializeField] private WeaponData weaponData;
         [SerializeField] private float countdown;

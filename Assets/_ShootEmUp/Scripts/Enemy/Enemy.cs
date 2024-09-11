@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class Enemy : MonoBehaviour, IGameFixedUpdateListener
+    public class Enemy : MonoBehaviour, IFixedUpdateGameListener
     {
         [SerializeField] private EnemyMoveAgent enemyMoveAgent;
         [SerializeField] private EnemyAttackAgent enemyAttackAgent;

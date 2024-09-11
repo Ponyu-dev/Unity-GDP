@@ -4,10 +4,10 @@ using Utils;
 namespace ShootEmUp
 {
     public sealed class EnemySpawner :
-        IGameTimerListener,
-        IGameStartListener,
-        IGameFixedUpdateListener,
-        IGameFinishListener
+        ITimerGameListener,
+        IStartGameListener,
+        IFixedUpdateGameListener,
+        IFinishGameListener
     {
         private readonly PoolMono<Enemy> m_PoolMono;
        
@@ -38,6 +38,7 @@ namespace ShootEmUp
             m_PoolMono = new PoolMono<Enemy>(enemyPrefab, container, worldTransform, autoExpand);
         }
         
+        //Когда нажали на Start. И идет отсчет. Создаем пул.
         public void OnStartTimer()
         {
             m_PoolMono.CreatePool(m_InitialCount);
@@ -84,6 +85,7 @@ namespace ShootEmUp
             }
         }
 
+        //При финише игры. Очищаем пул.
         public void OnFinishGame()
         {
             m_PoolMono.ClearPool();
