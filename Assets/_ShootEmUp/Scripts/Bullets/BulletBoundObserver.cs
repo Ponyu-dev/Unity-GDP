@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class BulletBoundObserver : MonoBehaviour
+    public class BulletBoundObserver
     {
         public event Action OnExceedBounded;
         
-        private LevelBounds m_LevelBounds;
+        private readonly LevelBounds m_LevelBounds;
 
-        public void Construct(LevelBounds levelBounds)
+        public BulletBoundObserver(LevelBounds levelBounds)
         {
             m_LevelBounds = levelBounds;
         }
         
-        private void FixedUpdate()
+        public void CheckInBounds(Vector3 position)
         {
-            if (m_LevelBounds.InBounds(transform.position)) return;
+            if (m_LevelBounds.InBounds(position)) return;
             
             OnExceedBounded?.Invoke();
         }

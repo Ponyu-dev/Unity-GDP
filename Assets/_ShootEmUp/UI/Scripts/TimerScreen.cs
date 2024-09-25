@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _ShootEmUp.UI.Scripts
 {
-    public sealed class TimerScreen : DefaultScreen, IGameTimerListener, IGameStartListener
+    public sealed class TimerScreen : DefaultScreen, ITimerGameListener, IStartGameListener
     {
         [SerializeField] 
         private int countTimer = 3;

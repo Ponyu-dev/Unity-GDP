@@ -1,56 +1,74 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils;
+using VContainer;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterShootObserver : MonoBehaviour,
-        IGameStartListener,
-        IGameFinishListener
+    public sealed class CharacterShootObserver :
+        IStartGameListener,
+        IFinishGameListener
     {
-        [SerializeField] private ShootInput shootInput;
-        [SerializeField] private WeaponComponent weaponComponent;
-        [FormerlySerializedAs("bulletSystem")] [SerializeField] private BulletSpawner bulletSpawner;
-        [SerializeField] private BulletConfig bulletConfig;
-        
         private bool m_FireRequired;
-
         private readonly CompositeCondition m_Condition = new();
         
-        public void AppendCondition(Func<bool> condition)
+        private WeaponData m_WeaponData;
+        private IShootInput m_ShootInput;
+        private IBulletSpawner m_BulletSpawner;
+        private BulletConfig m_BulletConfig;
+
+        [Inject]
+        public void Construct(
+            IShootInput shootInput,
+            IHitPointsComponent hitPointsComponent,
+            IBulletSpawner bulletSpawner,
+            BulletConfig bulletConfig,
+            WeaponData weaponData)
+        {
+            Debug.Log("[CharacterShootObserver] Construct");
+            m_ShootInput = shootInput;
+            m_WeaponData = weaponData;
+
+            m_BulletSpawner = bulletSpawner;
+            m_BulletConfig = bulletConfig;
+            
+            AppendCondition(hitPointsComponent.IsHitPointsExists);
+        }
+        
+        private void AppendCondition(Func<bool> condition)
         {
             m_Condition.Append(condition);
         }
         
-        void IGameStartListener.OnStartGame()
+        void IStartGameListener.OnStartGame()
         {
-            shootInput.OnShoot += OnShoot;
+            m_ShootInput.OnShoot += OnShoot;
         }
 
-        void IGameFinishListener.OnFinishGame()
+        void IFinishGameListener.OnFinishGame()
         {
-            shootInput.OnShoot -= OnShoot;
+            m_ShootInput.OnShoot -= OnShoot;
         }
 
         private void OnShoot()
         {
+            Debug.Log("[CharacterShootObserver] OnShoot");
             if (m_Condition.IsAllFalse()) return;
             
             if (this.m_FireRequired) return;
             
             this.m_FireRequired = true;
-            bulletSpawner.CreateBullet(BulletDataDefault());
+            m_BulletSpawner.CreateBullet(BulletDataDefault());
             this.m_FireRequired = false;
         }
 
         private BulletData BulletDataDefault() => new BulletData(
             isPlayer: true, 
-            physicsLayer: (int)this.bulletConfig.physicsLayer,
-            color: this.bulletConfig.color, 
-            damage: this.bulletConfig.damage, 
-            position: weaponComponent.position,
-            velocity: weaponComponent.rotation * Vector3.up * this.bulletConfig.speed
+            physicsLayer: (int)this.m_BulletConfig.physicsLayer,
+            color: this.m_BulletConfig.color, 
+            damage: this.m_BulletConfig.damage, 
+            position: m_WeaponData.position,
+            velocity: m_WeaponData.rotation * Vector3.up * this.m_BulletConfig.speed
         );
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace _ShootEmUp.UI.Scripts
 {
-    public sealed class StartScreen : DefaultScreen, IInitializable, IGameTimerListener
+    public sealed class StartScreen : DefaultScreen, IInitGameListener, ITimerGameListener
     {
         [SerializeField]
         private Button btnStart;

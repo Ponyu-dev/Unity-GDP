@@ -5,8 +5,8 @@ using UnityEngine.UI;
 namespace _ShootEmUp.UI.Scripts
 {
     public sealed class PauseScreen : DefaultScreen,
-        IGamePauseListener,
-        IGameResumeListener
+        IPauseGameListener,
+        IResumeGameListener
     {
         [SerializeField]
         private Button btnResume;

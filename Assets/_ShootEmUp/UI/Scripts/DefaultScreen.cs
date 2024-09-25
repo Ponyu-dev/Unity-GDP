@@ -1,5 +1,6 @@
 using ShootEmUp;
 using UnityEngine;
+using VContainer;
 
 namespace _ShootEmUp.UI.Scripts
 {
@@ -7,10 +8,15 @@ namespace _ShootEmUp.UI.Scripts
     {
         [SerializeField]
         protected GameObject view;
-        
-        [SerializeField] 
-        protected GameManager m_GameManager;
 
+        protected IGameManager m_GameManager;
+        
+        [Inject]
+        private void Construct(IGameManager gameManager)
+        {
+            m_GameManager = gameManager;
+        }
+        
         protected virtual void Show()
         {
             view.SetActive(true);

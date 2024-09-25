@@ -1,38 +1,52 @@
+using Sirenix.Utilities;
 using UnityEngine;
 using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSpawner : MonoBehaviour,
-        IGameTimerListener,
-        IGameFinishListener
+    public interface IBulletSpawner
+    { 
+        void CreateBullet(BulletData bulletData);
+    }
+    
+    public sealed class BulletSpawner :
+        ITimerGameListener,
+        IFixedUpdateGameListener,
+        IFinishGameListener,
+        IBulletSpawner
     {
-        [SerializeField] private Bullet prefab;
-        [SerializeField] private int initialCount = 50;
-        [SerializeField] private bool autoExpand = true;
-        [SerializeField] private Transform container;
-        [SerializeField] private Transform worldTransform;
+        private readonly PoolMono<Bullet> m_PoolMono;
+        private readonly int m_InitialCount;
+        private readonly LevelBounds m_LevelBounds;
         
-        [SerializeField] private LevelBounds levelBounds;
-
-        private PoolMono<Bullet> m_PoolMono;
-        
-        private void Awake()
+        public BulletSpawner(
+            Bullet bulletPrefab, 
+            int initialCount, 
+            bool autoExpand, 
+            Transform container, 
+            Transform worldTransform, 
+            LevelBounds levelBounds)
         {
-            m_PoolMono = new PoolMono<Bullet>(prefab, initialCount, container, worldTransform, autoExpand);
+            Debug.Log("[BulletSpawner] constructor");
+            m_InitialCount = initialCount;
+            m_LevelBounds = levelBounds;
+            m_PoolMono = new PoolMono<Bullet>(bulletPrefab, container, worldTransform, autoExpand);
         }
         
+        //Когда нажали на Start. И идет отсчет. Создаем пул. 
         public void OnStartTimer()
         {
-            m_PoolMono.CreatePool(initialCount);
+            Debug.Log("[BulletSpawner] OnStartTimer");
+            m_PoolMono.CreatePool(m_InitialCount);
         }
 
         public void CreateBullet(BulletData bulletData)
         {
+            Debug.Log("[BulletSpawner] CreateBullet");
             if (!m_PoolMono.TryGet(out var bullet)) return;
                 
-            bullet.Construct(bulletData, levelBounds);
-            bullet.OnInactive += this.RemoveBullet;
+            bullet.Construct(m_LevelBounds, bulletData);
+            bullet.OnInactive += RemoveBullet;
         }
 
         private void RemoveBullet(Bullet bullet)
@@ -40,10 +54,18 @@ namespace ShootEmUp
             bullet.OnInactive -= this.RemoveBullet;
             m_PoolMono.InactiveObject(bullet);
         }
-
+        
+        //При финише игры. Очищаем пул.
         public void OnFinishGame()
         {
+            Debug.Log("[BulletSpawner] OnFinishGame");
             m_PoolMono.ClearPool();
+        }
+
+        public void OnFixedUpdate(float deltaTime)
+        {
+            Debug.Log("[BulletSpawner] OnFixedUpdate");
+            m_PoolMono.Actives.ForEach(it => it.OnFixedUpdate(deltaTime));
         }
     }
 }

@@ -4,21 +4,29 @@ using Utils;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour, IGameFixedUpdateListener
-    {
-        [SerializeField] private WeaponComponent weaponComponent;
-        [SerializeField] private float countdown;
-        [SerializeField] private BulletConfig bulletConfig;
-
-        private Transform m_TargetTransform;
+    public sealed class EnemyAttackAgent
+    { 
+        private readonly WeaponData m_WeaponData;
+        private readonly float m_Countdown;
+        private readonly BulletConfig m_BulletConfig;
+        private readonly Transform m_TargetTransform;
+        private readonly IBulletSpawner m_BulletSpawner;
+        
         private float m_CurrentTime;
-        private BulletSpawner m_BulletSpawner;
 
         private readonly CompositeCondition m_Condition = new();
 
-        public void Construct(BulletSpawner bulletSpawner,Transform targetTransform)
+        public EnemyAttackAgent(
+            WeaponData weaponData,
+            float countdown,
+            IBulletSpawner bulletSpawner,
+            BulletConfig bulletConfig,
+            Transform targetTransform)
         {
+            m_WeaponData = weaponData;
+            m_Countdown = countdown;
             m_BulletSpawner = bulletSpawner;
+            m_BulletConfig = bulletConfig;
             m_TargetTransform = targetTransform;
         }
 
@@ -29,7 +37,7 @@ namespace ShootEmUp
 
         public void Reset()
         {
-            this.m_CurrentTime = this.countdown;
+            this.m_CurrentTime = this.m_Countdown;
         }
         
         public void OnFixedUpdate(float deltaTime)
@@ -38,25 +46,24 @@ namespace ShootEmUp
                 return;
 
             this.m_CurrentTime -= deltaTime;
-            if (this.m_CurrentTime <= 0)
-            {
-                this.Fire();
-                this.m_CurrentTime += this.countdown;
-            }
+            if (!(this.m_CurrentTime <= 0)) return;
+            
+            this.Fire();
+            this.m_CurrentTime += this.m_Countdown;
         }
 
         private void Fire()
         {
-            var startPosition = this.weaponComponent.position;
+            var startPosition = this.m_WeaponData.position;
             var vector = (Vector2) this.m_TargetTransform.position - startPosition;
             var direction = vector.normalized;
 
             m_BulletSpawner.CreateBullet(
                 new BulletData(
                     isPlayer: false, 
-                    physicsLayer: (int) bulletConfig.physicsLayer, 
-                    color: bulletConfig.color, 
-                    damage: bulletConfig.damage, 
+                    physicsLayer: (int) m_BulletConfig.physicsLayer, 
+                    color: m_BulletConfig.color, 
+                    damage: m_BulletConfig.damage, 
                     position: startPosition, 
                     velocity: direction * 2.0f)
                 );
