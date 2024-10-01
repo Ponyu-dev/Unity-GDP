@@ -627,6 +627,7 @@ MonoBehaviour:
   autoInjectGameObjects: []
   testSave: {fileID: 1819132233}
   saveConfig: {fileID: 11400000, guid: d8b5b38c0798a4650990b3888d713d8e, type: 2}
+  unitPrefabs: {fileID: 11400000, guid: 991d50373dd404f188dd9c3900251e7e, type: 2}
   unitManager:
     container: {fileID: 1263304700}
 --- !u!1001 &710706770

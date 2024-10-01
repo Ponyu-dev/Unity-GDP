@@ -9,15 +9,9 @@ namespace SaveSystem.Config
     {
         public bool IsCustomPlace() => place == Place.Custom;
 
-        //public const string Path = "Assets/Resources/UnitySave Settings.asset";
-        //public const string PathForResourcesLoad = "UnitySave Settings";
-
         [BoxGroup("B", false), HorizontalGroup("B/H")]
         [TitleGroup("B/H/Settings")]
         public bool debug = true;
-
-        [TitleGroup("B/H/Settings")]
-        public string fileName = "savegame.data";
         
         [TitleGroup("B/H/Settings")]
         public Place place = Place.UnityPersistent;
@@ -25,7 +19,7 @@ namespace SaveSystem.Config
         [TitleGroup("B/H/Settings"), ShowIf("IsCustomPlace")]
         public string customLocation;
 
-        public string SaveFilePath => Path.Combine(Location, fileName);
+        public string SaveFilePath(string fileName) => Path.Combine(Location, fileName);
 
         private string Location
         {

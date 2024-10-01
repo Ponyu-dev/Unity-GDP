@@ -14,6 +14,9 @@ namespace GameEngine
         
         [SerializeField]
         private SaveConfig saveConfig;
+        
+        [SerializeField]
+        private UnitPrefabs unitPrefabs;
 
         [SerializeField]
         private UnitManager unitManager;
@@ -24,14 +27,16 @@ namespace GameEngine
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(saveConfig);
+            builder.RegisterInstance(unitPrefabs);
+            
             builder.Register<EncryptionUtils>(Lifetime.Singleton);
             
             builder.RegisterInstance(unitManager);
             builder.RegisterInstance(resourceService);
             
-            builder.Register<SaveLoadService>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<UnitSaveLoaderService>(Lifetime.Singleton);
             
-            builder.Register<EntryPoint>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<SaveLoadPoint>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             
             builder.RegisterComponent(testSave);
         }

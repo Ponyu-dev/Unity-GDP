@@ -8,18 +8,18 @@ namespace GameEngine
     public class TestSave : MonoBehaviour
     {
         [Inject]
-        private EntryPoint _entryPoint;
+        private SaveLoadPoint _saveLoadPoint;
 
         [Button]
         public void SaveGameAsync()
         {
-            _entryPoint.SaveGameAsync().Forget();
+            _saveLoadPoint.SaveGameAsync().Forget();
         }
         
         [Button]
         public void LoadGameAsync()
         {
-            _entryPoint.LoadGameAsync().Forget();
+            _saveLoadPoint.LoadGameAsync().Forget();
         }
     }
 }
