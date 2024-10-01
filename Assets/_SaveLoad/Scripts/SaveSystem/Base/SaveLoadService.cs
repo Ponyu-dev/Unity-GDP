@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SaveSystem.Config;
 using SaveSystem.Utils;
@@ -25,11 +25,12 @@ namespace SaveSystem.Base
             _saveConfig = saveConfig;
         }
 
-        public async Task SaveAsync<T>(T data)
+        public async UniTask SaveAsync<T>(T data)
         {
             try
             {
                 var json = JsonConvert.SerializeObject(data); // Или JsonUtility.ToJson(data)
+                Debug.Log(json.Split());
                 var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
                 var encryptedBytes = _encryptionUtils.Encrypt(jsonBytes);
 
@@ -46,7 +47,7 @@ namespace SaveSystem.Base
             }
         }
 
-        public async Task<T> LoadAsync<T>()
+        public async UniTask<T> LoadAsync<T>()
         {
             try
             {
@@ -66,7 +67,6 @@ namespace SaveSystem.Base
                 var decryptedBytes = _encryptionUtils.Decrypt(encryptedBytes);
                 var json = System.Text.Encoding.UTF8.GetString(decryptedBytes);
                 var data = JsonConvert.DeserializeObject<T>(json); // Или JsonUtility.FromJson<T>(json)
-
                 LoadCompleted?.Invoke();
                 return data;
             }

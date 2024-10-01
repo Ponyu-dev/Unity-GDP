@@ -1,5 +1,5 @@
 using System;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace SaveSystem.Base
 {
@@ -10,7 +10,7 @@ namespace SaveSystem.Base
         event Action LoadCompleted;
         event Action<Exception> LoadFailed;
         
-        Task SaveAsync<T>(T data);
-        Task<T> LoadAsync<T>();
+        UniTask SaveAsync<T>(T data);
+        UniTask<T> LoadAsync<T>();
     }
 }

@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace SaveSystem.Utils
 {
-    internal class EncryptionUtils
+    public class EncryptionUtils
     {
         private readonly string _key = SystemInfo.deviceUniqueIdentifier;
         private readonly byte[] _salt = { 0x43, 0x23, 0x50, 0x6F, 0x6E, 0x59, 0x75 };
