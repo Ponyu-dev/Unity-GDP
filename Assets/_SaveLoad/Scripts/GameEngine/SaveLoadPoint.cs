@@ -12,21 +12,24 @@ namespace GameEngine
     public sealed class SaveLoadPoint : IStartable
     {
         private readonly UnitManager _unitManager;
-        private readonly ResourceService _resourceService;
         private readonly UnitSaveLoaderService _unitSaveLoaderService;
         private readonly UnitPrefabs _unitPrefabs;
+        private readonly ResourceService _resourceService;
+        private readonly ResourceSaveService _resourceSaveService;
 
         [Inject]
         public SaveLoadPoint(
             UnitManager unitManager,
-            ResourceService resourceService,
             UnitSaveLoaderService unitSaveLoaderService,
-            UnitPrefabs unitPrefabs)
+            UnitPrefabs unitPrefabs,
+            ResourceService resourceService,
+            ResourceSaveService resourceSaveService)
         {
             _unitManager = unitManager;
-            _resourceService = resourceService;
             _unitSaveLoaderService = unitSaveLoaderService;
             _unitPrefabs = unitPrefabs;
+            _resourceService = resourceService;
+            _resourceSaveService = resourceSaveService;
         }
 
         public void Start()
@@ -42,26 +45,7 @@ namespace GameEngine
         public async UniTask SaveGameAsync()
         {
             await _unitSaveLoaderService.SaveUnitsAsync(ListUnitData.Mapper(_unitManager.GetAllUnits().ToList()));
-            
-            /*var saveData = new SaveData
-            {
-                Resources = _resourceService.GetResources().Select(r => new ResourceData
-                {
-                    ID = r.ID,
-                    Amount = r.Amount
-                }).ToList(),
-
-                Units = _unitManager.GetAllUnits().Select(u => new ListUnitData
-                {
-                    Name = u.name,
-                    Type = u.Type,
-                    HitPoints = u.HitPoints,
-                    Position = new Vector3Data(u.Position),
-                    Rotation = new Vector3Data(u.Rotation)
-                }).ToList()
-            };
-
-            await _saveLoadService.SaveAsync(saveData);*/
+            await _resourceSaveService.SaveUnitsAsync(ResourcesData.Mapper(_resourceService.GetResources()));
         }
 
         // Метод для загрузки игры
@@ -71,6 +55,10 @@ namespace GameEngine
             if (listUnits != null)
                 ApplyUnits(listUnits.Units);
             
+            var resources = await _resourceSaveService.LoadUnitsAsync();
+            if (resources != null)
+                ApplyResources(resources.resourcesData);
+
         }
 
         private void ApplyResources(List<ResourceData> resources)

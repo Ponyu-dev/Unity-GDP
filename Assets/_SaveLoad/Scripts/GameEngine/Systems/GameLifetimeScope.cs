@@ -35,6 +35,7 @@ namespace GameEngine
             builder.RegisterInstance(resourceService);
             
             builder.Register<UnitSaveLoaderService>(Lifetime.Singleton);
+            builder.Register<ResourceSaveService>(Lifetime.Singleton);
             
             builder.Register<SaveLoadPoint>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             
