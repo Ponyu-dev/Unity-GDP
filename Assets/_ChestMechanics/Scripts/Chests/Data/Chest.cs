@@ -15,12 +15,13 @@ namespace _ChestMechanics.Chests.Data
         private float unlockTime;
         public float UnlockTime => unlockTime;
         
+        /*
         [SerializeField]
         private UnlockType unlockType;
-        public UnlockType TypeUnlock => unlockType;
+        public UnlockType TypeUnlock => unlockType;*/
 
         [SerializeField]
-        private Sprite icon;
-        public Sprite Icon => icon;
+        private GameObject prefab;
+        public GameObject Prefab => prefab;
     }
 }

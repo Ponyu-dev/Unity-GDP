@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Chests:
   - chestType: 0
-    unlockTime: 40
-    unlockType: 0
-    icon: {fileID: 0}
-  - chestType: 0
-    unlockTime: 5
-    unlockType: 1
-    icon: {fileID: 0}
-  - chestType: 0
-    unlockTime: 1
-    unlockType: 2
-    icon: {fileID: 0}
+    unlockTime: 30
+    prefab: {fileID: 1356612221414681043, guid: 893a944ace93e4798bd112a862ea8481,
+      type: 3}
+  - chestType: 1
+    unlockTime: 60
+    prefab: {fileID: 1356612221414681043, guid: d67866b08ad2c412fa3904fd63ed97af,
+      type: 3}
+  - chestType: 2
+    unlockTime: 120
+    prefab: {fileID: 7367771910950226485, guid: 61e2cf0916cbc437790b5640c9748168,
+      type: 3}
