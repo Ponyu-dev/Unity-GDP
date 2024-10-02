@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 
 namespace _ChestMechanics.Session
 {
@@ -7,5 +8,6 @@ namespace _ChestMechanics.Session
     {
         public string sessionStart;
         public string sessionEnd;
+        [CanBeNull] public string allSessionDuration;
     }
 }

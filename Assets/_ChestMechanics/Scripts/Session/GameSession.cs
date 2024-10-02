@@ -2,25 +2,35 @@ using System;
 using System.Globalization;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 using VContainer;
 
 namespace _ChestMechanics.Session
 {
     public interface IGameSession
     {
+        public event Action OnCurrentSessionLoad;
         public event Action OnLastSessionLoad;
-        public string CurrentSessionStart();
+        public string GetCurrentTimeString();
+        public DateTime GetCurrentTime();
         public string LastSessionStart();
         public string LastSessionEnd();
         public string LastSessionDuration();
-        public void StartSession();
         public void EndSession();
     } 
     
     public class GameSession : IGameSession
     {
+        private const string TimeApiUrl = "https://worldtimeapi.org/api/timezone/Etc/UTC";
+
+        private DateTime _serverTime;
+        private DateTime _localTime;
+        private bool _isActualTimeReceived = false;
+
         public event Action OnLastSessionLoad;
+        public event Action OnCurrentSessionLoad;
         
         [CanBeNull] private GameSessionData _lastGameSessionData;
         private readonly GameSessionData _currentGameSessionData;
@@ -45,34 +55,81 @@ namespace _ChestMechanics.Session
             Debug.Log($"LoadLastSession = {_lastGameSessionData?.sessionEnd}");
             OnLastSessionLoad?.Invoke();
         }
-        
-        public string CurrentSessionStart() => _currentGameSessionData.sessionStart;
 
-        public string LastSessionStart() => _lastGameSessionData?.sessionStart;
-        public string LastSessionEnd() => _lastGameSessionData?.sessionEnd;
+        public DateTime GetCurrentTime()
+        {
+            if (!_isActualTimeReceived) throw new Exception("Actual Time Not Received");
+
+            var elapsed = DateTime.Now - _localTime;
+            var currentTime = _serverTime.Add(elapsed);
+
+            return currentTime;
+        }
+        
+        public string GetCurrentTimeString()
+        {
+            return $"Start: {GetCurrentTime().ToString(CultureInfo.InvariantCulture)}";
+        }
+
+        public string LastSessionStart() => $"LastStart: {_lastGameSessionData?.sessionStart}";
+        public string LastSessionEnd() => $"LastEnd: {_lastGameSessionData?.sessionEnd}";
 
         public string LastSessionDuration()
         {
-            Debug.Log($"LastSessionDuration {LastSessionStart()}");
-            Debug.Log($"LastSessionDuration {_lastGameSessionData?.sessionEnd}");
-            
-            if (!DateTime.TryParse(LastSessionStart(), out var start) ||
-                !DateTime.TryParse(_lastGameSessionData?.sessionEnd, out var end)) return "";
-            
-            var sessionDuration = end.Subtract(start);
-            return sessionDuration.ToString();
+            return $"Время в игре: {_lastGameSessionData?.allSessionDuration}";
         }
 
-        public void StartSession()
+        private void StartSession()
         {
-            _currentGameSessionData.sessionStart = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-            Debug.Log($"StartSession {_currentGameSessionData.sessionStart}");
+            ServerTime().Forget();
+        }
+
+        private async UniTaskVoid ServerTime()
+        {
+            var request = UnityWebRequest.Get(TimeApiUrl);
+
+            await request.SendWebRequest().ToUniTask();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                var json = request.downloadHandler.text;
+                var data = JObject.Parse(json);
+                var dateTimeStr = data["utc_datetime"]?.ToString();
+
+                _serverTime = DateTime.Parse(dateTimeStr);
+                _localTime = DateTime.Now;
+
+                _isActualTimeReceived = true;
+                
+                Debug.Log($"ServerTime result = {request.result} _serverTime = {_serverTime.ToString(CultureInfo.InvariantCulture)}");
+                
+                OnCurrentSessionLoad?.Invoke();
+            }
+            else
+            {
+                Debug.LogError($"ServerTime result = {request.result} error = {request.error}");
+                await UniTask.Delay(2000);
+                ServerTime().Forget();
+            }
         }
 
         public void EndSession()
         {
-            _currentGameSessionData.sessionEnd = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             Debug.Log($"EndSession {_currentGameSessionData.sessionEnd}");
+            SaveGameSession();
+        }
+
+        private void SaveGameSession()
+        {
+            var startTime = _serverTime;
+            var endTime = GetCurrentTime();
+            var sessionDuration = endTime.Subtract(startTime);
+            var allSessionDuration = TimeSpan.Parse(_currentGameSessionData?.allSessionDuration ?? "0");
+            
+            _currentGameSessionData.sessionStart = _serverTime.ToString(CultureInfo.InvariantCulture);
+            _currentGameSessionData.sessionEnd = endTime.ToString(CultureInfo.InvariantCulture);
+            _currentGameSessionData.allSessionDuration = allSessionDuration.Add(sessionDuration).ToString();
+            
             _gameSessionSave.SaveUnitsAsync(_currentGameSessionData).Forget();
         }
     }

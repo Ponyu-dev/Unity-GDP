@@ -25,21 +25,26 @@ namespace _ChestMechanics.Session
         {
             Debug.Log("[GameSessionView] Construct");
             _gameSession = gameSession;
-            
-            txtCurrentSessionDate.text = _gameSession.CurrentSessionStart();
         }
 
         private void OnEnable()
         {
-            _gameSession.OnLastSessionLoad += OnUpdateLasSession;
+            _gameSession.OnCurrentSessionLoad += OnUpdateCurrentSession;
+            _gameSession.OnLastSessionLoad += OnUpdateLastSession;
         }
         
         private void OnDisable()
         {
-            _gameSession.OnLastSessionLoad -= OnUpdateLasSession;
+            _gameSession.OnCurrentSessionLoad -= OnUpdateCurrentSession;
+            _gameSession.OnLastSessionLoad -= OnUpdateLastSession;
         }
 
-        private void OnUpdateLasSession()
+        private void OnUpdateCurrentSession()
+        {
+            txtCurrentSessionDate.text = _gameSession.GetCurrentTimeString();
+        }
+
+        private void OnUpdateLastSession()
         {
             Debug.Log("[GameSessionView] Start");   
             txtLastSessionStart.text = _gameSession.LastSessionStart();
@@ -62,7 +67,7 @@ namespace _ChestMechanics.Session
             else
             {
                 // Приложение вернулось на передний план
-                _gameSession.StartSession();
+                //_gameSession.StartSession();
             }
         }
     }
