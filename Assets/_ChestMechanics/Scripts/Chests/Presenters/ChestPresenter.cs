@@ -28,6 +28,7 @@ namespace _ChestMechanics.Chests.Presenters
         private readonly Random RandomAnim = new();
 
         private DateTime? _openTime;
+        private bool _isCanOpen = false;
 
         private readonly IServerTimeSession _serverTimeSession;
         
@@ -47,18 +48,31 @@ namespace _ChestMechanics.Chests.Presenters
             Debug.Log($"ChestPresenter Initialize {chest.TypeChest}");
             _chest = chest;
             _chestView = chestView;
+
+            _chestView.OnChestOpen += OnChestOpen;
+        }
+
+        private void OnChestOpen()
+        {
+            if (!_isCanOpen) return;
+            
+            Debug.Log($"{_chest.TypeChest} OPEN");
+            Debug.Log("InitOpenTime");
+            InitOpenTime();
         }
 
         private void InitOpenTime()
         {
             if (!_serverTimeSession.IsActualTimeReceived()) return;
-            if (_openTime != null) return;
+            //if (_openTime != null) return;
             
+            _isCanOpen = false;
             _openTime = _serverTimeSession.GetCurrentTime().AddSeconds(_chest.UnlockTime);
         }
-
+        
         public void UpdateTimer()
         {
+            if (_isCanOpen) return;
             if (_openTime == null) return;
             
             var timer = _openTime - _serverTimeSession.GetCurrentTime();
@@ -71,6 +85,7 @@ namespace _ChestMechanics.Chests.Presenters
             }
             else
             {
+                _isCanOpen = true;
                 _chestView.SetTimer("Need Open");
                 _chestView.StartAnimation(NameOpen);
             }
