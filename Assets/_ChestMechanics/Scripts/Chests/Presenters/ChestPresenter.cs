@@ -1,8 +1,9 @@
 using System;
-using System.Collections.Generic;
 using _ChestMechanics.Chests.Data;
+using _ChestMechanics.Chests.Enums;
 using _ChestMechanics.Chests.System;
 using _ChestMechanics.Session;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 using Random = System.Random;
@@ -18,17 +19,13 @@ namespace _ChestMechanics.Chests.Presenters
     public class ChestPresenter : IChestPresenter, IDisposable
     {
         private const string NameOpen = "Open";
-
-        private static readonly IReadOnlyList<string> Anims = new List<string>
-        {
-            "Idle",
-            "Tease"
-        };
+        private const string NameTease = "Tease";
+        private const string NameIdle = "ChestIdle";
         
-        private readonly Random RandomAnim = new();
+        private readonly Random _random = new();
 
         private DateTime? _openTime;
-        private bool _isCanOpen = false;
+        private ChestOpenType _chestOpenType = ChestOpenType.Idle;
 
         private readonly IServerTimeSession _serverTimeSession;
         
@@ -40,7 +37,12 @@ namespace _ChestMechanics.Chests.Presenters
         {
             Debug.Log("ChestPresenter Constructor");
             _serverTimeSession = serverTimeSession;
-            _serverTimeSession.OnCurrentSessionLoad += InitOpenTime;
+            _serverTimeSession.OnCurrentSessionLoad += OnCurrentSessionLoad;
+        }
+
+        private void OnCurrentSessionLoad()
+        {
+            InitOpenTime().Forget();
         }
 
         public void Initialize(Chest chest, IChestView chestView)
@@ -54,25 +56,34 @@ namespace _ChestMechanics.Chests.Presenters
 
         private void OnChestOpen()
         {
-            if (!_isCanOpen) return;
+            if (_chestOpenType != ChestOpenType.CanOpen) return;
             
             Debug.Log($"{_chest.TypeChest} OPEN");
             Debug.Log("InitOpenTime");
-            InitOpenTime();
+            ChestOpened();
         }
 
-        private void InitOpenTime()
+        private void  ChestOpened()
+        {
+            _chestView.SetTimer("You Opened");
+            _chestView.StartAnimation(NameOpen);
+            _chestOpenType = ChestOpenType.Opened;
+            InitOpenTime().Forget();
+        }
+
+        private async UniTaskVoid InitOpenTime()
         {
             if (!_serverTimeSession.IsActualTimeReceived()) return;
-            //if (_openTime != null) return;
-            
-            _isCanOpen = false;
+
+            await UniTask.Delay(_random.Next(1000, 2000));
             _openTime = _serverTimeSession.GetCurrentTime().AddSeconds(_chest.UnlockTime);
+            _chestOpenType = ChestOpenType.Idle;
+            _chestView.StartAnimation(NameIdle);
         }
         
         public void UpdateTimer()
         {
-            if (_isCanOpen) return;
+            if (_chestOpenType != ChestOpenType.Idle) return;
             if (_openTime == null) return;
             
             var timer = _openTime - _serverTimeSession.GetCurrentTime();
@@ -80,20 +91,18 @@ namespace _ChestMechanics.Chests.Presenters
             {
                 var timerText = $"{timer?.Hours:D2}:{timer?.Minutes:D2}.{timer?.Seconds:D2}";
                 _chestView.SetTimer(timerText);
-                //TODO сделать другую логику
-                //_chestView.StartAnimation(Anims[RandomAnim.Next(Anims.Count)]);
             }
             else
             {
-                _isCanOpen = true;
+                _chestOpenType = ChestOpenType.CanOpen;
                 _chestView.SetTimer("Need Open");
-                _chestView.StartAnimation(NameOpen);
+                _chestView.StartAnimation(NameTease);
             }
         }
 
         public void Dispose()
         {
-            _serverTimeSession.OnCurrentSessionLoad -= InitOpenTime;
+            _serverTimeSession.OnCurrentSessionLoad -= OnCurrentSessionLoad;
         }
     }
 }

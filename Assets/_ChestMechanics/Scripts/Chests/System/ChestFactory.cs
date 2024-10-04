@@ -38,7 +38,7 @@ namespace _ChestMechanics.Chests.System
             var chestView = chestInstance.GetComponent<ChestView>();
 
             // Инжектируем презентер в созданный сундук
-            var chestPresenter = _resolver.Resolve<ChestPresenter>();
+            var chestPresenter = _resolver.Resolve<IChestPresenter>();
             _resolver.Inject(chestPresenter);
             chestPresenter.Initialize(chest, chestView);
 
