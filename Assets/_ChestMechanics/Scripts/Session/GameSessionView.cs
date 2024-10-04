@@ -29,12 +29,14 @@ namespace _ChestMechanics.Session
 
         private void OnEnable()
         {
+            if (_gameSession == null) return;
             _gameSession.OnCurrentSessionLoad += OnUpdateCurrentSession;
             _gameSession.OnLastSessionLoad += OnUpdateLastSession;
         }
         
         private void OnDisable()
         {
+            if (_gameSession == null) return;
             _gameSession.OnCurrentSessionLoad -= OnUpdateCurrentSession;
             _gameSession.OnLastSessionLoad -= OnUpdateLastSession;
         }
@@ -54,11 +56,14 @@ namespace _ChestMechanics.Session
         
         private void OnApplicationQuit()
         {
+            if (_gameSession == null) return;
             _gameSession.EndSession();
         }
 
         private void OnApplicationPause(bool pauseStatus)
         {
+            if (_gameSession == null) return;
+            
             if (pauseStatus)
             {
                 // Приложение ушло в фон

@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6656024308949456361, guid: 6a134bac79d574794b6ab291f9dd78b4,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ce3dc643261305943a9239b3a1547874,
+        type: 3}
+    - target: {fileID: 6656024309017458023, guid: 6a134bac79d574794b6ab291f9dd78b4,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f848d9ab98d4be4ab9cd06f89b6ffce,
+        type: 3}
     - target: {fileID: 6656024309024082627, guid: 6a134bac79d574794b6ab291f9dd78b4,
         type: 3}
       propertyPath: m_Pivot.x
@@ -115,7 +127,13 @@ PrefabInstance:
     - target: {fileID: 6656024309024082628, guid: 6a134bac79d574794b6ab291f9dd78b4,
         type: 3}
       propertyPath: m_Name
-      value: chest-default
+      value: chest-Diamond
       objectReference: {fileID: 0}
+    - target: {fileID: 6656024310747160202, guid: 6a134bac79d574794b6ab291f9dd78b4,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c0bfd9714d3376b4e9d2d4a888036581,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a134bac79d574794b6ab291f9dd78b4, type: 3}

@@ -8,5 +8,7 @@ namespace _ChestMechanics.Chests.Data
     {
         [SerializeField]
         private List<Chest> Chests;
+
+        public IReadOnlyList<Chest> GetChest() => Chests;
     }
 }

@@ -9,17 +9,22 @@ using VContainer;
 
 namespace _ChestMechanics.Session
 {
-    public interface IGameSession
+    public interface IGameSession : IServerTimeSession
     {
-        public event Action OnCurrentSessionLoad;
         public event Action OnLastSessionLoad;
-        public string GetCurrentTimeString();
-        public DateTime GetCurrentTime();
         public string LastSessionStart();
         public string LastSessionEnd();
         public string LastSessionDuration();
         public void EndSession();
-    } 
+    }
+
+    public interface IServerTimeSession
+    {
+        public event Action OnCurrentSessionLoad;
+        public bool IsActualTimeReceived();
+        public DateTime GetCurrentTime();
+        public string GetCurrentTimeString();
+    }
     
     public class GameSession : IGameSession
     {
@@ -28,6 +33,7 @@ namespace _ChestMechanics.Session
         private DateTime _serverTime;
         private DateTime _localTime;
         private bool _isActualTimeReceived = false;
+        public bool IsActualTimeReceived() => _isActualTimeReceived;
 
         public event Action OnLastSessionLoad;
         public event Action OnCurrentSessionLoad;
@@ -119,6 +125,7 @@ namespace _ChestMechanics.Session
             SaveGameSession();
         }
 
+        //TODO allSessionDuration считается не правильно.
         private void SaveGameSession()
         {
             var startTime = _serverTime;

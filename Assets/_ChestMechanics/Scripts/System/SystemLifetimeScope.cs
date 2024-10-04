@@ -1,3 +1,4 @@
+using _ChestMechanics.Chests.System;
 using _ChestMechanics.Session;
 using SaveSystem.Config;
 using UnityEngine;
@@ -13,12 +14,15 @@ namespace _ChestMechanics.Scripts.System
         
         [SerializeField]
         private GameSessionConfigure gameSessionConfigure;
+        [SerializeField]
+        private ChestsConfigure chestsConfigure;
         
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(saveConfig);
             
             gameSessionConfigure.Configure(builder);
+            chestsConfigure.Configure(builder);
         }
     }
 }

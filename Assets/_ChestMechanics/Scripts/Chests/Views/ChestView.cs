@@ -1,9 +1,28 @@
+using TMPro;
 using UnityEngine;
 
-namespace _ChestMechanics.Scripts.Chests.Views
+namespace _ChestMechanics.Chests.System
 {
-    public class ChestView : MonoBehaviour
+    public interface IChestView
     {
+        public void SetTimer(string timer);
+        public void StartAnimation(string animationName);
+    }
+    
+    [RequireComponent(typeof(Animator))]
+    public class ChestView : MonoBehaviour, IChestView
+    {
+        [SerializeField] private TextMeshProUGUI txtTimer;
+        [SerializeField] private Animator animator;
         
+        public void SetTimer(string timer)
+        {
+            txtTimer.text = timer;
+        }
+
+        public void StartAnimation(string animationName)
+        {
+            animator.Play(animationName);
+        }
     }
 }

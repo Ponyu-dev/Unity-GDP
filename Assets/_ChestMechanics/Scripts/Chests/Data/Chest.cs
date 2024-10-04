@@ -14,11 +14,6 @@ namespace _ChestMechanics.Chests.Data
         [SerializeField]
         private float unlockTime;
         public float UnlockTime => unlockTime;
-        
-        /*
-        [SerializeField]
-        private UnlockType unlockType;
-        public UnlockType TypeUnlock => unlockType;*/
 
         [SerializeField]
         private GameObject prefab;

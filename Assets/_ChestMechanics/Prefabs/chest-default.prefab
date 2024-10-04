@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 6656024309024082627}
   - component: {fileID: 6656024309024082626}
   - component: {fileID: 2558924965843226939}
+  - component: {fileID: 8778325537202445000}
   m_Layer: 5
   m_Name: chest-default
   m_TagString: Untagged
@@ -357,6 +358,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8778325537202445000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656024309024082628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358cac768b8f4dd089f6e0147cc8110e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtTimer: {fileID: 3239831220564196248}
+  animator: {fileID: 2558924965843226939}
 --- !u!1 &6656024310747160204
 GameObject:
   m_ObjectHideFlags: 0
