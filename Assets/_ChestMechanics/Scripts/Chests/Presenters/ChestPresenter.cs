@@ -57,9 +57,6 @@ namespace _ChestMechanics.Chests.Presenters
         private void OnChestOpen()
         {
             if (_chestOpenType != ChestOpenType.CanOpen) return;
-            
-            Debug.Log($"{_chest.TypeChest} OPEN");
-            Debug.Log("InitOpenTime");
             ChestOpened();
         }
 

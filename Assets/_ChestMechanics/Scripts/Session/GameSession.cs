@@ -82,7 +82,8 @@ namespace _ChestMechanics.Session
 
         public string LastSessionDuration()
         {
-            return $"Время в игре: {_lastGameSessionData?.allSessionDuration}";
+            var gameDuration = TimeSpan.Parse(_lastGameSessionData?.allSessionDuration ?? "0");
+            return $"Time game: {gameDuration.Hours:D2}:{gameDuration.Minutes:D2}.{gameDuration.Seconds:D2}";
         }
 
         private void StartSession()
@@ -107,13 +108,10 @@ namespace _ChestMechanics.Session
 
                 _isActualTimeReceived = true;
                 
-                Debug.Log($"ServerTime result = {request.result} _serverTime = {_serverTime.ToString(CultureInfo.InvariantCulture)}");
-                
                 OnCurrentSessionLoad?.Invoke();
             }
             else
             {
-                Debug.LogError($"ServerTime result = {request.result} error = {request.error}");
                 await UniTask.Delay(2000);
                 ServerTime().Forget();
             }
@@ -121,17 +119,15 @@ namespace _ChestMechanics.Session
 
         public void EndSession()
         {
-            Debug.Log($"EndSession {_currentGameSessionData.sessionEnd}");
             SaveGameSession();
         }
-
-        //TODO allSessionDuration считается не правильно.
+        
         private void SaveGameSession()
         {
             var startTime = _serverTime;
             var endTime = GetCurrentTime();
             var sessionDuration = endTime.Subtract(startTime);
-            var allSessionDuration = TimeSpan.Parse(_currentGameSessionData?.allSessionDuration ?? "0");
+            var allSessionDuration = TimeSpan.Parse(_lastGameSessionData?.allSessionDuration ?? "0");
             
             _currentGameSessionData.sessionStart = _serverTime.ToString(CultureInfo.InvariantCulture);
             _currentGameSessionData.sessionEnd = endTime.ToString(CultureInfo.InvariantCulture);
