@@ -49,9 +49,10 @@ namespace _ChestMechanics.Chests.System
             txtTimer.text = timer;
         }
 
-        public void StartAnimation(string animationName)
+        public void StartAnimation(string nameTrigger)
         {
-            animator.Play(animationName);
+            animator.SetTrigger(nameTrigger);
+            //animator.Play(animationName);
         }
     }
 }

@@ -19,10 +19,10 @@ namespace _ChestMechanics.Chests.Presenters
     
     public class ChestPresenter : IChestPresenter, IDisposable
     {
-        private const string NameOpen = "Open";
-        private const string NameTease = "Tease";
-        private const string NameIdle = "ChestIdle";
-        
+        private const string TriggerIdle = "Idle";
+        private const string TriggerTease = "Tease";
+        private const string TriggerCanOpen = "CanOpen";
+
         private readonly Random _random = new();
 
         private DateTime? _openTime;
@@ -70,7 +70,7 @@ namespace _ChestMechanics.Chests.Presenters
             _rewardManager.UpdateRewardCount(_chest.RewardsData);
             
             _chestView.SetTimer("You Opened");
-            _chestView.StartAnimation(NameOpen);
+            _chestView.StartAnimation(TriggerCanOpen);
             _chestOpenType = ChestOpenType.Opened;
             InitOpenTime().Forget();
         }
@@ -83,7 +83,7 @@ namespace _ChestMechanics.Chests.Presenters
             _chestOpenType = ChestOpenType.Idle;
             
             await UniTask.Delay(_random.Next(1000, 2000));
-            _chestView.StartAnimation(NameIdle);
+            _chestView.StartAnimation(TriggerIdle);
         }
         
         public void UpdateTimer()
@@ -101,7 +101,7 @@ namespace _ChestMechanics.Chests.Presenters
             {
                 _chestOpenType = ChestOpenType.CanOpen;
                 _chestView.SetTimer("Need Open");
-                _chestView.StartAnimation(NameTease);
+                _chestView.StartAnimation(TriggerTease);
             }
         }
 
