@@ -1,4 +1,5 @@
 using _ChestMechanics.Chests.System;
+using _ChestMechanics.Scripts.Reward.System;
 using _ChestMechanics.Session;
 using SaveSystem.Config;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace _ChestMechanics.Scripts.System
         private GameSessionConfigure gameSessionConfigure;
         [SerializeField]
         private ChestsConfigure chestsConfigure;
+        [SerializeField]
+        private RewardConfigure rewardConfigure;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -23,6 +26,7 @@ namespace _ChestMechanics.Scripts.System
             
             gameSessionConfigure.Configure(builder);
             chestsConfigure.Configure(builder);
+            rewardConfigure.Configure(builder);
         }
     }
 }
