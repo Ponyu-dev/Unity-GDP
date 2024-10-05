@@ -1,82 +1,44 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using Cysharp.Threading.Tasks;
+using GameEngine.Data;
+using SaveSystem.Base;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using GameEngine.Data;
-using Object = UnityEngine.Object;
 
-namespace GameEngine
+namespace GameEngine.Providers
 {
-    public sealed class SaveLoadPoint : IStartable
+    public class UnitDataProvider : IDataProvider<ListUnitData>, IStartable
     {
         private readonly UnitManager _unitManager;
-        private readonly UnitSaveLoaderService _unitSaveLoaderService;
         private readonly UnitPrefabs _unitPrefabs;
-        private readonly ResourceService _resourceService;
-        private readonly ResourceSaveService _resourceSaveService;
 
         [Inject]
-        public SaveLoadPoint(
-            UnitManager unitManager,
-            UnitSaveLoaderService unitSaveLoaderService,
-            UnitPrefabs unitPrefabs,
-            ResourceService resourceService,
-            ResourceSaveService resourceSaveService)
+        public UnitDataProvider(UnitManager unitManager, UnitPrefabs unitPrefabs)
         {
+            Debug.Log("UnitDataProvider Constructor");
             _unitManager = unitManager;
-            _unitSaveLoaderService = unitSaveLoaderService;
             _unitPrefabs = unitPrefabs;
-            _resourceService = resourceService;
-            _resourceSaveService = resourceSaveService;
         }
 
         public void Start()
         {
-            // Инициализация юнитов и ресурсов при старте
+            Debug.Log("UnitDataProvider Start");
             _unitManager.SetupUnits(Object.FindObjectsOfType<Unit>());
-            _resourceService.SetResources(Object.FindObjectsOfType<Resource>());
-
-            LoadGameAsync().Forget();
         }
 
-        // Метод для сохранения игры
-        public async UniTask SaveGameAsync()
+        public ListUnitData GetDataForSaving()
         {
-            await _unitSaveLoaderService.SaveUnitsAsync(ListUnitData.Mapper(_unitManager.GetAllUnits().ToList()));
-            await _resourceSaveService.SaveUnitsAsync(ResourcesData.Mapper(_resourceService.GetResources()));
+            Debug.Log("UnitDataProvider GetDataForSaving");
+            return ListUnitData.Mapper(_unitManager.GetAllUnits().ToList());
         }
 
-        // Метод для загрузки игры
-        public async UniTask LoadGameAsync()
+        public void ApplyLoadedData(ListUnitData data)
         {
-            var listUnits = await _unitSaveLoaderService.LoadUnitsAsync();
-            if (listUnits != null)
-                ApplyUnits(listUnits.Units);
-            
-            var resources = await _resourceSaveService.LoadUnitsAsync();
-            if (resources != null)
-                ApplyResources(resources.resourcesData);
-
+            Debug.Log("UnitDataProvider ApplyLoadedData");
+            ApplyUnits(data.Units);
         }
-
-        private void ApplyResources(List<ResourceData> resources)
-        {
-            foreach (var resourceData in resources)
-            {
-                var resource = _resourceService.GetResources().FirstOrDefault(r => r.ID == resourceData.ID);
-                if (resource != null)
-                {
-                    resource.Amount = resourceData.Amount;
-                }
-                else
-                {
-                    Debug.LogWarning($"Resource with ID {resourceData.ID} not found.");
-                }
-            }
-        }
-
+        
         private void ApplyUnits(List<UnitData> units)
         {
             // Создаем словарь для быстрого поиска существующих юнитов по имени

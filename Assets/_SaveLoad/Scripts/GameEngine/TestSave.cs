@@ -8,7 +8,7 @@ namespace GameEngine
     public class TestSave : MonoBehaviour
     {
         [Inject]
-        private SaveLoadPoint _saveLoadPoint;
+        private ISaveLoadPoint _saveLoadPoint;
 
         [Button]
         public void SaveGameAsync()

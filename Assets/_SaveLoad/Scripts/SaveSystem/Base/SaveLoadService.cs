@@ -19,11 +19,13 @@ namespace SaveSystem.Base
         [Inject]
         public SaveLoadService(SaveConfig saveConfig)
         {
+            Debug.Log($"SaveLoadService Constructor");
             _saveConfig = saveConfig;
         }
 
-        public async UniTask SaveAsync<T>(T data)
+        public async UniTask SaveAsync<T>(T data) where T : ISavableData
         {
+            Debug.Log($"SaveLoadService SaveAsync for {typeof(T)}");
             try
             {
                 var json = JsonConvert.SerializeObject(data); // Или JsonUtility.ToJson(data)
@@ -39,8 +41,9 @@ namespace SaveSystem.Base
             }
         }
 
-        public async UniTask<T> LoadAsync<T>()
+        public async UniTask<T> LoadAsync<T>(T type) where T : ISavableData
         {
+            Debug.Log($"SaveLoadService LoadAsync for {typeof(T)}");
             try
             {
                 var filePath = GetPath<T>();
