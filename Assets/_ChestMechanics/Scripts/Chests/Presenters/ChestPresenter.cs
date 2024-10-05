@@ -72,9 +72,10 @@ namespace _ChestMechanics.Chests.Presenters
         {
             if (!_serverTimeSession.IsActualTimeReceived()) return;
 
-            await UniTask.Delay(_random.Next(1000, 2000));
             _openTime = _serverTimeSession.GetCurrentTime().AddSeconds(_chest.UnlockTime);
             _chestOpenType = ChestOpenType.Idle;
+            
+            await UniTask.Delay(_random.Next(1000, 2000));
             _chestView.StartAnimation(NameIdle);
         }
         
