@@ -8,6 +8,7 @@ using VContainer.Unity;
 
 namespace GameEngine.Providers
 {
+    //TODO не вынес в SaveSystem. Так как думаю потом SaveSystem допилить еще лучше и выложить в открытый доступ.
     public class UnitDataProvider : IDataProvider<ISavableData>, IStartable
     {
         private readonly UnitManager _unitManager;
