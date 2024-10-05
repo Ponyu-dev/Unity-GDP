@@ -54,7 +54,7 @@ namespace _ChestMechanics.Scripts.Reward.Presenter
         {
             var rewardPresenter = _rewardFactory.Create(reward);
             _rewardsPresenters.Add(rewardSave.TypeReward, rewardPresenter);
-            SetRewardCount(rewardSave.TypeReward, rewardSave.Count);
+            SetRewardCount(rewardSave.TypeReward, rewardSave.Count, false);
         }
 
         private void SpawnDefaultRewards(IEnumerable<RewardConfig> rewards)
@@ -102,11 +102,11 @@ namespace _ChestMechanics.Scripts.Reward.Presenter
             _processSave = false;
         }
 
-        private void SetRewardCount(string rewardType, int rewardCount)
+        private void SetRewardCount(string rewardType, int rewardCount, bool startAnim)
         {
             if (_rewardsPresenters.TryGetValue(rewardType, out var rewardPresenter))
             {
-                rewardPresenter.UpdateRewardCount(rewardCount.ToString());
+                rewardPresenter.UpdateRewardCount(rewardCount.ToString(), startAnim);
             }
         }
 
@@ -117,7 +117,7 @@ namespace _ChestMechanics.Scripts.Reward.Presenter
             foreach (var rewardData in rewardsData)
             {
                 var updatedCount = _rewardSaveList.AddToRewardCount(rewardData.TypeReward, rewardData.CountDefault);
-                SetRewardCount(rewardData.TypeReward.ToString(), updatedCount);
+                SetRewardCount(rewardData.TypeReward.ToString(), updatedCount, true);
             }
             
             SaveRewardsAsync().Forget();
