@@ -4,7 +4,7 @@ using SaveSystem.Base;
 using VContainer;
 using VContainer.Unity;
 
-namespace GameEngine
+namespace _SaveLoad.Scripts.SaveSystem
 {
     public interface ISaveLoadPoint
     {
