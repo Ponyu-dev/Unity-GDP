@@ -9,19 +9,20 @@ using VContainer;
 
 namespace SaveSystem.Base
 {
-    public abstract class SaveLoadService //: ISaveLoadService
+    public sealed class SaveLoadService : ISaveLoadService
     {
-        protected string _saveFileName;
+        private static string GetPath<T>() => $"{typeof(T).Name.ToLower()}.data";
+        
         protected readonly EncryptionUtils _encryptionUtils = new();
         protected readonly SaveConfig _saveConfig;
 
         [Inject]
-        protected SaveLoadService(SaveConfig saveConfig)
+        public SaveLoadService(SaveConfig saveConfig)
         {
             _saveConfig = saveConfig;
         }
 
-        protected async UniTask SaveAsync<T>(T data)
+        public async UniTask SaveAsync<T>(T data)
         {
             try
             {
@@ -29,7 +30,7 @@ namespace SaveSystem.Base
                 var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
                 var encryptedBytes = _encryptionUtils.Encrypt(jsonBytes);
 
-                await using var fs = new FileStream(_saveConfig.SaveFilePath(_saveFileName), FileMode.Create, FileAccess.Write);
+                await using var fs = new FileStream(_saveConfig.SaveFilePath(GetPath<T>()), FileMode.Create, FileAccess.Write);
                 await fs.WriteAsync(encryptedBytes, 0, encryptedBytes.Length);
             }
             catch (Exception ex)
@@ -38,18 +39,19 @@ namespace SaveSystem.Base
             }
         }
 
-        protected async UniTask<T> LoadAsync<T>()
+        public async UniTask<T> LoadAsync<T>()
         {
             try
             {
-                if (!File.Exists(_saveConfig.SaveFilePath(_saveFileName)))
+                var filePath = GetPath<T>();
+                if (!File.Exists(_saveConfig.SaveFilePath(filePath)))
                 {
-                    Debug.LogError($"Save file {_saveFileName} not found");
+                    Debug.LogError($"Save file {filePath} not found");
                     return default;
                 }
 
                 byte[] encryptedBytes;
-                await using (var fs = new FileStream(_saveConfig.SaveFilePath(_saveFileName), FileMode.Open, FileAccess.Read))
+                await using (var fs = new FileStream(_saveConfig.SaveFilePath(filePath), FileMode.Open, FileAccess.Read))
                 {
                     encryptedBytes = new byte[fs.Length];
                     var readAsync = await fs.ReadAsync(encryptedBytes, 0, encryptedBytes.Length);
