@@ -9,7 +9,7 @@ namespace _ChestMechanics.Scripts.Reward.System
 {
     public interface IRewardFactory
     {
-        IRewardPresenter Create(RewardData reward);
+        IRewardPresenter Create(RewardConfig reward);
     }
     
     public class RewardFactory : IInitializable, IRewardFactory
@@ -32,9 +32,8 @@ namespace _ChestMechanics.Scripts.Reward.System
             Debug.Log("RewardFactory Initialize");
         }
         
-        public IRewardPresenter Create(RewardData reward)
+        public IRewardPresenter Create(RewardConfig reward)
         {
-            Debug.Log($"RewardFactory Create {reward.TypeReward}");
             var chestInstance = Object.Instantiate(reward.Prefab, _container);
             var chestView = chestInstance.GetComponent<RewardView>();
 
@@ -42,8 +41,6 @@ namespace _ChestMechanics.Scripts.Reward.System
             var chestPresenter = _resolver.Resolve<IRewardPresenter>();
             _resolver.Inject(chestPresenter);
             chestPresenter.Initialize(reward.SaveReward, chestView);
-
-            Debug.Log($"RewardFactory Initialize {reward.TypeReward}");
             
             return chestPresenter;
         }

@@ -16,10 +16,7 @@ namespace _ChestMechanics.Scripts.Reward.Presenter
         private IRewardView _rewardView;
 
         [Inject]
-        public RewardPresenter()
-        {
-            
-        }
+        public RewardPresenter() { }
         
         public void Initialize(RewardSave rewardSave, IRewardView rewardView)
         {

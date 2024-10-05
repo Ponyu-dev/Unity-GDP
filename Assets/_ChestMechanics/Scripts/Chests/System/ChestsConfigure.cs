@@ -28,7 +28,6 @@ namespace _ChestMechanics.Chests.System
                 .AsImplementedInterfaces()
                 .AsSelf();
             
-            
             Debug.Log("ChestsConfigure Register ListChestsPresenter");
             builder.Register<ListChestsPresenter>(Lifetime.Singleton)
                 .AsImplementedInterfaces()

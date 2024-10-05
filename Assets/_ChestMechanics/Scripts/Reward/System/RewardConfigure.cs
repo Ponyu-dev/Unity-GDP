@@ -17,6 +17,8 @@ namespace _ChestMechanics.Scripts.Reward.System
             Debug.Log("RewardConfigure RegisterInstance RewardsConfig");
             builder.RegisterInstance(rewardsConfig);
             
+            builder.Register<RewardsSystemSave>(Lifetime.Singleton);
+            
             Debug.Log("RewardConfigure Register RewardPresenter");
             builder.Register<RewardPresenter>(Lifetime.Transient)
                 .AsImplementedInterfaces()
@@ -28,8 +30,8 @@ namespace _ChestMechanics.Scripts.Reward.System
                 .AsImplementedInterfaces()
                 .AsSelf();
             
-            Debug.Log("RewardConfigure Register ListRewardPresenter");
-            builder.Register<ListRewardPresenter>(Lifetime.Singleton)
+            Debug.Log("RewardConfigure Register RewardManager");
+            builder.Register<RewardManager>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
         }

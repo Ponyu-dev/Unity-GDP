@@ -2,6 +2,7 @@ using System;
 using _ChestMechanics.Chests.Data;
 using _ChestMechanics.Chests.Enums;
 using _ChestMechanics.Chests.System;
+using _ChestMechanics.Scripts.Reward.Presenter;
 using _ChestMechanics.Session;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -28,16 +29,21 @@ namespace _ChestMechanics.Chests.Presenters
         private ChestOpenType _chestOpenType = ChestOpenType.Idle;
 
         private readonly IServerTimeSession _serverTimeSession;
+        private readonly IRewardManager _rewardManager;
         
         private Chest _chest;
         private IChestView _chestView;
 
         [Inject]
-        public ChestPresenter(IServerTimeSession serverTimeSession)
+        public ChestPresenter(
+            IServerTimeSession serverTimeSession,
+            IRewardManager rewardManager)
         {
             Debug.Log("ChestPresenter Constructor");
             _serverTimeSession = serverTimeSession;
             _serverTimeSession.OnCurrentSessionLoad += OnCurrentSessionLoad;
+
+            _rewardManager = rewardManager;
         }
 
         private void OnCurrentSessionLoad()
@@ -47,7 +53,6 @@ namespace _ChestMechanics.Chests.Presenters
 
         public void Initialize(Chest chest, IChestView chestView)
         {
-            Debug.Log($"ChestPresenter Initialize {chest.TypeChest}");
             _chest = chest;
             _chestView = chestView;
 
@@ -62,6 +67,8 @@ namespace _ChestMechanics.Chests.Presenters
 
         private void  ChestOpened()
         {
+            _rewardManager.UpdateRewardCount(_chest.RewardsData);
+            
             _chestView.SetTimer("You Opened");
             _chestView.StartAnimation(NameOpen);
             _chestOpenType = ChestOpenType.Opened;

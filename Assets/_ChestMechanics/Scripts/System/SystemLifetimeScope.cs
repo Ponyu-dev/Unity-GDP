@@ -25,8 +25,8 @@ namespace _ChestMechanics.Scripts.System
             builder.RegisterInstance(saveConfig);
             
             gameSessionConfigure.Configure(builder);
-            chestsConfigure.Configure(builder);
             rewardConfigure.Configure(builder);
+            chestsConfigure.Configure(builder);
         }
     }
 }

@@ -25,11 +25,11 @@ namespace SaveSystem.Base
         {
             try
             {
-                var json = JsonConvert.SerializeObject(data); // Или JsonUtility.ToJson(data)
+                var json = JsonConvert.SerializeObject(data);
                 var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
                 var encryptedBytes = _encryptionUtils.Encrypt(jsonBytes);
-
-                await using var fs = new FileStream(_saveConfig.SaveFilePath(_saveFileName), FileMode.Create, FileAccess.Write);
+                var pathSave = _saveConfig.SaveFilePath(_saveFileName);
+                await using var fs = new FileStream(pathSave, FileMode.Create, FileAccess.Write);
                 await fs.WriteAsync(encryptedBytes, 0, encryptedBytes.Length);
             }
             catch (Exception ex)
@@ -42,14 +42,15 @@ namespace SaveSystem.Base
         {
             try
             {
-                if (!File.Exists(_saveConfig.SaveFilePath(_saveFileName)))
+                var pathSave = _saveConfig.SaveFilePath(_saveFileName);
+                if (!File.Exists(pathSave))
                 {
                     Debug.LogError($"[LoadAsync] Save file {_saveFileName} not found");
                     return default;
                 }
 
                 byte[] encryptedBytes;
-                await using (var fs = new FileStream(_saveConfig.SaveFilePath(_saveFileName), FileMode.Open, FileAccess.Read))
+                await using (var fs = new FileStream(pathSave, FileMode.Open, FileAccess.Read))
                 {
                     encryptedBytes = new byte[fs.Length];
                     var readAsync = await fs.ReadAsync(encryptedBytes, 0, encryptedBytes.Length);
@@ -57,6 +58,7 @@ namespace SaveSystem.Base
 
                 var decryptedBytes = _encryptionUtils.Decrypt(encryptedBytes);
                 var json = System.Text.Encoding.UTF8.GetString(decryptedBytes);
+                Debug.Log($"{json}");
                 var data = JsonConvert.DeserializeObject<T>(json); // Или JsonUtility.FromJson<T>(json)
                 return data;
             }

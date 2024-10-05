@@ -7,8 +7,13 @@ namespace _ChestMechanics.Scripts.Reward.Data
     public class RewardsConfig : ScriptableObject
     {
         [SerializeField]
-        private List<RewardData> rewardsList;
+        private List<RewardConfig> rewardsList;
 
-        public IReadOnlyList<RewardData> GetChest() => rewardsList;
+        public IReadOnlyList<RewardConfig> GetRewards() => rewardsList;
+
+        public RewardConfig GetRewardByType(string rewardSaveTypeReward)
+        {
+            return rewardsList.Find(it => it.SaveReward.TypeReward == rewardSaveTypeReward);
+        }
     }
 }

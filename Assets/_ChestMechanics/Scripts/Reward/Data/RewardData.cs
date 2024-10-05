@@ -12,12 +12,19 @@ namespace _ChestMechanics.Scripts.Reward.Data
 
         [SerializeField] 
         private int countDefault;
-        private int CountDefault => countDefault;
+        public int CountDefault => countDefault;
+    }
+    
+    [Serializable]
+    public class RewardConfig
+    {
+        [SerializeField]
+        private RewardData rewardData;
         
         [SerializeField]
         private GameObject prefab;
         public GameObject Prefab => prefab;
 
-        public RewardSave SaveReward => new RewardSave(rewardType.ToString(), countDefault);
+        public RewardSave SaveReward => new RewardSave(rewardData);
     }
 }
