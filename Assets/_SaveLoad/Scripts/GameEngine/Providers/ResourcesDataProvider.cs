@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 namespace GameEngine.Providers
 {
-    public class ResourcesDataProvider : IDataProvider<ResourcesData>, IStartable
+    public class ResourcesDataProvider : IDataProvider<ISavableData>, IStartable
     {
         private readonly ResourceService _resourceService;
 
@@ -25,16 +25,18 @@ namespace GameEngine.Providers
             _resourceService.SetResources(Object.FindObjectsOfType<Resource>());
         }
 
-        public ResourcesData GetDataForSaving()
+        public ISavableData GetDataForSaving()
         {
             Debug.Log("ResourcesDataProvider GetDataForSaving");
             return ResourcesData.Mapper(_resourceService.GetResources());
         }
 
-        public void ApplyLoadedData(ResourcesData data)
+        public void ApplyLoadedData(ISavableData data)
         {
+            if (data is not ResourcesData resources) return;
+            
             Debug.Log("ResourcesDataProvider ApplyLoadedData");
-            ApplyResources(data.resourcesData);
+            ApplyResources(resources.resourcesData);
         }
         
         private void ApplyResources(List<ResourceData> resources)

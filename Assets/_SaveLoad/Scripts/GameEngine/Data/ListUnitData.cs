@@ -6,7 +6,7 @@ using SaveSystem.Base;
 namespace GameEngine.Data
 {
     [Serializable]
-    public class ListUnitData : SavableData
+    public class ListUnitData : ISavableData
     {
         public List<UnitData> Units;
 

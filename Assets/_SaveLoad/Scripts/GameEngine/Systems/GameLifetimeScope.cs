@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using GameEngine.Data;
 using GameEngine.Providers;
 using SaveSystem.Base;
 using SaveSystem.Config;
@@ -40,13 +38,9 @@ namespace GameEngine
             builder.Register<SaveLoadService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
-            /*builder.Register<IDataProvider<ListUnitData>, IStartable, UnitDataProvider>(Lifetime.Singleton)
-                .AsSelf();*/
-            
             builder.Register<UnitDataProvider>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
-            
             builder.Register<ResourcesDataProvider>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();

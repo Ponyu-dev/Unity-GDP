@@ -12,6 +12,7 @@ namespace SaveSystem.Base
     public sealed class SaveLoadService : ISaveLoadService
     {
         private static string GetPath<T>() => $"{typeof(T).Name.ToLower()}.data";
+        private static string GetPath(string fileName) => $"{fileName.ToLower()}.data";
         
         protected readonly EncryptionUtils _encryptionUtils = new();
         protected readonly SaveConfig _saveConfig;
@@ -23,16 +24,17 @@ namespace SaveSystem.Base
             _saveConfig = saveConfig;
         }
 
-        public async UniTask SaveAsync<T>(T data) where T : ISavableData
+        public async UniTask SaveAsync<T>(T data, string fileName) where T : ISavableData
         {
-            Debug.Log($"SaveLoadService SaveAsync for {typeof(T)}");
+            var saveFile = GetPath(fileName);
+            Debug.Log($"SaveLoadService SaveAsync for {saveFile} {typeof(T)}");
             try
             {
                 var json = JsonConvert.SerializeObject(data); // Или JsonUtility.ToJson(data)
                 var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
                 var encryptedBytes = _encryptionUtils.Encrypt(jsonBytes);
 
-                await using var fs = new FileStream(_saveConfig.SaveFilePath(GetPath<T>()), FileMode.Create, FileAccess.Write);
+                await using var fs = new FileStream(_saveConfig.SaveFilePath(saveFile), FileMode.Create, FileAccess.Write);
                 await fs.WriteAsync(encryptedBytes, 0, encryptedBytes.Length);
             }
             catch (Exception ex)
@@ -41,12 +43,13 @@ namespace SaveSystem.Base
             }
         }
 
-        public async UniTask<T> LoadAsync<T>(T type) where T : ISavableData
+        public async UniTask<ISavableData> LoadAsync(string fileName, Type dataType)
         {
-            Debug.Log($"SaveLoadService LoadAsync for {typeof(T)}");
+            Debug.Log($"SaveLoadService LoadAsync for {dataType}");
             try
             {
-                var filePath = GetPath<T>();
+                var filePath = GetPath(fileName);
+                Debug.Log($"SaveLoadService LoadAsync for {filePath}");
                 if (!File.Exists(_saveConfig.SaveFilePath(filePath)))
                 {
                     Debug.LogError($"Save file {filePath} not found");
@@ -62,7 +65,7 @@ namespace SaveSystem.Base
 
                 var decryptedBytes = _encryptionUtils.Decrypt(encryptedBytes);
                 var json = System.Text.Encoding.UTF8.GetString(decryptedBytes);
-                var data = JsonConvert.DeserializeObject<T>(json); // Или JsonUtility.FromJson<T>(json)
+                var data = (ISavableData)JsonConvert.DeserializeObject(json, dataType); // Или JsonUtility.FromJson<T>(json)
                 return data;
             }
             catch (Exception ex)

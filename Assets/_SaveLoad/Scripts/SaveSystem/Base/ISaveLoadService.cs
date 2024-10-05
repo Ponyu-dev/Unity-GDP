@@ -1,10 +1,11 @@
+using System;
 using Cysharp.Threading.Tasks;
 
 namespace SaveSystem.Base
 {
     public interface ISaveLoadService
     {
-        UniTask SaveAsync<T>(T data) where T : ISavableData;
-        UniTask<T> LoadAsync<T>(T type) where T : ISavableData;
+        UniTask SaveAsync<T>(T data, string fileName) where T : ISavableData;
+        UniTask<ISavableData> LoadAsync(string fileName, Type dataType);
     }
 }

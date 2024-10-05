@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 namespace GameEngine.Providers
 {
-    public class UnitDataProvider : IDataProvider<ListUnitData>, IStartable
+    public class UnitDataProvider : IDataProvider<ISavableData>, IStartable
     {
         private readonly UnitManager _unitManager;
         private readonly UnitPrefabs _unitPrefabs;
@@ -27,16 +27,18 @@ namespace GameEngine.Providers
             _unitManager.SetupUnits(Object.FindObjectsOfType<Unit>());
         }
 
-        public ListUnitData GetDataForSaving()
+        public ISavableData GetDataForSaving()
         {
             Debug.Log("UnitDataProvider GetDataForSaving");
             return ListUnitData.Mapper(_unitManager.GetAllUnits().ToList());
         }
 
-        public void ApplyLoadedData(ListUnitData data)
+        public void ApplyLoadedData(ISavableData data)
         {
+            if (data is not ListUnitData listUnitData) return;
+            
             Debug.Log("UnitDataProvider ApplyLoadedData");
-            ApplyUnits(data.Units);
+            ApplyUnits(listUnitData.Units);
         }
         
         private void ApplyUnits(List<UnitData> units)
