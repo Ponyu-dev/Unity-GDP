@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GameEngine.Data
+namespace GameEngine.Helpers
 {
     [Serializable]
     public class Vector3Data
