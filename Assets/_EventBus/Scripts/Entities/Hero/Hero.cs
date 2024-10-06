@@ -6,8 +6,8 @@ namespace _EventBus.Scripts.Entities.Hero
     [Serializable]
     public class Hero
     {
-        [SerializeField] private HeroType heroType;
-        [SerializeField] private int damage;
-        [SerializeField] private int health;
+        [SerializeField] public HeroType heroType;
+        [SerializeField] public int damage;
+        [SerializeField] public int health;
     }
 }

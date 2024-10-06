@@ -7,7 +7,7 @@ namespace _EventBus.Scripts.Entities.Player
     [Serializable]
     public class Player
     {
-        [SerializeField] private PlayerType playerType;
-        [SerializeField] private HeroConfig[] heroConfigs;
+        [SerializeField] public PlayerType playerType;
+        [SerializeField] public HeroConfig[] heroConfigs;
     }
 }
