@@ -1,4 +1,4 @@
-namespace _EventBus.Scripts.Entities.Hero
+namespace _EventBus.Scripts.Players.Hero
 {
     public enum HeroType
     {

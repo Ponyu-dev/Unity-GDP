@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using _EventBus.Scripts.Entities.Hero;
-using _EventBus.Scripts.Entities.Player;
-using _EventBus.Scripts.Game.Presenters;
+using _EventBus.Scripts.Players.Hero;
+using _EventBus.Scripts.Players.Player;
 using UI;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace _EventBus.Scripts.Game.Players
+namespace _EventBus.Scripts.Game.Presenters
 {
     public class PlayersPresenter : IStartable
     {

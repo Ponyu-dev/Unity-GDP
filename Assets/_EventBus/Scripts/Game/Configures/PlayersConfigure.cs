@@ -1,11 +1,11 @@
 using System;
-using _EventBus.Scripts.Entities.Player;
+using _EventBus.Scripts.Players.Player;
 using _EventBus.Scripts.Game.Presenters;
 using UI;
 using UnityEngine;
 using VContainer;
 
-namespace _EventBus.Scripts.Game.Players
+namespace _EventBus.Scripts.Game.Configures
 {
     [Serializable]
     public class PlayersConfigure

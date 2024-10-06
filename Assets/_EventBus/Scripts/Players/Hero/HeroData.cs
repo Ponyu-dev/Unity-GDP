@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace _EventBus.Scripts.Entities.Hero
+namespace _EventBus.Scripts.Players.Hero
 {
     [Serializable]
-    public class Hero
+    public class HeroData
     {
         [SerializeField] public HeroType heroType;
         [SerializeField] public int damage;

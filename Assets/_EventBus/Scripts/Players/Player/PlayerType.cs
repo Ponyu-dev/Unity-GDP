@@ -1,4 +1,4 @@
-namespace _EventBus.Scripts.Entities.Player
+namespace _EventBus.Scripts.Players.Player
 {
     public enum PlayerType
     {

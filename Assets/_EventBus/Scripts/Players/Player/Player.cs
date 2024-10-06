@@ -1,8 +1,8 @@
 using System;
-using _EventBus.Scripts.Entities.Hero;
+using _EventBus.Scripts.Players.Hero;
 using UnityEngine;
 
-namespace _EventBus.Scripts.Entities.Player
+namespace _EventBus.Scripts.Players.Player
 {
     [Serializable]
     public class Player

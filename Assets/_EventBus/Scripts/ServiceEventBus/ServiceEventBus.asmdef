@@ -1,12 +1,8 @@
 {
-    "name": "Game",
+    "name": "ServiceEventBus",
     "rootNamespace": "",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:c8271f7d1f4948d9a631cb5dc520d760",
-        "GUID:a7266f56ea7f749f6ace607d4e5c5142",
-        "GUID:f6ec66291d14a4460855a29536fd22e8"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

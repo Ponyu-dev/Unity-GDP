@@ -1,4 +1,4 @@
-using _EventBus.Scripts.Entities.Hero;
+using _EventBus.Scripts.Players.Hero;
 using UI;
 using VContainer;
 
