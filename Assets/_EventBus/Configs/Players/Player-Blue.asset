@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba99a8d68e14ab7888b5b7acd56b990, type: 3}
   m_Name: Player-Blue
   m_EditorClassIdentifier: 
-  _player:
+  player:
     playerType: 1
     heroConfigs:
     - {fileID: 11400000, guid: 0ca6b0618de31400f9189e63c883a22d, type: 2}
