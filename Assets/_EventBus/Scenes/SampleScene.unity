@@ -224,14 +224,13 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  playersConfigure:
-    prefabHeroView: {fileID: 8763992113062683896, guid: 291ab9f483432480c8815884e98cd0a0,
-      type: 3}
-    playersRedConfig: {fileID: 11400000, guid: 33c25073c6a0942c18ad40dba2b81acd, type: 2}
-    containerPlayerRed: {fileID: 389887957}
-    playersBlueConfig: {fileID: 11400000, guid: 8722cf8859a8245c396162ae5e4f995b,
-      type: 2}
-    containerPlayerBlue: {fileID: 743752122}
+  prefabHeroView: {fileID: 8763992113062683896, guid: 291ab9f483432480c8815884e98cd0a0,
+    type: 3}
+  allHeroes: {fileID: 11400000, guid: d993737a618c74e65b62500a68336c1e, type: 2}
+  playersConfigRed: {fileID: 11400000, guid: 33c25073c6a0942c18ad40dba2b81acd, type: 2}
+  containerPlayerRed: {fileID: 389887957}
+  playersConfigBlue: {fileID: 11400000, guid: 8722cf8859a8245c396162ae5e4f995b, type: 2}
+  containerPlayerBlue: {fileID: 743752122}
 --- !u!4 &335382348
 Transform:
   m_ObjectHideFlags: 0

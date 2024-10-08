@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
   m_Name: Orc
   m_EditorClassIdentifier: 
-  hero:
-    heroType: 5
-    damage: 8
-    health: 32
-  heroPortrait: {fileID: 21300000, guid: c1be5b39c416140b4a270be385402427, type: 3}
+  portrait: {fileID: 21300000, guid: c1be5b39c416140b4a270be385402427, type: 3}
+  type: 5
+  damage: 8
+  health: 32

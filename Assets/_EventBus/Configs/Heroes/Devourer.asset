@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
   m_Name: Devourer
   m_EditorClassIdentifier: 
-  hero:
-    heroType: 0
-    damage: 3
-    health: 50
-  heroPortrait: {fileID: 21300000, guid: 313dedf7220414e3c869a853d03060bc, type: 3}
+  portrait: {fileID: 21300000, guid: 313dedf7220414e3c869a853d03060bc, type: 3}
+  type: 0
+  damage: 3
+  health: 50

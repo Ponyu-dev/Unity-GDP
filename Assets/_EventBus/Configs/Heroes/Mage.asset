@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
   m_Name: Mage
   m_EditorClassIdentifier: 
-  hero:
-    heroType: 3
-    damage: 2
-    health: 50
-  heroPortrait: {fileID: 21300000, guid: 2059f3310f8404adcac5457e5e772e52, type: 3}
+  portrait: {fileID: 21300000, guid: 2059f3310f8404adcac5457e5e772e52, type: 3}
+  type: 3
+  damage: 2
+  health: 50

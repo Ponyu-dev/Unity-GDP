@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
   m_Name: Paladin
   m_EditorClassIdentifier: 
-  hero:
-    heroType: 6
-    damage: 30
-    health: 30
-  heroPortrait: {fileID: 21300000, guid: 6f26327dca38144098a004666cd0e3b3, type: 3}
+  portrait: {fileID: 21300000, guid: 6f26327dca38144098a004666cd0e3b3, type: 3}
+  type: 6
+  damage: 30
+  health: 30

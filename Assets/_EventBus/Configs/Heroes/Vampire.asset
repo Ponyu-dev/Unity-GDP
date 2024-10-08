@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
   m_Name: Vampire
   m_EditorClassIdentifier: 
-  hero:
-    heroType: 7
-    damage: 6
-    health: 22
-  heroPortrait: {fileID: 21300000, guid: 778d4d7ee50594cd79059847cefca69a, type: 3}
+  portrait: {fileID: 21300000, guid: 778d4d7ee50594cd79059847cefca69a, type: 3}
+  type: 7
+  damage: 6
+  health: 22
