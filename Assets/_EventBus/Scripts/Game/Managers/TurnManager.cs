@@ -102,6 +102,7 @@ namespace _EventBus.Scripts.Game.Managers
 
         private void StartNextTurn()
         {
+            Debug.Log("[TurnManager] StartNextTurn");
             if (_turnQueue.Count == 0)
             {
                 // Обработка конца игры
@@ -119,13 +120,13 @@ namespace _EventBus.Scripts.Game.Managers
 
         private void OnHeroDied(DiedEvent evt)
         {
+            Debug.Log("[TurnManager] OnHeroDied");
             // Удаление погибшего героя из очереди
-            var deadHero = evt.Target.HeroType;
             var newQueue = new Queue<IHeroEntity>();
             while (_turnQueue.Count > 0)
             {
                 var entity = _turnQueue.Dequeue();
-                if (entity.HeroType != deadHero)
+                if (entity.HeroType != evt.Target.HeroType)
                 {
                     newQueue.Enqueue(entity);
                 }
