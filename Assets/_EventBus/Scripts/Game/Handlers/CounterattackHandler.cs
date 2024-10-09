@@ -1,6 +1,8 @@
 using System;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Effects;
+using _EventBus.Scripts.Players.Abilities;
+using _EventBus.Scripts.Players.Abilities.Base;
 using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -30,6 +32,10 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private async UniTask OnCounterattack(CounterattackEvent evt)
         {
+            if (evt.Target.TryGetComponent<IAbility>(out var ability) &&
+                ability is UnpunishedStrikeAbility)
+                return;
+            
             if (!evt.Attacker.TryGetComponent(out AttackComponent attackComponent))
                 return;
             
