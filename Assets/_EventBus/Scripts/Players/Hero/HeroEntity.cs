@@ -4,6 +4,7 @@ using _EventBus.Scripts.Players.Abilities;
 using _EventBus.Scripts.Players.Abilities.Base;
 using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Player;
+using Sirenix.Utilities;
 using UnityEngine;
 using Random = System.Random;
 
@@ -36,6 +37,8 @@ namespace _EventBus.Scripts.Players.Hero
 
         public AudioClip StartTurnClip()
         {
+            if (_config.clipsStartTurn.IsNullOrEmpty()) return null;
+            
             var count = _config.clipsStartTurn.Length;
             return _config.clipsStartTurn[_random.Next(count)];
         }
@@ -44,6 +47,8 @@ namespace _EventBus.Scripts.Players.Hero
 
         public AudioClip AbilityClip()
         {
+            if (_config.clipsAbility.IsNullOrEmpty()) return default;
+            
             var count = _config.clipsAbility.Length;
             return _config.clipsAbility[_random.Next(count)];
         }

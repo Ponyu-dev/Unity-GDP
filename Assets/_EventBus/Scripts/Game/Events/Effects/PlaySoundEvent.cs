@@ -1,12 +1,13 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace _EventBus.Scripts.Game.Events.Effects
 {
     public class PlaySoundEvent
     {
-        public AudioClip Clip { get; private set; }
+        [CanBeNull] public AudioClip Clip { get; private set; }
         
-        public PlaySoundEvent(AudioClip clip)
+        public PlaySoundEvent([CanBeNull] AudioClip clip)
         {
             Clip = clip;
         }
