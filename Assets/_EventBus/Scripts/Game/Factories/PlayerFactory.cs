@@ -60,7 +60,7 @@ namespace _EventBus.Scripts.Game.Factories
             _resolver = resolver;
             
             _eventBus.Subscribe<TurnStartedEvent>(OnTurnStarted);
-            _eventBus.Subscribe<AttackedAnimEvent>(OnAttackedView);
+            _eventBus.Subscribe<AttackedAnimEvent>(OnAttackedAnim);
             //_eventBus.Subscribe<AttackedEvent>(OnAttacked);
             _eventBus.Subscribe<DealDamageEvent>(OnDealDamage);
             _eventBus.Subscribe<DiedEvent>(OnDied);
@@ -76,7 +76,7 @@ namespace _EventBus.Scripts.Game.Factories
                 attacker.SetActive(true);
         }
 
-        private async void OnAttackedView(AttackedAnimEvent evt)
+        private async void OnAttackedAnim(AttackedAnimEvent evt)
         {
             var attackerType = evt.Attacker.HeroType;
             var targetType = evt.Target.HeroType;
@@ -163,7 +163,7 @@ namespace _EventBus.Scripts.Game.Factories
             _resolver?.Dispose();
             
             _eventBus.Unsubscribe<TurnStartedEvent>(OnTurnStarted);
-            _eventBus.Unsubscribe<AttackedAnimEvent>(OnAttackedView);
+            _eventBus.Unsubscribe<AttackedAnimEvent>(OnAttackedAnim);
             //_eventBus.Unsubscribe<AttackedEvent>(OnAttacked);
             _eventBus.Unsubscribe<DealDamageEvent>(OnDealDamage);
             _eventBus.Unsubscribe<DiedEvent>(OnDied);
