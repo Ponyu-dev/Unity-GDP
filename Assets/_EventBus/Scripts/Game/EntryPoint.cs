@@ -1,5 +1,6 @@
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Game.Handlers;
+using _EventBus.Scripts.Game.Handlers.Abilities;
 using _EventBus.Scripts.Game.Handlers.Effects;
 using _EventBus.Scripts.Game.Managers;
 using _EventBus.Scripts.Game.Presenters;
@@ -41,6 +42,7 @@ namespace _EventBus.Scripts.Game
                 .AsSelf();
 
             ConfigureHandlers(builder);
+            ConfigureAbilityHandlers(builder);
                 
             builder.Register<PlayerFactory>(Lifetime.Singleton)
                 .WithParameter("prefabHeroView", prefabHeroView)
@@ -70,7 +72,11 @@ namespace _EventBus.Scripts.Game
             builder.Register<DealDamageHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<DiedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<TurnEndedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        }
 
+        private void ConfigureAbilityHandlers(IContainerBuilder builder)
+        {
+            builder.Register<AbilityTurnEndHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
     }
 }

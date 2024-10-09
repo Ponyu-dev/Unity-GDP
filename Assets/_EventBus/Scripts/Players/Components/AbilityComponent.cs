@@ -1,8 +1,8 @@
-using _EventBus.Scripts.Players.Abilities;
+using _EventBus.Scripts.Players.Abilities.Base;
 
 namespace _EventBus.Scripts.Players.Components
 {
-    public struct AbilityComponent
+    /*public struct AbilityComponent
     {
         public IAbility Ability { get; private set; }
 
@@ -10,5 +10,5 @@ namespace _EventBus.Scripts.Players.Components
         {
             Ability = ability;
         }
-    }
+    }*/
 }

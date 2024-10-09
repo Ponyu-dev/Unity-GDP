@@ -1,6 +1,7 @@
 using System;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Effects;
+using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using VContainer.Unity;
@@ -29,8 +30,11 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private async UniTask OnHeroAttacked(AttackedEvent evt)
         {
+            if (!evt.Attacker.TryGetComponent(out AttackComponent attackComponent))
+                return;
+            
             await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Attacker, evt.Target));
-            await _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, evt.Target));
+            await _eventBus.RaiseEvent(new DealDamageEvent(evt.Target, attackComponent.Value));
             await UniTask.Delay(1000);
             await _eventBus.RaiseEvent(new CounterattackEvent(evt.Target, evt.Attacker));
         }

@@ -34,6 +34,7 @@ namespace _EventBus.Scripts.Game.Managers
             _heroFactory = heroFactory;
             
             _eventBus.Subscribe<DiedEvent>(OnHeroDied);
+            //TODO заменить на NextHeroEvent
             _eventBus.Subscribe<TurnEndedEvent>(OnTurnEnded);
         }
 

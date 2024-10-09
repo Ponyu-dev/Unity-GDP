@@ -1,4 +1,5 @@
 using _EventBus.Scripts.Players.Abilities;
+using _EventBus.Scripts.Players.Abilities.Base;
 using UnityEngine;
 
 namespace _EventBus.Scripts.Players.Hero

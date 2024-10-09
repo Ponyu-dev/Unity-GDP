@@ -1,8 +1,8 @@
 using System;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Abilities;
+using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Game.Factories;
-using _EventBus.Scripts.Game.Presenters;
 using _EventBus.Scripts.Players.Abilities;
 using _EventBus.Scripts.Players.Abilities.Base;
 using _EventBus.Scripts.Players.Components;
@@ -12,16 +12,16 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace _EventBus.Scripts.Game.Handlers
+namespace _EventBus.Scripts.Game.Handlers.Abilities
 {
     [UsedImplicitly]
-    public class TurnEndedHandler : IInitializable, IDisposable
+    public class AbilityTurnEndHandler : IInitializable, IDisposable
     {
         private readonly EventBus _eventBus;
         private readonly IHeroFactory _heroFactory;
         
         [Inject]
-        public TurnEndedHandler(
+        public AbilityTurnEndHandler(
             EventBus eventBus,
             IHeroFactory heroFactory)
         {
@@ -31,27 +31,27 @@ namespace _EventBus.Scripts.Game.Handlers
         
         public void Initialize()
         {
-            _eventBus.Subscribe<TurnEndedEvent>(OnHeroTurnEnded);
+            _eventBus.Subscribe<AbilityTurnEndEvent>(OnAbilityTurnEnded);
         }
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<TurnEndedEvent>(OnHeroTurnEnded);
+            _eventBus.Unsubscribe<AbilityTurnEndEvent>(OnAbilityTurnEnded);
         }
-
-        private async UniTask OnHeroTurnEnded(TurnEndedEvent evt)
+        
+        private async UniTask OnAbilityTurnEnded(AbilityTurnEndEvent evt)
         {
-            Debug.Log($"[TurnEndedHandler] OnHeroTurnEnded {evt.Current.HeroType}");
-            
             if (evt.Current.TryGetComponent<IAbility>(out var ability) &&
-                ability is IAbilityTurnEnd turnEndAbility)
+                ability is LastStrikeAbility turnEndAbility)
             {
-                await _eventBus.RaiseEvent(new AbilityTurnEndEvent(evt.Current));
+                Debug.Log($"[AbilityTurnEndHandler] LastStrikeAbility {evt.Current.HeroType}");
+                var targetHero = _heroFactory.GetRandomEntity(evt.Current);
+                await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Current, targetHero));
+                await _eventBus.RaiseEvent(new DealDamageEvent(targetHero, turnEndAbility.Damage));
                 await UniTask.Delay(1000);
             }
-
-            if (evt.Current.TryGetComponent<IHeroPresenter>(out var presenter))
-                presenter.SetActive(false);
+            
+            
         }
     }
 }

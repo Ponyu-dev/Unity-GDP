@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace _EventBus.Scripts.Players.Abilities
+namespace _EventBus.Scripts.Players.Abilities.Base
 {
     internal static class AbilityFactory
     {

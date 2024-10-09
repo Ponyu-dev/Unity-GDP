@@ -34,15 +34,13 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private async UniTask OnDealDamaged(DealDamageEvent evt)
         {
-            var attacker = evt.Attacker;
             var target = evt.Target;
 
             Debug.Log("[DealDamageHandler] OnDealDamaged");
-            if (!target.TryGetComponent(out HitPointsComponent hitPointsComponent) ||
-                !attacker.TryGetComponent(out AttackComponent attackComponent))
+            if (!target.TryGetComponent(out HitPointsComponent hitPointsComponent))
                 return;
 
-            hitPointsComponent.Value -= attackComponent.Value;
+            hitPointsComponent.Value -= evt.Damage;
 
             if (hitPointsComponent.Value <= 0)
                 await _eventBus.RaiseEvent(new DiedEvent(target));

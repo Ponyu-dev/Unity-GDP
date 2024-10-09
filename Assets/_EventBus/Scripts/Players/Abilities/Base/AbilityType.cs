@@ -1,4 +1,4 @@
-namespace _EventBus.Scripts.Players.Abilities
+namespace _EventBus.Scripts.Players.Abilities.Base
 {
     public enum AbilityType
     {

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using _EventBus.Scripts.Players.Abilities;
+using _EventBus.Scripts.Players.Abilities.Base;
 using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Player;
 using UnityEngine;
@@ -43,7 +45,8 @@ namespace _EventBus.Scripts.Players.Hero
 
         public AudioClip AbilityClip()
         {
-            throw new NotImplementedException();
+            var count = Config.clipsAbility.Length;
+            return Config.clipsAbility[_random.Next(count)];
         }
 
         public AudioClip DeathClip() => Config.clipsDeath;
@@ -58,6 +61,7 @@ namespace _EventBus.Scripts.Players.Hero
             {
                 { typeof(HitPointsComponent), new HitPointsComponent(Config.health) },
                 { typeof(AttackComponent), new AttackComponent(Config.damage) },
+                { typeof(IAbility), heroConfig.GetAbility()}
             };
             Debug.Log($"[HeroEntity] Constructor {PlayerType} {Config.type}");
         }
