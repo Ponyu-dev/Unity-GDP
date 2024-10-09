@@ -16,3 +16,16 @@ MonoBehaviour:
   type: 6
   damage: 30
   health: 30
+  clipsStartTurn:
+  - {fileID: 8300000, guid: a07129f97165b416ca5b98bf007d13ab, type: 3}
+  - {fileID: 8300000, guid: 37149f279272d4103a4bd4026c305fb9, type: 3}
+  - {fileID: 8300000, guid: 201df6a048cb448ccac478b26b990d93, type: 3}
+  - {fileID: 8300000, guid: d6bc3dfb7a20a49e6a8e0eda07246f8a, type: 3}
+  - {fileID: 8300000, guid: 11a383f73734c485b849b8833ccd79c6, type: 3}
+  - {fileID: 8300000, guid: 24ea30ee053054a85b364e3e8d898895, type: 3}
+  - {fileID: 8300000, guid: 5939d99aa7ba34992be48ead7acab59f, type: 3}
+  - {fileID: 8300000, guid: 39a6ae64024a24d8b99fad8bc05e747e, type: 3}
+  - {fileID: 8300000, guid: 5a6f985f0b2cf4e3a9c76417ac4559d6, type: 3}
+  clipsLowHealth: {fileID: 8300000, guid: def0bb40c1b6e487793c7e472e79964d, type: 3}
+  clipsAbility: []
+  clipsDeath: {fileID: 8300000, guid: f39f9cf73887b47b79d98618433ecc22, type: 3}

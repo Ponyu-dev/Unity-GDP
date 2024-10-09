@@ -9,5 +9,10 @@ namespace _EventBus.Scripts.Players.Hero
         [SerializeField] public HeroType type;
         [SerializeField] public int damage;
         [SerializeField] public int health;
+
+        [SerializeField] public AudioClip[] clipsStartTurn;
+        [SerializeField] public AudioClip clipsLowHealth;
+        [SerializeField] public AudioClip[] clipsAbility;
+        [SerializeField] public AudioClip clipsDeath;
     }
 }
