@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Presenters;
 using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Hero;
 using _EventBus.Scripts.Players.Player;
-using Cysharp.Threading.Tasks;
 using UI;
 using UnityEngine;
 using VContainer;
