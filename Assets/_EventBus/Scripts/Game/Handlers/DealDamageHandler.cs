@@ -2,6 +2,8 @@ using System;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Abilities;
 using _EventBus.Scripts.Game.Events.Effects;
+using _EventBus.Scripts.Players.Abilities;
+using _EventBus.Scripts.Players.Abilities.Base;
 using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -40,6 +42,14 @@ namespace _EventBus.Scripts.Game.Handlers
             Debug.Log("[DealDamageHandler] OnDealDamaged");
             if (!target.TryGetComponent(out HitPointsComponent hitPointsComponent))
                 return;
+
+            if (target.TryGetComponent<IAbility>(out var ability) &&
+                ability is DivineShieldAbility)
+            {
+                target.RemoveComponent<IAbility>();
+                await _eventBus.RaiseEvent(new PlaySoundEvent(target.AbilityClip()));
+                return;
+            }
 
             hitPointsComponent.Value -= evt.Damage;
             

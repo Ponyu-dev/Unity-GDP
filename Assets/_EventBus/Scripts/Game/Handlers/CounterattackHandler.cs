@@ -32,6 +32,12 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private async UniTask OnCounterattack(CounterattackEvent evt)
         {
+            //TODO Скорее всего этого здесь не должно быть.
+            // Надо как то по другому обойти проблему. когда умерший котратакует.
+            if (evt.Attacker.TryGetComponent<HitPointsComponent>(out var hitPointsComponent) &&
+                hitPointsComponent.Value <= 0)
+                return;
+            
             if (evt.Target.TryGetComponent<IAbility>(out var ability) &&
                 ability is UnpunishedStrikeAbility)
                 return;
