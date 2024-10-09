@@ -1,3 +1,4 @@
+using _EventBus.Scripts.Players.Abilities;
 using UnityEngine;
 
 namespace _EventBus.Scripts.Players.Hero
@@ -14,5 +15,12 @@ namespace _EventBus.Scripts.Players.Hero
         [SerializeField] public AudioClip clipsLowHealth;
         [SerializeField] public AudioClip[] clipsAbility;
         [SerializeField] public AudioClip clipsDeath;
+
+        [SerializeField] public AbilityType abilityType;
+        
+        public IAbility GetAbility()
+        {
+            return AbilityFactory.GetAbility(abilityType);
+        }
     }
 }

@@ -29,3 +29,4 @@ MonoBehaviour:
   clipsLowHealth: {fileID: 8300000, guid: def0bb40c1b6e487793c7e472e79964d, type: 3}
   clipsAbility: []
   clipsDeath: {fileID: 8300000, guid: f39f9cf73887b47b79d98618433ecc22, type: 3}
+  abilityType: 4

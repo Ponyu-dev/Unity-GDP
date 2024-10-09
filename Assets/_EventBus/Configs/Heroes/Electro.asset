@@ -31,3 +31,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5394c6470fa594d1a96b89972712026e, type: 3}
   - {fileID: 8300000, guid: 02f04a1cc50a2457799df1aadd4d69c2, type: 3}
   clipsDeath: {fileID: 8300000, guid: 31a832b5ffe004b669c0b887d8e2b984, type: 3}
+  abilityType: 7
