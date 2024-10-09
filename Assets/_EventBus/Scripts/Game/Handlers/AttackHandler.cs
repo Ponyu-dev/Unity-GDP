@@ -25,9 +25,9 @@ namespace _EventBus.Scripts.Game.Handlers
             _eventBus.Unsubscribe<AttackedEvent>(OnHeroAttacked);
         }
 
-        private void OnHeroAttacked(AttackedEvent evt)
+        private async void OnHeroAttacked(AttackedEvent evt)
         {
-            _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, evt.Target));
+            await _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, evt.Target));
         }
     }
 }

@@ -95,6 +95,7 @@ namespace _EventBus.Scripts.Game.Managers
         public async UniTaskVoid StartTurn()
         {
             Debug.Log("[TurnManager] StartTurn");
+            //TODO надо добавить 3, 2, 1 на сцену. А не просто задержку в 3 секунды.
             await UniTask.Delay(3000);
             StartNextTurn();
         }
@@ -113,7 +114,7 @@ namespace _EventBus.Scripts.Game.Managers
             _turnQueue.Enqueue(currentEntity);
 
             //Запускаем у него старт хода.
-            _eventBus.RaiseEvent(new TurnStartedEvent(currentEntity));
+            _eventBus.RaiseEvent(new TurnStartedEvent(currentEntity)).Forget();
         }
 
         private void OnHeroDied(DiedEvent evt)

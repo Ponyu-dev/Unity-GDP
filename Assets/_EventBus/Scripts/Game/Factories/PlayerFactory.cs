@@ -62,21 +62,23 @@ namespace _EventBus.Scripts.Game.Factories
             _eventBus.Subscribe<TurnStartedEvent>(OnTurnStarted);
             _eventBus.Subscribe<AttackedAnimEvent>(OnAttackedAnim);
             //_eventBus.Subscribe<AttackedEvent>(OnAttacked);
-            _eventBus.Subscribe<DealDamageEvent>(OnDealDamage);
+            //_eventBus.Subscribe<DealDamageEvent>(OnDealDamage);
             _eventBus.Subscribe<DiedEvent>(OnDied);
             _eventBus.Subscribe<TurnEndedEvent>(OnTurnEnded);
         }
         
-        private void OnTurnStarted(TurnStartedEvent evt)
+        private UniTask OnTurnStarted(TurnStartedEvent evt)
         {
             var attackerHeroType = evt.CurrentHeroEntity.HeroType;
             Debug.Log($"[PlayerFactory] OnTurnStarted {attackerHeroType}");
             
             if (_heroPresenters.TryGetValue(attackerHeroType, out var attacker))
                 attacker.SetActive(true);
+
+            return default;
         }
 
-        private async void OnAttackedAnim(AttackedAnimEvent evt)
+        private async UniTask OnAttackedAnim(AttackedAnimEvent evt)
         {
             var attackerType = evt.Attacker.HeroType;
             var targetType = evt.Target.HeroType;
@@ -86,26 +88,24 @@ namespace _EventBus.Scripts.Game.Factories
                 return;
             
             await attacker.AnimateAttack(attackerType, target.GetHeroView());
-            _eventBus.RaiseEvent(new AttackedEvent(evt.Attacker, evt.Target));
+            await _eventBus.RaiseEvent(new AttackedEvent(evt.Attacker, evt.Target));
             attacker.SetActive(false);
         }
         
-        private void OnDealDamage(DealDamageEvent obj)
-        {
-            //Debug.Log($"[PlayerFactory] OnDealDamage {obj.Target.HeroType}");
-        }
-        
-        private void OnDied(DiedEvent obj)
+        private UniTask OnDied(DiedEvent obj)
         {
             Debug.Log($"[PlayerFactory] OnDied {obj.Target}");
+            return default;
         }
 
-        private void OnTurnEnded(TurnEndedEvent obj)
+        private UniTask OnTurnEnded(TurnEndedEvent obj)
         {
             var heroType = obj.Current.HeroType;
             Debug.Log($"[PlayerFactory] OnTurnEnded {heroType}");
             if (_heroPresenters.TryGetValue(heroType, out var hero))
                 hero.SetActive(false);
+
+            return default;
         }
 
         public void CreatePlayerHeroes()
@@ -165,7 +165,7 @@ namespace _EventBus.Scripts.Game.Factories
             _eventBus.Unsubscribe<TurnStartedEvent>(OnTurnStarted);
             _eventBus.Unsubscribe<AttackedAnimEvent>(OnAttackedAnim);
             //_eventBus.Unsubscribe<AttackedEvent>(OnAttacked);
-            _eventBus.Unsubscribe<DealDamageEvent>(OnDealDamage);
+            //_eventBus.Unsubscribe<DealDamageEvent>(OnDealDamage);
             _eventBus.Unsubscribe<DiedEvent>(OnDied);
             _eventBus.Unsubscribe<TurnEndedEvent>(OnTurnEnded);
         }

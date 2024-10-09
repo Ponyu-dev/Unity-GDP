@@ -11,7 +11,20 @@ namespace _EventBus.Scripts
     {
         private readonly Dictionary<Type, IEventHandlerCollection> _handlers = new();
 
-        public void Subscribe<T>(Action<T> handler)
+        public void Subscribe<T>(Action<T> handler) // Синхронный обработчик
+        {
+            var evtType = typeof(T);
+
+            if (!_handlers.TryGetValue(evtType, out var handlerCollection))
+            {
+                handlerCollection = new EventHandlerCollection<T>();
+                _handlers[evtType] = handlerCollection;
+            }
+
+            handlerCollection.Subscribe(handler);
+        }
+
+        public void Subscribe<T>(Func<T, UniTask> handler) // Асинхронный обработчик
         {
             var evtType = typeof(T);
 
@@ -33,41 +46,7 @@ namespace _EventBus.Scripts
             }
         }
 
-        public void RaiseEvent<T>(T evt)
-        {
-            var evtType = evt.GetType();
-            Debug.Log(evtType);
-
-            if (!_handlers.TryGetValue(evtType, out var handlerCollection))
-            {
-                Debug.LogWarning($"No subscribers found for type: {evtType}");
-                return;
-            }
-
-            try
-            {
-                handlerCollection.RaiseEvent(evt);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Error occurred while raising event: {ex}");
-            }
-        }
-        
-        public void Subscribe<T>(Func<T, UniTask> handler) // Изменено на Func<T, UniTask>
-        {
-            var evtType = typeof(T);
-
-            if (!_handlers.TryGetValue(evtType, out var handlerCollection))
-            {
-                handlerCollection = new EventHandlerCollection<T>();
-                _handlers[evtType] = handlerCollection;
-            }
-
-            handlerCollection.Subscribe(handler);
-        }
-
-        public void Unsubscribe<T>(Func<T, UniTask> handler) // Изменено на Func<T, UniTask>
+        public void Unsubscribe<T>(Func<T, UniTask> handler)
         {
             var evtType = typeof(T);
             if (_handlers.TryGetValue(evtType, out var handlerCollection))
@@ -75,8 +54,8 @@ namespace _EventBus.Scripts
                 handlerCollection.Unsubscribe(handler);
             }
         }
-        
-        public async UniTask AsyncRaiseEvent<T>(T evt)
+
+        public async UniTask RaiseEvent<T>(T evt)
         {
             var evtType = evt.GetType();
             Debug.Log(evtType);
@@ -89,7 +68,7 @@ namespace _EventBus.Scripts
 
             try
             {
-                await handlerCollection.AsyncRaiseEvent(evt);
+                await handlerCollection.RaiseEventWithDelay(evt); // Ожидание завершения всех асинхронных обработчиков
             }
             catch (Exception ex)
             {
@@ -101,8 +80,7 @@ namespace _EventBus.Scripts
         {
             void Subscribe(Delegate handler);
             void Unsubscribe(Delegate handler);
-            void RaiseEvent<TEvent>(TEvent evt);
-            UniTask AsyncRaiseEvent<TEvent>(TEvent evt);
+            UniTask RaiseEventWithDelay<TEvent>(TEvent evt); // Асинхронный вызов
         }
 
         private sealed class EventHandlerCollection<T> : IEventHandlerCollection
@@ -119,28 +97,20 @@ namespace _EventBus.Scripts
                 _handlers.Remove(handler);
             }
 
-            public void RaiseEvent<TEvent>(TEvent evt)
+            public async UniTask RaiseEventWithDelay<TEvent>(TEvent evt)
             {
                 if (evt is not T concreteEvent) return;
 
                 foreach (var handler in _handlers)
                 {
-                    if (handler is Action<T> action)
-                        action.Invoke(concreteEvent);
-                }
-            }
-            
-            public async UniTask AsyncRaiseEvent<TEvent>(TEvent evt)
-            {
-                if (evt is not T concreteEvent) return;
-
-                foreach (var handler in _handlers)
-                {
-                    if (handler is not Action<T> action) continue;
-                    
-                    if (handler is Func<T, UniTask> asyncHandler)
+                    if (handler is Action<T> syncHandler)
                     {
-                        // Ожидание завершения анимации или другой асинхронной задачи
+                        // Вызов синхронного обработчика
+                        syncHandler.Invoke(concreteEvent);
+                    }
+                    else if (handler is Func<T, UniTask> asyncHandler)
+                    {
+                        // Вызов асинхронного обработчика
                         await asyncHandler(concreteEvent);
                     }
                 }

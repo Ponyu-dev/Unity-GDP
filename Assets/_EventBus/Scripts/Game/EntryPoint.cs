@@ -1,5 +1,6 @@
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Game.Handlers;
+using _EventBus.Scripts.Game.Handlers.Effects;
 using _EventBus.Scripts.Game.Managers;
 using _EventBus.Scripts.Game.Presenters;
 using _EventBus.Scripts.Players.Hero;
@@ -33,13 +34,14 @@ namespace _EventBus.Scripts.Game
                 .AsSelf();
             
             builder.Register<EventBus>(Lifetime.Singleton).AsSelf();
+            builder.Register<AudioManagers>(Lifetime.Singleton).AsSelf();
             
             builder.Register<HeroFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
 
+            builder.Register<PlaySoundHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<TurnStartedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<AttackedAnimHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AttackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<DealDamageHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<TurnEndedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();

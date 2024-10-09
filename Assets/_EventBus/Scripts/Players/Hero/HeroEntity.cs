@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Player;
 using UnityEngine;
+using Random = System.Random;
 
 namespace _EventBus.Scripts.Players.Hero
 {
@@ -11,6 +12,12 @@ namespace _EventBus.Scripts.Players.Hero
     {
         public PlayerType PlayerType { get; }
         public HeroType HeroType { get; }
+        public HeroConfig Config { get; }
+
+        public AudioClip StartTurnClip();
+        public AudioClip LowHealthClip();
+        public AudioClip AbilityClip();
+        public AudioClip DeathClip();
         public void AddComponent<T>(T component);
         public void RemoveComponent<T>();
         public bool HasComponent<T>();
@@ -21,20 +28,39 @@ namespace _EventBus.Scripts.Players.Hero
     
     public class HeroEntity : IHeroEntity
     {
+        private readonly Random _random = new();
+        
         public PlayerType PlayerType { get; private set; }
-        public HeroType HeroType { get; private set; }
+        public HeroType HeroType => Config.type;
+        public HeroConfig Config { get; private set; }
+
+        public AudioClip StartTurnClip()
+        {
+            var count = Config.clipsStartTurn.Length;
+            return Config.clipsStartTurn[_random.Next(count)];
+        }
+
+        public AudioClip LowHealthClip() => Config.clipsLowHealth;
+
+        public AudioClip AbilityClip()
+        {
+            throw new NotImplementedException();
+        }
+
+        public AudioClip DeathClip() => Config.clipsDeath;
+
         private readonly Dictionary<Type, object> _components;
         
         public HeroEntity(PlayerType playerType, HeroConfig heroConfig)
         {
             PlayerType = playerType;
-            this.HeroType = heroConfig.type;
+            Config = heroConfig;
             _components = new Dictionary<Type, object>()
             {
-                { typeof(HitPointsComponent), new HitPointsComponent(heroConfig.health) },
-                { typeof(AttackComponent), new AttackComponent(heroConfig.damage) },
+                { typeof(HitPointsComponent), new HitPointsComponent(Config.health) },
+                { typeof(AttackComponent), new AttackComponent(Config.damage) },
             };
-            Debug.Log($"[HeroEntity] Constructor {PlayerType} {heroConfig.type}");
+            Debug.Log($"[HeroEntity] Constructor {PlayerType} {Config.type}");
         }
 
         public void AddComponent<T>(T component)

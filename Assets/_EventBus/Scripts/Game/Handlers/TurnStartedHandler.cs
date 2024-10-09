@@ -1,6 +1,8 @@
 using System;
 using _EventBus.Scripts.Game.Events;
+using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Game.Factories;
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 using VContainer;
@@ -33,13 +35,15 @@ namespace _EventBus.Scripts.Game.Handlers
             _eventBus.Unsubscribe<TurnStartedEvent>(OnHeroTurnStarted);
         }
 
-        private void OnHeroTurnStarted(TurnStartedEvent evt)
+        private async UniTask OnHeroTurnStarted(TurnStartedEvent evt)
         {
-            Debug.Log($"Test TurnStartedHandler OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
+            Debug.Log($"[TurnStartedHandler] OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
+
+            await _eventBus.RaiseEvent(new PlaySoundEvent(evt.CurrentHeroEntity.StartTurnClip()));
             
             var targetHero = _heroFactory.GetRandomEntity(evt.CurrentHeroEntity);
             var attackerHero = _heroFactory.GetEntity(evt.CurrentHeroEntity.HeroType);
-            _eventBus.RaiseEvent(new AttackedAnimEvent(attackerHero, targetHero));
+            await _eventBus.RaiseEvent(new AttackedAnimEvent(attackerHero, targetHero));
         }
     }
 }
