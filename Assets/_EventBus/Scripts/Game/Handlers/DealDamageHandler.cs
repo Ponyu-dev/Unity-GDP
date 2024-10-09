@@ -1,5 +1,6 @@
 using System;
 using _EventBus.Scripts.Game.Events;
+using _EventBus.Scripts.Game.Events.Abilities;
 using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
@@ -41,6 +42,8 @@ namespace _EventBus.Scripts.Game.Handlers
                 return;
 
             hitPointsComponent.Value -= evt.Damage;
+            
+            await _eventBus.RaiseEvent(new AbilityLifeStealChanceEvent(evt.Attacker, evt.Damage));
 
             if (hitPointsComponent.Value <= 0)
                 await _eventBus.RaiseEvent(new DiedEvent(target));

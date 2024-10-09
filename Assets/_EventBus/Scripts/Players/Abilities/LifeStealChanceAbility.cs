@@ -7,6 +7,7 @@ namespace _EventBus.Scripts.Players.Abilities
     [Serializable]
     public class LifeStealChanceAbility : IAbilityAttack
     {
-        
+        private readonly Random _random = new Random();
+        public bool IsSuccessful => _random.NextDouble() < 0.5;
     }
 }

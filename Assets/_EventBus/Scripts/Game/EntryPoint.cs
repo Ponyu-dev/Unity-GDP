@@ -77,6 +77,7 @@ namespace _EventBus.Scripts.Game
         private void ConfigureAbilityHandlers(IContainerBuilder builder)
         {
             builder.Register<AbilityTurnEndHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AbilityLifeStealChanceHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
     }
 }

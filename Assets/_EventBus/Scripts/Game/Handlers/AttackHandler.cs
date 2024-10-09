@@ -53,7 +53,7 @@ namespace _EventBus.Scripts.Game.Handlers
             
             Debug.Log($"[AttackHandler] OnHeroAttacked target {target.HeroType}");
             await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Attacker, target));
-            await _eventBus.RaiseEvent(new DealDamageEvent(target, attackComponent.Value));
+            await _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, target, attackComponent.Value));
 
             await UniTask.Delay(1000);
 

@@ -5,7 +5,6 @@ using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Players.Abilities;
 using _EventBus.Scripts.Players.Abilities.Base;
-using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -48,7 +47,7 @@ namespace _EventBus.Scripts.Game.Handlers.Abilities
                 await _eventBus.RaiseEvent(new PlaySoundEvent(evt.Current.AbilityClip()));
                 var targetHero = _heroFactory.GetRandomEntity(evt.Current);
                 await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Current, targetHero));
-                await _eventBus.RaiseEvent(new DealDamageEvent(targetHero, turnEndAbility.Damage));
+                await _eventBus.RaiseEvent(new DealDamageEvent(evt.Current, targetHero, turnEndAbility.Damage));
             }
         }
     }

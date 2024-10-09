@@ -43,7 +43,7 @@ namespace _EventBus.Scripts.Game.Handlers
             }
 
             await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Attacker, evt.Target));
-            await _eventBus.RaiseEvent(new DealDamageEvent(evt.Target, attackComponent.Value));
+            await _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, evt.Target, attackComponent.Value));
         }
     }
 }
