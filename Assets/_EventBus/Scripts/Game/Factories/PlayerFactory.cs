@@ -61,46 +61,33 @@ namespace _EventBus.Scripts.Game.Factories
             
             _eventBus.Subscribe<TurnStartedEvent>(OnTurnStarted);
             _eventBus.Subscribe<AttackedAnimEvent>(OnAttackedView);
-            _eventBus.Subscribe<AttackedEvent>(OnAttacked);
+            //_eventBus.Subscribe<AttackedEvent>(OnAttacked);
             _eventBus.Subscribe<DealDamageEvent>(OnDealDamage);
             _eventBus.Subscribe<DiedEvent>(OnDied);
             _eventBus.Subscribe<TurnEndedEvent>(OnTurnEnded);
         }
         
-        private void OnTurnStarted(TurnStartedEvent obj)
+        private void OnTurnStarted(TurnStartedEvent evt)
         {
-            var attackerHeroType = obj.CurrentHeroEntity.HeroType;
+            var attackerHeroType = evt.CurrentHeroEntity.HeroType;
             Debug.Log($"[PlayerFactory] OnTurnStarted {attackerHeroType}");
             
-            var targetHero = _heroFactory.GetRandomEntity(obj.CurrentHeroEntity);
-            if (!_heroPresenters.TryGetValue(attackerHeroType, out var attacker))
-                return;
-            
-            var attackerHero = _heroFactory.GetEntity(obj.CurrentHeroEntity.HeroType);
-            attacker.SetActive(true);
-            _eventBus.RaiseEvent(new AttackedAnimEvent(attackerHero, targetHero));
+            if (_heroPresenters.TryGetValue(attackerHeroType, out var attacker))
+                attacker.SetActive(true);
         }
 
-        private async void OnAttackedView(AttackedAnimEvent obj)
+        private async void OnAttackedView(AttackedAnimEvent evt)
         {
-            var attackerType = obj.Attacker.HeroType;
-            var targetType = obj.Target.HeroType;
-            Debug.Log($"[PlayerFactory] OnAttackedView Attacker = {attackerType}");
-            Debug.Log($"[PlayerFactory] OnAttackedView Target = {targetType}");
+            var attackerType = evt.Attacker.HeroType;
+            var targetType = evt.Target.HeroType;
 
             if (!_heroPresenters.TryGetValue(attackerType, out var attacker) ||
                 !_heroPresenters.TryGetValue(targetType, out var target)) 
                 return;
             
             await attacker.AnimateAttack(attackerType, target.GetHeroView());
-            _eventBus.RaiseEvent(new AttackedEvent(_heroFactory.GetEntity(attackerType), _heroFactory.GetEntity(targetType)));
+            _eventBus.RaiseEvent(new AttackedEvent(evt.Attacker, evt.Target));
             attacker.SetActive(false);
-        }
-
-        private void OnAttacked(AttackedEvent obj)
-        {
-            Debug.Log($"[PlayerFactory] OnAttacked Attacker = {obj.Attacker.HeroType}");
-            Debug.Log($"[PlayerFactory] OnAttacked Target = {obj.Target.HeroType}");
         }
         
         private void OnDealDamage(DealDamageEvent obj)
@@ -140,7 +127,6 @@ namespace _EventBus.Scripts.Game.Factories
         {
             var playerType = playerConfig.playerType;
             Debug.Log($"[PlayerFactory] CreatePlayer {playerType}");
-            //List<IHeroPresenter> heroPresenters = new();
 
             for (int index = 0, count = playerConfig.heroTypes.Length; index < count; index++)
             {
@@ -148,8 +134,6 @@ namespace _EventBus.Scripts.Game.Factories
                 if (_heroPresenters.ContainsKey(heroType)) continue;
                 _heroPresenters.Add(heroType, CreateHeroPresenter(playerType, _heroesConfig.GetHeroConfig(heroType), container));
             }
-
-            //_heroPresenters.Add(playerType, heroPresenters);
         }
 
         private IHeroPresenter CreateHeroPresenter(
@@ -180,7 +164,7 @@ namespace _EventBus.Scripts.Game.Factories
             
             _eventBus.Unsubscribe<TurnStartedEvent>(OnTurnStarted);
             _eventBus.Unsubscribe<AttackedAnimEvent>(OnAttackedView);
-            _eventBus.Unsubscribe<AttackedEvent>(OnAttacked);
+            //_eventBus.Unsubscribe<AttackedEvent>(OnAttacked);
             _eventBus.Unsubscribe<DealDamageEvent>(OnDealDamage);
             _eventBus.Unsubscribe<DiedEvent>(OnDied);
             _eventBus.Unsubscribe<TurnEndedEvent>(OnTurnEnded);

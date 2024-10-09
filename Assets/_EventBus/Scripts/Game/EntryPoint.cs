@@ -39,8 +39,10 @@ namespace _EventBus.Scripts.Game
                 .AsSelf();
 
             builder.Register<TurnStartedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AttackedAnimHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AttackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<DealDamageHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<TurnEndedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             
             builder.Register<PlayerFactory>(Lifetime.Singleton)
                 .WithParameter("prefabHeroView", prefabHeroView)

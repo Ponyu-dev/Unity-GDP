@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Hero;
 using _EventBus.Scripts.Players.Player;
 using UnityEngine;
@@ -53,9 +54,12 @@ namespace _EventBus.Scripts.Game.Factories
 
         public IHeroEntity GetRandomEntity(IHeroEntity hero)
         {
-            // Отбираем всех героев, которые не являются текущим и принадлежат другому игроку
+            // Отбираем всех Живых героев, которые не являются текущим и принадлежат другому игроку
             var validHeroes = _entity.Values
-                .Where(it => it.HeroType != hero.HeroType && it.PlayerType != hero.PlayerType)
+                .Where(it => it.GetComponent<HitPointsComponent>().Value > 0)
+                .Where(it => 
+                    it.HeroType != hero.HeroType && 
+                    it.PlayerType != hero.PlayerType)
                 .ToList();
 
             // Если нет подходящих героев, возвращаем null или выбрасываем исключение

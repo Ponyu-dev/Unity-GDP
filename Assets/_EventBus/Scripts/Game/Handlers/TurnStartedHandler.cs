@@ -19,26 +19,27 @@ namespace _EventBus.Scripts.Game.Handlers
             EventBus eventBus,
             IHeroFactory heroFactory)
         {
-            Debug.Log("TurnStartedHandler Constructor");
             _eventBus = eventBus;
             _heroFactory = heroFactory;
         }
         
         public void Initialize()
         {
-            Debug.Log("TurnStartedHandler Initialize");
             _eventBus.Subscribe<TurnStartedEvent>(OnHeroTurnStarted);
         }
 
         public void Dispose()
         {
-            Debug.Log("TurnStartedHandler Dispose");
             _eventBus.Unsubscribe<TurnStartedEvent>(OnHeroTurnStarted);
         }
 
         private void OnHeroTurnStarted(TurnStartedEvent evt)
         {
-            Debug.Log($"TurnStartedHandler OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
+            Debug.Log($"Test TurnStartedHandler OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
+            
+            var targetHero = _heroFactory.GetRandomEntity(evt.CurrentHeroEntity);
+            var attackerHero = _heroFactory.GetEntity(evt.CurrentHeroEntity.HeroType);
+            _eventBus.RaiseEvent(new AttackedAnimEvent(attackerHero, targetHero));
         }
     }
 }

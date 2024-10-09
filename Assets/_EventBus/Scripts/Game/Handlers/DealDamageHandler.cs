@@ -43,6 +43,7 @@ namespace _EventBus.Scripts.Game.Handlers
                _eventBus.RaiseEvent(new DiedEvent(evt.Target));
             else
             {
+                //TODO может быть после нанесения урона запускать событие ответного удара.
                 //_eventBus.RaiseEvent(new AttackedAnimEvent(evt.Target, evt.Attacker));
                 _eventBus.RaiseEvent(new TurnEndedEvent(evt.Attacker));
             }

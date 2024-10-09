@@ -6,28 +6,28 @@ using VContainer.Unity;
 namespace _EventBus.Scripts.Game.Handlers
 {
     [UsedImplicitly]
-    public class AttackHandler : IInitializable, IDisposable
+    public class AttackedAnimHandler : IInitializable, IDisposable
     {
         private readonly EventBus _eventBus;
         
-        public AttackHandler(EventBus eventBus)
+        public AttackedAnimHandler(EventBus eventBus)
         {
             _eventBus = eventBus;
         }
         
         public void Initialize()
         {
-            _eventBus.Subscribe<AttackedEvent>(OnHeroAttacked);
+            _eventBus.Subscribe<AttackedAnimEvent>(OnHeroAttacked);
         }
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<AttackedEvent>(OnHeroAttacked);
+            _eventBus.Unsubscribe<AttackedAnimEvent>(OnHeroAttacked);
         }
 
-        private void OnHeroAttacked(AttackedEvent evt)
+        private void OnHeroAttacked(AttackedAnimEvent evt)
         {
-            _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, evt.Target));
+            //_eventBus.RaiseEvent(new AttackedEvent(evt.Attacker, evt.Target));
         }
     }
 }
