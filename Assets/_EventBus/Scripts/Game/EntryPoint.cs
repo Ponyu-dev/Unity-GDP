@@ -40,14 +40,8 @@ namespace _EventBus.Scripts.Game
                 .AsImplementedInterfaces()
                 .AsSelf();
 
-            builder.Register<PlaySoundHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<TurnStartedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<AttackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<AttackedAnimHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<DealDamageHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<DiedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<TurnEndedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            
+            ConfigureHandlers(builder);
+                
             builder.Register<PlayerFactory>(Lifetime.Singleton)
                 .WithParameter("prefabHeroView", prefabHeroView)
                 .WithParameter("playersConfigRed", playersConfigRed)
@@ -64,6 +58,19 @@ namespace _EventBus.Scripts.Game
             builder.Register<GameManager>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
+        }
+
+        private void ConfigureHandlers(IContainerBuilder builder)
+        {
+            builder.Register<PlaySoundHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<TurnStartedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AttackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<CounterattackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AttackedAnimHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<DealDamageHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<DiedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<TurnEndedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
         }
     }
 }

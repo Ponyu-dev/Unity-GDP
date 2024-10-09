@@ -8,31 +8,29 @@ using VContainer.Unity;
 namespace _EventBus.Scripts.Game.Handlers
 {
     [UsedImplicitly]
-    public class AttackHandler : IInitializable, IDisposable
+    public class CounterattackHandler : IInitializable, IDisposable
     {
         private readonly EventBus _eventBus;
         
-        public AttackHandler(EventBus eventBus)
+        public CounterattackHandler(EventBus eventBus)
         {
             _eventBus = eventBus;
         }
         
         public void Initialize()
         {
-            _eventBus.Subscribe<AttackedEvent>(OnHeroAttacked);
+            _eventBus.Subscribe<CounterattackEvent>(OnCounterattack);
         }
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<AttackedEvent>(OnHeroAttacked);
+            _eventBus.Unsubscribe<CounterattackEvent>(OnCounterattack);
         }
 
-        private async UniTask OnHeroAttacked(AttackedEvent evt)
+        private async UniTask OnCounterattack(CounterattackEvent evt)
         {
             await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Attacker, evt.Target));
             await _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, evt.Target));
-            await UniTask.Delay(1000);
-            await _eventBus.RaiseEvent(new CounterattackEvent(evt.Target, evt.Attacker));
         }
     }
 }

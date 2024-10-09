@@ -47,7 +47,10 @@ namespace _EventBus.Scripts.Game.Handlers
             
             var targetHero = _heroFactory.GetRandomEntity(evt.CurrentHeroEntity);
             var attackerHero = _heroFactory.GetEntity(evt.CurrentHeroEntity.HeroType);
-            await _eventBus.RaiseEvent(new AttackedAnimEvent(attackerHero, targetHero));
+            
+            await _eventBus.RaiseEvent(new AttackedEvent(attackerHero, targetHero));
+            await UniTask.Delay(1000);
+            await _eventBus.RaiseEvent(new TurnEndedEvent(attackerHero));
         }
     }
 }

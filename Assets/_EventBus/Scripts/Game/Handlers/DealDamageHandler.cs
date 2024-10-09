@@ -48,11 +48,6 @@ namespace _EventBus.Scripts.Game.Handlers
                 await _eventBus.RaiseEvent(new DiedEvent(target));
             else if (hitPointsComponent.IsHitPointsLow())
                 await _eventBus.RaiseEvent(new PlaySoundEvent(target.LowHealthClip()));
-
-            //TODO может быть после нанесения урона запускать событие ответного удара.
-            //await _eventBus.RaiseEvent(new AttackedAnimEvent(target, evt.Attacker));
-
-            await _eventBus.RaiseEvent(new TurnEndedEvent(evt.Attacker));
         }
     }
 }

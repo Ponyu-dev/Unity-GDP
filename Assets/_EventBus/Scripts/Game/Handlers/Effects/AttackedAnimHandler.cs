@@ -1,5 +1,4 @@
 using System;
-using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Game.Presenters;
 using JetBrains.Annotations;
@@ -34,7 +33,6 @@ namespace _EventBus.Scripts.Game.Handlers.Effects
                 return;
             
             await attackerPresenter.AnimateAttack(targetPresenter.GetHeroView());
-            await _eventBus.RaiseEvent(new AttackedEvent(evt.Attacker, evt.Target));
         }
     }
 }
