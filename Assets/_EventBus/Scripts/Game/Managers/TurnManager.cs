@@ -4,6 +4,7 @@ using System.Linq;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Players.Hero;
+using _EventBus.Scripts.Players.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
@@ -45,8 +46,50 @@ namespace _EventBus.Scripts.Game.Managers
                 return;
             }
             
-            foreach (var hero in _heroFactory.GetAllEntities())
-                _turnQueue.Enqueue(hero);
+            //TODO Если хотим что бы сперва ходили все герои одного игрока.
+            //foreach (var hero in _heroFactory.GetAllEntities())
+            //  _turnQueue.Enqueue(hero);
+            
+            //TODO Для очередности хода
+            ReorderQueue();
+        }
+        
+        private void ReorderQueue()
+        {
+            // Получаем все элементы сразу
+            var entities = _heroFactory.GetAllEntities().ToList();
+
+            // Разделяем на два списка по типам
+            var redHeroes = entities.Where(hero => hero.PlayerType == PlayerType.Red).ToList();
+            var blueHeroes = entities.Where(hero => hero.PlayerType == PlayerType.Blue).ToList();
+
+            // Определяем минимальную длину, чтобы чередовать по одному элементу
+            var minCount = Math.Min(redHeroes.Count, blueHeroes.Count);
+            int redIndex = 0, blueIndex = 0;
+
+            // Чередуем элементы
+            for (var i = 0; i < minCount * 2; i++)
+            {
+                if (i % 2 == 0 && redIndex < redHeroes.Count)
+                {
+                    _turnQueue.Enqueue(redHeroes[redIndex++]);
+                }
+                else if (blueIndex < blueHeroes.Count)
+                {
+                    _turnQueue.Enqueue(blueHeroes[blueIndex++]);
+                }
+            }
+
+            // Добавляем оставшиеся элементы, если в одном из списков их больше
+            for (int i = redIndex, count = redHeroes.Count; i < count; i++)
+            {
+                _turnQueue.Enqueue(redHeroes[i]);
+            }
+
+            for (int i = blueIndex, count = blueHeroes.Count; i < count; i++)
+            {
+                _turnQueue.Enqueue(blueHeroes[i]);
+            }
         }
 
         public async UniTaskVoid StartTurn()
