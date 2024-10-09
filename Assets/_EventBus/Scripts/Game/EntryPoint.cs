@@ -1,4 +1,5 @@
 using _EventBus.Scripts.Game.Factories;
+using _EventBus.Scripts.Game.Handlers;
 using _EventBus.Scripts.Game.Managers;
 using _EventBus.Scripts.Game.Presenters;
 using _EventBus.Scripts.Players.Hero;
@@ -27,16 +28,20 @@ namespace _EventBus.Scripts.Game
         {
             builder.RegisterInstance(allHeroes);
             
-            builder.Register<EventBus>(Lifetime.Singleton).AsSelf();
-            
             builder.Register<HeroPresenter>(Lifetime.Transient)
                 .AsImplementedInterfaces()
                 .AsSelf();
-
+            
+            builder.Register<EventBus>(Lifetime.Singleton).AsSelf();
+            
             builder.Register<HeroFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
 
+            builder.Register<TurnStartedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AttackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<DealDamageHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            
             builder.Register<PlayerFactory>(Lifetime.Singleton)
                 .WithParameter("prefabHeroView", prefabHeroView)
                 .WithParameter("playersConfigRed", playersConfigRed)

@@ -10,7 +10,7 @@ namespace _EventBus.Scripts.Players.Hero
     public interface IHeroEntity
     {
         public PlayerType PlayerType { get; }
-        public Guid Id { get; }
+        public HeroType HeroType { get; }
         public void AddComponent<T>(T component);
         public void RemoveComponent<T>();
         public bool HasComponent<T>();
@@ -22,19 +22,19 @@ namespace _EventBus.Scripts.Players.Hero
     public class HeroEntity : IHeroEntity
     {
         public PlayerType PlayerType { get; private set; }
-        public Guid Id { get; private set; }
+        public HeroType HeroType { get; private set; }
         private readonly Dictionary<Type, object> _components;
         
         public HeroEntity(PlayerType playerType, HeroConfig heroConfig)
         {
-            Id = Guid.NewGuid();
             PlayerType = playerType;
+            this.HeroType = heroConfig.type;
             _components = new Dictionary<Type, object>()
             {
                 { typeof(HitPointsComponent), new HitPointsComponent(heroConfig.health) },
                 { typeof(AttackComponent), new AttackComponent(heroConfig.damage) },
             };
-            Debug.Log($"[HeroEntity] Constructor {PlayerType} {Id} {heroConfig.type}");
+            Debug.Log($"[HeroEntity] Constructor {PlayerType} {heroConfig.type}");
         }
 
         public void AddComponent<T>(T component)

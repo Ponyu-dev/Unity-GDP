@@ -34,8 +34,7 @@ namespace _EventBus.Scripts.Game.Managers
         public void Start()
         {
             Debug.Log("[GameManager] Start");
-
-            //_turnManager.StartTurn();
+            _turnManager.StartTurn();
         }
     }
 }

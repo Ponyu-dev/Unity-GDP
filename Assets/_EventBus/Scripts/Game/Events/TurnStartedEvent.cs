@@ -5,7 +5,7 @@ namespace _EventBus.Scripts.Game.Events
     // Событие начала хода героя
     public struct TurnStartedEvent
     {
-        public IHeroEntity CurrentHeroEntity;
+        public readonly IHeroEntity CurrentHeroEntity;
 
         public TurnStartedEvent(IHeroEntity currentHeroEntity)
         {

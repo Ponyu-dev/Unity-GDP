@@ -20,28 +20,26 @@ namespace _EventBus.Scripts.Game.Handlers
         
         public void Initialize()
         {
-            Debug.Log("DealDamageHandler Initialize");
+            Debug.Log("[DealDamageHandler] Initialize");
             _eventBus.Subscribe<DealDamageEvent>(OnDealDamaged);
         }
 
         public void Dispose()
         {
-            Debug.Log("DealDamageHandler Dispose");
+            Debug.Log("[DealDamageHandler] Dispose");
             _eventBus.Unsubscribe<DealDamageEvent>(OnDealDamaged);
         }
 
         private void OnDealDamaged(DealDamageEvent evt)
         {
-            Debug.Log("DealDamageHandler Dispose");
-            if (!evt.Target.TryGetComponent(out HitPointsComponent hitPointsComponent))
+            Debug.Log("[DealDamageHandler] OnDealDamaged");
+            if (!evt.Current.TryGetComponent(out HitPointsComponent hitPointsComponent))
                 return;
             
-            hitPointsComponent.ChangeHitPoints(evt.Strength);
+            hitPointsComponent.Value -= evt.Strength;
 
             if (hitPointsComponent.Value <= 0)
-                _eventBus.RaiseEvent(new DiedEvent(evt.Target));
-            //else
-            //_eventBus.RaiseEvent();
+               _eventBus.RaiseEvent(new DiedEvent(evt.Current));
         }
     }
 }

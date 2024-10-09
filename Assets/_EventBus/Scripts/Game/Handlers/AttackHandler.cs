@@ -32,13 +32,16 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private void OnHeroAttacked(AttackedEvent evt)
         {
-            Debug.Log("AttackHandler Dispose");
+            Debug.Log($"AttackHandler OnHeroAttacked");
+            
             // Обработка логики атаки, например, ответный удар
-            if (evt.Target.TryGetComponent(out AttackComponent targetAttack))
+            if (evt.Attacker.TryGetComponent(out AttackComponent targetAttack))
             {
-                // Ответный удар от цели обратно атакующему
-                _eventBus.RaiseEvent(new AttackedEvent(evt.Target, evt.Attacker));
+                _eventBus.RaiseEvent(new DealDamageEvent(evt.Target, targetAttack.AttackValue));
             }
+            
+            // Ответный удар от цели обратно атакующему может быть надо перенесте в DealDamageHandler.
+            //_eventBus.RaiseEvent(new AttackedEvent(evt.Current, evt.Attacker));
         }
     }
 }

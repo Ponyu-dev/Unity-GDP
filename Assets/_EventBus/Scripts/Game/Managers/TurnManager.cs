@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Players.Hero;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
@@ -11,10 +13,10 @@ namespace _EventBus.Scripts.Game.Managers
     public interface ITurnManager
     {
         public void Initialize();
-        public void StartTurn();
+        public UniTaskVoid StartTurn();
     }
     
-    public class TurnManager : ITurnManager
+    public class TurnManager : ITurnManager, IDisposable
     {
         private readonly EventBus _eventBus;
         private readonly IHeroFactory _heroFactory;
@@ -29,7 +31,9 @@ namespace _EventBus.Scripts.Game.Managers
             _eventBus = eventBus;
             _turnQueue = new Queue<IHeroEntity>();
             _heroFactory = heroFactory;
+            
             _eventBus.Subscribe<DiedEvent>(OnHeroDied);
+            _eventBus.Subscribe<TurnEndedEvent>(OnTurnEnded);
         }
 
         public void Initialize()
@@ -45,9 +49,10 @@ namespace _EventBus.Scripts.Game.Managers
                 _turnQueue.Enqueue(hero);
         }
 
-        public void StartTurn()
+        public async UniTaskVoid StartTurn()
         {
             Debug.Log("[TurnManager] StartTurn");
+            await UniTask.Delay(3000);
             StartNextTurn();
         }
 
@@ -75,7 +80,7 @@ namespace _EventBus.Scripts.Game.Managers
             while (_turnQueue.Count > 0)
             {
                 var entity = _turnQueue.Dequeue();
-                if (entity.Id != evt.Target.Id)
+                if (entity.HeroType != evt.Target.HeroType)
                 {
                     newQueue.Enqueue(entity);
                 }
@@ -86,6 +91,17 @@ namespace _EventBus.Scripts.Game.Managers
             }
 
             StartNextTurn();
+        }
+
+        private void OnTurnEnded(TurnEndedEvent evt)
+        {
+            //StartNextTurn();
+        }
+
+        public void Dispose()
+        {
+            _eventBus.Unsubscribe<DiedEvent>(OnHeroDied);
+            _eventBus.Unsubscribe<TurnEndedEvent>(OnTurnEnded);
         }
     }
 

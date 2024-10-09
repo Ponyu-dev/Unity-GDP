@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Presenters;
 using _EventBus.Scripts.Players.Hero;
 using _EventBus.Scripts.Players.Player;
+using Cysharp.Threading.Tasks;
 using UI;
 using UnityEngine;
 using VContainer;
@@ -16,11 +18,12 @@ namespace _EventBus.Scripts.Game.Factories
         //public void CreatePlayerHeroesRandom();
     }
     
-    public class PlayerFactory : IPlayerFactory
+    public class PlayerFactory : IPlayerFactory, IDisposable
     {
-        private readonly Dictionary<PlayerType, List<IHeroPresenter>> _heroPresenters = new();
+        private readonly Dictionary<HeroType, IHeroPresenter> _heroPresenters = new();
 
         private readonly IHeroFactory _heroFactory;
+        private readonly EventBus _eventBus;
 
         private readonly HeroesConfig _heroesConfig;
         private readonly HeroView _prefabHeroView;
@@ -36,6 +39,7 @@ namespace _EventBus.Scripts.Game.Factories
         [Inject]
         public PlayerFactory(
             IHeroFactory heroFactory,
+            EventBus eventBus,
             HeroesConfig heroesConfig,
             HeroView prefabHeroView,
             PlayerConfig playersConfigRed,
@@ -46,6 +50,7 @@ namespace _EventBus.Scripts.Game.Factories
         {
             Debug.Log("[PlayerFactory] Constructor");
             _heroFactory = heroFactory;
+            _eventBus = eventBus;
             _heroesConfig = heroesConfig;
             _prefabHeroView = prefabHeroView;
             _playersConfigRed = playersConfigRed;
@@ -53,6 +58,67 @@ namespace _EventBus.Scripts.Game.Factories
             _playersConfigBlue = playersConfigBlue;
             _containerPlayerBlue = containerPlayerBlue;
             _resolver = resolver;
+            
+            _eventBus.Subscribe<TurnStartedEvent>(OnTurnStarted);
+            _eventBus.Subscribe<AttackedAnimEvent>(OnAttackedView);
+            _eventBus.Subscribe<AttackedEvent>(OnAttacked);
+            _eventBus.Subscribe<DealDamageEvent>(OnDealDamage);
+            _eventBus.Subscribe<DiedEvent>(OnDied);
+            _eventBus.Subscribe<TurnEndedEvent>(OnTurnEnded);
+        }
+        
+        private void OnTurnStarted(TurnStartedEvent obj)
+        {
+            var attackerHeroType = obj.CurrentHeroEntity.HeroType;
+            Debug.Log($"[PlayerFactory] OnTurnStarted {attackerHeroType}");
+            
+            var targetHero = _heroFactory.GetRandomEntity(obj.CurrentHeroEntity);
+            if (!_heroPresenters.TryGetValue(attackerHeroType, out var attacker) ||
+                !_heroPresenters.TryGetValue(targetHero.HeroType, out var target))
+                return;
+            
+            attacker.SetActive(true);
+            _eventBus.RaiseEvent(new AttackedAnimEvent(attacker, target));
+        }
+
+        private async void OnAttackedView(AttackedAnimEvent obj)
+        {
+            var attackerType = obj.Attacker.GetHeroType();
+            var targetType = obj.Target.GetHeroType();
+            Debug.Log($"[PlayerFactory] OnAttackedView Attacker = {attackerType}");
+            Debug.Log($"[PlayerFactory] OnAttackedView Target = {targetType}");
+
+            if (!_heroPresenters.TryGetValue(attackerType, out var attacker) ||
+                !_heroPresenters.TryGetValue(targetType, out var target)) 
+                return;
+            
+            await attacker.AnimateAttack(attackerType, target.GetHeroView());
+            _eventBus.RaiseEvent(new AttackedEvent(_heroFactory.GetEntity(attackerType), _heroFactory.GetEntity(targetType)));
+            attacker.SetActive(false);
+        }
+
+        private void OnAttacked(AttackedEvent obj)
+        {
+            Debug.Log($"[PlayerFactory] OnAttacked Attacker = {obj.Attacker.HeroType}");
+            Debug.Log($"[PlayerFactory] OnAttacked Target = {obj.Target.HeroType}");
+        }
+        
+        private void OnDealDamage(DealDamageEvent obj)
+        {
+            Debug.Log($"[PlayerFactory] OnDealDamage {obj.Current.HeroType}");
+        }
+        
+        private void OnDied(DiedEvent obj)
+        {
+            Debug.Log($"[PlayerFactory] OnDied {obj.Target}");
+        }
+
+        private void OnTurnEnded(TurnEndedEvent obj)
+        {
+            var heroType = obj.Current.HeroType;
+            Debug.Log($"[PlayerFactory] OnTurnEnded {heroType}");
+            if (_heroPresenters.TryGetValue(heroType, out var hero))
+                hero.SetActive(false);
         }
 
         public void CreatePlayerHeroes()
@@ -74,17 +140,16 @@ namespace _EventBus.Scripts.Game.Factories
         {
             var playerType = playerConfig.playerType;
             Debug.Log($"[PlayerFactory] CreatePlayer {playerType}");
-            List<IHeroPresenter> heroPresenters = new();
+            //List<IHeroPresenter> heroPresenters = new();
 
             for (int index = 0, count = playerConfig.heroTypes.Length; index < count; index++)
             {
-                if (_heroPresenters.ContainsKey(playerType)) continue;
-
                 var heroType = playerConfig.heroTypes[index];
-                heroPresenters.Add(CreateHeroPresenter(playerType, _heroesConfig.GetHeroConfig(heroType), container));
+                if (_heroPresenters.ContainsKey(heroType)) continue;
+                _heroPresenters.Add(heroType, CreateHeroPresenter(playerType, _heroesConfig.GetHeroConfig(heroType), container));
             }
 
-            _heroPresenters.Add(playerType, heroPresenters);
+            //_heroPresenters.Add(playerType, heroPresenters);
         }
 
         private IHeroPresenter CreateHeroPresenter(
@@ -102,11 +167,23 @@ namespace _EventBus.Scripts.Game.Factories
             var heroEntity = _heroFactory.CreateEntity(playerType, heroConfig);
             
             //Создание презентра
-            var chestPresenter = _resolver.Resolve<IHeroPresenter>();
-            _resolver.Inject(chestPresenter);
-            chestPresenter.Initialize(heroConfig, heroView, heroEntity);
+            var heroPresenter = _resolver.Resolve<IHeroPresenter>();
+            _resolver.Inject(heroPresenter);
+            heroPresenter.Init(heroConfig, heroView, heroEntity);
 
-            return chestPresenter;
+            return heroPresenter;
+        }
+
+        public void Dispose()
+        {
+            _resolver?.Dispose();
+            
+            _eventBus.Unsubscribe<TurnStartedEvent>(OnTurnStarted);
+            _eventBus.Unsubscribe<AttackedAnimEvent>(OnAttackedView);
+            _eventBus.Unsubscribe<AttackedEvent>(OnAttacked);
+            _eventBus.Unsubscribe<DealDamageEvent>(OnDealDamage);
+            _eventBus.Unsubscribe<DiedEvent>(OnDied);
+            _eventBus.Unsubscribe<TurnEndedEvent>(OnTurnEnded);
         }
     }
 }

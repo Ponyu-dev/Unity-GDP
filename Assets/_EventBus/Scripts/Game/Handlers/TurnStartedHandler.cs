@@ -1,7 +1,9 @@
 using System;
 using _EventBus.Scripts.Game.Events;
+using _EventBus.Scripts.Game.Factories;
 using JetBrains.Annotations;
 using UnityEngine;
+using VContainer;
 using VContainer.Unity;
 
 namespace _EventBus.Scripts.Game.Handlers
@@ -10,35 +12,37 @@ namespace _EventBus.Scripts.Game.Handlers
     public class TurnStartedHandler : IInitializable, IDisposable
     {
         private readonly EventBus _eventBus;
+        private readonly IHeroFactory _heroFactory;
         
-        public TurnStartedHandler(EventBus eventBus)
+        [Inject]
+        public TurnStartedHandler(
+            EventBus eventBus,
+            IHeroFactory heroFactory)
         {
             Debug.Log("TurnStartedHandler Constructor");
             _eventBus = eventBus;
+            _heroFactory = heroFactory;
         }
         
         public void Initialize()
         {
             Debug.Log("TurnStartedHandler Initialize");
-            _eventBus.Subscribe<AttackedEvent>(OnHeroTurnStarted);
+            _eventBus.Subscribe<TurnStartedEvent>(OnHeroTurnStarted);
         }
 
         public void Dispose()
         {
             Debug.Log("TurnStartedHandler Dispose");
-            _eventBus.Unsubscribe<AttackedEvent>(OnHeroTurnStarted);
+            _eventBus.Unsubscribe<TurnStartedEvent>(OnHeroTurnStarted);
         }
 
-        private void OnHeroTurnStarted(AttackedEvent evt)
+        private void OnHeroTurnStarted(TurnStartedEvent evt)
         {
-            Debug.Log("TurnStartedHandler OnHeroTurnStarted");
-            
-            // Обработка логики атаки, например, ответный удар
-            /*if (evt.Target.TryGetComponent(out AttackComponent targetAttack))
-            {
-                // Ответный удар от цели обратно атакующему
-                _eventBus.RaiseEvent(new AttackedEvent(evt.Target, evt.Attacker));
-            }*/
+            Debug.Log($"TurnStartedHandler OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
+            //TODO надо вызвать анимацию атаки
+            //var attacker = evt.CurrentHeroEntity;
+            //var target = _heroFactory.GetRandomEntity(attacker);
+            //_eventBus.RaiseEvent(new AttackedEvent(attacker, target));
         }
     }
 }

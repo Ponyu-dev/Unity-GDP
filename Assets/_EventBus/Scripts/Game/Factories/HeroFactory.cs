@@ -1,24 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _EventBus.Scripts.Players.Hero;
 using _EventBus.Scripts.Players.Player;
 using UnityEngine;
 using VContainer;
+using Random = System.Random;
 
 namespace _EventBus.Scripts.Game.Factories
 {
-    //TODO Может быть вообще не нужный класс.
     public interface IHeroFactory
     {
         public IHeroEntity CreateEntity(PlayerType playerType, HeroConfig heroConfig);
-        public void RemoveEntity(Guid entityId);
-        public IHeroEntity GetEntity(Guid entityId);
+        public void RemoveEntity(HeroType entityId);
+        public IHeroEntity GetEntity(HeroType entityId);
+        public IHeroEntity GetRandomEntity(IHeroEntity hero);
         public IEnumerable<IHeroEntity> GetAllEntities();
     }
     
     public class HeroFactory : IHeroFactory
     {
-        private readonly Dictionary<Guid, IHeroEntity> _entity = new();
+        private readonly Random _random = new();
+        private readonly Dictionary<HeroType, IHeroEntity> _entity = new();
 
         [Inject]
         public HeroFactory()
@@ -30,24 +33,43 @@ namespace _EventBus.Scripts.Game.Factories
         {
             Debug.Log("[HeroFactory] CreateEntity");
             var entity = new HeroEntity(playerType, heroConfig);
-            _entity[entity.Id] = entity;
+            _entity[entity.HeroType] = entity;
             return entity;
         }
 
-        public void RemoveEntity(Guid entityId)
+        public void RemoveEntity(HeroType heroType)
         {
-            _entity.Remove(entityId);
+            _entity.Remove(heroType);
         }
 
-        public IHeroEntity GetEntity(Guid entityId)
+        public IHeroEntity GetEntity(HeroType heroType)
         {
-            if (_entity.TryGetValue(entityId, out var entity))
+            if (_entity.TryGetValue(heroType, out var entity))
             {
                 return entity;
             }
-            throw new InvalidOperationException($"HeroEntity with ID {entityId} does not exist.");
+            throw new InvalidOperationException($"HeroEntity with ID {heroType} does not exist.");
         }
 
+        public IHeroEntity GetRandomEntity(IHeroEntity hero)
+        {
+            // Отбираем всех героев, которые не являются текущим и принадлежат другому игроку
+            var validHeroes = _entity.Values
+                .Where(it => it.HeroType != hero.HeroType && it.PlayerType != hero.PlayerType)
+                .ToList();
+
+            // Если нет подходящих героев, возвращаем null или выбрасываем исключение
+            if (validHeroes.Count == 0)
+            {
+                throw new InvalidOperationException("No valid heroes available.");
+            }
+
+            // Выбираем случайного героя
+            var randomHero = validHeroes[_random.Next(validHeroes.Count)];
+
+            return randomHero;
+        }
+        
         public IEnumerable<IHeroEntity> GetAllEntities()
         {
             return _entity.Values;

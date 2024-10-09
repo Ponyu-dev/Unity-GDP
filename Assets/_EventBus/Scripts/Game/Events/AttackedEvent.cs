@@ -5,8 +5,8 @@ namespace _EventBus.Scripts.Game.Events
     // Событие атаки героя
     public struct AttackedEvent
     {
-        public IHeroEntity Attacker;
-        public IHeroEntity Target;
+        public readonly IHeroEntity Attacker;
+        public readonly IHeroEntity Target;
 
         public AttackedEvent(IHeroEntity attacker, IHeroEntity target)
         {
