@@ -7,7 +7,6 @@ using Random = System.Random;
 
 namespace _EventBus.Scripts.Players.Hero
 {
-    //TODO Может быть сделать Transient
     public interface IHeroEntity
     {
         public PlayerType PlayerType { get; }

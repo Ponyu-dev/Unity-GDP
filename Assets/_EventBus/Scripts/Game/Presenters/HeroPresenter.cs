@@ -1,6 +1,5 @@
 using System;
 using _EventBus.Scripts.Players.Components;
-using _EventBus.Scripts.Players.Hero;
 using Cysharp.Threading.Tasks;
 using UI;
 using UnityEngine;
@@ -10,22 +9,21 @@ namespace _EventBus.Scripts.Game.Presenters
 {
     public interface IHeroPresenter
     {
-        void Init(HeroConfig heroConfig, HeroView heroView, IHeroEntity heroEntity);
+        void Init(
+            HeroView heroView, HitPointsComponent hitPointsComponent, 
+            int defaultDamage, Sprite portrait);
         HeroView GetHeroView();
-        HeroType GetHeroType();
         public void SetActive(bool active);
-        public UniTask AnimateAttack(HeroType heroType, HeroView target);
+        public UniTask AnimateAttack(HeroView target);
     }
     
     public class HeroPresenter : IHeroPresenter, IDisposable
     {
-        private HeroConfig _heroConfig;
-        public HeroType GetHeroType() => _heroConfig.type;
-        
         private HeroView _heroView;
         public HeroView GetHeroView() => _heroView;
-
-        private IHeroEntity _heroEntity;
+        
+        private HitPointsComponent _hitPointsComponent;
+        private int _defaultDamage;
 
         [Inject]
         public HeroPresenter()
@@ -34,18 +32,19 @@ namespace _EventBus.Scripts.Game.Presenters
         }
         
         public void Init(
-            HeroConfig heroConfig,
-            HeroView heroView, 
-            IHeroEntity heroEntity)
+            HeroView heroView,
+            HitPointsComponent hitPointsComponent,
+            int defaultDamage,
+            Sprite portrait)
         {
-            _heroConfig = heroConfig;
             _heroView = heroView;
-            _heroEntity = heroEntity;
-            Debug.Log($"[HeroPresenter] Initialize heroConfig.type = {_heroConfig.type}");
+            _hitPointsComponent = hitPointsComponent;
+            _defaultDamage = defaultDamage;
             
-            _heroEntity.GetComponent<HitPointsComponent>().OnValueChanged += OnHitPointsChanged;
+            _heroView.SetStats(GetStats(hitPointsComponent.Value));
+            _heroView.SetIcon(portrait);
             
-            InitView();
+            _hitPointsComponent.OnValueChanged += OnHitPointsChanged;
         }
 
         private void OnHitPointsChanged(int health)
@@ -56,13 +55,7 @@ namespace _EventBus.Scripts.Game.Presenters
         //атака/здоровье
         private string GetStats(int hitPoint)
         {
-            return $"{_heroConfig.damage}/{hitPoint}";
-        }
-
-        private void InitView()
-        {
-            _heroView.SetIcon(_heroConfig.portrait);
-            _heroView.SetStats(GetStats(_heroConfig.health));
+            return $"{_defaultDamage}/{hitPoint}";
         }
 
         public void SetActive(bool active)
@@ -70,14 +63,14 @@ namespace _EventBus.Scripts.Game.Presenters
             _heroView.SetActive(active);
         }
 
-        public UniTask AnimateAttack(HeroType heroType, HeroView target)
+        public UniTask AnimateAttack(HeroView target)
         {
-            return heroType == GetHeroType() ? _heroView.AnimateAttack(target) : default;
+            return _heroView.AnimateAttack(target);
         }
 
         public void Dispose()
         {
-            _heroEntity.GetComponent<HitPointsComponent>().OnValueChanged -= OnHitPointsChanged;
+            _hitPointsComponent.OnValueChanged -= OnHitPointsChanged;
         }
     }
 }

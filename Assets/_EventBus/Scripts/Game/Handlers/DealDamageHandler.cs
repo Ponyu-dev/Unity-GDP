@@ -1,5 +1,6 @@
 using System;
 using _EventBus.Scripts.Game.Events;
+using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -33,21 +34,25 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private async UniTask OnDealDamaged(DealDamageEvent evt)
         {
+            var attacker = evt.Attacker;
+            var target = evt.Target;
+
             Debug.Log("[DealDamageHandler] OnDealDamaged");
-            if (!evt.Target.TryGetComponent(out HitPointsComponent hitPointsComponent) ||
-                !evt.Attacker.TryGetComponent(out AttackComponent attackComponent))
+            if (!target.TryGetComponent(out HitPointsComponent hitPointsComponent) ||
+                !attacker.TryGetComponent(out AttackComponent attackComponent))
                 return;
-            
-            hitPointsComponent.Value -= attackComponent.AttackValue;
+
+            hitPointsComponent.Value -= attackComponent.Value;
 
             if (hitPointsComponent.Value <= 0)
-               await _eventBus.RaiseEvent(new DiedEvent(evt.Target));
-            else
-            {
-                //TODO может быть после нанесения урона запускать событие ответного удара.
-                //await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Target, evt.Attacker));
-                await _eventBus.RaiseEvent(new TurnEndedEvent(evt.Attacker));
-            }
+                await _eventBus.RaiseEvent(new DiedEvent(target));
+            else if (hitPointsComponent.IsHitPointsLow())
+                await _eventBus.RaiseEvent(new PlaySoundEvent(target.LowHealthClip()));
+
+            //TODO может быть после нанесения урона запускать событие ответного удара.
+            //await _eventBus.RaiseEvent(new AttackedAnimEvent(target, evt.Attacker));
+
+            await _eventBus.RaiseEvent(new TurnEndedEvent(evt.Attacker));
         }
     }
 }

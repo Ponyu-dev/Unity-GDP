@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Presenters;
+using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Hero;
 using _EventBus.Scripts.Players.Player;
 using Cysharp.Threading.Tasks;
@@ -20,10 +21,7 @@ namespace _EventBus.Scripts.Game.Factories
     
     public class PlayerFactory : IPlayerFactory, IDisposable
     {
-        private readonly Dictionary<HeroType, IHeroPresenter> _heroPresenters = new();
-
         private readonly IHeroFactory _heroFactory;
-        private readonly EventBus _eventBus;
 
         private readonly HeroesConfig _heroesConfig;
         private readonly HeroView _prefabHeroView;
@@ -39,7 +37,6 @@ namespace _EventBus.Scripts.Game.Factories
         [Inject]
         public PlayerFactory(
             IHeroFactory heroFactory,
-            EventBus eventBus,
             HeroesConfig heroesConfig,
             HeroView prefabHeroView,
             PlayerConfig playersConfigRed,
@@ -50,7 +47,6 @@ namespace _EventBus.Scripts.Game.Factories
         {
             Debug.Log("[PlayerFactory] Constructor");
             _heroFactory = heroFactory;
-            _eventBus = eventBus;
             _heroesConfig = heroesConfig;
             _prefabHeroView = prefabHeroView;
             _playersConfigRed = playersConfigRed;
@@ -58,54 +54,6 @@ namespace _EventBus.Scripts.Game.Factories
             _playersConfigBlue = playersConfigBlue;
             _containerPlayerBlue = containerPlayerBlue;
             _resolver = resolver;
-            
-            _eventBus.Subscribe<TurnStartedEvent>(OnTurnStarted);
-            _eventBus.Subscribe<AttackedAnimEvent>(OnAttackedAnim);
-            //_eventBus.Subscribe<AttackedEvent>(OnAttacked);
-            //_eventBus.Subscribe<DealDamageEvent>(OnDealDamage);
-            _eventBus.Subscribe<DiedEvent>(OnDied);
-            _eventBus.Subscribe<TurnEndedEvent>(OnTurnEnded);
-        }
-        
-        private UniTask OnTurnStarted(TurnStartedEvent evt)
-        {
-            var attackerHeroType = evt.CurrentHeroEntity.HeroType;
-            Debug.Log($"[PlayerFactory] OnTurnStarted {attackerHeroType}");
-            
-            if (_heroPresenters.TryGetValue(attackerHeroType, out var attacker))
-                attacker.SetActive(true);
-
-            return default;
-        }
-
-        private async UniTask OnAttackedAnim(AttackedAnimEvent evt)
-        {
-            var attackerType = evt.Attacker.HeroType;
-            var targetType = evt.Target.HeroType;
-
-            if (!_heroPresenters.TryGetValue(attackerType, out var attacker) ||
-                !_heroPresenters.TryGetValue(targetType, out var target)) 
-                return;
-            
-            await attacker.AnimateAttack(attackerType, target.GetHeroView());
-            await _eventBus.RaiseEvent(new AttackedEvent(evt.Attacker, evt.Target));
-            attacker.SetActive(false);
-        }
-        
-        private UniTask OnDied(DiedEvent obj)
-        {
-            Debug.Log($"[PlayerFactory] OnDied {obj.Target}");
-            return default;
-        }
-
-        private UniTask OnTurnEnded(TurnEndedEvent obj)
-        {
-            var heroType = obj.Current.HeroType;
-            Debug.Log($"[PlayerFactory] OnTurnEnded {heroType}");
-            if (_heroPresenters.TryGetValue(heroType, out var hero))
-                hero.SetActive(false);
-
-            return default;
         }
 
         public void CreatePlayerHeroes()
@@ -131,12 +79,11 @@ namespace _EventBus.Scripts.Game.Factories
             for (int index = 0, count = playerConfig.heroTypes.Length; index < count; index++)
             {
                 var heroType = playerConfig.heroTypes[index];
-                if (_heroPresenters.ContainsKey(heroType)) continue;
-                _heroPresenters.Add(heroType, CreateHeroPresenter(playerType, _heroesConfig.GetHeroConfig(heroType), container));
+                CreateHeroPresenter(playerType, _heroesConfig.GetHeroConfig(heroType), container);
             }
         }
 
-        private IHeroPresenter CreateHeroPresenter(
+        private void CreateHeroPresenter(
             PlayerType playerType,
             HeroConfig heroConfig,
             Transform container)
@@ -149,25 +96,20 @@ namespace _EventBus.Scripts.Game.Factories
             
             //Создание Entity
             var heroEntity = _heroFactory.CreateEntity(playerType, heroConfig);
+            var hitPointsComponent = heroEntity.GetComponent<HitPointsComponent>();
+            heroEntity.AddComponent(new DestroyComponent(heroView.gameObject));
             
             //Создание презентра
             var heroPresenter = _resolver.Resolve<IHeroPresenter>();
             _resolver.Inject(heroPresenter);
-            heroPresenter.Init(heroConfig, heroView, heroEntity);
-
-            return heroPresenter;
+            heroPresenter.Init(heroView, hitPointsComponent, heroConfig.damage, heroConfig.portrait);
+            
+            heroEntity.AddComponent(heroPresenter);
         }
 
         public void Dispose()
         {
             _resolver?.Dispose();
-            
-            _eventBus.Unsubscribe<TurnStartedEvent>(OnTurnStarted);
-            _eventBus.Unsubscribe<AttackedAnimEvent>(OnAttackedAnim);
-            //_eventBus.Unsubscribe<AttackedEvent>(OnAttacked);
-            //_eventBus.Unsubscribe<DealDamageEvent>(OnDealDamage);
-            _eventBus.Unsubscribe<DiedEvent>(OnDied);
-            _eventBus.Unsubscribe<TurnEndedEvent>(OnTurnEnded);
         }
     }
 }

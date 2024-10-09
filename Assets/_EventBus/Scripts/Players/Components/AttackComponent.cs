@@ -2,11 +2,11 @@ namespace _EventBus.Scripts.Players.Components
 {
     public sealed class AttackComponent
     {
-        public int AttackValue { get; private set; }
+        public int Value { get; private set; }
 
-        public AttackComponent(int attackValue)
+        public AttackComponent(int value)
         {
-            AttackValue = attackValue;
+            Value = value;
         }
     }
 }

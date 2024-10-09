@@ -120,21 +120,28 @@ namespace _EventBus.Scripts.Game.Managers
         private void OnHeroDied(DiedEvent evt)
         {
             // Удаление погибшего героя из очереди
+            var deadHero = evt.Target.HeroType;
             var newQueue = new Queue<IHeroEntity>();
             while (_turnQueue.Count > 0)
             {
                 var entity = _turnQueue.Dequeue();
-                if (entity.HeroType != evt.Target.HeroType)
+                if (entity.HeroType != deadHero)
                 {
                     newQueue.Enqueue(entity);
                 }
+                /*
+                 //TODO либо здесь написать уделение героя либо в DiedHandler
+                 else
+                {
+                    _heroFactory.RemoveEntity(deadHero);
+                }*/
             }
             while (newQueue.Count > 0)
             {
                 _turnQueue.Enqueue(newQueue.Dequeue());
             }
 
-            StartNextTurn();
+            //StartNextTurn();
         }
 
         private void OnTurnEnded(TurnEndedEvent evt)

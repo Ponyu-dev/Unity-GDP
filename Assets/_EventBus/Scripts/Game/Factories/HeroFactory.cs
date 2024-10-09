@@ -57,9 +57,8 @@ namespace _EventBus.Scripts.Game.Factories
             // Отбираем всех Живых героев, которые не являются текущим и принадлежат другому игроку
             var validHeroes = _entity.Values
                 .Where(it => it.GetComponent<HitPointsComponent>().Value > 0)
-                .Where(it => 
-                    it.HeroType != hero.HeroType && 
-                    it.PlayerType != hero.PlayerType)
+                .Where(it => it.PlayerType != hero.PlayerType)
+                .Where(it => it.HeroType != hero.HeroType)
                 .ToList();
 
             // Если нет подходящих героев, возвращаем null или выбрасываем исключение

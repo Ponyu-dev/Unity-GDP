@@ -2,6 +2,7 @@ using System;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Game.Factories;
+using _EventBus.Scripts.Game.Presenters;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -39,6 +40,9 @@ namespace _EventBus.Scripts.Game.Handlers
         {
             Debug.Log($"[TurnStartedHandler] OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
 
+            if (evt.CurrentHeroEntity.TryGetComponent<IHeroPresenter>(out var presenter))
+                presenter.SetActive(true);
+                
             await _eventBus.RaiseEvent(new PlaySoundEvent(evt.CurrentHeroEntity.StartTurnClip()));
             
             var targetHero = _heroFactory.GetRandomEntity(evt.CurrentHeroEntity);

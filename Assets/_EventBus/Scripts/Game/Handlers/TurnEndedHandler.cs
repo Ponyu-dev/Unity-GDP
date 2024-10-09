@@ -1,7 +1,7 @@
 using System;
 using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Factories;
-using Cysharp.Threading.Tasks;
+using _EventBus.Scripts.Game.Presenters;
 using JetBrains.Annotations;
 using UnityEngine;
 using VContainer;
@@ -34,10 +34,11 @@ namespace _EventBus.Scripts.Game.Handlers
             _eventBus.Unsubscribe<TurnEndedEvent>(OnHeroTurnEnded);
         }
 
-        private UniTask OnHeroTurnEnded(TurnEndedEvent evt)
+        private void OnHeroTurnEnded(TurnEndedEvent evt)
         {
             Debug.Log($"Test TurnEndedHandler OnHeroTurnEnded {evt.Current.HeroType}");
-            return default;
+            if (evt.Current.TryGetComponent<IHeroPresenter>(out var presenter))
+                presenter.SetActive(false);
         }
     }
 }

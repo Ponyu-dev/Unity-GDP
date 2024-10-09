@@ -1,6 +1,6 @@
 using _EventBus.Scripts.Players.Hero;
 
-namespace _EventBus.Scripts.Game.Events
+namespace _EventBus.Scripts.Game.Events.Effects
 {
     public struct AttackedAnimEvent
     {
