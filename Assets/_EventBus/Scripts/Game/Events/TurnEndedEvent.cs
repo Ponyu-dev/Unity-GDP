@@ -2,11 +2,11 @@ using _EventBus.Scripts.Players.Hero;
 
 namespace _EventBus.Scripts.Game.Events
 {
-    // Событие конца хода героя
+    // Событие конца хода
     public struct TurnEndedEvent
     {
-        public readonly IHeroEntity Current;
-
+        public IHeroEntity Current { get; private set; } 
+        
         public TurnEndedEvent(IHeroEntity current)
         {
             Current = current;

@@ -1,13 +1,13 @@
-using _EventBus.Scripts.Game.Presenters;
+using _EventBus.Scripts.Players.Hero;
 
 namespace _EventBus.Scripts.Game.Events
 {
     public struct AttackedAnimEvent
     {
-        public readonly IHeroPresenter Attacker;
-        public readonly IHeroPresenter Target;
+        public readonly IHeroEntity Attacker;
+        public readonly IHeroEntity Target;
 
-        public AttackedAnimEvent(IHeroPresenter attacker, IHeroPresenter target)
+        public AttackedAnimEvent(IHeroEntity attacker, IHeroEntity target)
         {
             Attacker = attacker;
             Target = target;

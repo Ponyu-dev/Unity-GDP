@@ -39,10 +39,6 @@ namespace _EventBus.Scripts.Game.Handlers
         private void OnHeroTurnStarted(TurnStartedEvent evt)
         {
             Debug.Log($"TurnStartedHandler OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
-            //TODO надо вызвать анимацию атаки
-            //var attacker = evt.CurrentHeroEntity;
-            //var target = _heroFactory.GetRandomEntity(attacker);
-            //_eventBus.RaiseEvent(new AttackedEvent(attacker, target));
         }
     }
 }

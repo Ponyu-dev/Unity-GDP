@@ -1,6 +1,6 @@
 namespace _EventBus.Scripts.Players.Components
 {
-    public struct AttackComponent
+    public sealed class AttackComponent
     {
         public int AttackValue { get; private set; }
 

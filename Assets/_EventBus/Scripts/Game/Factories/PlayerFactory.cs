@@ -73,18 +73,18 @@ namespace _EventBus.Scripts.Game.Factories
             Debug.Log($"[PlayerFactory] OnTurnStarted {attackerHeroType}");
             
             var targetHero = _heroFactory.GetRandomEntity(obj.CurrentHeroEntity);
-            if (!_heroPresenters.TryGetValue(attackerHeroType, out var attacker) ||
-                !_heroPresenters.TryGetValue(targetHero.HeroType, out var target))
+            if (!_heroPresenters.TryGetValue(attackerHeroType, out var attacker))
                 return;
             
+            var attackerHero = _heroFactory.GetEntity(obj.CurrentHeroEntity.HeroType);
             attacker.SetActive(true);
-            _eventBus.RaiseEvent(new AttackedAnimEvent(attacker, target));
+            _eventBus.RaiseEvent(new AttackedAnimEvent(attackerHero, targetHero));
         }
 
         private async void OnAttackedView(AttackedAnimEvent obj)
         {
-            var attackerType = obj.Attacker.GetHeroType();
-            var targetType = obj.Target.GetHeroType();
+            var attackerType = obj.Attacker.HeroType;
+            var targetType = obj.Target.HeroType;
             Debug.Log($"[PlayerFactory] OnAttackedView Attacker = {attackerType}");
             Debug.Log($"[PlayerFactory] OnAttackedView Target = {targetType}");
 
@@ -105,7 +105,7 @@ namespace _EventBus.Scripts.Game.Factories
         
         private void OnDealDamage(DealDamageEvent obj)
         {
-            Debug.Log($"[PlayerFactory] OnDealDamage {obj.Current.HeroType}");
+            //Debug.Log($"[PlayerFactory] OnDealDamage {obj.Target.HeroType}");
         }
         
         private void OnDied(DiedEvent obj)

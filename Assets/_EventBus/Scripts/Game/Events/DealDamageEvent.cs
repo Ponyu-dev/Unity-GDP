@@ -5,13 +5,13 @@ namespace _EventBus.Scripts.Game.Events
     // Событие изменения здоровья героя
     public struct DealDamageEvent
     {
-        public readonly IHeroEntity Current;
-        public readonly int Strength;
+        public readonly IHeroEntity Attacker;
+        public readonly IHeroEntity Target;
 
-        public DealDamageEvent(IHeroEntity current, int strength)
+        public DealDamageEvent(IHeroEntity attacker, IHeroEntity target)
         {
-            Current = current;
-            Strength = strength;
+            Attacker = attacker;
+            Target = target;
         }
     }
 }

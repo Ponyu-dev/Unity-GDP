@@ -33,13 +33,19 @@ namespace _EventBus.Scripts.Game.Handlers
         private void OnDealDamaged(DealDamageEvent evt)
         {
             Debug.Log("[DealDamageHandler] OnDealDamaged");
-            if (!evt.Current.TryGetComponent(out HitPointsComponent hitPointsComponent))
+            if (!evt.Target.TryGetComponent(out HitPointsComponent hitPointsComponent) ||
+                !evt.Attacker.TryGetComponent(out AttackComponent attackComponent))
                 return;
             
-            hitPointsComponent.Value -= evt.Strength;
+            hitPointsComponent.Value -= attackComponent.AttackValue;
 
             if (hitPointsComponent.Value <= 0)
-               _eventBus.RaiseEvent(new DiedEvent(evt.Current));
+               _eventBus.RaiseEvent(new DiedEvent(evt.Target));
+            else
+            {
+                //_eventBus.RaiseEvent(new AttackedAnimEvent(evt.Target, evt.Attacker));
+                _eventBus.RaiseEvent(new TurnEndedEvent(evt.Attacker));
+            }
         }
     }
 }

@@ -95,7 +95,7 @@ namespace _EventBus.Scripts.Game.Managers
 
         private void OnTurnEnded(TurnEndedEvent evt)
         {
-            //StartNextTurn();
+            StartNextTurn();
         }
 
         public void Dispose()
