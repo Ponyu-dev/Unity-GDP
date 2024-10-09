@@ -33,7 +33,7 @@ namespace _EventBus.Scripts.Game.Handlers
         private void OnHeroAttacked(AttackedEvent evt)
         {
             Debug.Log($"AttackHandler OnHeroAttacked");
-            _eventBus.RaiseEvent(new DealDamageEvent(evt.Target, evt.Attacker));
+            _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, evt.Target));
             
             // Ответный удар от цели обратно атакующему может быть надо перенесте в DealDamageHandler.
             //_eventBus.RaiseEvent(new AttackedEvent(evt.Current, evt.Attacker));
