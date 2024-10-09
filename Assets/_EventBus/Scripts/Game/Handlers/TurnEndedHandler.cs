@@ -3,9 +3,7 @@ using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Abilities;
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Game.Presenters;
-using _EventBus.Scripts.Players.Abilities;
 using _EventBus.Scripts.Players.Abilities.Base;
-using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -44,7 +42,7 @@ namespace _EventBus.Scripts.Game.Handlers
             Debug.Log($"[TurnEndedHandler] OnHeroTurnEnded {evt.Current.HeroType}");
             
             if (evt.Current.TryGetComponent<IAbility>(out var ability) &&
-                ability is IAbilityTurnEnd turnEndAbility)
+                ability is IAbilityTurnEnd)
             {
                 await _eventBus.RaiseEvent(new AbilityTurnEndEvent(evt.Current));
                 await UniTask.Delay(1000);
@@ -52,6 +50,8 @@ namespace _EventBus.Scripts.Game.Handlers
 
             if (evt.Current.TryGetComponent<IHeroPresenter>(out var presenter))
                 presenter.SetActive(false);
+            
+            await _eventBus.RaiseEvent(new NextHeroEvent());
         }
     }
 }

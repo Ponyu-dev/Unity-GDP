@@ -34,8 +34,7 @@ namespace _EventBus.Scripts.Game.Managers
             _heroFactory = heroFactory;
             
             _eventBus.Subscribe<DiedEvent>(OnHeroDied);
-            //TODO заменить на NextHeroEvent
-            _eventBus.Subscribe<TurnEndedEvent>(OnTurnEnded);
+            _eventBus.Subscribe<NextHeroEvent>(OnNextHero);
         }
 
         public void Initialize()
@@ -142,11 +141,9 @@ namespace _EventBus.Scripts.Game.Managers
             {
                 _turnQueue.Enqueue(newQueue.Dequeue());
             }
-
-            //StartNextTurn();
         }
 
-        private void OnTurnEnded(TurnEndedEvent evt)
+        private void OnNextHero(NextHeroEvent evt)
         {
             StartNextTurn();
         }
@@ -154,7 +151,7 @@ namespace _EventBus.Scripts.Game.Managers
         public void Dispose()
         {
             _eventBus.Unsubscribe<DiedEvent>(OnHeroDied);
-            _eventBus.Unsubscribe<TurnEndedEvent>(OnTurnEnded);
+            _eventBus.Unsubscribe<NextHeroEvent>(OnNextHero);
         }
     }
 

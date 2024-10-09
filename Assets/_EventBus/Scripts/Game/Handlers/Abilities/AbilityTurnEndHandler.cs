@@ -45,13 +45,11 @@ namespace _EventBus.Scripts.Game.Handlers.Abilities
                 ability is LastStrikeAbility turnEndAbility)
             {
                 Debug.Log($"[AbilityTurnEndHandler] LastStrikeAbility {evt.Current.HeroType}");
+                await _eventBus.RaiseEvent(new PlaySoundEvent(evt.Current.AbilityClip()));
                 var targetHero = _heroFactory.GetRandomEntity(evt.Current);
                 await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Current, targetHero));
                 await _eventBus.RaiseEvent(new DealDamageEvent(targetHero, turnEndAbility.Damage));
-                await UniTask.Delay(1000);
             }
-            
-            
         }
     }
 }

@@ -13,7 +13,6 @@ namespace _EventBus.Scripts.Players.Hero
     {
         public PlayerType PlayerType { get; }
         public HeroType HeroType { get; }
-        public HeroConfig Config { get; }
 
         public AudioClip StartTurnClip();
         public AudioClip LowHealthClip();
@@ -32,38 +31,38 @@ namespace _EventBus.Scripts.Players.Hero
         private readonly Random _random = new();
         
         public PlayerType PlayerType { get; private set; }
-        public HeroType HeroType => Config.type;
-        public HeroConfig Config { get; private set; }
+        public HeroType HeroType => _config.type;
+        private HeroConfig _config;
 
         public AudioClip StartTurnClip()
         {
-            var count = Config.clipsStartTurn.Length;
-            return Config.clipsStartTurn[_random.Next(count)];
+            var count = _config.clipsStartTurn.Length;
+            return _config.clipsStartTurn[_random.Next(count)];
         }
 
-        public AudioClip LowHealthClip() => Config.clipsLowHealth;
+        public AudioClip LowHealthClip() => _config.clipsLowHealth;
 
         public AudioClip AbilityClip()
         {
-            var count = Config.clipsAbility.Length;
-            return Config.clipsAbility[_random.Next(count)];
+            var count = _config.clipsAbility.Length;
+            return _config.clipsAbility[_random.Next(count)];
         }
 
-        public AudioClip DeathClip() => Config.clipsDeath;
+        public AudioClip DeathClip() => _config.clipsDeath;
 
         private readonly Dictionary<Type, object> _components;
         
         public HeroEntity(PlayerType playerType, HeroConfig heroConfig)
         {
             PlayerType = playerType;
-            Config = heroConfig;
+            _config = heroConfig;
             _components = new Dictionary<Type, object>()
             {
-                { typeof(HitPointsComponent), new HitPointsComponent(Config.health) },
-                { typeof(AttackComponent), new AttackComponent(Config.damage) },
+                { typeof(HitPointsComponent), new HitPointsComponent(_config.health) },
+                { typeof(AttackComponent), new AttackComponent(_config.damage) },
                 { typeof(IAbility), heroConfig.GetAbility()}
             };
-            Debug.Log($"[HeroEntity] Constructor {PlayerType} {Config.type}");
+            Debug.Log($"[HeroEntity] Constructor {PlayerType} {_config.type}");
         }
 
         public void AddComponent<T>(T component)

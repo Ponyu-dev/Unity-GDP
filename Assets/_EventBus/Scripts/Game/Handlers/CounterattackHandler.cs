@@ -35,10 +35,13 @@ namespace _EventBus.Scripts.Game.Handlers
             if (evt.Target.TryGetComponent<IAbility>(out var ability) &&
                 ability is UnpunishedStrikeAbility)
                 return;
-            
+
             if (!evt.Attacker.TryGetComponent(out AttackComponent attackComponent))
+            {
+                await _eventBus.RaiseEvent(new PlaySoundEvent(evt.Target.AbilityClip()));
                 return;
-            
+            }
+
             await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Attacker, evt.Target));
             await _eventBus.RaiseEvent(new DealDamageEvent(evt.Target, attackComponent.Value));
         }
