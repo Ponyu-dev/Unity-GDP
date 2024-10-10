@@ -13,14 +13,14 @@ namespace _EventBus.Scripts.Game.Managers
 {
     public interface ITurnManager
     {
-        event Action<PlayerType> GameFinish;
+        event Action<PlayerType?> OnGameFinish;
         public void Initialize();
-        public UniTaskVoid StartTurn();
+        public void StartTurn();
     }
     
     public class TurnManager : ITurnManager, IDisposable
     {
-        public event Action<PlayerType> GameFinish;
+        public event Action<PlayerType?> OnGameFinish;
         private readonly EventBus _eventBus;
         private readonly IHeroFactory _heroFactory;
         private readonly Queue<IHeroEntity> _turnQueue;
@@ -94,20 +94,19 @@ namespace _EventBus.Scripts.Game.Managers
             }
         }
 
-        public async UniTaskVoid StartTurn()
+        public void StartTurn()
         {
             Debug.Log("[TurnManager] StartTurn");
-            //TODO надо добавить 3, 2, 1 на сцену. А не просто задержку в 3 секунды.
-            await UniTask.Delay(3000);
             StartNextTurn();
         }
 
         private void StartNextTurn()
         {
             Debug.Log("[TurnManager] StartNextTurn");
-            if (_turnQueue.Count == 0)
+            if (!_heroFactory.TryGetMissingPlayerType(out var remainingType))
             {
                 // Обработка конца игры
+                OnGameFinish?.Invoke(remainingType);
                 return;
             }
 
@@ -132,12 +131,6 @@ namespace _EventBus.Scripts.Game.Managers
                 {
                     newQueue.Enqueue(entity);
                 }
-                /*
-                 //TODO либо здесь написать уделение героя либо в DiedHandler
-                 else
-                {
-                    _heroFactory.RemoveEntity(deadHero);
-                }*/
             }
             while (newQueue.Count > 0)
             {

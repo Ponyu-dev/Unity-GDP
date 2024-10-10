@@ -18,6 +18,7 @@ namespace _EventBus.Scripts.Game.Factories
         public IHeroEntity GetRandomEntity(IHeroEntity hero);
         public IEnumerable<IHeroEntity> GetAllEntities();
         public IEnumerable<IHeroEntity> GetEntitiesByPredicate(Func<IHeroEntity, bool> predicate);
+        public bool TryGetMissingPlayerType(out PlayerType? remainingType);
     }
     
     public class HeroFactory : IHeroFactory
@@ -78,6 +79,26 @@ namespace _EventBus.Scripts.Game.Factories
         public IEnumerable<IHeroEntity> GetEntitiesByPredicate(Func<IHeroEntity, bool> predicate)
         {
             return _entity.Values.Where(predicate);
+        }
+        
+        public bool TryGetMissingPlayerType(out PlayerType? remainingType)
+        {
+            // Получаем уникальные типы игроков в списке героев
+            var playerTypes = _entity.Values.Select(hero => hero.PlayerType).Distinct().ToList();
+
+            // Проверяем наличие обоих типов игроков
+            var hasRed = playerTypes.Contains(PlayerType.Red);
+            var hasBlue = playerTypes.Contains(PlayerType.Blue);
+
+            if (hasRed && hasBlue)
+            {
+                remainingType = null; // Оба типа присутствуют, нет отсутствующего типа
+                return true;
+            }
+
+            // Если остался только один тип, возвращаем его как "оставшийся"
+            remainingType = hasRed ? PlayerType.Red : hasBlue ? PlayerType.Blue : (PlayerType?)null;
+            return false;
         }
     }
 }
