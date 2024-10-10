@@ -42,6 +42,7 @@ namespace _EventBus.Scripts.Game
                 .AsSelf();
 
             ConfigureHandlers(builder);
+            ConfigureEffectsHandlers(builder);
             ConfigureAbilityHandlers(builder);
                 
             builder.Register<PlayerFactory>(Lifetime.Singleton)
@@ -64,21 +65,27 @@ namespace _EventBus.Scripts.Game
 
         private void ConfigureHandlers(IContainerBuilder builder)
         {
-            builder.Register<PlaySoundHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<TurnStartedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AttackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<CounterattackHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            builder.Register<AttackedAnimHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<DealDamageHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<HealedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<DiedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<TurnEndedHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
 
+        private void ConfigureEffectsHandlers(IContainerBuilder builder)
+        {
+            builder.Register<PlaySoundHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AttackedAnimHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        }
+        
         private void ConfigureAbilityHandlers(IContainerBuilder builder)
         {
             builder.Register<AbilityTurnEndHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AbilityLifeStealChanceHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AbilityPainBlastHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AbilityHealingGiftHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace _EventBus.Scripts.Game.Handlers.Abilities
                 Debug.Log($"[AbilityPainBlastHandler] PainBlastAbility {evt.Current.HeroType}");
                 await _eventBus.RaiseEvent(new PlaySoundEvent(evt.Current.AbilityClip()));
 
-                var opposingTeam = _heroFactory.GetAllEntitiesOpposingTeam(evt.Current.PlayerType).ToList();
+                var opposingTeam = _heroFactory.GetEntitiesByPredicate(it => it.PlayerType != evt.Current.PlayerType).ToList();
                 Debug.Log($"[AbilityPainBlastHandler] PainBlastAbility opposingTeam = {opposingTeam.Count}");
                 for (int i = 0, count = opposingTeam.Count; i < count; i++)
                 {

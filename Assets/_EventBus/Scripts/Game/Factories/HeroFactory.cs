@@ -17,7 +17,7 @@ namespace _EventBus.Scripts.Game.Factories
         public IHeroEntity GetEntity(HeroType entityId);
         public IHeroEntity GetRandomEntity(IHeroEntity hero);
         public IEnumerable<IHeroEntity> GetAllEntities();
-        public IEnumerable<IHeroEntity> GetAllEntitiesOpposingTeam(PlayerType playerType);
+        public IEnumerable<IHeroEntity> GetEntitiesByPredicate(Func<IHeroEntity, bool> predicate);
     }
     
     public class HeroFactory : IHeroFactory
@@ -79,9 +79,9 @@ namespace _EventBus.Scripts.Game.Factories
             return _entity.Values;
         }
 
-        public IEnumerable<IHeroEntity> GetAllEntitiesOpposingTeam(PlayerType playerType)
+        public IEnumerable<IHeroEntity> GetEntitiesByPredicate(Func<IHeroEntity, bool> predicate)
         {
-            return _entity.Values.Where(it => it.PlayerType != playerType);
+            return _entity.Values.Where(predicate);
         }
     }
 }

@@ -1,12 +1,11 @@
 using System;
+using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Abilities;
 using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Players.Abilities;
 using _EventBus.Scripts.Players.Abilities.Base;
-using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
-using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -35,13 +34,10 @@ namespace _EventBus.Scripts.Game.Handlers.Abilities
         
         private async UniTask OnAbilityLifeStealChance(AbilityLifeStealChanceEvent evt)
         {
-            if (evt.Current.TryGetComponent<HitPointsComponent>(out var hitPointsComponent) &&
-                evt.Current.TryGetComponent<IAbility>(out var ability) &&
+            if (evt.Current.TryGetComponent<IAbility>(out var ability) &&
                 ability is LifeStealChanceAbility { IsSuccessful: true })
             {
-                Debug.Log($"[AbilityLifeStealChanceHandler] LifeStealChanceAbility {evt.Current.HeroType} {hitPointsComponent.Value} + {evt.LifeStealAmount}");
-                hitPointsComponent.Value += evt.LifeStealAmount;
-                Debug.Log($"[AbilityLifeStealChanceHandler] LifeStealChanceAbility {evt.Current.HeroType} = {hitPointsComponent.Value}");
+                await _eventBus.RaiseEvent(new HealedEvent(evt.Current, evt.LifeStealAmount));
                 await _eventBus.RaiseEvent(new PlaySoundEvent(evt.Current.AbilityClip()));
             }
         }

@@ -48,6 +48,8 @@ namespace _EventBus.Scripts.Game.Handlers
                 await UniTask.Delay(1000);
             }
 
+            await _eventBus.RaiseEvent(new AbilityHealingGiftEvent(evt.Current));
+
             if (evt.Current.TryGetComponent<IHeroPresenter>(out var presenter))
                 presenter.SetActive(false);
             
