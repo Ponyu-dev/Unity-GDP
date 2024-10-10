@@ -5,11 +5,11 @@ namespace _EventBus.Scripts.Game.Events
     // Событие начала хода героя
     public struct TurnStartedEvent
     {
-        public readonly IHeroEntity CurrentHeroEntity;
+        public readonly IHeroEntity Current;
 
-        public TurnStartedEvent(IHeroEntity currentHeroEntity)
+        public TurnStartedEvent(IHeroEntity current)
         {
-            CurrentHeroEntity = currentHeroEntity;
+            Current = current;
         }
     }
 }

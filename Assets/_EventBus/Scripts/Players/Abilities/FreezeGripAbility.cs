@@ -7,6 +7,6 @@ namespace _EventBus.Scripts.Players.Abilities
     [Serializable]
     public class FreezeGripAbility : IAbilityAttack
     {
-        
+        public readonly int CountTurnFreeze = 2;
     }
 }

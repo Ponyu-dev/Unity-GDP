@@ -1,5 +1,6 @@
 using System;
 using _EventBus.Scripts.Game.Events;
+using _EventBus.Scripts.Game.Events.Abilities;
 using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Players.Abilities;
@@ -55,6 +56,8 @@ namespace _EventBus.Scripts.Game.Handlers
             await _eventBus.RaiseEvent(new AttackedAnimEvent(evt.Attacker, target));
             await _eventBus.RaiseEvent(new DealDamageEvent(evt.Attacker, target, attackComponent.Value));
 
+            await _eventBus.RaiseEvent(new AbilityFreezeGripEvent(evt.Attacker, target));
+            
             await UniTask.Delay(1000);
 
             await _eventBus.RaiseEvent(new CounterattackEvent(target, evt.Attacker));

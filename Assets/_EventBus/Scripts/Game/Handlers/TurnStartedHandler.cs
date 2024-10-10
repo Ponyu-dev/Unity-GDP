@@ -3,6 +3,8 @@ using _EventBus.Scripts.Game.Events;
 using _EventBus.Scripts.Game.Events.Effects;
 using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Game.Presenters;
+using _EventBus.Scripts.Players.Abilities;
+using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -38,18 +40,26 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private async UniTask OnHeroTurnStarted(TurnStartedEvent evt)
         {
-            Debug.Log($"[TurnStartedHandler] OnHeroTurnStarted {evt.CurrentHeroEntity.HeroType}");
+            Debug.Log($"[TurnStartedHandler] OnHeroTurnStarted {evt.Current.HeroType}");
 
-            if (evt.CurrentHeroEntity.TryGetComponent<IHeroPresenter>(out var presenter))
+            if (evt.Current.TryGetComponent<IHeroPresenter>(out var presenter))
                 presenter.SetActive(true);
-                
-            await _eventBus.RaiseEvent(new PlaySoundEvent(evt.CurrentHeroEntity.StartTurnClip()));
+
+            await _eventBus.RaiseEvent(new PlaySoundEvent(evt.Current.StartTurnClip()));
             
-            var targetHero = _heroFactory.GetRandomEntity(evt.CurrentHeroEntity);
-            var attackerHero = _heroFactory.GetEntity(evt.CurrentHeroEntity.HeroType);
-            await _eventBus.RaiseEvent(new AttackedEvent(attackerHero, targetHero));
-            await UniTask.Delay(1000);
-            await _eventBus.RaiseEvent(new TurnEndedEvent(attackerHero));
+            if (evt.Current.TryGetComponent<FreezeDebuffComponent>(out var freezeDebuff))
+            {
+                if (freezeDebuff.ProcessTurn())
+                    evt.Current.RemoveComponent<FreezeDebuffComponent>();
+            }
+            else
+            {
+                var targetHero = _heroFactory.GetRandomEntity(evt.Current);
+                await _eventBus.RaiseEvent(new AttackedEvent(evt.Current, targetHero));
+                await UniTask.Delay(1000);
+            }
+            
+            await _eventBus.RaiseEvent(new TurnEndedEvent(evt.Current));
         }
     }
 }

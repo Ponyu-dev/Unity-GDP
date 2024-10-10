@@ -86,6 +86,7 @@ namespace _EventBus.Scripts.Game
             builder.Register<AbilityLifeStealChanceHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AbilityPainBlastHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AbilityHealingGiftHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AbilityFreezeGripHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
     }
 }
