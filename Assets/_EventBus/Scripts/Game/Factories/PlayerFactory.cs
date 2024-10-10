@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using _EventBus.Scripts.Game.Presenters;
 using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Hero;
@@ -7,13 +9,14 @@ using UI;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace _EventBus.Scripts.Game.Factories
 {
     public interface IPlayerFactory
     {
         public void CreatePlayerHeroes();
-        //public void CreatePlayerHeroesRandom();
+        public void CreatePlayerHeroesRandom();
     }
     
     public class PlayerFactory : IPlayerFactory, IDisposable
@@ -58,8 +61,8 @@ namespace _EventBus.Scripts.Game.Factories
             Debug.Log("[PlayerFactory] CreatePlayerHeroes");
             try
             {
-                CreatePlayer(_playersConfigRed, _containerPlayerRed);
-                CreatePlayer(_playersConfigBlue, _containerPlayerBlue);
+                CreatePlayer(_playersConfigRed.playerType, _playersConfigRed.heroTypes, _containerPlayerRed);
+                CreatePlayer(_playersConfigBlue.playerType, _playersConfigBlue.heroTypes, _containerPlayerBlue);
             }
             catch (Exception e)
             {
@@ -68,14 +71,47 @@ namespace _EventBus.Scripts.Game.Factories
             }
         }
 
-        private void CreatePlayer(PlayerConfig playerConfig, Transform container)
+        public void CreatePlayerHeroesRandom()
         {
-            var playerType = playerConfig.playerType;
+            Debug.Log("[PlayerFactory] CreatePlayerHeroesRandom");
+            try
+            {
+                var (redList, blueList) = SplitHeroTypesIntoTwoRandomLists();
+                CreatePlayer(PlayerType.Red, redList, _containerPlayerRed);
+                CreatePlayer(PlayerType.Blue, blueList, _containerPlayerBlue);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("[PlayerFactory] CreatePlayerHeroes Exception");
+                Debug.LogException(e);
+            }
+        }
+        
+        private (HeroType[], HeroType[]) SplitHeroTypesIntoTwoRandomLists()
+        {
+            // Получаем все значения HeroType
+            var allHeroTypes = Enum.GetValues(typeof(HeroType)).Cast<HeroType>().ToList();
+
+            // Перемешиваем список случайным образом
+            var shuffledHeroTypes = allHeroTypes.OrderBy(_ => Random.value).ToList();
+
+            // Рассчитываем середину списка
+            var middleIndex = shuffledHeroTypes.Count / 2;
+
+            // Разделяем список на два равных списка
+            var redList = shuffledHeroTypes.Take(middleIndex);
+            var blueList = shuffledHeroTypes.Skip(middleIndex);
+
+            return (redList.ToArray(), blueList.ToArray());
+        }
+
+        private void CreatePlayer(PlayerType playerType, HeroType[] heroTypes, Transform container)
+        {
             Debug.Log($"[PlayerFactory] CreatePlayer {playerType}");
 
-            for (int index = 0, count = playerConfig.heroTypes.Length; index < count; index++)
+            for (int index = 0, count = heroTypes.Length; index < count; index++)
             {
-                var heroType = playerConfig.heroTypes[index];
+                var heroType = heroTypes[index];
                 CreateHeroPresenter(playerType, _heroesConfig.GetHeroConfig(heroType), container);
             }
         }

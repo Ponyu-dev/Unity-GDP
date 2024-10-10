@@ -5,6 +5,7 @@ using _EventBus.Scripts.Game.Factories;
 using _EventBus.Scripts.Players.Components;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace _EventBus.Scripts.Game.Handlers
@@ -36,12 +37,14 @@ namespace _EventBus.Scripts.Game.Handlers
 
         private async UniTask OnDied(DiedEvent evt)
         {
+            Debug.Log("[DiedHandler] OnHeroDied");
             var clip = evt.Target.DeathClip();
             await _eventBus.RaiseEvent(new PlaySoundEvent(clip));
             
+            _heroFactory.RemoveEntity(evt.Target.HeroType);
+            
             if (evt.Target.TryGetComponent<DestroyComponent>(out var component))
                 component.Destroy();
-            _heroFactory.RemoveEntity(evt.Target.HeroType);
         }
     }
 }

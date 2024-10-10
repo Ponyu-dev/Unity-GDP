@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Player-Blue
   m_EditorClassIdentifier: 
   playerType: 1
-  heroTypes: 01000000060000000300000004000000
+  heroTypes: 06000000030000000400000001000000

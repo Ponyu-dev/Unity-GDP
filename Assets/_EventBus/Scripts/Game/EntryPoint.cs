@@ -8,7 +8,6 @@ using _EventBus.Scripts.Players.Hero;
 using _EventBus.Scripts.Players.Player;
 using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -17,6 +16,8 @@ namespace _EventBus.Scripts.Game
     public class EntryPoint : LifetimeScope
     {
         [SerializeField] private HeroView prefabHeroView;
+        [SerializeField] private MainMenuView mainMenuView;
+        [SerializeField] private TimerView timerView;
 
         [SerializeField] private HeroesConfig allHeroes;
         
@@ -29,6 +30,14 @@ namespace _EventBus.Scripts.Game
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(allHeroes);
+            
+            builder.RegisterComponent(mainMenuView)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.RegisterComponent(timerView)
+                .AsImplementedInterfaces()
+                .AsSelf();
             
             builder.Register<HeroPresenter>(Lifetime.Transient)
                 .AsImplementedInterfaces()
@@ -58,7 +67,11 @@ namespace _EventBus.Scripts.Game
                 .AsImplementedInterfaces()
                 .AsSelf();
             
-            builder.Register<GameManager>(Lifetime.Singleton)
+            builder.Register<TimerPresenter>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<MainMenuPresenter>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
         }

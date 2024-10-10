@@ -13,12 +13,14 @@ namespace _EventBus.Scripts.Game.Managers
 {
     public interface ITurnManager
     {
+        event Action<PlayerType> GameFinish;
         public void Initialize();
         public UniTaskVoid StartTurn();
     }
     
     public class TurnManager : ITurnManager, IDisposable
     {
+        public event Action<PlayerType> GameFinish;
         private readonly EventBus _eventBus;
         private readonly IHeroFactory _heroFactory;
         private readonly Queue<IHeroEntity> _turnQueue;

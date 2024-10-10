@@ -14,7 +14,7 @@ namespace _EventBus.Scripts.Game.Factories
     {
         public IHeroEntity CreateEntity(PlayerType playerType, HeroConfig heroConfig);
         public void RemoveEntity(HeroType entityId);
-        public IHeroEntity GetEntity(HeroType entityId);
+        public bool HasEntity(HeroType entityId);
         public IHeroEntity GetRandomEntity(IHeroEntity hero);
         public IEnumerable<IHeroEntity> GetAllEntities();
         public IEnumerable<IHeroEntity> GetEntitiesByPredicate(Func<IHeroEntity, bool> predicate);
@@ -44,13 +44,9 @@ namespace _EventBus.Scripts.Game.Factories
             _entity.Remove(heroType);
         }
 
-        public IHeroEntity GetEntity(HeroType heroType)
+        public bool HasEntity(HeroType heroType)
         {
-            if (_entity.TryGetValue(heroType, out var entity))
-            {
-                return entity;
-            }
-            throw new InvalidOperationException($"HeroEntity with ID {heroType} does not exist.");
+            return _entity.ContainsKey(heroType);
         }
 
         public IHeroEntity GetRandomEntity(IHeroEntity hero)

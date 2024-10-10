@@ -40,19 +40,22 @@ namespace _EventBus.Scripts.Game.Handlers
         private async UniTask OnHeroTurnEnded(TurnEndedEvent evt)
         {
             Debug.Log($"[TurnEndedHandler] OnHeroTurnEnded {evt.Current.HeroType}");
-            
-            if (evt.Current.TryGetComponent<IAbility>(out var ability) &&
-                ability is IAbilityTurnEnd)
+
+            if (_heroFactory.HasEntity(evt.Current.HeroType))
             {
-                await _eventBus.RaiseEvent(new AbilityTurnEndEvent(evt.Current));
-                await UniTask.Delay(1000);
+                if (evt.Current.TryGetComponent<IAbility>(out var ability) &&
+                    ability is IAbilityTurnEnd)
+                {
+                    await _eventBus.RaiseEvent(new AbilityTurnEndEvent(evt.Current));
+                    await UniTask.Delay(1000);
+                }
+
+                await _eventBus.RaiseEvent(new AbilityHealingGiftEvent(evt.Current));
+
+                if (evt.Current.TryGetComponent<IHeroPresenter>(out var presenter))
+                    presenter.SetActive(false);
             }
 
-            await _eventBus.RaiseEvent(new AbilityHealingGiftEvent(evt.Current));
-
-            if (evt.Current.TryGetComponent<IHeroPresenter>(out var presenter))
-                presenter.SetActive(false);
-            
             await _eventBus.RaiseEvent(new NextHeroEvent());
         }
     }
