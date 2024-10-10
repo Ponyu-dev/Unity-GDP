@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _EventBus.Scripts.Game.Presenters;
 using _EventBus.Scripts.Players.Components;
 using _EventBus.Scripts.Players.Hero;
 using _EventBus.Scripts.Players.Player;
@@ -19,6 +20,7 @@ namespace _EventBus.Scripts.Game.Factories
         public IEnumerable<IHeroEntity> GetAllEntities();
         public IEnumerable<IHeroEntity> GetEntitiesByPredicate(Func<IHeroEntity, bool> predicate);
         public bool TryGetMissingPlayerType(out PlayerType? remainingType);
+        public void ClearAll();
     }
     
     public class HeroFactory : IHeroFactory
@@ -99,6 +101,19 @@ namespace _EventBus.Scripts.Game.Factories
             // Если остался только один тип, возвращаем его как "оставшийся"
             remainingType = hasRed ? PlayerType.Red : hasBlue ? PlayerType.Blue : (PlayerType?)null;
             return false;
+        }
+
+        public void ClearAll()
+        {
+            foreach (var entity in _entity)
+            {
+                var destroy = entity.Value.GetComponent<DestroyComponent>();
+                destroy.Destroy();
+                
+                entity.Value.RemoveComponent<IHeroPresenter>();
+            }
+            
+            _entity.Clear();
         }
     }
 }

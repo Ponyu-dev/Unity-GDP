@@ -16,6 +16,7 @@ namespace _EventBus.Scripts.Game.Managers
         event Action<PlayerType?> OnGameFinish;
         public void Initialize();
         public void StartTurn();
+        public void ClearAll();
     }
     
     public class TurnManager : ITurnManager, IDisposable
@@ -98,6 +99,12 @@ namespace _EventBus.Scripts.Game.Managers
         {
             Debug.Log("[TurnManager] StartTurn");
             StartNextTurn();
+        }
+
+        public void ClearAll()
+        {
+            _turnQueue.Clear();
+            _heroFactory.ClearAll();
         }
 
         private void StartNextTurn()

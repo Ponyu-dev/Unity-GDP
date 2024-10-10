@@ -86,7 +86,7 @@ namespace _EventBus.Scripts.Game.Factories
                 Debug.LogException(e);
             }
         }
-        
+
         private (HeroType[], HeroType[]) SplitHeroTypesIntoTwoRandomLists()
         {
             // Получаем все значения HeroType

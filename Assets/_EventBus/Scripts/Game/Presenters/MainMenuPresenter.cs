@@ -53,9 +53,10 @@ namespace _EventBus.Scripts.Game.Presenters
                 ? "Draw"
                 : $"!!! VICTORY {playerTypeWin.ToString()} !!!";
             
-            
             _mainMenuView.SetVictory(GetWinColor(playerTypeWin), victory);
             _mainMenuView.Show();
+            
+            _turnManager.ClearAll();
         }
 
         public void Start()
