@@ -17,6 +17,7 @@ namespace _EventBus.Scripts.Game.Factories
         public IHeroEntity GetEntity(HeroType entityId);
         public IHeroEntity GetRandomEntity(IHeroEntity hero);
         public IEnumerable<IHeroEntity> GetAllEntities();
+        public IEnumerable<IHeroEntity> GetAllEntitiesOpposingTeam(PlayerType playerType);
     }
     
     public class HeroFactory : IHeroFactory
@@ -76,6 +77,11 @@ namespace _EventBus.Scripts.Game.Factories
         public IEnumerable<IHeroEntity> GetAllEntities()
         {
             return _entity.Values;
+        }
+
+        public IEnumerable<IHeroEntity> GetAllEntitiesOpposingTeam(PlayerType playerType)
+        {
+            return _entity.Values.Where(it => it.PlayerType != playerType);
         }
     }
 }

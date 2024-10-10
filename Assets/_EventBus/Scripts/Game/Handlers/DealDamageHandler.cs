@@ -54,6 +54,7 @@ namespace _EventBus.Scripts.Game.Handlers
             hitPointsComponent.Value -= evt.Damage;
             
             await _eventBus.RaiseEvent(new AbilityLifeStealChanceEvent(evt.Attacker, evt.Damage));
+            await _eventBus.RaiseEvent(new AbilityPainBlastEvent(target));
 
             if (hitPointsComponent.Value <= 0)
                 await _eventBus.RaiseEvent(new DiedEvent(target));

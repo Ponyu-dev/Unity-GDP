@@ -78,6 +78,7 @@ namespace _EventBus.Scripts.Game
         {
             builder.Register<AbilityTurnEndHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<AbilityLifeStealChanceHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<AbilityPainBlastHandler>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
     }
 }
