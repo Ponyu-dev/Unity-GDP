@@ -11,15 +11,16 @@ namespace CubeECS.Scripts.ECS.SpawnStrategy.Base
         {
             var entity = world.NewEntity();
             ref var positionComponent = ref world.GetPool<PositionComponent>().Add(entity);
-            ref var teamComponent = ref world.GetPool<TeamComponent>().Add(entity);
-            ref var prefabComponent = ref world.GetPool<PrefabComponent>().Add(entity);
-            ref var movement = ref world.GetPool<MovementComponent>().Add(entity);
-
-            movement.TargetPosition = new Vector3(targetPosition.x, 0, position.z);
-            Debug.Log($"BaseSpawnStrategy CreateEntity team {team} targetPosition = {movement.TargetPosition}");
-            
             positionComponent.Position = position;
+            
+            ref var teamComponent = ref world.GetPool<TeamComponent>().Add(entity);
             teamComponent.team = team;
+            
+            ref var movement = ref world.GetPool<MovementComponent>().Add(entity);
+            movement.TargetPosition = targetPosition;
+            movement.IsMoving = true;
+            
+            ref var prefabComponent = ref world.GetPool<PrefabComponent>().Add(entity);
             prefabComponent.Prefab = Object.Instantiate(prefab, position, Quaternion.identity, container);
         }
 

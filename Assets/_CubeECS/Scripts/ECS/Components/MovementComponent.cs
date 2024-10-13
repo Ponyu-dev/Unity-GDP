@@ -5,5 +5,6 @@ namespace CubeECS.Scripts.ECS.Components
     public struct MovementComponent
     {
         public Vector3 TargetPosition;
+        public bool IsMoving;
     }
 }
