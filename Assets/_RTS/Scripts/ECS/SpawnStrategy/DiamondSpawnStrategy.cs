@@ -11,13 +11,28 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
             float spacing)
         {
             var center = container.position;
-            for (var i = 0; i < count; i++)
-            {
-                var diamondLayer = (int)Mathf.Sqrt(i);
-                var indexInLayer = i - (diamondLayer * diamondLayer);
 
-                var position = center + new Vector3((indexInLayer - diamondLayer) * spacing, 0, diamondLayer * spacing);
-                CreateEntity(world, container, position, team, prefab);
+            // Вычисляем максимальную ширину ромба
+            var diamondWidth = Mathf.CeilToInt((Mathf.Sqrt(1 + 8 * count) - 1) / 2) / 2;
+
+            var totalEntities = 0;
+
+            // Проходим по уровням высоты ромба
+            for (var y = -diamondWidth; y <= diamondWidth; y++) 
+            {
+                // Определяем максимальное количество сущностей по X на уровне Y
+                var xLimit = diamondWidth - Mathf.Abs(y); 
+
+                for (var x = -xLimit; x <= xLimit; x++) 
+                {
+                    // Проверка на превышение количества
+                    if (totalEntities >= count) return;
+
+                    // Вычисляем позицию для сущности
+                    var position = center + new Vector3(x * spacing, 0, y * spacing); 
+                    CreateEntity(world, container, position, team, prefab);
+                    totalEntities++; // Увеличиваем общее количество созданных сущностей
+                }
             }
         }
     }

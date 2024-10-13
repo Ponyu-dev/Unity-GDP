@@ -11,13 +11,33 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
             float spacing)
         {
             var center = container.position;
-            var radius = Mathf.Sqrt(count) * spacing * 0.5f;
+            
+            // Общее количество сущностей на каждом радиусе
+            var radiusCount = Mathf.CeilToInt(Mathf.Sqrt(count));
+            // Параметр для отслеживания общего количества сущностей, добавленных до текущего уровня
+            var totalSpawned = 0;
 
-            for (var i = 0; i < count; i++)
+            for (var r = 0; r < radiusCount; r++) // Уровень радиуса
             {
-                var angle = i * Mathf.PI * 2 / count;
-                var position = center + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
-                CreateEntity(world, container, position, team, prefab);
+                var radius = r * spacing; // Определяем радиус для текущего уровня
+                var entitiesOnThisLevel = Mathf.Min(count - totalSpawned, 6 * r); // Максимум 6 сущностей на уровень
+
+                // Распределяем сущности по кругу на текущем радиусе
+                for (var i = 0; i < entitiesOnThisLevel; i++)
+                {
+                    // Угол для текущей сущности
+                    var angle = i * (360f / entitiesOnThisLevel) * Mathf.Deg2Rad;
+                    // Вычисляем позицию
+                    var position = center + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+                    // Создаем сущность в рассчитанной позиции
+                    CreateEntity(world, container, position, team, prefab);
+                }
+
+                // Увеличиваем общее количество созданных сущностей
+                totalSpawned += entitiesOnThisLevel;
+                // Прерываем, если все сущности созданы
+                if (totalSpawned >= count)
+                    break;
             }
         }
     }
