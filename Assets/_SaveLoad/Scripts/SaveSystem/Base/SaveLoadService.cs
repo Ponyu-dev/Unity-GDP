@@ -30,10 +30,9 @@ namespace SaveSystem.Base
             Debug.Log($"SaveLoadService SaveAsync for {saveFile} {typeof(T)}");
             try
             {
-                var json = JsonConvert.SerializeObject(data); // Или JsonUtility.ToJson(data)
+                var json = JsonConvert.SerializeObject(data);
                 var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
                 var encryptedBytes = _encryptionUtils.Encrypt(jsonBytes);
-
                 await using var fs = new FileStream(_saveConfig.SaveFilePath(saveFile), FileMode.Create, FileAccess.Write);
                 await fs.WriteAsync(encryptedBytes, 0, encryptedBytes.Length);
             }
