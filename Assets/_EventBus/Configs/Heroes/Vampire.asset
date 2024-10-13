@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
+  m_Name: Vampire
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 21300000, guid: 778d4d7ee50594cd79059847cefca69a, type: 3}
+  type: 7
+  damage: 6
+  health: 22
+  clipsStartTurn:
+  - {fileID: 8300000, guid: 9d1d73939dcbe4e8890062bb45c775c5, type: 3}
+  - {fileID: 8300000, guid: 5e06a2876563e4176b0f2903d2c1b1d1, type: 3}
+  - {fileID: 8300000, guid: 72ec728a021244cd9b54a2fb92ef45f3, type: 3}
+  clipsLowHealth: {fileID: 8300000, guid: 4dc3f4ce2f8594160a8aee0a7fdc5a07, type: 3}
+  clipsAbility: []
+  clipsDeath: {fileID: 8300000, guid: b6800c1defee546798aeed2f7a581be7, type: 3}
+  abilityType: 3
