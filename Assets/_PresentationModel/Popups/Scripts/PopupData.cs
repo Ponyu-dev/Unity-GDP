@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PopupData
+namespace Popups
 {
-    
+    public abstract class PopupData : ScriptableObject
+    {
+        public string Title;
+        public string Message;
+    }
 }
