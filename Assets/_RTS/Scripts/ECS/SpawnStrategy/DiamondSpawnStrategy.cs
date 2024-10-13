@@ -7,7 +7,7 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
 {
     public class DiamondSpawnStrategy : BaseSpawnStrategy
     {
-        public override void SpawnArmy(EcsWorld world, Transform container, int count, Team team, GameObject prefab,
+        public override void SpawnArmy(EcsWorld world, Transform container, Vector3 targetPosition, int count, Team team, GameObject prefab,
             float spacing)
         {
             var center = container.position;
@@ -30,7 +30,8 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
 
                     // Вычисляем позицию для сущности
                     var position = center + new Vector3(x * spacing, 0, y * spacing); 
-                    CreateEntity(world, container, position, team, prefab);
+                    var target = targetPosition + new Vector3(x * spacing, 0, y * spacing); 
+                    CreateEntity(world, container, position, target, team, prefab);
                     totalEntities++; // Увеличиваем общее количество созданных сущностей
                 }
             }

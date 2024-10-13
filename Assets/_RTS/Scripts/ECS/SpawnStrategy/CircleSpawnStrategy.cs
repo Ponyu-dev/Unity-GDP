@@ -7,7 +7,18 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
 {
     public class CircleSpawnStrategy : BaseSpawnStrategy
     {
-        public override void SpawnArmy(EcsWorld world, Transform container, int count, Team team, GameObject prefab,
+        private Vector3 Circle(float angle, float radius)
+        {
+            return new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+        }
+        
+        public override void SpawnArmy(
+            EcsWorld world,
+            Transform container,
+            Vector3 targetPosition,
+            int count,
+            Team team,
+            GameObject prefab,
             float spacing)
         {
             var center = container.position;
@@ -28,9 +39,10 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
                     // Угол для текущей сущности
                     var angle = i * (360f / entitiesOnThisLevel) * Mathf.Deg2Rad;
                     // Вычисляем позицию
-                    var position = center + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+                    var position = center + Circle(angle, radius);
+                    var target = targetPosition + Circle(angle, radius);
                     // Создаем сущность в рассчитанной позиции
-                    CreateEntity(world, container, position, team, prefab);
+                    CreateEntity(world, container, position, target, team, prefab);
                 }
 
                 // Увеличиваем общее количество созданных сущностей

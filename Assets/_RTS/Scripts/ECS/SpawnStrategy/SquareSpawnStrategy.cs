@@ -7,7 +7,15 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
 {
     public class SquareSpawnStrategy : BaseSpawnStrategy
     {
-        public override void SpawnArmy(EcsWorld world, Transform container, int count, Team team, GameObject prefab,
+        private Vector3 Square(int i, int columns, int rows, float spacing)
+        {
+            return new Vector3(
+                (i % columns) * spacing - (columns - 1) * spacing * 0.5f,
+                0,
+                (i / columns) * spacing - (rows - 1) * spacing * 0.5f);
+        }
+        
+        public override void SpawnArmy(EcsWorld world, Transform container, Vector3 targetPosition, int count, Team team, GameObject prefab,
             float spacing)
         {
             var center = container.position;
@@ -16,9 +24,10 @@ namespace _RTS.Scripts.ECS.SpawnStrategy
 
             for (var i = 0; i < count; i++)
             {
-                var position = center + new Vector3((i % columns) * spacing - (columns - 1) * spacing * 0.5f, 0,
-                    (i / columns) * spacing - (rows - 1) * spacing * 0.5f);
-                CreateEntity(world, container, position, team, prefab);
+                var position = center + Square(i, columns, rows, spacing);
+                var target = targetPosition + Square(i, columns, rows, spacing);
+                
+                CreateEntity(world, container, position, target, team, prefab);
             }
         }
     }

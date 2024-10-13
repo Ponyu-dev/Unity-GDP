@@ -4,7 +4,7 @@ using Leopotam.EcsLite;
 using VContainer;
 using VContainer.Unity;
 
-namespace _RTS.Scripts.ECS.DI
+namespace _RTS.Scripts.ECS.Systems
 {
     public class GameRunner : IInitializable, IDisposable, ITickable
     {
@@ -12,12 +12,17 @@ namespace _RTS.Scripts.ECS.DI
         private readonly EcsSystems _systems;
 
         [Inject]
-        public GameRunner(CubeSpawnSystem cubeSpawnSystem)
+        public GameRunner(
+            MovementSystem movementSystem,
+            RenderSystem renderSystem,
+            SpawnSystem spawnSystem)
         {
             _world = new EcsWorld();
             _systems = new EcsSystems(_world);
             _systems
-                .Add(cubeSpawnSystem);
+                .Add(spawnSystem)
+                .Add(renderSystem)
+                .Add(movementSystem);
         }
         
         public void Initialize()

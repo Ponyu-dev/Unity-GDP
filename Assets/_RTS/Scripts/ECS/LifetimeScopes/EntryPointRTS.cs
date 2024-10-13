@@ -18,8 +18,16 @@ namespace _RTS.Scripts.ECS.DI
         protected override void Configure(IContainerBuilder builder)
         {
             _spawnStrategyInstaller.Configure(builder);
+
+            builder.Register<MovementSystem>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
             
-            builder.Register<CubeSpawnSystem>(Lifetime.Singleton)
+            builder.Register<RenderSystem>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<SpawnSystem>(Lifetime.Singleton)
                 .WithParameter("redContainer", redContainer)
                 .WithParameter("blueContainer", blueContainer)
                 .WithParameter("redCubePrefab", redCubePrefab)
