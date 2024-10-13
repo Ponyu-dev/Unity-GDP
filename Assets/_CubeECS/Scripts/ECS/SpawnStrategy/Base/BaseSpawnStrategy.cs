@@ -1,9 +1,9 @@
-using _RTS.Scripts.ECS.Components;
-using _RTS.Scripts.ECS.Utils;
+using CubeECS.Scripts.ECS.Components;
+using CubeECS.Scripts.ECS.Utils;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace _RTS.Scripts.ECS.SpawnStrategy.Base
+namespace CubeECS.Scripts.ECS.SpawnStrategy.Base
 {
     public abstract class BaseSpawnStrategy : ISpawnStrategy
     {

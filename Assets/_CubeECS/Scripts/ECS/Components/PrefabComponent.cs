@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _RTS.Scripts.ECS.Components
+namespace CubeECS.Scripts.ECS.Components
 {
     public struct PrefabComponent
     {

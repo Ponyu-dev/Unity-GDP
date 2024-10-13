@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using _RTS.Scripts.ECS.SpawnStrategy;
-using _RTS.Scripts.ECS.SpawnStrategy.Base;
-using _RTS.Scripts.ECS.Utils;
+using CubeECS.Scripts.ECS.SpawnStrategy;
+using CubeECS.Scripts.ECS.SpawnStrategy.Base;
+using CubeECS.Scripts.ECS.Utils;
 using Leopotam.EcsLite;
 using UnityEngine;
 using VContainer;
 
-namespace _RTS.Scripts.ECS.Systems
+namespace CubeECS.Scripts.ECS.Systems
 {
     public class SpawnSystem : IEcsInitSystem
     {

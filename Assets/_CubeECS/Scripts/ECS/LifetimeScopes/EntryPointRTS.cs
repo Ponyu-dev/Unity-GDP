@@ -1,10 +1,10 @@
-using _RTS.Scripts.ECS.SpawnStrategy.Base;
-using _RTS.Scripts.ECS.Systems;
+using CubeECS.Scripts.ECS.SpawnStrategy.Base;
+using CubeECS.Scripts.ECS.Systems;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace _RTS.Scripts.ECS.DI
+namespace CubeECS.Scripts.ECS.DI
 {
     public class EntryPointRTS : LifetimeScope
     {

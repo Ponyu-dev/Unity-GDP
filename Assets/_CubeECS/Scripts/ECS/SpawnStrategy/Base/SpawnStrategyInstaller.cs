@@ -1,6 +1,6 @@
 using VContainer;
 
-namespace _RTS.Scripts.ECS.SpawnStrategy.Base
+namespace CubeECS.Scripts.ECS.SpawnStrategy.Base
 {
     public class SpawnStrategyInstaller
     {

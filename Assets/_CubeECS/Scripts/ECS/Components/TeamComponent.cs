@@ -1,6 +1,6 @@
-using _RTS.Scripts.ECS.Utils;
+using CubeECS.Scripts.ECS.Utils;
 
-namespace _RTS.Scripts.ECS.Components
+namespace CubeECS.Scripts.ECS.Components
 {
     public struct TeamComponent
     {

@@ -1,9 +1,9 @@
-using _RTS.Scripts.ECS.Components;
+using CubeECS.Scripts.ECS.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 using VContainer;
 
-namespace _RTS.Scripts.ECS.Systems
+namespace CubeECS.Scripts.ECS.Systems
 {
     public class RenderSystem : IEcsInitSystem, IEcsRunSystem
     {

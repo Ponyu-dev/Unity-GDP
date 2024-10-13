@@ -1,4 +1,4 @@
-namespace _RTS.Scripts.ECS.Utils
+namespace CubeECS.Scripts.ECS.Utils
 {
     public enum Team
     {

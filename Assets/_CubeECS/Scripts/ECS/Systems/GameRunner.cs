@@ -1,10 +1,10 @@
 using System;
-using _RTS.Scripts.ECS.Systems;
+using CubeECS.Scripts.ECS.Systems;
 using Leopotam.EcsLite;
 using VContainer;
 using VContainer.Unity;
 
-namespace _RTS.Scripts.ECS.Systems
+namespace CubeECS.Scripts.ECS.Systems
 {
     public class GameRunner : IInitializable, IDisposable, ITickable
     {
