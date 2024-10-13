@@ -42,7 +42,8 @@ namespace _ChestMechanics.Scripts.Reward.Presenter
         
         private async UniTaskVoid InitializeRewardsAsync()
         {
-            _rewardSaveList = await _rewardsSystemSave.LoadUnitsAsync();
+            //TODO Надо вернуть
+            //_rewardSaveList = await _rewardsSystemSave.LoadUnitsAsync();
             
             if (_rewardSaveList?.rewardsSaves?.IsNullOrEmpty() ?? true)
                 SpawnDefaultRewards(_rewardsConfig.GetRewards());
@@ -96,7 +97,8 @@ namespace _ChestMechanics.Scripts.Reward.Presenter
             
             if (_rewardSaveList != null)
             {
-                await _rewardsSystemSave.SaveUnitsAsync(_rewardSaveList);
+                //TODO Надо вернуть
+                //await _rewardsSystemSave.SaveUnitsAsync(_rewardSaveList);
             }
 
             _processSave = false;

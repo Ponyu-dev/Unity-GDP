@@ -1,22 +1,18 @@
-using _ChestMechanics.Scripts.Reward.Data;
-using Cysharp.Threading.Tasks;
 using SaveSystem.Base;
-using SaveSystem.Config;
 using VContainer;
+using NotImplementedException = System.NotImplementedException;
 
 namespace _ChestMechanics.Scripts.Reward.System
 {
-    public class RewardsSystemSave : SaveLoadService
+    public class RewardsSystemSave : IDataProvider<ISavableData>
     {
-        private const string FileName = "rewards.data";
-        
         [Inject]
-        public RewardsSystemSave(SaveConfig saveConfig) : base(saveConfig)
+        public RewardsSystemSave()
         {
-            _saveFileName = FileName;
+            
         }
         
-        public async UniTask SaveUnitsAsync(RewardSaveList rewardSave)
+        /*public async UniTask SaveUnitsAsync(RewardSaveList rewardSave)
         {
             await SaveAsync(rewardSave);
         }
@@ -24,6 +20,15 @@ namespace _ChestMechanics.Scripts.Reward.System
         public async UniTask<RewardSaveList> LoadUnitsAsync()
         {
             return await LoadAsync<RewardSaveList>();
+        }*/
+        public ISavableData GetDataForSaving()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyLoadedData(ISavableData data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

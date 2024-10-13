@@ -13,7 +13,7 @@ namespace _ChestMechanics.Session
         
         public void Configure(IContainerBuilder builder)
         {
-            builder.Register<GameSessionSave>(Lifetime.Singleton);
+            builder.Register<GameSessionProvider>(Lifetime.Singleton);
             builder.Register<GameSession>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             
             builder.RegisterComponent(gameSessionView);

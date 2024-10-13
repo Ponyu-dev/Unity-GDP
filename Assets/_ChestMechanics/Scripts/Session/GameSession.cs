@@ -41,12 +41,12 @@ namespace _ChestMechanics.Session
         [CanBeNull] private GameSessionData _lastGameSessionData;
         private readonly GameSessionData _currentGameSessionData;
         
-        private readonly GameSessionSave _gameSessionSave;
+        private readonly GameSessionProvider _gameSessionProvider;
 
         [Inject]
-        public GameSession(GameSessionSave gameSessionSave)
+        public GameSession(GameSessionProvider gameSessionProvider)
         {
-            _gameSessionSave = gameSessionSave;
+            _gameSessionProvider = gameSessionProvider;
             _currentGameSessionData = new GameSessionData();
             
             LoadLastSession().Forget();
@@ -56,9 +56,10 @@ namespace _ChestMechanics.Session
 
         private async UniTaskVoid LoadLastSession()
         {
-            _lastGameSessionData = await _gameSessionSave.LoadUnitsAsync();
-            Debug.Log($"LoadLastSession = {_lastGameSessionData?.sessionStart}");
-            Debug.Log($"LoadLastSession = {_lastGameSessionData?.sessionEnd}");
+            //TODO Надо вернуть загрузку
+            //_lastGameSessionData = await _gameSessionProvider.LoadUnitsAsync();
+            //Debug.Log($"LoadLastSession = {_lastGameSessionData?.sessionStart}");
+            //Debug.Log($"LoadLastSession = {_lastGameSessionData?.sessionEnd}");
             OnLastSessionLoad?.Invoke();
         }
 
@@ -133,7 +134,8 @@ namespace _ChestMechanics.Session
             _currentGameSessionData.sessionEnd = endTime.ToString(CultureInfo.InvariantCulture);
             _currentGameSessionData.allSessionDuration = allSessionDuration.Add(sessionDuration).ToString();
             
-            _gameSessionSave.SaveUnitsAsync(_currentGameSessionData).Forget();
+            //TODO Надо вернуть сохранение
+            //_gameSessionProvider.SaveUnitsAsync(_currentGameSessionData).Forget();
         }
     }
 }
