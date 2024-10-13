@@ -1,3 +1,4 @@
+using _SaveLoad.Scripts.SaveSystem;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace GameEngine
     public class TestSave : MonoBehaviour
     {
         [Inject]
-        private SaveLoadPoint _saveLoadPoint;
+        private ISaveLoadPoint _saveLoadPoint;
 
         [Button]
         public void SaveGameAsync()

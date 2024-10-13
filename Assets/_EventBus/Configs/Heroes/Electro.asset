@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
+  m_Name: Electro
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 21300000, guid: f6d397e5cec894f3cbbb28a24524a3db, type: 3}
+  type: 1
+  damage: 7
+  health: 35
+  clipsStartTurn:
+  - {fileID: 8300000, guid: 9aec69027fb0d42d284ccb7c087858c0, type: 3}
+  - {fileID: 8300000, guid: 1314fcb530f1f444489b0b5a3caed0a1, type: 3}
+  - {fileID: 8300000, guid: 24cda1d363f66421b9a28d0ce15c2d2a, type: 3}
+  - {fileID: 8300000, guid: 6c42d7f78fc4c492c851c0f6d5ec764f, type: 3}
+  - {fileID: 8300000, guid: 8705eee9f468f4612995a31ade57aa3c, type: 3}
+  - {fileID: 8300000, guid: cf4131bc52c7c42d68eefca84e52e73a, type: 3}
+  clipsLowHealth: {fileID: 8300000, guid: 5bb9ff9087b6d492eacdeda34a7610f4, type: 3}
+  clipsAbility:
+  - {fileID: 8300000, guid: 855f23e1af9964e14a4956788f3097a8, type: 3}
+  - {fileID: 8300000, guid: 22eae6007a5b540ddb343c25c1c84dae, type: 3}
+  - {fileID: 8300000, guid: 2e23698572f7448d1bad5e6f926790c0, type: 3}
+  - {fileID: 8300000, guid: 5394c6470fa594d1a96b89972712026e, type: 3}
+  - {fileID: 8300000, guid: 02f04a1cc50a2457799df1aadd4d69c2, type: 3}
+  clipsDeath: {fileID: 8300000, guid: 31a832b5ffe004b669c0b887d8e2b984, type: 3}
+  abilityType: 7

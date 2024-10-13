@@ -1,3 +1,5 @@
+using _SaveLoad.Scripts.SaveSystem;
+using GameEngine.Providers;
 using SaveSystem.Base;
 using SaveSystem.Config;
 using SaveSystem.Utils;
@@ -34,10 +36,17 @@ namespace GameEngine
             builder.RegisterInstance(unitManager);
             builder.RegisterInstance(resourceService);
             
-            builder.Register<UnitSaveLoaderService>(Lifetime.Singleton);
-            builder.Register<ResourceSaveService>(Lifetime.Singleton);
+            builder.Register<SaveLoadService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
             
-            builder.Register<SaveLoadPoint>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<UnitDataProvider>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            builder.Register<ResourcesDataProvider>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<SaveLoadPoint>(Lifetime.Singleton).AsImplementedInterfaces();
             
             builder.RegisterComponent(testSave);
         }

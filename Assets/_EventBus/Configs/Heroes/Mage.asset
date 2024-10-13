@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcf58c2ea7c46039c5f9c51531710a2, type: 3}
+  m_Name: Mage
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 21300000, guid: 2059f3310f8404adcac5457e5e772e52, type: 3}
+  type: 3
+  damage: 2
+  health: 50
+  clipsStartTurn:
+  - {fileID: 8300000, guid: 58a60bdc5e2d64a81a2b9d53513b684b, type: 3}
+  - {fileID: 8300000, guid: 0ba3f36a6a4424d0ab20e02a25c18d1d, type: 3}
+  clipsLowHealth: {fileID: 8300000, guid: 0ebd6580ff27d4dc1a08513f4d2330d3, type: 3}
+  clipsAbility: []
+  clipsDeath: {fileID: 8300000, guid: 7d8f63236f074456dac94230db57fac4, type: 3}
+  abilityType: 5

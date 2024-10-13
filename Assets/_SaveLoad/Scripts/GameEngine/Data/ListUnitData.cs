@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameEngine.Helpers;
+using SaveSystem.Base;
 
 namespace GameEngine.Data
 {
     [Serializable]
-    public class ListUnitData
+    public class ListUnitData : ISavableData
     {
         public List<UnitData> Units;
 

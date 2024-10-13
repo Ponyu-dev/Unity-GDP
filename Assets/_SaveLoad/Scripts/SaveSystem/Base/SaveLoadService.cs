@@ -9,27 +9,31 @@ using VContainer;
 
 namespace SaveSystem.Base
 {
-    public abstract class SaveLoadService //: ISaveLoadService
+    public sealed class SaveLoadService : ISaveLoadService
     {
-        protected string _saveFileName;
+        private static string GetPath<T>() => $"{typeof(T).Name.ToLower()}.data";
+        private static string GetPath(string fileName) => $"{fileName.ToLower()}.data";
+        
         protected readonly EncryptionUtils _encryptionUtils = new();
         protected readonly SaveConfig _saveConfig;
 
         [Inject]
-        protected SaveLoadService(SaveConfig saveConfig)
+        public SaveLoadService(SaveConfig saveConfig)
         {
+            Debug.Log($"SaveLoadService Constructor");
             _saveConfig = saveConfig;
         }
 
-        protected async UniTask SaveAsync<T>(T data)
+        public async UniTask SaveAsync<T>(T data, string fileName) where T : ISavableData
         {
+            var saveFile = GetPath(fileName);
+            Debug.Log($"SaveLoadService SaveAsync for {saveFile} {typeof(T)}");
             try
             {
                 var json = JsonConvert.SerializeObject(data);
                 var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
                 var encryptedBytes = _encryptionUtils.Encrypt(jsonBytes);
-                var pathSave = _saveConfig.SaveFilePath(_saveFileName);
-                await using var fs = new FileStream(pathSave, FileMode.Create, FileAccess.Write);
+                await using var fs = new FileStream(_saveConfig.SaveFilePath(saveFile), FileMode.Create, FileAccess.Write);
                 await fs.WriteAsync(encryptedBytes, 0, encryptedBytes.Length);
             }
             catch (Exception ex)
@@ -38,19 +42,21 @@ namespace SaveSystem.Base
             }
         }
 
-        protected async UniTask<T> LoadAsync<T>()
+        public async UniTask<ISavableData> LoadAsync(string fileName, Type dataType)
         {
+            Debug.Log($"SaveLoadService LoadAsync for {dataType}");
             try
             {
-                var pathSave = _saveConfig.SaveFilePath(_saveFileName);
-                if (!File.Exists(pathSave))
+                var filePath = GetPath(fileName);
+                Debug.Log($"SaveLoadService LoadAsync for {filePath}");
+                if (!File.Exists(_saveConfig.SaveFilePath(filePath)))
                 {
-                    Debug.LogError($"[LoadAsync] Save file {_saveFileName} not found");
+                    Debug.LogError($"Save file {filePath} not found");
                     return default;
                 }
 
                 byte[] encryptedBytes;
-                await using (var fs = new FileStream(pathSave, FileMode.Open, FileAccess.Read))
+                await using (var fs = new FileStream(_saveConfig.SaveFilePath(filePath), FileMode.Open, FileAccess.Read))
                 {
                     encryptedBytes = new byte[fs.Length];
                     var readAsync = await fs.ReadAsync(encryptedBytes, 0, encryptedBytes.Length);
@@ -58,8 +64,7 @@ namespace SaveSystem.Base
 
                 var decryptedBytes = _encryptionUtils.Decrypt(encryptedBytes);
                 var json = System.Text.Encoding.UTF8.GetString(decryptedBytes);
-                Debug.Log($"{json}");
-                var data = JsonConvert.DeserializeObject<T>(json); // Или JsonUtility.FromJson<T>(json)
+                var data = (ISavableData)JsonConvert.DeserializeObject(json, dataType); // Или JsonUtility.FromJson<T>(json)
                 return data;
             }
             catch (Exception ex)
