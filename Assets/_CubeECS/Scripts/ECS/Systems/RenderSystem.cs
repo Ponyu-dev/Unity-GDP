@@ -23,14 +23,14 @@ namespace CubeECS.Scripts.ECS.Systems
         public void Run(IEcsSystems systems)
         {
             Debug.Log("RenderSystem Run");
-            var filter = _world.Filter<PositionComponent>().Inc<PrefabComponent>().End();
+            var filter = _world.Filter<PositionComponent>().Inc<TransformComponent>().End();
 
             foreach (var entity in filter)
             {
                 ref var position = ref _world.GetPool<PositionComponent>().Get(entity);
-                ref var prefab = ref _world.GetPool<PrefabComponent>().Get(entity);
+                ref var prefab = ref _world.GetPool<TransformComponent>().Get(entity);
 
-                prefab.Prefab.transform.position = position.Position; // Обновляем позицию префаба
+                prefab.Value.position = position.Position; // Обновляем позицию префаба
             }
         }
     }

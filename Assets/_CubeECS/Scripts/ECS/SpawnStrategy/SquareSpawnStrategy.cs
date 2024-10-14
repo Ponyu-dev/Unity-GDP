@@ -18,6 +18,7 @@ namespace CubeECS.Scripts.ECS.SpawnStrategy
         public override void SpawnArmy(EcsWorld world, Transform container, Vector3 targetPosition, int count, Team team, GameObject prefab,
             float spacing)
         {
+            base.SpawnArmy(world, container, targetPosition, count, team, prefab, spacing);
             var center = container.position;
             var rows = Mathf.CeilToInt(Mathf.Sqrt(count));
             var columns = Mathf.CeilToInt((float)count / rows);
@@ -25,9 +26,7 @@ namespace CubeECS.Scripts.ECS.SpawnStrategy
             for (var i = 0; i < count; i++)
             {
                 var position = center + Square(i, columns, rows, spacing);
-                var target = targetPosition + Square(i, columns, rows, spacing);
-                
-                CreateEntity(world, container, position, target, team, prefab);
+                CreateEntity(world, container, position, team, prefab);
             }
         }
     }

@@ -21,6 +21,7 @@ namespace CubeECS.Scripts.ECS.SpawnStrategy
             GameObject prefab,
             float spacing)
         {
+            base.SpawnArmy(world, container, targetPosition, count, team, prefab, spacing);
             var center = container.position;
             
             // Общее количество сущностей на каждом радиусе
@@ -40,9 +41,8 @@ namespace CubeECS.Scripts.ECS.SpawnStrategy
                     var angle = i * (360f / entitiesOnThisLevel) * Mathf.Deg2Rad;
                     // Вычисляем позицию
                     var position = center + Circle(angle, radius);
-                    var target = targetPosition + Circle(angle, radius);
                     // Создаем сущность в рассчитанной позиции
-                    CreateEntity(world, container, position, target, team, prefab);
+                    CreateEntity(world, container, position, team, prefab);
                 }
 
                 // Увеличиваем общее количество созданных сущностей

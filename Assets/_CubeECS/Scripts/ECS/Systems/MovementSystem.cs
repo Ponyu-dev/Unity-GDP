@@ -32,7 +32,6 @@ namespace CubeECS.Scripts.ECS.Systems
 
                 if (movement.IsMoving)
                 {
-
                     ref var position = ref _world.GetPool<PositionComponent>().Get(entity);
 
                     // Рассчитываем вектор направления к целевой позиции
