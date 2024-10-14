@@ -2,7 +2,7 @@ using CubeECS.Scripts.ECS.Utils;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace CubeECS.Scripts.ECS.SpawnStrategy.Base
+namespace CubeECS.Scripts.ECS.Spawn.Base
 {
     public interface ISpawnStrategy
     {

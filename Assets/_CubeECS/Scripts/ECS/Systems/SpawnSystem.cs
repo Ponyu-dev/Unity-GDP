@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using CubeECS.Scripts.ECS.SpawnStrategy;
-using CubeECS.Scripts.ECS.SpawnStrategy.Base;
+using CubeECS.Scripts.ECS.Spawn.Base;
+using CubeECS.Scripts.ECS.Spawn.Strategy;
 using CubeECS.Scripts.ECS.Utils;
 using Leopotam.EcsLite;
 using UnityEngine;

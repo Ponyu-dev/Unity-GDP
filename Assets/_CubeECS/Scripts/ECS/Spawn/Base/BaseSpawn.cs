@@ -3,9 +3,9 @@ using CubeECS.Scripts.ECS.Utils;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace CubeECS.Scripts.ECS.SpawnStrategy.Base
+namespace CubeECS.Scripts.ECS.Spawn.Base
 {
-    public abstract class BaseSpawnStrategy : ISpawnStrategy
+    public abstract class BaseSpawn : ISpawnStrategy
     {
         private void CreateArmy(EcsWorld world, Transform container, Team team, Vector3 targetPosition)
         {

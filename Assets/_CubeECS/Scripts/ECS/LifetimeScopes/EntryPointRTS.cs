@@ -1,4 +1,4 @@
-using CubeECS.Scripts.ECS.SpawnStrategy.Base;
+using CubeECS.Scripts.ECS.Spawn;
 using CubeECS.Scripts.ECS.Systems;
 using UnityEngine;
 using VContainer;

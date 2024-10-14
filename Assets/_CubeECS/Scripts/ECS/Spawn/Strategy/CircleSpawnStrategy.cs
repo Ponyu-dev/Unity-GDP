@@ -1,11 +1,11 @@
-using CubeECS.Scripts.ECS.SpawnStrategy.Base;
 using CubeECS.Scripts.ECS.Utils;
+using CubeECS.Scripts.ECS.Spawn.Base;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace CubeECS.Scripts.ECS.SpawnStrategy
+namespace CubeECS.Scripts.ECS.Spawn.Strategy
 {
-    public class CircleSpawnStrategy : BaseSpawnStrategy
+    public class CircleSpawnStrategy : BaseSpawn
     {
         private Vector3 Circle(float angle, float radius)
         {

@@ -1,11 +1,11 @@
-using CubeECS.Scripts.ECS.SpawnStrategy.Base;
+using CubeECS.Scripts.ECS.Spawn.Base;
 using Leopotam.EcsLite;
 using CubeECS.Scripts.ECS.Utils;
 using UnityEngine;
 
-namespace CubeECS.Scripts.ECS.SpawnStrategy
+namespace CubeECS.Scripts.ECS.Spawn.Strategy
 {
-    public class SquareSpawnStrategy : BaseSpawnStrategy
+    public class SquareSpawnStrategy : BaseSpawn
     {
         private Vector3 Square(int i, int columns, int rows, float spacing)
         {

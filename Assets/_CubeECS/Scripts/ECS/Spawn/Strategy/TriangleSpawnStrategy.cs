@@ -1,11 +1,11 @@
-using CubeECS.Scripts.ECS.SpawnStrategy.Base;
+using CubeECS.Scripts.ECS.Spawn.Base;
 using CubeECS.Scripts.ECS.Utils;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace CubeECS.Scripts.ECS.SpawnStrategy
+namespace CubeECS.Scripts.ECS.Spawn.Strategy
 {
-    public class TriangleSpawnStrategy : BaseSpawnStrategy
+    public class TriangleSpawnStrategy : BaseSpawn
     {
         private Vector3 Triangle(int currentCount, int currentRow, float spacing)
         {
