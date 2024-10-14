@@ -27,6 +27,10 @@ namespace CubeECS.Scripts.ECS.DI
                 .AsImplementedInterfaces()
                 .AsSelf();
             
+            builder.Register<DetectorSystem>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
             builder.Register<SpawnSystem>(Lifetime.Singleton)
                 .WithParameter("redContainer", redContainer)
                 .WithParameter("blueContainer", blueContainer)

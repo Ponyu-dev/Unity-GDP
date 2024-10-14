@@ -14,6 +14,7 @@ namespace CubeECS.Scripts.ECS.Systems
         public GameRunner(
             MovementSystem movementSystem,
             RenderSystem renderSystem,
+            DetectorSystem detectorSystem,
             SpawnSystem spawnSystem)
         {
             _world = new EcsWorld();
@@ -21,6 +22,7 @@ namespace CubeECS.Scripts.ECS.Systems
             _systems
                 .Add(spawnSystem)
                 .Add(renderSystem)
+                .Add(detectorSystem)
                 .Add(movementSystem);
         }
         

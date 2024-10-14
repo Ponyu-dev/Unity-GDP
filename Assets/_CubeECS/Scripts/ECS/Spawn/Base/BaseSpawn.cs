@@ -7,20 +7,30 @@ namespace CubeECS.Scripts.ECS.Spawn.Base
 {
     public abstract class BaseSpawn : ISpawnStrategy
     {
-        private void CreateArmy(EcsWorld world, Transform container, Team team, Vector3 targetPosition)
+        private string GetLayerDetect(Team team)
+        {
+            return team == Team.Red ? $"Cube{Team.Blue.ToString()}" : $"Cube{Team.Red.ToString()}";
+        }
+        
+        protected void CreateArmy(
+            EcsWorld world, Transform container, Team team, Vector3 targetPosition, float range)
         {
             var entity = world.NewEntity();
             
             ref var teamComponent = ref world.GetPool<TeamComponent>().Add(entity);
             teamComponent.team = team;
             
-            ref var transform = ref world.GetPool<TransformComponent>().Add(entity);
+            ref var armyDetectorComponent = ref world.GetPool<ArmyDetectorComponent>().Add(entity);
+            armyDetectorComponent.Range = range;
+            armyDetectorComponent.LayerDetect = GetLayerDetect(team);
+            
+            ref var transform = ref world.GetPool<ArmyTransformComponent>().Add(entity);
             transform.Value = container;
             
-            ref var positionComponent = ref world.GetPool<PositionComponent>().Add(entity);
-            positionComponent.Position = container.position;
+            ref var positionComponent = ref world.GetPool<ArmyPositionComponent>().Add(entity);
+            positionComponent.Value = container.position;
             
-            ref var movement = ref world.GetPool<MovementComponent>().Add(entity);
+            ref var movement = ref world.GetPool<ArmyMovementComponent>().Add(entity);
             movement.TargetPosition = targetPosition;
             movement.IsMoving = true;
         }
@@ -37,11 +47,8 @@ namespace CubeECS.Scripts.ECS.Spawn.Base
             prefabComponent.Prefab = Object.Instantiate(prefab, position, Quaternion.identity, container);
         }
 
-        public virtual void SpawnArmy(
+        public abstract void SpawnArmy(
             EcsWorld world, Transform container, Vector3 targetPosition,
-            int count, Team team, GameObject prefab, float spacing)
-        {
-            CreateArmy(world, container, team, targetPosition);
-        }
+            int count, Team team, GameObject prefab, float spacing);
     }
 }

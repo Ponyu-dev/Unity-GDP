@@ -20,24 +20,22 @@ namespace CubeECS.Scripts.ECS.Systems
         public void Init(IEcsSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world.Filter<PositionComponent>().Inc<MovementComponent>().End();
+            _filter = _world.Filter<ArmyPositionComponent>().Inc<ArmyMovementComponent>().End();
         }
 
         public void Run(IEcsSystems systems)
         {
-            Debug.Log("MovementSystem Run");
-
             foreach (var entity in _filter)
             {
-                ref var movement = ref _world.GetPool<MovementComponent>().Get(entity);
+                ref var movement = ref _world.GetPool<ArmyMovementComponent>().Get(entity);
 
                 if (!movement.IsMoving) continue;
                 
-                ref var position = ref _world.GetPool<PositionComponent>().Get(entity);
+                ref var position = ref _world.GetPool<ArmyPositionComponent>().Get(entity);
 
                 // Рассчитываем вектор направления к целевой позиции
-                var direction = (movement.TargetPosition - position.Position).normalized;
-                var distanceToTarget = Vector3.Distance(position.Position, movement.TargetPosition);
+                var direction = (movement.TargetPosition - position.Value).normalized;
+                var distanceToTarget = Vector3.Distance(position.Value, movement.TargetPosition);
 
                 // Если объект находится дальше 0.1f от целевой позиции, продолжаем движение
                 if (distanceToTarget > 0.1f)
@@ -48,17 +46,17 @@ namespace CubeECS.Scripts.ECS.Systems
                     // Если оставшееся расстояние меньше, чем шаг, останавливаем на целевой позиции
                     if (distanceToTarget < moveStep)
                     {
-                        position.Position = movement.TargetPosition; // Устанавливаем на целевую позицию
+                        position.Value = movement.TargetPosition; // Устанавливаем на целевую позицию
                     }
                     else
                     {
-                        position.Position += direction * moveStep; // Обновляем позицию
+                        position.Value += direction * moveStep; // Обновляем позицию
                     }
                 }
                 else
                 {
                     // Объект достиг целевой позиции, фиксируем его
-                    position.Position = movement.TargetPosition;
+                    position.Value = movement.TargetPosition;
                     movement.IsMoving = false;
                 }
             }

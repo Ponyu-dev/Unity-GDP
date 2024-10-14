@@ -11,13 +11,11 @@ namespace CubeECS.Scripts.ECS.Spawn.Strategy
             EcsWorld world, Transform container, Vector3 targetPosition,
             int count, Team team, GameObject prefab, float spacing)
         {
-            base.SpawnArmy(world, container, targetPosition, count, team, prefab, spacing);
-            
             var center = container.position;
 
             // Вычисляем максимальную ширину ромба
             var diamondWidth = Mathf.CeilToInt((Mathf.Sqrt(1 + 8 * count) - 1) / 2) / 2;
-
+            CreateArmy(world, container, team, targetPosition, diamondWidth);
             var totalEntities = 0;
 
             // Проходим по уровням высоты ромба

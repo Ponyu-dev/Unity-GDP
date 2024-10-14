@@ -21,13 +21,14 @@ namespace CubeECS.Scripts.ECS.Spawn.Strategy
             GameObject prefab,
             float spacing)
         {
-            base.SpawnArmy(world, container, targetPosition, count, team, prefab, spacing);
             var center = container.position;
             
             // Общее количество сущностей на каждом радиусе
             var radiusCount = Mathf.CeilToInt(Mathf.Sqrt(count));
             // Параметр для отслеживания общего количества сущностей, добавленных до текущего уровня
             var totalSpawned = 0;
+            
+            CreateArmy(world, container, team, targetPosition, radiusCount);
 
             for (var r = 0; r < radiusCount; r++) // Уровень радиуса
             {
