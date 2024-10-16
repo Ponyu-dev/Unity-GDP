@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7041478336016117288}
   - component: {fileID: 7041478336016117289}
   - component: {fileID: 7230876297947332298}
+  - component: {fileID: 4822930844799182503}
   m_Layer: 17
   m_Name: CubeBlue
   m_TagString: Untagged
@@ -115,3 +116,15 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 65536
+--- !u!114 &4822930844799182503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7041478336016117291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc99731a42246ef88eb8e6050e637f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

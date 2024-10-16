@@ -1,15 +1,14 @@
 using CubeECS.Scripts.ECS.Components;
 using Leopotam.EcsLite;
+using Sirenix.Utilities;
 using UnityEngine;
 using VContainer;
-using Random = System.Random;
 
 namespace CubeECS.Scripts.ECS.Systems
 {
     public class DetectorSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsWorld _world;
-        private readonly Random _random = new();
 
         [Inject]
         public DetectorSystem()
@@ -39,20 +38,15 @@ namespace CubeECS.Scripts.ECS.Systems
                 var position = transformComponent.Value.position;
                 ref var detectorComponent = ref _world.GetPool<DetectorComponent>().Get(entity);
                 ref var shotComponent = ref _world.GetPool<ShotComponent>().Get(entity);
-
-                var collider = GetEnemyInRange(
-                    position,
-                    detectorComponent.Range,
-                    detectorComponent.LayerDetect);
-                var colliderLength = collider.Length;
-
-                if (colliderLength <= 0) continue;
                 
-                var targetPosition = collider[_random.Next(colliderLength)].transform.position;
-                var direction = targetPosition - position;
-                direction.Normalize();
+                shotComponent.CollidersEnemy.Clear();
+                var colliders = GetEnemyInRange(position, detectorComponent.Range, detectorComponent.LayerDetect);
+                if (shotComponent.CollidersEnemy.IsNullOrEmpty()) 
+                    shotComponent.CollidersEnemy.AddRange(colliders);
+                
+                var colliderLength = colliders.Length;
 
-                shotComponent.Direction = direction;
+                if (colliderLength <= 1) continue;
                 isMoving = false;
             }
             

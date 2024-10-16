@@ -12,18 +12,23 @@ namespace CubeECS.Scripts.ECS.Systems
 
         [Inject]
         public GameRunner(
+            EcsWorld world,
             MovementSystem movementSystem,
             RenderSystem renderSystem,
             DetectorSystem detectorSystem,
-            SpawnSystem spawnSystem)
+            ShotSystem shotSystem,
+            BulletCollisionSystem bulletCollisionSystem,
+            SpawnEnemySystem spawnSystem)
         {
-            _world = new EcsWorld();
+            _world = world;
             _systems = new EcsSystems(_world);
             _systems
                 .Add(spawnSystem)
-                .Add(renderSystem)
                 .Add(detectorSystem)
-                .Add(movementSystem);
+                .Add(shotSystem)
+                .Add(movementSystem)
+                .Add(bulletCollisionSystem)
+                .Add(renderSystem);
         }
         
         public void Initialize()

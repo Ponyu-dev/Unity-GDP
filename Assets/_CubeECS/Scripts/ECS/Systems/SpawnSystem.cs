@@ -9,7 +9,7 @@ using VContainer;
 
 namespace CubeECS.Scripts.ECS.Systems
 {
-    public class SpawnSystem : IEcsInitSystem
+    public class SpawnEnemySystem : IEcsInitSystem
     {
         private readonly IReadOnlyList<ISpawnStrategy> _spawnStrategies;
         
@@ -17,11 +17,11 @@ namespace CubeECS.Scripts.ECS.Systems
         private readonly Transform _blueContainer;
         private readonly GameObject _redCubePrefab;
         private readonly GameObject _blueCubePrefab;
-        private readonly int _countArmy = 50; // Общее кол-во кубов
+        private readonly int _countArmy = 100; // Общее кол-во кубов
         private readonly float _spacing = 2f; // Зазор между кубами
 
         [Inject]
-        public SpawnSystem(
+        public SpawnEnemySystem(
             Transform redContainer,
             Transform blueContainer,
             GameObject redCubePrefab,

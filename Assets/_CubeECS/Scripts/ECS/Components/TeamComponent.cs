@@ -4,6 +4,6 @@ namespace CubeECS.Scripts.ECS.Components
 {
     public struct TeamComponent
     {
-        public Team team;
+        public Team Value;
     }
 }
