@@ -28,7 +28,7 @@ namespace CubeECS.Scripts.ECS.Spawn.Strategy
             // Параметр для отслеживания общего количества сущностей, добавленных до текущего уровня
             var totalSpawned = 0;
             
-            CreateArmy(world, container, team, targetPosition, radiusCount);
+            CreateArmy(world, container, team, targetPosition);
 
             for (var r = 0; r < radiusCount; r++) // Уровень радиуса
             {

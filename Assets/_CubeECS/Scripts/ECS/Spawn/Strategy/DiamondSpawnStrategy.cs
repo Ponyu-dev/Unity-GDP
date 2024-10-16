@@ -15,7 +15,7 @@ namespace CubeECS.Scripts.ECS.Spawn.Strategy
 
             // Вычисляем максимальную ширину ромба
             var diamondWidth = Mathf.CeilToInt((Mathf.Sqrt(1 + 8 * count) - 1) / 2) / 2;
-            CreateArmy(world, container, team, targetPosition, diamondWidth);
+            CreateArmy(world, container, team, targetPosition);
             var totalEntities = 0;
 
             // Проходим по уровням высоты ромба

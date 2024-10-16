@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 namespace CubeECS.Scripts.ECS.DI
 {
-    public class EntryPointRTS : LifetimeScope
+    public class EntryPointCube : LifetimeScope
     {
         [SerializeField] private GameObject redCubePrefab;
         [SerializeField] private Transform redContainer;

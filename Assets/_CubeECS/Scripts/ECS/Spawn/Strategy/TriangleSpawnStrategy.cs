@@ -32,7 +32,7 @@ namespace CubeECS.Scripts.ECS.Spawn.Strategy
                 currentCount++;
             }
             
-            CreateArmy(world, container, team, targetPosition, Mathf.Max(currentRow, currentCount));
+            CreateArmy(world, container, team, targetPosition);
         }
     }
 }

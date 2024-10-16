@@ -22,7 +22,7 @@ namespace CubeECS.Scripts.ECS.Spawn.Strategy
             var rows = Mathf.CeilToInt(Mathf.Sqrt(count));
             var columns = Mathf.CeilToInt((float)count / rows);
 
-            CreateArmy(world, container, team, targetPosition, Mathf.Max(rows, columns));
+            CreateArmy(world, container, team, targetPosition);
             
             for (var i = 0; i < count; i++)
             {
