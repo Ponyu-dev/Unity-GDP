@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Swordman (Red)
       objectReference: {fileID: 0}
+    - target: {fileID: 8692576747330127513, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 8692576747330127514, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
       propertyPath: m_RootOrder
@@ -214,6 +219,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Base (Red)
+      objectReference: {fileID: 0}
+    - target: {fileID: 981802089077454633, guid: 7abfb19faaf1147e9816d9c6709f4689,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6854243942854037326, guid: 7abfb19faaf1147e9816d9c6709f4689,
         type: 3}
@@ -1301,6 +1311,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer (Red)
       objectReference: {fileID: 0}
+    - target: {fileID: 1870072543877420731, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 1870072544955971606, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1591,6 +1606,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer (Blue)
       objectReference: {fileID: 0}
+    - target: {fileID: 1870072543877420731, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f, type: 3}
 --- !u!1001 &7657002863243684347
@@ -1604,6 +1624,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Base (Blue)
+      objectReference: {fileID: 0}
+    - target: {fileID: 981802089077454633, guid: 7abfb19faaf1147e9816d9c6709f4689,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 6854243942854037326, guid: 7abfb19faaf1147e9816d9c6709f4689,
         type: 3}
@@ -1679,6 +1704,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Swordman (Blue)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692576747330127513, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8692576747330127514, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
