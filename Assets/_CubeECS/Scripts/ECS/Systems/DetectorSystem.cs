@@ -20,17 +20,13 @@ namespace CubeECS.Scripts.ECS.Systems
         public void Init(IEcsSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world.Filter<ArmyPositionComponent>().Inc<ArmyMovementComponent>().End();
+            _filter = _world.Filter<PositionComponent>().Inc<MovementComponent>().End();
         }
         
         private bool IsEnemyInRange(Vector3 position, float range, string layerMask)
         {
             // Получаем все коллайдеры в радиусе, которые находятся на слое врагов
             var size = Physics.OverlapSphere(position, range, LayerMask.GetMask(layerMask)).Length;
-
-            // Проверяем, есть ли хотя бы один враг
-            Debug.Log($"IsEnemyInRange {layerMask} size = {size}");
-            
             return size <= 0;
         }
 
@@ -38,9 +34,9 @@ namespace CubeECS.Scripts.ECS.Systems
         {
             foreach (var entity in _filter)
             {
-                ref var position = ref _world.GetPool<ArmyPositionComponent>().Get(entity);
-                ref var movementComponent = ref _world.GetPool<ArmyMovementComponent>().Get(entity);
-                ref var armyDetectorComponent = ref _world.GetPool<ArmyDetectorComponent>().Get(entity);
+                ref var position = ref _world.GetPool<PositionComponent>().Get(entity);
+                ref var movementComponent = ref _world.GetPool<MovementComponent>().Get(entity);
+                ref var armyDetectorComponent = ref _world.GetPool<DetectorComponent>().Get(entity);
 
                 movementComponent.IsMoving = IsEnemyInRange(position.Value, armyDetectorComponent.Range, armyDetectorComponent.LayerDetect);
             }

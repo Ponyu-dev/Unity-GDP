@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CubeECS.Scripts.ECS.Components
 {
-    public struct ArmyMovementComponent
+    public struct MovementComponent
     {
         public Vector3 TargetPosition;
         public bool IsMoving;

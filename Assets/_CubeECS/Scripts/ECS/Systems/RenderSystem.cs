@@ -19,15 +19,15 @@ namespace CubeECS.Scripts.ECS.Systems
         public void Init(IEcsSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world.Filter<ArmyPositionComponent>().Inc<ArmyTransformComponent>().End();
+            _filter = _world.Filter<PositionComponent>().Inc<TransformComponent>().End();
         }
 
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _filter)
             {
-                ref var position = ref _world.GetPool<ArmyPositionComponent>().Get(entity);
-                ref var prefab = ref _world.GetPool<ArmyTransformComponent>().Get(entity);
+                ref var position = ref _world.GetPool<PositionComponent>().Get(entity);
+                ref var prefab = ref _world.GetPool<TransformComponent>().Get(entity);
 
                 prefab.Value.position = position.Value; // Обновляем позицию
             }

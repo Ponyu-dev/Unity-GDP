@@ -1,6 +1,6 @@
 namespace CubeECS.Scripts.ECS.Components
 {
-    public struct ArmyDetectorComponent
+    public struct DetectorComponent
     {
         public string LayerDetect;
         public float Range;

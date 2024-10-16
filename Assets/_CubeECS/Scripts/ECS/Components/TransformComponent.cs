@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace CubeECS.Scripts.ECS.Components
 {
-    public struct ArmyPositionComponent
+    public struct TransformComponent
     {
-        public Vector3 Value;
+        public Transform Value;
     }
 }

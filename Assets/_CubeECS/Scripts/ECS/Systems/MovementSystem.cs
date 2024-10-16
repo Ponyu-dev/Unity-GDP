@@ -20,18 +20,18 @@ namespace CubeECS.Scripts.ECS.Systems
         public void Init(IEcsSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world.Filter<ArmyPositionComponent>().Inc<ArmyMovementComponent>().End();
+            _filter = _world.Filter<PositionComponent>().Inc<MovementComponent>().End();
         }
 
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _filter)
             {
-                ref var movement = ref _world.GetPool<ArmyMovementComponent>().Get(entity);
+                ref var movement = ref _world.GetPool<MovementComponent>().Get(entity);
 
                 if (!movement.IsMoving) continue;
                 
-                ref var position = ref _world.GetPool<ArmyPositionComponent>().Get(entity);
+                ref var position = ref _world.GetPool<PositionComponent>().Get(entity);
 
                 // Рассчитываем вектор направления к целевой позиции
                 var direction = (movement.TargetPosition - position.Value).normalized;

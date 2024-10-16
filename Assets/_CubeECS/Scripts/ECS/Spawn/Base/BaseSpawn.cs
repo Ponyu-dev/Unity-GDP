@@ -20,17 +20,17 @@ namespace CubeECS.Scripts.ECS.Spawn.Base
             ref var teamComponent = ref world.GetPool<TeamComponent>().Add(entity);
             teamComponent.team = team;
             
-            ref var armyDetectorComponent = ref world.GetPool<ArmyDetectorComponent>().Add(entity);
+            ref var armyDetectorComponent = ref world.GetPool<DetectorComponent>().Add(entity);
             armyDetectorComponent.Range = range;
             armyDetectorComponent.LayerDetect = GetLayerDetect(team);
             
-            ref var transform = ref world.GetPool<ArmyTransformComponent>().Add(entity);
+            ref var transform = ref world.GetPool<TransformComponent>().Add(entity);
             transform.Value = container;
             
-            ref var positionComponent = ref world.GetPool<ArmyPositionComponent>().Add(entity);
+            ref var positionComponent = ref world.GetPool<PositionComponent>().Add(entity);
             positionComponent.Value = container.position;
             
-            ref var movement = ref world.GetPool<ArmyMovementComponent>().Add(entity);
+            ref var movement = ref world.GetPool<MovementComponent>().Add(entity);
             movement.TargetPosition = targetPosition;
             movement.IsMoving = true;
         }
