@@ -1,7 +1,6 @@
 using _ECS._RTS.Scripts.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 
 namespace _ECS._RTS.Scripts.Systems
 {
@@ -12,8 +11,6 @@ namespace _ECS._RTS.Scripts.Systems
 
         public void PostRun(IEcsSystems systems)
         {
-            Debug.Log("[TransformViewSystem] Run");
-            
             var rotationPool = _rotationPool.Value;
 
             foreach (var entity in _filter.Value)

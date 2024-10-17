@@ -1,5 +1,6 @@
 using System;
 using _ECS._RTS.Scripts.Systems;
+using _ECS._RTS.Scripts.Systems.Range;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Entities;
@@ -31,6 +32,8 @@ namespace _ECS._RTS.Scripts
             Debug.Log("[EcsStartup] Initialize()");
             _systems.AddWorld(_events, EcsWorlds.EVENTS);
             _systems
+                .Add(new DetectorRangeSystem())
+                .Add(new AttackRangeSystem())
                 .Add(new MovementSystem())
                 .Add(new TransformViewSystem());
             

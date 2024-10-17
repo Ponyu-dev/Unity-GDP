@@ -1,11 +1,8 @@
 using _ECS._RTS.Scripts.Components;
 using _ECS._RTS.Scripts.Enums;
-using _ECS._RTS.Scripts.Services;
-using _ECS._RTS.Scripts.UI.Presenters;
 using _ECS._RTS.Scripts.UI.Views;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
-using VContainer;
 
 namespace _ECS._RTS.Scripts.Installers
 {
@@ -25,7 +22,6 @@ namespace _ECS._RTS.Scripts.Installers
             EntityId = entity.Id;
             Debug.Log($"[BaseInstaller] Install({EntityId})");
             entity.AddData(GetHealth());
-            entity.AddData(new Team { Value = defaultTeam });
             entity.AddData(new TransformView { Value = transform });
         }
 
