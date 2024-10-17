@@ -1,4 +1,5 @@
 using System;
+using _ECS._RTS.Scripts.Systems;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Entities;
@@ -29,12 +30,14 @@ namespace _ECS._RTS.Scripts
         {
             Debug.Log("[EcsStartup] Initialize()");
             _systems.AddWorld(_events, EcsWorlds.EVENTS);
-            /*_systems
+            _systems
                 .Add(new MovementSystem())
-                .Add(new ExampleSystem())
-                .Add(new FireRequestSystem())
-                .Add(new SpawnRequestSystem())
-                .Add(new TransformViewSystem());*/
+                .Add(new TransformViewSystem());
+            
+            
+            /*.Add(new ExampleSystem())
+            .Add(new FireRequestSystem())
+            .Add(new SpawnRequestSystem())*/
             
 #if UNITY_EDITOR
             _systems
