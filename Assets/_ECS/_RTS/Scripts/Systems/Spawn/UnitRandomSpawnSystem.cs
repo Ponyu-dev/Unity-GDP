@@ -42,6 +42,8 @@ namespace _ECS._RTS.Scripts.Systems
         {
             if (!_firstSpawnDone) return; // Если первый спавн не завершен, выходим
 
+            //TODO Вернуть потом когда закончу с механикой атаки и дамага.
+            /*
             // Обновляем общий таймер
             _timeSinceLastSpawn += Time.deltaTime;
 
@@ -59,7 +61,7 @@ namespace _ECS._RTS.Scripts.Systems
             }
 
             // Сбрасываем таймер
-            _timeSinceLastSpawn = 0f;
+            _timeSinceLastSpawn = 0f;*/
         }
 
         private void Spawn(SpawnBaseConfig config, int prefabIndex, int positionIndex)
