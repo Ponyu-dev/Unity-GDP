@@ -1,5 +1,4 @@
 using _ECS._RTS.Scripts.Components;
-using _ECS._RTS.Scripts.Enums;
 using _ECS._RTS.Scripts.UI.Views;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
@@ -9,8 +8,7 @@ namespace _ECS._RTS.Scripts.Installers
     public class BaseInstaller : EntityInstaller
     {
         [SerializeField] private int defaultHealth = 200;
-        [SerializeField] private Teams defaultTeam;
-        
+        [SerializeField] private LayerMask layerMask;
         [SerializeField] private HealthView healthView;
         public HealthView GetHealthView() => healthView;
         public Health GetHealth() => new Health { Current = defaultHealth, Max = defaultHealth };
@@ -20,8 +18,10 @@ namespace _ECS._RTS.Scripts.Installers
         protected override void Install(Entity entity)
         {
             EntityId = entity.Id;
-            Debug.Log($"[BaseInstaller] Install({EntityId})");
             entity.AddData(GetHealth());
+            entity.AddData(new Base());
+            entity.AddData(new Layer() { Value = layerMask});
+            entity.AddData(new Position { Value = transform.position});
             entity.AddData(new TransformView { Value = transform });
         }
 

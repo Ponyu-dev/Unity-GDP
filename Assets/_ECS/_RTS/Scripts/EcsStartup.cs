@@ -32,11 +32,11 @@ namespace _ECS._RTS.Scripts
             Debug.Log("[EcsStartup] Initialize()");
             _systems.AddWorld(_events, EcsWorlds.EVENTS);
             _systems
-                .Add(new DetectorRangeSystem())
+                //.Add(new FirstEnemyRangeSystem())
+                .Add(new NearestEnemyRangeSystem())
                 .Add(new AttackRangeSystem())
                 .Add(new MovementSystem())
                 .Add(new TransformViewSystem());
-            
             
             /*.Add(new ExampleSystem())
             .Add(new FireRequestSystem())

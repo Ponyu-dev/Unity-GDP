@@ -132,7 +132,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
+      propertyPath: attackTeam
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: attackTeams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 131072
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
       propertyPath: layerEnemyMask.m_Bits
+      value: 131072
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: _layerEnemyMask.m_Bits
       value: 131072
       objectReference: {fileID: 0}
     - target: {fileID: 8692576747330127513, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
@@ -163,7 +183,7 @@ PrefabInstance:
     - target: {fileID: 8692576747330127514, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.3
+      value: -7.71
       objectReference: {fileID: 0}
     - target: {fileID: 8692576747330127514, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
@@ -230,6 +250,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 463166444}
     m_Modifications:
+    - target: {fileID: -2151270795278617281, guid: 7abfb19faaf1147e9816d9c6709f4689,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 65536
+      objectReference: {fileID: 0}
     - target: {fileID: 981802089077454633, guid: 7abfb19faaf1147e9816d9c6709f4689,
         type: 3}
       propertyPath: m_Name
@@ -319,6 +344,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657002863764177193, guid: 7abfb19faaf1147e9816d9c6709f4689,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7657002863766446057, guid: 7abfb19faaf1147e9816d9c6709f4689,
         type: 3}
@@ -1340,7 +1370,7 @@ PrefabInstance:
     - target: {fileID: 1870072543877420728, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.8599999
+      value: 9.99
       objectReference: {fileID: 0}
     - target: {fileID: 1870072543877420728, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
@@ -1424,7 +1454,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 98a7fdcb4ebb44344b4afe0424d44b82, type: 2}
     - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
+      propertyPath: attackTeam
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: attackTeams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 131072
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
       propertyPath: layerEnemyMask.m_Bits
+      value: 131072
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: _layerEnemyMask.m_Bits
       value: 131072
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1650,7 +1700,7 @@ PrefabInstance:
     - target: {fileID: 1870072543877420728, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.8399999
+      value: 6.07
       objectReference: {fileID: 0}
     - target: {fileID: 1870072543877420728, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
@@ -1709,7 +1759,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
         type: 3}
+      propertyPath: currentTeam
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 65536
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
       propertyPath: layerEnemyMask.m_Bits
+      value: 65536
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643755222940726824, guid: 2edb3dcb9e85f4750b5bc0c0cac3d77f,
+        type: 3}
+      propertyPath: _layerEnemyMask.m_Bits
       value: 65536
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1725,6 +1790,11 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultTeam
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2151270795278617281, guid: 7abfb19faaf1147e9816d9c6709f4689,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 131072
       objectReference: {fileID: 0}
     - target: {fileID: 351823936204504872, guid: 7abfb19faaf1147e9816d9c6709f4689,
         type: 3}
@@ -1846,7 +1916,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7657002863764177193, guid: 7abfb19faaf1147e9816d9c6709f4689,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1773334612434288562, guid: 7abfb19faaf1147e9816d9c6709f4689, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7abfb19faaf1147e9816d9c6709f4689, type: 3}
 --- !u!4 &7657002863243684348 stripped
 Transform:
@@ -1875,7 +1951,22 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
+      propertyPath: currentTeam
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 65536
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
       propertyPath: layerEnemyMask.m_Bits
+      value: 65536
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646745687822715597, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: _layerEnemyMask.m_Bits
       value: 65536
       objectReference: {fileID: 0}
     - target: {fileID: 8692576747330127513, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
@@ -1906,7 +1997,7 @@ PrefabInstance:
     - target: {fileID: 8692576747330127514, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.32
+      value: -7.44
       objectReference: {fileID: 0}
     - target: {fileID: 8692576747330127514, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
