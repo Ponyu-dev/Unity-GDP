@@ -10,7 +10,7 @@ namespace _ECS._RTS.Scripts.Installers
         [SerializeField] private float moveSpeed = 5.0f;
         [SerializeField] private float detectorRange = 10.0f;
         [SerializeField] private float attackRange = 3.0f;
-        [SerializeField] private LayerMask layerMask;
+        [SerializeField] private LayerMask attackLayerMask;
         
         [SerializeField] private Transform moveDirection;
         
@@ -24,16 +24,17 @@ namespace _ECS._RTS.Scripts.Installers
             entity.AddData(new MoveSpeed {Value = moveSpeed});
             entity.AddData(new DetectorRange {Value = detectorRange});
             entity.AddData(new AttackRange {Value = attackRange});
-            entity.AddData(new Layer { Value = layerMask});
+            entity.AddData(new Layer { Value = attackLayerMask});
             entity.AddData(new TransformView { Value = transform});
             entity.AddData(new IsMoving { Value = true});
         }
 
         protected override void Dispose(Entity entity) { }
         
+#if UNITY_EDITOR
         void Update()
         {
-            _isEnemyDetected = Physics.OverlapSphere(transform.position, detectorRange, layerMask).Length > 0;
+            _isEnemyDetected = Physics.OverlapSphere(transform.position, detectorRange, attackLayerMask).Length > 0;
         }
         
         private void OnDrawGizmos()
@@ -45,5 +46,6 @@ namespace _ECS._RTS.Scripts.Installers
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, attackRange);
         }
+#endif
     }
 }

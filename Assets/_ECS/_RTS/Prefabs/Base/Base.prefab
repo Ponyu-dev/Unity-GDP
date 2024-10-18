@@ -62,6 +62,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultHealth: 200
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   healthView: {fileID: 369124304546705621}
 --- !u!1001 &7657002863764277129
 PrefabInstance:

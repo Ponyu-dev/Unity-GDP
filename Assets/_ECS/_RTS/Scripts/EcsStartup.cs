@@ -32,6 +32,8 @@ namespace _ECS._RTS.Scripts
             Debug.Log("[EcsStartup] Initialize()");
             _systems.AddWorld(_events, EcsWorlds.EVENTS);
             _systems
+                .Add(new StartUnitSpawnSystem())
+                .Add(new SpawnRequestSystem())
                 //.Add(new FirstEnemyRangeSystem())
                 .Add(new NearestEnemyRangeSystem())
                 .Add(new AttackRangeSystem())
