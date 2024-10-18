@@ -32,25 +32,18 @@ namespace _ECS._RTS.Scripts
             Debug.Log("[EcsStartup] Initialize()");
             _systems.AddWorld(_events, EcsWorlds.EVENTS);
             _systems
-                .Add(new StartUnitSpawnSystem())
+                .Add(new UnitRandomSpawnSystem())
                 .Add(new SpawnRequestSystem())
                 //.Add(new FirstEnemyRangeSystem())
                 .Add(new NearestEnemyRangeSystem())
                 .Add(new AttackRangeSystem())
                 .Add(new MovementSystem())
                 .Add(new TransformViewSystem());
-            
-            /*.Add(new ExampleSystem())
-            .Add(new FireRequestSystem())
-            .Add(new SpawnRequestSystem())*/
-            
 #if UNITY_EDITOR
             _systems
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(EcsWorlds.EVENTS));
 #endif
-            
-            
             _entityManager?.Initialize(_world);
             _systems?.Inject(_entityManager);
             _systems?.Init();
