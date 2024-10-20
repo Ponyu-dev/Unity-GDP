@@ -11,6 +11,7 @@ namespace SampleGame
     {
         public override void InstallBindings()
         {
+            this.Container.BindInterfacesTo<SceneLoader>().AsSingle().NonLazy();
             this.Container.Bind<ApplicationExiter>().AsSingle().NonLazy();
             this.Container.Bind<GameLoader>().AsSingle().NonLazy();
             this.Container.Bind<MenuLoader>().AsSingle().NonLazy();

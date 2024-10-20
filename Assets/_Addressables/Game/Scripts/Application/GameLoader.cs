@@ -1,19 +1,21 @@
-using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace SampleGame
 {
     public sealed class GameLoader
     {
-        //TODO: Сделать через Addressables
-        public void UnloadGame()
+        private readonly ISceneLoader _sceneLoader;
+
+        [Inject]
+        public GameLoader(ISceneLoader sceneLoader)
         {
-            SceneManager.UnloadSceneAsync("Game");
+            _sceneLoader = sceneLoader;
         }
         
         //TODO: Сделать через Addressables
         public void LoadGame()
         {
-            SceneManager.LoadScene("Game");
+            _sceneLoader.LoadNewScene("Game");
         }
     }
 }
