@@ -38,12 +38,17 @@ namespace _ECS._RTS.Scripts
                 .Add(new NearestEnemyRangeSystem())
                 .Add(new AttackRangeSystem())
                 .Add(new MovementSystem())
-                .Add(new TransformViewSystem());
+                .Add(new AttackSystem())
+                
+                .Add(new TransformViewSystem())
+                .Add(new AnimationSystem());
+            
 #if UNITY_EDITOR
             _systems
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(EcsWorlds.EVENTS));
 #endif
+            
             _entityManager?.Initialize(_world);
             _systems?.Inject(_entityManager);
             _systems?.Init();

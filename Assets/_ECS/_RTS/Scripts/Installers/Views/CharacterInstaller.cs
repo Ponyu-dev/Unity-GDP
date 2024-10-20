@@ -1,4 +1,6 @@
+using _ECS._RTS.Scripts.AnimationHelper;
 using _ECS._RTS.Scripts.Components;
+using _ECS._RTS.Scripts.Components.Anim;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 
@@ -13,6 +15,7 @@ namespace _ECS._RTS.Scripts.Installers
         [SerializeField] private LayerMask attackLayerMask;
         
         [SerializeField] private Transform moveDirection;
+        [SerializeField] private AnimatorCoder animator;
         
         private bool _isEnemyDetected;
         
@@ -26,7 +29,9 @@ namespace _ECS._RTS.Scripts.Installers
             entity.AddData(new AttackRange {Value = attackRange});
             entity.AddData(new Layer { Value = attackLayerMask});
             entity.AddData(new TransformView { Value = transform});
-            entity.AddData(new IsMoving { Value = true});
+            entity.AddData(new IsMoving { Value = true });
+            entity.AddData(new Attacking { Value = false });
+            entity.AddData(new AnimView { Value = animator });
         }
 
         protected override void Dispose(Entity entity) { }

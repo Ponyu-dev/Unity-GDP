@@ -7,7 +7,7 @@ namespace _ECS._RTS.Scripts.Systems
 {
     public class MovementSystem : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<Position, MoveDirection, MoveSpeed, IsMoving>> _filter;
+        private readonly EcsFilterInject<Inc<Position, MoveDirection, MoveSpeed, Attacking>> _filter;
         
         public void Run(IEcsSystems systems)
         {
@@ -16,14 +16,14 @@ namespace _ECS._RTS.Scripts.Systems
             var positionPool = _filter.Pools.Inc1;
             var directionPool = _filter.Pools.Inc2;
             var speedPool = _filter.Pools.Inc3;
-            var isMovingPool = _filter.Pools.Inc4;
+            var isAttackingPool = _filter.Pools.Inc4;
             
             foreach (var entity in _filter.Value)
             {
-                var isMoving = isMovingPool.Get(entity);
-                Debug.Log($"[MovementSystem] {entity} {isMoving.Value}");
-                
-                if (!isMoving.Value) continue;
+                Debug.Log($"[MovementSystem] {entity}");
+
+                var isAttack = isAttackingPool.Get(entity).Value;
+                if (isAttack) continue;
                 
                 var moveDirection = directionPool.Get(entity);
                 var moveSpeed = speedPool.Get(entity);

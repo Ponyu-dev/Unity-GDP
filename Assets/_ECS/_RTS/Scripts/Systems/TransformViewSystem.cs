@@ -6,24 +6,27 @@ namespace _ECS._RTS.Scripts.Systems
 {
     public class TransformViewSystem : IEcsPostRunSystem
     {
-        private readonly EcsFilterInject<Inc<TransformView, Position>> _filter;
-        private readonly EcsPoolInject<Rotation> _rotationPool;
+        private readonly EcsFilterInject<Inc<TransformView, Position, Rotation, Attacking>> _filter;
 
         public void PostRun(IEcsSystems systems)
         {
-            var rotationPool = _rotationPool.Value;
+            var transformViewPool = _filter.Pools.Inc1;
+            var positionPool = _filter.Pools.Inc2;
+            var rotationPool = _filter.Pools.Inc3;
+            var isAttackingPool = _filter.Pools.Inc4;
 
             foreach (var entity in _filter.Value)
             {
-                ref var transform = ref _filter.Pools.Inc1.Get(entity);
-                var position = _filter.Pools.Inc2.Get(entity);
+                var isAttack = isAttackingPool.Get(entity).Value;
+                ref var transform = ref transformViewPool.Get(entity);
                 
-                transform.Value.position = position.Value;
-
-                if (!rotationPool.Has(entity)) continue;
-                
-                var rotation = rotationPool.Get(entity).Value;
+                ref var rotation = ref rotationPool.Get(entity).Value;
                 transform.Value.rotation = rotation;
+                
+                if (isAttack) continue;
+                
+                var position = positionPool.Get(entity);
+                transform.Value.position = position.Value;
             }
         }
     }

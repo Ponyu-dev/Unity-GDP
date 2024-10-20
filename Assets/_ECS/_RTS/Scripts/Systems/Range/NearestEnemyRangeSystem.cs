@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using _ECS._RTS.Scripts.AnimationHelper.Base;
 using _ECS._RTS.Scripts.Components;
+using _ECS._RTS.Scripts.Components.Anim;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Sirenix.Utilities;
@@ -9,8 +11,14 @@ namespace _ECS._RTS.Scripts.Systems.Range
 {
     public class NearestEnemyRangeSystem : IEcsRunSystem
     {
-        protected readonly EcsFilterInject<Inc<Position, MoveDirection, DetectorRange, Layer>> _filterEnemy;
+        private readonly EcsWorldInject _eventWorld = EcsWorlds.EVENTS;
+        
+        protected readonly EcsFilterInject<Inc<Position, MoveDirection, DetectorRange, Layer, AnimView, Attacking, Rotation>> _filterEnemy;
         protected readonly EcsFilterInject<Inc<Position, Layer, Base>> _filterBase;
+        
+        private readonly EcsPoolInject<AnimEvent> _animEventPool = EcsWorlds.EVENTS;
+        private readonly EcsPoolInject<AnimView> _animViewPool = EcsWorlds.EVENTS;
+        private readonly EcsPoolInject<AnimData> _animDataPool = EcsWorlds.EVENTS;
         
         public void Run(IEcsSystems systems)
         {
@@ -18,12 +26,19 @@ namespace _ECS._RTS.Scripts.Systems.Range
             var moveDirectionPool = _filterEnemy.Pools.Inc2;
             var rangePool = _filterEnemy.Pools.Inc3;
             var layerPool = _filterEnemy.Pools.Inc4;
+            var animViewPool = _filterEnemy.Pools.Inc5;
+            var attackingPool = _filterEnemy.Pools.Inc6;
+            var rotationPool = _filterEnemy.Pools.Inc7;
 
             foreach (var entityEnemy in _filterEnemy.Value)
             {
+                var attack = attackingPool.Get(entityEnemy).Value;
+                if (attack) continue;
+                
                 var position = positionPool.Get(entityEnemy).Value;
                 var range = rangePool.Get(entityEnemy).Value;
                 var layer = layerPool.Get(entityEnemy).Value;
+                var animView = animViewPool.Get(entityEnemy).Value;
 
                 var direction = AttackBasePosition(position, layer);
 
@@ -31,11 +46,30 @@ namespace _ECS._RTS.Scripts.Systems.Range
                 if (!colliders.IsNullOrEmpty())
                 {
                     direction = (SelectTargetEnemy(position, colliders) - position).normalized;
+                    AnimEvent(animView, Animations.RUN);
+                }
+                else
+                {
+                    AnimEvent(animView, Animations.RESET);
                 }
                 
                 ref var moveDirection = ref moveDirectionPool.Get(entityEnemy);
                 moveDirection.Value = direction;
+                
+                ref var rotation = ref rotationPool.Get(entityEnemy);
+                rotation.Value = Quaternion.LookRotation(direction);
             }
+        }
+
+        private void AnimEvent(IAnimatorCoder animatorCoder, Animations animations)
+        {
+            if (animatorCoder.GetCurrentAnimation(0) != Animations.WALK) return;
+            
+            var animEvent = _eventWorld.Value.NewEntity();
+
+            _animEventPool.Value.Add(animEvent) = new AnimEvent(); 
+            _animViewPool.Value.Add(animEvent) = new AnimView { Value = animatorCoder };
+            _animDataPool.Value.Add(animEvent) = new AnimData { Value = new AnimationData(animations)};
         }
         
         private Vector3 SelectTargetEnemy(Vector3 currentPosition, IEnumerable<Collider> colliders)
