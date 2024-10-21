@@ -12,7 +12,7 @@ namespace _ECS._RTS.Scripts.AnimationHelper
         
         public override void DefaultAnimation(int layer)
         {
-            PlayAsync(new AnimationData(Animations.WALK)).Forget();
+            Play(new AnimationData(Animations.IDLE));
         }
     }
 }

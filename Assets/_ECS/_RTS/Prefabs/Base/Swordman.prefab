@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  detectorRange: 10
-  attackRange: 2
+  detectorRange: 5
+  attackRange: 1.5
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 0

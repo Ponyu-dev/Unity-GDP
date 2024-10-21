@@ -33,6 +33,7 @@ namespace _ECS._RTS.Scripts.Systems.Range
             foreach (var entityEnemy in _filterEnemy.Value)
             {
                 var attack = attackingPool.Get(entityEnemy).Value;
+                Debug.Log($"[NearestEnemyRangeSystem] attack {entityEnemy} {attack}");
                 if (attack) continue;
                 
                 var position = positionPool.Get(entityEnemy).Value;
@@ -50,7 +51,7 @@ namespace _ECS._RTS.Scripts.Systems.Range
                 }
                 else
                 {
-                    AnimEvent(animView, Animations.RESET);
+                    AnimEvent(animView, Animations.WALK);
                 }
                 
                 ref var moveDirection = ref moveDirectionPool.Get(entityEnemy);
@@ -63,8 +64,6 @@ namespace _ECS._RTS.Scripts.Systems.Range
 
         private void AnimEvent(IAnimatorCoder animatorCoder, Animations animations)
         {
-            if (animatorCoder.GetCurrentAnimation(0) != Animations.WALK) return;
-            
             var animEvent = _eventWorld.Value.NewEntity();
 
             _animEventPool.Value.Add(animEvent) = new AnimEvent(); 

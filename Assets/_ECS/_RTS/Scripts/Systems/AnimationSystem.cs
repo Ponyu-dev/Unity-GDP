@@ -16,9 +16,16 @@ namespace _ECS._RTS.Scripts.Systems
             {
                 var animator = _filter.Pools.Inc2.Get(@event).Value;
                 var animationData = _filter.Pools.Inc3.Get(@event).Value;
+
+                var currentAnim = animator.GetCurrentAnimation(0);
+                var newAnim = animationData.Animation;
+                Debug.Log($"[AnimationSystem] Run currentAnim = {currentAnim} newAnim = {newAnim}");
                 
-                Debug.Log($"[AnimationSystem] Run {animationData.Animation}");
-                animator.PlayAsync(animationData);
+                if (currentAnim != newAnim)
+                {
+                    Debug.Log($"[AnimationSystem] Run {newAnim}");   
+                    animator.Play(animationData);   
+                }
 
                 _eventWorld.Value.DelEntity(@event);
             }

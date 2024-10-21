@@ -24,7 +24,7 @@ namespace _ECS._RTS.Scripts.AnimationHelper.Base
             for (int i = 0, count = nextAnimations.Length - 1; i < count; ++i)
                 nextAnimations[i].NextAnimation = nextAnimations[i + 1];
 
-            _animatorBrain.PlayAsync(nextAnimations[0], layerIndex).Forget();
+            _animatorBrain.Play(nextAnimations[0], layerIndex);
         }
     }
 }

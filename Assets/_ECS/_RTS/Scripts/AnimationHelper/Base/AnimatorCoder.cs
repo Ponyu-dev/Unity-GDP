@@ -1,8 +1,6 @@
 using System;
-using System.Threading;
-using Cysharp.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _ECS._RTS.Scripts.AnimationHelper.Base
 {
@@ -27,20 +25,19 @@ namespace _ECS._RTS.Scripts.AnimationHelper.Base
         bool GetBool(Parameters id);
 
         /// <summary> Plays an animation on the specified layer asynchronously </summary>
-        UniTask<bool> PlayAsync(AnimationData data, int layer = 0);
+        bool Play(AnimationData data, int layer = 0);
     }
-    
+
     public abstract class BaseAnimatorCoder : MonoBehaviour, IAnimatorCoder
     {
         /// <summary> The baseline animation logic on a specific layer </summary>
         public abstract void DefaultAnimation(int layer);
 
-        [SerializeField]
-        private Animator animator;
+        [SerializeField] private Animator animator;
         private Animations[] _currentAnimation;
         private bool[] _layerLocked;
         private ParameterDisplay[] _parameters;
-        private CancellationTokenSource[] _currentTasks;
+        private Coroutine[] _currentCoroutine;
 
         /// <summary> Sets up the Animator Brain </summary>
         public void Initialize()
@@ -48,9 +45,9 @@ namespace _ECS._RTS.Scripts.AnimationHelper.Base
             AnimatorValues.Initialize();
 
             var layerCount = this.animator.layerCount;
-            _currentTasks = new CancellationTokenSource[layerCount];
             _layerLocked = new bool[layerCount];
             _currentAnimation = new Animations[layerCount];
+            _currentCoroutine = new Coroutine[layerCount];
 
             for (int i = 0; i < layerCount; ++i)
             {
@@ -144,9 +141,9 @@ namespace _ECS._RTS.Scripts.AnimationHelper.Base
                 return false;
             }
         }
-
+        
         /// <summary> Takes in the animation details and the animation layer, then attempts to play the animation </summary>
-        public async UniTask<bool> PlayAsync(AnimationData data, int layer = 0)
+        public bool Play(AnimationData data, int layer = 0)
         {
             try
             {
@@ -158,41 +155,33 @@ namespace _ECS._RTS.Scripts.AnimationHelper.Base
 
                 if (_layerLocked[layer] || _currentAnimation[layer] == data.Animation) return false;
 
-                if (_currentTasks[layer] != null)
-                {
-                    _currentTasks[layer].Cancel();
-                }
-                
-                Debug.Log($"[BaseAnimatorCoder] PlayAsync {data.Animation.ToString()}");
-
-                _currentTasks[layer] = new CancellationTokenSource();
-                var token = _currentTasks[layer].Token;
-
+                if (_currentCoroutine[layer] != null) StopCoroutine(_currentCoroutine[layer]);
                 _layerLocked[layer] = data.LockLayer;
                 _currentAnimation[layer] = data.Animation;
 
                 animator.CrossFade(AnimatorValues.GetHash(_currentAnimation[layer]), data.CrossFade, layer);
 
                 if (data.NextAnimation == null) return true;
+                
+                _currentCoroutine[layer] = StartCoroutine(Wait());
+                
+                IEnumerator Wait()
+                {
+                    animator.Update(0);
+                    var delay = animator.GetNextAnimatorStateInfo(layer).length;
+                    if (data.CrossFade == 0) delay = animator.GetCurrentAnimatorStateInfo(layer).length;
+                    yield return new WaitForSeconds(delay - data.NextAnimation.CrossFade);
+                    SetLocked(false, layer);
+                    Play(data.NextAnimation, layer);
+                }
 
-                await WaitForAnimationToEnd(data, layer, token);
-                SetLocked(false, layer);
-                return await PlayAsync(data.NextAnimation, layer);
+                return true;
             }
             catch
             {
                 LogError("Please Initialize() in Start()");
                 return false;
             }
-        }
-
-        private async UniTask WaitForAnimationToEnd(AnimationData data, int layer, CancellationToken token)
-        {
-            animator.Update(0);
-            var delay = animator.GetNextAnimatorStateInfo(layer).length;
-            if (data.CrossFade == 0) delay = animator.GetCurrentAnimatorStateInfo(layer).length;
-
-            await UniTask.Delay(TimeSpan.FromSeconds(delay - data.NextAnimation.CrossFade), cancellationToken: token);
         }
 
         private void LogError(string message)

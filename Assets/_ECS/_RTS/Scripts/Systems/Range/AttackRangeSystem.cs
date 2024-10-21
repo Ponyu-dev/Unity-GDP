@@ -32,6 +32,8 @@ namespace _ECS._RTS.Scripts.Systems.Range
                 isMoving.Value = colliders.IsNullOrEmpty();
                 isAttacking.Value = !isMoving.Value;
                 isAttacking.Target = isAttacking.Value ? colliders[0].transform : default;
+                
+                Debug.Log($"[AttackRangeSystem] attack {entity} isMoving.Value = {isMoving.Value} isAttacking.Value = {isAttacking.Value}");
             }
         }
     }

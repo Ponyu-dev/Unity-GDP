@@ -39,7 +39,7 @@ namespace _ECS._RTS.Scripts.Systems
                 _animViewPool.Value.Add(spawnEvent) = new AnimView { Value = animView };
                 _animDataPool.Value.Add(spawnEvent) = new AnimData
                 {
-                    Value = new AnimationData(Animations.ATTACK1)
+                    Value = new AnimationData(Animations.ATTACK1, true, new AnimationData())
                 };
             }
         }
