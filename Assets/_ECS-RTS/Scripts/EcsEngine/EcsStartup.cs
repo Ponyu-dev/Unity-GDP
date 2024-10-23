@@ -2,6 +2,7 @@ using System;
 using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Systems;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Animators;
+using _ECS_RTS.Scripts.EcsEngine.Systems.Requests;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Entities;
@@ -42,8 +43,8 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 //.Add(new MovementSystem())
                 //.Add(new FireRequestSystem())
                 //.Add(new SpawnRequestSystem())
-                //.Add(new HealthEmptySystem())
-                //.Add(new DeathRequestSystem())
+                .Add(new HealthEmptySystem())
+                .Add(new DeathRequestSystem())
                 //.Add(new CollisionRequestSystem())
                 //.Add(new TakeDamageRequestSystem())
                 //.Add(new ArrowDestroySystem())

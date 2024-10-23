@@ -7,8 +7,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
 {
     internal sealed class AnimatorAttackListenerSystem : IEcsRunSystem
     {
-        private static readonly int AttackAnimatorTrigger = Animator.StringToHash("AttackA");
-        //private static readonly int AttackAnimatorTrigger = Animator.StringToHash("AttackB");
+        private static readonly int AAttackAnimatorTrigger = Animator.StringToHash("AttackA");
+        private static readonly int BAttackAnimatorTrigger = Animator.StringToHash("AttackB");
 
         private readonly EcsFilterInject<Inc<AttackEvent, SourceEntity>> _filter = EcsWorlds.EVENTS;
         
@@ -22,8 +22,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
 
                 if (!_animatorPool.Value.Has(source)) continue;
                 
+                var randomIndex = Random.Range(0, 2);
                 var animator = _animatorPool.Value.Get(source).Value;
-                animator.SetTrigger(AttackAnimatorTrigger);
+                var trigger = randomIndex == 0 ? AAttackAnimatorTrigger : BAttackAnimatorTrigger;
+                animator.SetTrigger(trigger);
             }
         }
     }
