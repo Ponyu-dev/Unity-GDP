@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1870072543877420728}
   - component: {fileID: -5207118468367316410}
-  - component: {fileID: -4354566833873807912}
+  - component: {fileID: 1098217372529575530}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   installers:
-  - {fileID: -4354566833873807912}
---- !u!114 &-4354566833873807912
+  - {fileID: 1098217372529575530}
+--- !u!114 &1098217372529575530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,11 +57,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1870072543877420731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb6a24d513294f5cbc3e194337116b6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0127bf47a89042ef95fee0448a5d8db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  teamType: 0
+  entityType: 2
   health: 5
+  moveSpeed: 5
   animator: {fileID: 1870072544967355838}
 --- !u!1001 &1870072544957858056
 PrefabInstance:

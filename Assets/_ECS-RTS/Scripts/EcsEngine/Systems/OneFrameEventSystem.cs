@@ -11,7 +11,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
 
         public void Run(IEcsSystems systems)
         {
-            foreach (int @event in _filter.Value)
+            foreach (var @event in _filter.Value)
             {
                 _eventWorld.Value.DelEntity(@event);
             }

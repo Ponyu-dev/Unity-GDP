@@ -1,17 +1,21 @@
 using _ECS_RTS.Scripts.EcsEngine.Components;
+using _ECS_RTS.Scripts.EcsEngine.Helpers;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Installer
 {
-    public sealed class EnemyInstaller : EntityInstaller
+    public abstract class BaseEnemyInstaller : EntityInstaller
     {
-        [SerializeField] private float moveSpeed = 5.0f;
+        [SerializeField] private TeamType teamType;
+        [SerializeField] private EntityType entityType;
         [SerializeField] private int health = 5;
+        [SerializeField] private float moveSpeed = 5.0f;
         [SerializeField] private Animator animator;
         
         protected override void Install(Entity entity)
         {
+            entity.AddData(new TeamTag {Value = teamType});
             entity.AddData(new Position {Value = transform.position});
             entity.AddData(new Rotation {Value = transform.rotation});
             entity.AddData(new MoveDirection {Value = Vector3.forward});

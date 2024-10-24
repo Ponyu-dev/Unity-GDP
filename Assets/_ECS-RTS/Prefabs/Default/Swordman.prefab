@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8692576747330127514}
   - component: {fileID: -8420790650537289203}
-  - component: {fileID: 2104504936533405464}
+  - component: {fileID: 2586762221177084928}
   m_Layer: 0
   m_Name: Swordman
   m_TagString: Untagged
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   installers:
-  - {fileID: 2104504936533405464}
---- !u!114 &2104504936533405464
+  - {fileID: 2586762221177084928}
+--- !u!114 &2586762221177084928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,11 +57,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8692576747330127513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb6a24d513294f5cbc3e194337116b6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e5ded616cef4201aa44f37989ff8305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  teamType: 0
+  entityType: 1
   health: 5
+  moveSpeed: 5
   animator: {fileID: 8692576747537636603}
 --- !u!1001 &8692576747530256569
 PrefabInstance:

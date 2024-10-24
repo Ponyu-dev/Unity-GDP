@@ -31,9 +31,9 @@ namespace _ECS_RTS.Scripts.EcsEngine
         }
 
         [Inject]
-        public EcsStartup()
+        public EcsStartup(EntityManager entityManager)
         {
-            _entityManager = new EntityManager();
+            _entityManager = entityManager;
             _world = new EcsWorld ();
             _events = new EcsWorld ();
             _systems = new EcsSystems (_world);
