@@ -4,7 +4,6 @@ using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 using VContainer;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems
@@ -28,8 +27,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
             {
                 var team = teamTagPool.Get(@event).Value;
                 _enemiesFactories.First(it => it.GetTeamType() == team).InactiveObject(@event);
-                
-                Debug.Log($"[EnemyDestroySystem] Run {@event} {team}");
             }
         }
     }

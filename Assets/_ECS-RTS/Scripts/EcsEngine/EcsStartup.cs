@@ -35,6 +35,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
         public EcsStartup(
             EntityManager entityManager,
             FirstArmySpawnSystem firstArmySpawnSystem,
+            DelayArmySpawnSystem delayArmySpawnSystem,
             EnemyDestroySystem enemyDestroySystem)
         {
             _entityManager = entityManager;
@@ -45,6 +46,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
             _systems
                 // Game Logic
                 .Add(firstArmySpawnSystem)
+                .Add(delayArmySpawnSystem)
                 //.Add(new MovementSystem())
                 //.Add(new FireRequestSystem())
                 //.Add(new SpawnRequestSystem())

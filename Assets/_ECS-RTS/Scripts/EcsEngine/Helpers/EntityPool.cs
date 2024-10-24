@@ -9,6 +9,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
 {
     public interface IEntityPool
     {
+        int GetActivesCount();
         void InstantiateDefault(int initialCount);
         bool TryGet(EntityType prefabKey, Vector3 position, Quaternion rotation, out Entity entity);
         void InactiveObject(Entity obj);
@@ -27,6 +28,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
 
         private Queue<Entity> _pool;
         private readonly HashSet<Entity> _actives;
+        public int GetActivesCount() => _actives.Count;
         
         public EntityPool(
             EntityManager entityManager,
