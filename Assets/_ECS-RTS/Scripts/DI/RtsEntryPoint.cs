@@ -1,5 +1,4 @@
-using _ECS_RTS.Scripts.EcsEngine;
-using Leopotam.EcsLite.Entities;
+using _ECS_RTS.Scripts.EcsEngine.DI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
@@ -11,6 +10,8 @@ namespace _ECS_RTS.Scripts.DI
     {
         [BoxGroup("Team Red"), SerializeField] private PoolEnemyConfigure poolEnemyRedConfigure;
         [BoxGroup("Team Blue"), SerializeField] private PoolEnemyConfigure poolEnemyBlueConfigure;
+
+        private EcsSystemConfigure _ecsSystemConfigure = new();
         
         protected override void Awake()
         {
@@ -20,13 +21,7 @@ namespace _ECS_RTS.Scripts.DI
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<EntityManager>(Lifetime.Singleton)
-                .AsImplementedInterfaces()
-                .AsSelf();
-            
-            builder.Register<EcsStartup>(Lifetime.Singleton)
-                .AsImplementedInterfaces()
-                .AsSelf();
+            _ecsSystemConfigure.Configure(builder);
             
             poolEnemyRedConfigure.Configure(builder);
             poolEnemyBlueConfigure.Configure(builder);

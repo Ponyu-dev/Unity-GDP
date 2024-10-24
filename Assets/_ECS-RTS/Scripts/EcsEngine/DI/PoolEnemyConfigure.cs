@@ -7,7 +7,7 @@ using Leopotam.EcsLite.Entities;
 using UnityEngine;
 using VContainer;
 
-namespace _ECS_RTS.Scripts.DI
+namespace _ECS_RTS.Scripts.EcsEngine.DI
 {
     [Serializable]
     public class EntityTypeEntityPair

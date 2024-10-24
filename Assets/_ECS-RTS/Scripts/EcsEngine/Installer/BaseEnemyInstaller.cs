@@ -15,7 +15,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
         
         protected override void Install(Entity entity)
         {
+            entity.AddData(new Inactive());
             entity.AddData(new TeamTag {Value = teamType});
+            entity.AddData(new EntityTag {Value = entityType});
             entity.AddData(new Position {Value = transform.position});
             entity.AddData(new Rotation {Value = transform.rotation});
             entity.AddData(new MoveDirection {Value = Vector3.forward});

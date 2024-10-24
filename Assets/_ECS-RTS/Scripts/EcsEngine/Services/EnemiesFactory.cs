@@ -12,9 +12,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
     {
         public TeamType GetTeamType(); 
         public bool TryGetEnemy(EntityType entityType, Vector3 spawnPoint, Quaternion rotation, out Entity entity);
+        public void FirstSpawn(EntityType entityType, int positionIndex);
     }
     
-    public class EnemiesFactory : IEnemiesFactory, IStartable, ITickable, IDisposable
+    public class EnemiesFactory : IEnemiesFactory, IStartable, IDisposable
     {
         //How many enemies will be in the pool at startup.
         private const int DEFAULT_POOL_SIZE_ARMY = 5;
@@ -50,19 +51,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
             return false;
         }
 
-        public void Tick()
+        public void FirstSpawn(EntityType entityType, int positionIndex)
         {
-            FirstSpawn();
-        }
-
-        private bool _firstSpawn = false;
-        private void FirstSpawn()
-        {
-            if (_firstSpawn) return;
-            
-            _firstSpawn = true;
-            TryGetEnemy(EntityType.Swordsman, _spawnPoints[0], Quaternion.LookRotation(Vector3.forward), out var sword);
-            TryGetEnemy(EntityType.Archer, _spawnPoints[1], Quaternion.LookRotation(Vector3.forward), out var archer);
+            TryGetEnemy(entityType, _spawnPoints[positionIndex], Quaternion.LookRotation(Vector3.forward), out var entity);
         }
 
         public void Dispose()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _ECS_RTS.Scripts.EcsEngine.Components;
@@ -111,38 +112,26 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
 
         public void DestroyEntity(int id)
         {
-            Debug.Log($"[EntityPool] DestroyEntity Start removed from pool {id}");
-            if (_entityManager.Get(id) is not { } entity) return;
-            
-            Debug.Log($"[EntityPool] DestroyEntity Middle removed from pool {id}");
-
-            if (_actives.Remove(entity))
+            try
             {
-                Debug.Log($"[EntityPool] DestroyEntity Middle IF removed from pool {id}");
-                _pool = new Queue<Entity>(_pool.Where(pooledObj => !pooledObj.Equals(entity)));
-            }
+                if (_entityManager.Get(id) is not { } entity) return;
 
-            Debug.Log($"[EntityPool] DestroyEntity End removed from pool {id}");
-            _entityManager.Destroy(id);
+                if (_actives.Remove(entity))
+                    _pool = new Queue<Entity>(_pool.Where(pooledObj => !pooledObj.Equals(entity)));
+
+                _entityManager.Destroy(id);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError($"[EntityPool] Exception DestroyEntity {id}");
+                Debug.LogException(exception);
+            }
         }
 
         public void ClearPool()
         {
-            Debug.Log($"[EntityPool] ClearPool Start removed active object");
-            foreach (var active in _actives)
-            {
-                _entityManager.Destroy(active.Id);
-            }
-
             _actives.Clear();
-
-            while (_pool.Count > 0)
-            {
-                var pooledObj = _pool.Dequeue();
-                _entityManager.Destroy(pooledObj.Id);
-            }
-            
-            Debug.Log($"[EntityPool] ClearPool End removed active object");
+            _pool.Clear();
         }
     }
 }

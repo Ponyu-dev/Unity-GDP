@@ -3,6 +3,7 @@ using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Systems;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Animators;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Requests;
+using _ECS_RTS.Scripts.EcsEngine.Systems.Spawns;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Entities;
@@ -18,7 +19,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
         public EcsEntityBuilder CreateEntity(string worldName = null);
     }
     
-    public sealed class EcsStartup : IEcsStartup, IStartable, ITickable, IDisposable
+    internal sealed class EcsStartup : IEcsStartup, IStartable, ITickable, IDisposable
     {
         private readonly EcsWorld _world;
         private readonly EcsWorld _events;
@@ -31,7 +32,9 @@ namespace _ECS_RTS.Scripts.EcsEngine
         }
 
         [Inject]
-        public EcsStartup(EntityManager entityManager)
+        public EcsStartup(
+            EntityManager entityManager,
+            FirstArmySpawnSystem firstArmySpawnSystem)
         {
             _entityManager = entityManager;
             _world = new EcsWorld ();
@@ -40,6 +43,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
             _systems.AddWorld(_events, EcsWorlds.EVENTS);
             _systems
                 // Game Logic
+                .Add(firstArmySpawnSystem)
                 //.Add(new MovementSystem())
                 //.Add(new FireRequestSystem())
                 //.Add(new SpawnRequestSystem())

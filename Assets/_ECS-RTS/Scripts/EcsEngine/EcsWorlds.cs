@@ -1,6 +1,6 @@
 namespace _ECS_RTS.Scripts.EcsEngine
 {
-    public static class EcsWorlds
+    internal static class EcsWorlds
     {
         public const  string EVENTS = nameof(EVENTS);
     }
