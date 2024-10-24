@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _ECS_RTS.Scripts.EcsEngine.Helpers;
+using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 using VContainer;
@@ -10,7 +11,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
 {
     public interface IEnemiesFactory
     {
-        public TeamType GetTeamType(); 
+        public TeamType GetTeamType();
+        void InactiveObject(int id);
         public bool TryGetEnemy(EntityType entityType, Vector3 spawnPoint, Quaternion rotation, out Entity entity);
         public void FirstSpawn(EntityType entityType, int positionIndex);
     }
@@ -22,7 +24,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
         
         private readonly TeamType _teamType;
         public TeamType GetTeamType() => _teamType;
-        
+
         private readonly IEntityPool _entityPool;
         private readonly Vector3[] _spawnPoints;
 
@@ -54,6 +56,12 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
         public void FirstSpawn(EntityType entityType, int positionIndex)
         {
             TryGetEnemy(entityType, _spawnPoints[positionIndex], Quaternion.LookRotation(Vector3.forward), out var entity);
+        }
+
+        public async void InactiveObject(int id)
+        {
+            await UniTask.Delay(2000);
+            _entityPool.InactiveObject(id);
         }
 
         public void Dispose()

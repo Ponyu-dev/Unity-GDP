@@ -34,7 +34,8 @@ namespace _ECS_RTS.Scripts.EcsEngine
         [Inject]
         public EcsStartup(
             EntityManager entityManager,
-            FirstArmySpawnSystem firstArmySpawnSystem)
+            FirstArmySpawnSystem firstArmySpawnSystem,
+            EnemyDestroySystem enemyDestroySystem)
         {
             _entityManager = entityManager;
             _world = new EcsWorld ();
@@ -52,6 +53,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 //.Add(new CollisionRequestSystem())
                 //.Add(new TakeDamageRequestSystem())
                 //.Add(new ArrowDestroySystem())
+                .Add(enemyDestroySystem)
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())

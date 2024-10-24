@@ -12,6 +12,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
         void InstantiateDefault(int initialCount);
         bool TryGet(EntityType prefabKey, Vector3 position, Quaternion rotation, out Entity entity);
         void InactiveObject(Entity obj);
+        void InactiveObject(int id);
         void DestroyEntity(int id);
         void ClearPool();
     }
@@ -105,9 +106,15 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
         {
             if (obj == null || !_actives.Remove(obj)) return;
             
-            obj.AddData(new Inactive());
+            if (!obj.HasData<Inactive>()) obj.AddData(new Inactive());
+            
             obj.transform.SetParent(_container);
             _pool.Enqueue(obj);
+        }
+
+        public void InactiveObject(int id)
+        {
+            InactiveObject(_entityManager.Get(id));
         }
 
         public void DestroyEntity(int id)
