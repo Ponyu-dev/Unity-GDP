@@ -15,7 +15,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
         public TeamType GetTeamType();
         void InactiveObject(int id);
         public bool TryGetEnemy(EntityType entityType, Vector3 spawnPoint, Quaternion rotation, out Entity entity);
-        public bool DelaySpawn(out Entity entity);
+        public bool Spawn(out Entity entity);
         public bool FirstSpawn(EntityType entityType, int positionIndex, out Entity entity);
     }
     
@@ -58,7 +58,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
         }
 
         //TODO Add await Delay spawn;
-        public bool DelaySpawn(out Entity entity)
+        public bool Spawn(out Entity entity)
         {
             entity = default;
             
