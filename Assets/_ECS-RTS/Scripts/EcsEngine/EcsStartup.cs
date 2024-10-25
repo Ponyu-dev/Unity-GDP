@@ -74,6 +74,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
 #endif
                 //Clean Up:
                 .Add(new OneFrameEventSystem())
+                .DelHere<IdleEvent>()
                 .DelHere<WalkEvent>()
                 .DelHere<AttackEvent>()
                 .DelHere<DeathEvent>();

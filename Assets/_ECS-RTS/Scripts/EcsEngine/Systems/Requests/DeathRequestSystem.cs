@@ -34,7 +34,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 // Обработка тегов
                 ProcessTags(entity, _filterMoveTags, firstTargetSelectedPool);
                 ProcessTags(entity, _filterAttackTags, firstTargetSelectedPool);
-
             }
         }
 
@@ -54,7 +53,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 // Удаляем теги и цели, добавляем новый запрос
                 tagPool.Del(entityTag);
                 targetPool.Del(entityTag);
-
                 requestPool.Add(entityTag) = new FinderNearestTargetRequest();
             }
         }

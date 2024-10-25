@@ -12,17 +12,17 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
         
         private readonly EcsFilterInject<Inc<FinderNearestTargetRequest>, Exc<Inactive>> _filter;
         private readonly EcsFilterInject<Inc<AttackLayerMaskView, Position, EntityTag>, Exc<Inactive>> _filterArmy;
-        private readonly EcsFilterInject<Inc<MoveTarget, MoveTargetRequest>, Exc<Inactive>> _filterMove;
+        private readonly EcsFilterInject<Inc<MoveTarget, MoveTag>, Exc<Inactive>> _filterMove;
         
-        private readonly EcsPoolInject<MoveTag> _poolMoveTag;
-
+        private readonly EcsPoolInject<WalkEvent> _eventPool;
+        
         public void Run(IEcsSystems systems)
         {
             var attackLayerMaskViewPool = _filterArmy.Pools.Inc1;
             var positionPool = _filterArmy.Pools.Inc2;
             
             var moveTargetPool = _filterMove.Pools.Inc1;
-            var moveTargetRequestPool = _filterMove.Pools.Inc2;
+            var moveTagPool = _filterMove.Pools.Inc2;
 
             foreach (var entity in _filter.Value)
             {
@@ -33,10 +33,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
                 
                 if (!FindNearestEnemy(position.Value, RANGE_FINDER, layerMask.Value, out var nearestEnemy))
                     continue;
-
-                _poolMoveTag.Value.Add(entity) = new MoveTag();
+                
                 moveTargetPool.Add(entity) = new MoveTarget { Value = nearestEnemy };
-                moveTargetRequestPool.Add(entity) = new MoveTargetRequest();
+                moveTagPool.Add(entity) = new MoveTag();
+
+                _eventPool.Value.Add(entity) = new WalkEvent();
             }
         }
         

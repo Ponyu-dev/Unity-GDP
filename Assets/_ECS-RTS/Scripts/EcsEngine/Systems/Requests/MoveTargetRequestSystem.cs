@@ -7,23 +7,17 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
 {
     internal sealed class MoveTargetRequestSystem : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<MoveTargetRequest, MoveTarget>, Exc<Inactive>> _filterRequest;
-        private readonly EcsFilterInject<Inc<Position, Rotation, MoveDirection, EntityTag>, Exc<Inactive>> _filterPosition;
-        
-        private readonly EcsPoolInject<WalkEvent> _eventPool;
+        private readonly EcsFilterInject<Inc<Position, Rotation, MoveDirection, MoveTarget, MoveTag, EntityTag>, Exc<Inactive>> _filter;
         
         public void Run(IEcsSystems systems)
         {
-            var moveTargetRequestPool = _filterRequest.Pools.Inc1;
-            var moveTargetPool = _filterRequest.Pools.Inc2;
+            var positionPool = _filter.Pools.Inc1;
+            var rotationPool = _filter.Pools.Inc2;
+            var moveDirectionPool = _filter.Pools.Inc3;
+            var moveTargetPool = _filter.Pools.Inc4;
             
-            foreach (var id in _filterRequest.Value)
+            foreach (var id in _filter.Value)
             {
-                var positionPool = _filterPosition.Pools.Inc1;
-                var rotationPool = _filterPosition.Pools.Inc2;
-                var moveDirectionPool = _filterPosition.Pools.Inc3;
-                
-                moveTargetRequestPool.Del(id);
                 var idMoveTarget = moveTargetPool.Get(id).Value;
                 var enemyPosition = positionPool.Get(idMoveTarget).Value;
 
@@ -36,7 +30,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 ref var rotation = ref rotationPool.Get(id);
                 var targetRotation = Quaternion.LookRotation(directionToEnemy);
                 rotation.Value = targetRotation;
-                _eventPool.Value.Add(id) = new WalkEvent();
             }
         }
     }

@@ -11,6 +11,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
         private readonly EcsFilterInject<Inc<MoveTag, MoveTarget, MoveDirection, Position, Rotation>, Exc<Inactive>> _filterMove;
         private readonly EcsPoolInject<AttackTag> _poolAttackTag;
         
+        private readonly EcsPoolInject<IdleEvent> _eventPool;
+        
         public void Run(IEcsSystems systems)
         {
             var moveTagPool = _filterMove.Pools.Inc1;
@@ -37,9 +39,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 var position = positionPool.Get(entity).Value;
                 var positionEnemy = positionPool.Get(attackTargetEntityPool.Get(entity).Value).Value;
                 var directionToEnemy = (positionEnemy - position).normalized;
+                
                 ref var rotationEntity = ref rotationPool.Get(entity);
                 rotationEntity.Value = Quaternion.LookRotation(directionToEnemy);
 
+                _eventPool.Value.Add(entity) = new IdleEvent();
                 _poolAttackTag.Value.Add(entity) = new AttackTag();
             }
         }

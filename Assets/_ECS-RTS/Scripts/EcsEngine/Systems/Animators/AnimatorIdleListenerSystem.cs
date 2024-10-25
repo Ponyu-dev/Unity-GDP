@@ -8,18 +8,15 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
     internal sealed class AnimatorIdleListenerSystem : IEcsRunSystem
     {
         private static readonly int IdleAnimatorTrigger = Animator.StringToHash("Idle");
-        private readonly EcsFilterInject<Inc<IdleEvent, SourceEntity>> _filter = EcsWorlds.EVENTS;
-        private readonly EcsPoolInject<AnimatorView> _animatorPool;
+
+        private readonly EcsFilterInject<Inc<AnimatorView, IdleEvent>> _filter;
 
         public void Run(IEcsSystems systems)
         {
+            var animatorViewPool = _filter.Pools.Inc1;
             foreach (var @event in _filter.Value)
             {
-                var source = _filter.Pools.Inc2.Get(@event).Value;
-
-                if (!_animatorPool.Value.Has(source)) continue;
-                
-                var animator = _animatorPool.Value.Get(source).Value;
+                var animator = animatorViewPool.Get(@event).Value;
                 animator.SetTrigger(IdleAnimatorTrigger);
             }
         }

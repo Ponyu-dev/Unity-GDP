@@ -9,19 +9,14 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
     {
         private static readonly int TakeDamageAnimatorTrigger = Animator.StringToHash("TakeDamage");
 
-        private readonly EcsFilterInject<Inc<TakeDamageEvent, TargetEntity>> _filter = EcsWorlds.EVENTS;
-        
-        private readonly EcsPoolInject<AnimatorView> _animatorPool;
+        private readonly EcsFilterInject<Inc<AnimatorView, TakeDamageEvent>> _filter;
 
         public void Run(IEcsSystems systems)
         {
+            var animatorViewPool = _filter.Pools.Inc1;
             foreach (var @event in _filter.Value)
             {
-                var target = _filter.Pools.Inc2.Get(@event).Value;
-
-                if (!_animatorPool.Value.Has(target)) continue;
-                
-                var animator = _animatorPool.Value.Get(target).Value;
+                var animator = animatorViewPool.Get(@event).Value;
                 animator.SetTrigger(TakeDamageAnimatorTrigger);
             }
         }
