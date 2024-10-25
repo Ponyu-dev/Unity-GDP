@@ -19,7 +19,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
             foreach (var entity in _filterAttack.Value)
             {
                 var attackEnemyId = attackTargetEntityPool.Get(entity).Value;
-                Debug.Log($"[AttackSystem] Run {entity} attack {attackEnemyId}");
+                //Debug.Log($"[AttackSystem] Run {entity} attack {attackEnemyId}");
                 
                 
                 

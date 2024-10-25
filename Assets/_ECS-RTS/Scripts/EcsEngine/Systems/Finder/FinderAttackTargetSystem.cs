@@ -24,8 +24,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
                 var rangeAttack = rangeAttackerPool.Get(entity).Value;
                 
                 if (!IsAttackDistance(position, rangeAttack, layerMask, out var enemyId)) continue;
-                
-                Debug.Log($"[FinderAttackTargetSystem] Run {entity} attack {enemyId}");
 
                 _filterAttack.Pools.Inc1.Add(entity) = new AttackTargetRequest();
                 _filterAttack.Pools.Inc2.Add(entity) = new AttackTargetEntity { Value = enemyId};
@@ -38,10 +36,19 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
             enemyId = -1;
 
             if (colliders.Length <= 0) return false;
-            
-            enemyId = colliders[0].GetComponent<Entity>().Id;
 
-            return true;
+            foreach (var collider in colliders)
+            {
+                if (!collider.TryGetComponent<Entity>(out var entity))
+                    continue;
+                
+                if (entity.HasData<Inactive>()) continue;
+                
+                enemyId = entity.Id;
+                break;
+            }
+
+            return enemyId >= 0;
         }
     }
 }

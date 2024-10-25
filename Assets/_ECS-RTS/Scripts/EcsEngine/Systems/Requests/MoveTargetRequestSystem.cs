@@ -19,7 +19,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
             
             foreach (var id in _filterRequest.Value)
             {
-                Debug.Log($"[MoveTargetRequestSystem] Run {id}");
                 var positionPool = _filterPosition.Pools.Inc1;
                 var rotationPool = _filterPosition.Pools.Inc2;
                 var moveDirectionPool = _filterPosition.Pools.Inc3;

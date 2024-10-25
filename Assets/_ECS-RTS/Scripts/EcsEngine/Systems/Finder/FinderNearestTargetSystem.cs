@@ -26,16 +26,13 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
 
             foreach (var entity in _filter.Value)
             {
-                Debug.Log($"[FinderNearestTargetSystem] Run {entity}");
                 _filter.Pools.Inc1.Del(entity);
 
                 var layerMask = attackLayerMaskViewPool.Get(entity);
                 var position = positionPool.Get(entity);
                 
-                var nearestEnemy = FindNearestEnemy(position.Value, RANGE_FINDER, layerMask.Value);
-                
-                //Debug.Log($"[FinderAttackTargetSystem] Run nearestEnemy = {nearestEnemy} {enemyTeamPool.Get(nearestEnemy).Value}");
-                if (nearestEnemy == -1) continue;
+                if (!FindNearestEnemy(position.Value, RANGE_FINDER, layerMask.Value, out var nearestEnemy))
+                    continue;
 
                 _poolMoveTag.Value.Add(entity) = new MoveTag();
                 moveTargetPool.Add(entity) = new MoveTarget { Value = nearestEnemy };
@@ -43,16 +40,18 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
             }
         }
         
-        private int FindNearestEnemy(Vector3 currentPosition, float detectionRadius, int layerMask)
+        private bool FindNearestEnemy(Vector3 currentPosition, float detectionRadius, int layerMask, out int nearestEnemy)
         {
             var closestDistance = float.MaxValue;
-            var nearestEnemy = -1;
+            nearestEnemy = -1;
             var hitColliders = Physics.OverlapSphere(currentPosition, detectionRadius, layerMask);
 
             foreach (var collider in hitColliders)
             {
                 if (!collider.TryGetComponent<Entity>(out var entityTarget)) 
                     continue;
+                
+                if (entityTarget.HasData<Inactive>()) continue;
 
                 var distance = Vector3.Distance(currentPosition, collider.transform.position);
 
@@ -62,7 +61,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
                 nearestEnemy = entityTarget.Id;
             }
 
-            return nearestEnemy;
+            return nearestEnemy >= 0;
         }
     }
 }
