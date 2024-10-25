@@ -32,14 +32,14 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     }
     
     [Serializable]
-    public struct SourceEntity
+    public struct SourceEntity : ITargetEntity
     {
-        public int Value;
+        public int Value { get; set; } 
     }
     
     [Serializable]
-    public struct TargetEntity
+    public struct TargetEntity : ITargetEntity
     {
-        public int Value;
+        public int Value { get; set; } 
     }
 }

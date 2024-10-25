@@ -7,52 +7,57 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
     internal sealed class DeathRequestSystem : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<DeathRequest>, Exc<Inactive>> _filter;
-        
+
         private readonly EcsPoolInject<Inactive> _inactivePool;
         private readonly EcsPoolInject<DeathEvent> _eventPool;
 
         private readonly EcsFilterInject<Inc<MoveTag, MoveTarget, EntityTag>, Exc<Inactive>> _filterMoveTags;
         private readonly EcsFilterInject<Inc<AttackTag, AttackTargetEntity, EntityTag>, Exc<Inactive>> _filterAttackTags;
-        
+
         private readonly EcsPoolInject<FinderNearestTargetRequest> _firstTargetSelectedPool;
-        
+
         public void Run(IEcsSystems systems)
         {
-            var moveTagPool = _filterMoveTags.Pools.Inc1;
-            var moveTargetPool = _filterMoveTags.Pools.Inc2;
-            
-            var attackTagPool = _filterAttackTags.Pools.Inc1;
-            var attackTargetEntityPool = _filterAttackTags.Pools.Inc2;
-            
-            foreach (var entity in _filter.Value)
+            var filter = _filter.Value;
+            var inactivePool = _inactivePool.Value;
+            var eventPool = _eventPool.Value;
+            var firstTargetSelectedPool = _firstTargetSelectedPool.Value;
+
+            // Обработка сущностей в основном фильтре
+            foreach (var entity in filter)
             {
                 _filter.Pools.Inc1.Del(entity);
 
-                _inactivePool.Value.Add(entity) = new Inactive();
-                _eventPool.Value.Add(entity) = new DeathEvent();
-                
-                foreach (var entityTags in _filterAttackTags.Value)
-                {
-                    if (!attackTagPool.Has(entityTags) || attackTargetEntityPool.Get(entityTags).Value != entity)
-                        continue;
-                    
-                    attackTagPool.Del(entityTags);
-                    attackTargetEntityPool.Del(entityTags);
-                    
-                    _firstTargetSelectedPool.Value.Add(entityTags) = new FinderNearestTargetRequest();
-                }
-                
-                foreach (var entityTags in _filterMoveTags.Value)
-                {
-                    if (!moveTagPool.Has(entityTags) || attackTargetEntityPool.Get(entityTags).Value != entity)
-                        continue;
-                    
-                    moveTagPool.Del(entityTags);
-                    moveTargetPool.Del(entityTags);
-                    
-                    _firstTargetSelectedPool.Value.Add(entityTags) = new FinderNearestTargetRequest();
-                }
+                inactivePool.Add(entity) = new Inactive();
+                eventPool.Add(entity) = new DeathEvent();
+
+                // Обработка тегов
+                ProcessTags(entity, _filterMoveTags, firstTargetSelectedPool);
+                ProcessTags(entity, _filterAttackTags, firstTargetSelectedPool);
+
             }
         }
+
+        private void ProcessTags<TTag, TTarget>(int entity, EcsFilterInject<Inc<TTag, TTarget, EntityTag>, Exc<Inactive>> filter, EcsPool<FinderNearestTargetRequest> requestPool)
+            where TTag : struct 
+            where TTarget : struct, ITargetEntity
+        {
+            var tagPool = filter.Pools.Inc1;
+            var targetPool = filter.Pools.Inc2;
+
+            foreach (var entityTag in filter.Value)
+            {
+                // Проверяем, есть ли у сущности компонент TTag и соответствующий TTarget
+                if (!tagPool.Has(entityTag) || targetPool.Get(entityTag).Value != entity)
+                    continue;
+
+                // Удаляем теги и цели, добавляем новый запрос
+                tagPool.Del(entityTag);
+                targetPool.Del(entityTag);
+
+                requestPool.Add(entityTag) = new FinderNearestTargetRequest();
+            }
+        }
+
     }
 }

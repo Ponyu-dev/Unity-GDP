@@ -3,9 +3,9 @@ using System;
 namespace _ECS_RTS.Scripts.EcsEngine.Components
 {
     [Serializable]
-    public struct AttackTargetEntity
+    public struct AttackTargetEntity : ITargetEntity
     {
-        public int Value;
+        public int Value { get; set; } 
     }
     
     [Serializable]

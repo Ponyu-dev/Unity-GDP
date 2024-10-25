@@ -16,8 +16,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     }
     
     [Serializable]
-    public struct MoveTarget
+    public struct MoveTarget : ITargetEntity
     {
-        public int Value;
+        public int Value { get; set; } 
     }
 }
