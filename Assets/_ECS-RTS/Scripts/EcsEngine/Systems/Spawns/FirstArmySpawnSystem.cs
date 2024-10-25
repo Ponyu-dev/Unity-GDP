@@ -10,7 +10,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
 {
     internal class FirstArmySpawnSystem : IEcsInitSystem
     {
-        private readonly EcsPoolInject<FirstTargetSelectedRequest> _firstTargetSelectedPool;
+        private readonly EcsPoolInject<FinderNearestTargetRequest> _firstTargetSelectedPool;
         
         private readonly IReadOnlyList<IEnemiesFactory> _enemiesFactories;
         private bool _firstSpawn;
@@ -29,10 +29,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
             foreach (var factory in _enemiesFactories)
             {
                 if (factory.FirstSpawn(EntityType.Swordsman, 0, out var entitySwordsman))
-                    _firstTargetSelectedPool.Value.Add(entitySwordsman.Id) = new FirstTargetSelectedRequest();
+                    _firstTargetSelectedPool.Value.Add(entitySwordsman.Id) = new FinderNearestTargetRequest();
 
                 if (factory.FirstSpawn(EntityType.Archer, 1, out var entityArcher))
-                    _firstTargetSelectedPool.Value.Add(entityArcher.Id) = new FirstTargetSelectedRequest();
+                    _firstTargetSelectedPool.Value.Add(entityArcher.Id) = new FinderNearestTargetRequest();
             }
         }
     }

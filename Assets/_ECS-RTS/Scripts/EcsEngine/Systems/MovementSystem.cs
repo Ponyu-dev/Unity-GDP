@@ -7,7 +7,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
 {
     internal sealed class MovementSystem : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<MoveDirection, MoveSpeed, Position, EntityTag>, Exc<Inactive>> _filter;
+        private readonly EcsFilterInject<Inc<MoveDirection, MoveSpeed, Position, MoveTag>, Exc<Inactive>> _filter;
         
         public void Run(IEcsSystems systems)
         {

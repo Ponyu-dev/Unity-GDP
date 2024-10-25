@@ -42,10 +42,4 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     {
         public int Value;
     }
-    
-    [Serializable]
-    public struct Damage
-    {
-        public int Value;
-    }
 }

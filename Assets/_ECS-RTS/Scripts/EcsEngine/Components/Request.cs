@@ -7,5 +7,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     [Serializable] public struct ArrowRequest { }
     [Serializable] public struct DeathRequest { }
     [Serializable] public struct TakeDamageRequest { }
-    [Serializable] public struct FirstTargetSelectedRequest { }
+    [Serializable] public struct FinderNearestTargetRequest { }
+    [Serializable] public struct MoveTargetRequest { }
+    [Serializable] public struct AttackTargetRequest { }
 }

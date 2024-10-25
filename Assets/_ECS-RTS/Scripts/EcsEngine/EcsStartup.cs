@@ -2,6 +2,7 @@ using System;
 using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Systems;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Animators;
+using _ECS_RTS.Scripts.EcsEngine.Systems.Finder;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Requests;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Spawns;
 using Leopotam.EcsLite;
@@ -47,17 +48,15 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 // Game Logic
                 .Add(firstArmySpawnSystem)
                 .Add(delayArmySpawnSystem)
+                .Add(new FinderNearestTargetSystem())
+                .Add(new MoveTargetRequestSystem())
                 .Add(new MovementSystem())
-                //.Add(new FireRequestSystem())
-                //.Add(new SpawnRequestSystem())
+                .Add(new FinderAttackTargetSystem())
+                .Add(new AttackRequestSystem())
+                .Add(new AttackSystem())
                 .Add(new HealthEmptySystem())
                 .Add(new DeathRequestSystem())
-                .Add(new FinderAttackTargetSystem())
-                //.Add(new CollisionRequestSystem())
-                //.Add(new TakeDamageRequestSystem())
-                //.Add(new ArrowDestroySystem())
                 .Add(enemyDestroySystem)
-                .Add(new NearestTargetFinderRequestSystem())
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())

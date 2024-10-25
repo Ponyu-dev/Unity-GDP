@@ -9,7 +9,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
 {
     internal sealed class DelayArmySpawnSystem : IEcsRunSystem
     {
-        private readonly EcsPoolInject<FirstTargetSelectedRequest> _firstTargetSelectedPool;
+        private readonly EcsPoolInject<FinderNearestTargetRequest> _firstTargetSelectedPool;
         private readonly IReadOnlyList<IEnemiesFactory> _enemiesFactories;
 
         [Inject]
@@ -24,7 +24,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
             {
                 if (factory.DelaySpawn(out var entity))
                 {
-                    _firstTargetSelectedPool.Value.Add(entity.Id) = new FirstTargetSelectedRequest();
+                    _firstTargetSelectedPool.Value.Add(entity.Id) = new FinderNearestTargetRequest();
                 }
             }
         }

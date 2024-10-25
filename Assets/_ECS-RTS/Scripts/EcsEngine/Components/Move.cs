@@ -14,4 +14,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     {
         public Vector3 Value;
     }
+    
+    [Serializable]
+    public struct MoveTarget
+    {
+        public int Value;
+    }
 }

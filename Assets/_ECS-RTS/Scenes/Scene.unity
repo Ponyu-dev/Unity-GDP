@@ -610,8 +610,8 @@ MonoBehaviour:
       Value: {fileID: 652521778951814711, guid: c598c55e7f6af4566b80420bda81bb04,
         type: 3}
     spawnPoints:
-    - {fileID: 1863891992}
     - {fileID: 36653714}
+    - {fileID: 1863891992}
 --- !u!1001 &670880642
 PrefabInstance:
   m_ObjectHideFlags: 0
