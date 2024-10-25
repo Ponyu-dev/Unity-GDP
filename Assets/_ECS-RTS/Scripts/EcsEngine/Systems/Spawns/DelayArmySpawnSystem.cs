@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite;
+using Leopotam.EcsLite.Di;
 using VContainer;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
 {
     internal sealed class DelayArmySpawnSystem : IEcsRunSystem
     {
+        private readonly EcsPoolInject<FirstTargetSelectedRequest> _firstTargetSelectedPool;
         private readonly IReadOnlyList<IEnemiesFactory> _enemiesFactories;
 
         [Inject]
@@ -19,7 +22,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
         {
             foreach (var factory in _enemiesFactories)
             {
-                factory.DelaySpawn();
+                if (factory.DelaySpawn(out var entity))
+                {
+                    _firstTargetSelectedPool.Value.Add(entity.Id) = new FirstTargetSelectedRequest();
+                }
             }
         }
     }

@@ -6,17 +6,18 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
 {
     internal sealed class TransformViewSynchronizerSystem : IEcsPostRunSystem
     {
-        private readonly EcsFilterInject<Inc<TransformView, Position>> _filter;
-        private readonly EcsPoolInject<Rotation> _rotationPool;
+        private readonly EcsFilterInject<Inc<TransformView, Position, Rotation>, Exc<Inactive>> _filter;
 
         public void PostRun(IEcsSystems systems)
         {
-            var rotationPool = _rotationPool.Value;
+            var transformPool = _filter.Pools.Inc1;
+            var positionPool = _filter.Pools.Inc2;
+            var rotationPool = _filter.Pools.Inc3;
 
             foreach (var entity in _filter.Value)
             {
-                ref var transform = ref _filter.Pools.Inc1.Get(entity);
-                var position = _filter.Pools.Inc2.Get(entity);
+                ref var transform = ref transformPool.Get(entity);
+                var position = positionPool.Get(entity);
                 
                 transform.Value.position = position.Value;
 

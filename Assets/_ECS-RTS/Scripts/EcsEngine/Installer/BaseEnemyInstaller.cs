@@ -7,10 +7,13 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
 {
     public abstract class BaseEnemyInstaller : EntityInstaller
     {
+        [SerializeField] private LayerMask attackLayerMask;
         [SerializeField] private TeamType teamType;
         [SerializeField] private EntityType entityType;
         [SerializeField] private int health = 5;
         [SerializeField] private float moveSpeed = 5.0f;
+        //[SerializeField] private float rangeFinder = 8.0f;
+        [SerializeField] private float rangeAttacker = 4.0f;
         [SerializeField] private Animator animator;
         
         protected override void Install(Entity entity)
@@ -22,9 +25,12 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
             entity.AddData(new Rotation {Value = transform.rotation});
             entity.AddData(new MoveDirection {Value = Vector3.forward});
             entity.AddData(new MoveSpeed {Value = moveSpeed});
-            entity.AddData(new TransformView { Value = transform});
-            entity.AddData(new AnimatorView { Value = animator});
-            entity.AddData(new Health { Value = health});
+            entity.AddData(new TransformView {Value = transform});
+            entity.AddData(new AnimatorView {Value = animator});
+            entity.AddData(new Health {Value = health});
+            //entity.AddData(new RangeFinder {Value = rangeFinder});
+            entity.AddData(new RangeAttacker {Value = rangeAttacker});
+            entity.AddData(new AttackLayerMaskView {Value = attackLayerMask});
             entity.AddData(new DamageableTag());
         }
 

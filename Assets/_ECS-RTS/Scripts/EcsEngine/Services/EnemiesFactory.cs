@@ -15,8 +15,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
         public TeamType GetTeamType();
         void InactiveObject(int id);
         public bool TryGetEnemy(EntityType entityType, Vector3 spawnPoint, Quaternion rotation, out Entity entity);
-        public void DelaySpawn();
-        public void FirstSpawn(EntityType entityType, int positionIndex);
+        public bool DelaySpawn(out Entity entity);
+        public bool FirstSpawn(EntityType entityType, int positionIndex, out Entity entity);
     }
     
     public class EnemiesFactory : IEnemiesFactory, IStartable, IDisposable
@@ -58,19 +58,25 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
         }
 
         //TODO Add await Delay spawn;
-        public void DelaySpawn()
+        public bool DelaySpawn(out Entity entity)
         {
-            if (_entityPool.GetActivesCount() >= MAX_ACTIVE_SIZE_ARMY) return;
+            entity = default;
             
-            if (TryGetEnemy(EntityType.Archer, _spawnPoints[0], Quaternion.LookRotation(Vector3.forward), out var entity))
-            {
-                entity.GetData<Health>().Value = 5;
-            }
+            if (_entityPool.GetActivesCount() >= MAX_ACTIVE_SIZE_ARMY)
+                return false;
+
+            if (!TryGetEnemy(EntityType.Archer, _spawnPoints[0], Quaternion.LookRotation(Vector3.forward), out var it))
+                return false;
+
+            entity = it;
+            entity.GetData<Health>().Value = 5;
+
+            return true;
         }
         
-        public void FirstSpawn(EntityType entityType, int positionIndex)
+        public bool FirstSpawn(EntityType entityType, int positionIndex, out Entity entity)
         {
-            TryGetEnemy(entityType, _spawnPoints[positionIndex], Quaternion.LookRotation(Vector3.forward), out var entity);
+            return TryGetEnemy(entityType, _spawnPoints[positionIndex], Quaternion.LookRotation(Vector3.forward), out entity);
         }
 
         public async void InactiveObject(int id)

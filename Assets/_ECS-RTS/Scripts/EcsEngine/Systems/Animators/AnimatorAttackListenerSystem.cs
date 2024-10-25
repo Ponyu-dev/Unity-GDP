@@ -10,20 +10,15 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
         private static readonly int AAttackAnimatorTrigger = Animator.StringToHash("AttackA");
         private static readonly int BAttackAnimatorTrigger = Animator.StringToHash("AttackB");
 
-        private readonly EcsFilterInject<Inc<AttackEvent, SourceEntity>> _filter = EcsWorlds.EVENTS;
-        
-        private readonly EcsPoolInject<AnimatorView> _animatorPool;
+        private readonly EcsFilterInject<Inc<AnimatorView, AttackEvent>> _filter;
 
         public void Run(IEcsSystems systems)
         {
+            var animatorViewPool = _filter.Pools.Inc1;
             foreach (var @event in _filter.Value)
             {
-                var source = _filter.Pools.Inc2.Get(@event).Value;
-
-                if (!_animatorPool.Value.Has(source)) continue;
-                
+                var animator = animatorViewPool.Get(@event).Value;
                 var randomIndex = Random.Range(0, 2);
-                var animator = _animatorPool.Value.Get(source).Value;
                 var trigger = randomIndex == 0 ? AAttackAnimatorTrigger : BAttackAnimatorTrigger;
                 animator.SetTrigger(trigger);
             }

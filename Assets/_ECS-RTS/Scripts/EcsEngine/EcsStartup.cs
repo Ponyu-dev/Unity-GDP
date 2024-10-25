@@ -47,15 +47,17 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 // Game Logic
                 .Add(firstArmySpawnSystem)
                 .Add(delayArmySpawnSystem)
-                //.Add(new MovementSystem())
+                .Add(new MovementSystem())
                 //.Add(new FireRequestSystem())
                 //.Add(new SpawnRequestSystem())
                 .Add(new HealthEmptySystem())
                 .Add(new DeathRequestSystem())
+                .Add(new FinderAttackTargetSystem())
                 //.Add(new CollisionRequestSystem())
                 //.Add(new TakeDamageRequestSystem())
                 //.Add(new ArrowDestroySystem())
                 .Add(enemyDestroySystem)
+                .Add(new NearestTargetFinderRequestSystem())
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())
@@ -73,6 +75,8 @@ namespace _ECS_RTS.Scripts.EcsEngine
 #endif
                 //Clean Up:
                 .Add(new OneFrameEventSystem())
+                .DelHere<WalkEvent>()
+                .DelHere<AttackEvent>()
                 .DelHere<DeathEvent>();
         }
 
