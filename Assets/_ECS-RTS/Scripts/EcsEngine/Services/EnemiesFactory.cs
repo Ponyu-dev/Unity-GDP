@@ -33,11 +33,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
         private readonly Vector3[] _spawnPoints;
 
         [Inject]
-        public EnemiesFactory(TeamType teamType, EntityManager entityManager, Transform container, Transform worldTransform, bool autoExpand, Dictionary<EntityType, Entity> prefabs, Vector3[] spawnPoints)
+        public EnemiesFactory(TeamType teamType, EntityManager entityManager, Transform container, Transform worldTransform, bool autoExpand, Dictionary<EntityType, Entity> prefabs, Vector3[] spawnPoints, IObjectResolver resolver)
         {
             _teamType = teamType;
             _spawnPoints = spawnPoints;
-            _entityPool = new EntityPool(entityManager, container, worldTransform, autoExpand, prefabs);
+            _entityPool = new EntityPool(entityManager, container, worldTransform, autoExpand, prefabs, resolver);
         }
 
         public void Start()
@@ -47,17 +47,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
 
         public bool TryGetEnemy(EntityType entityType, Vector3 spawnPoint, Quaternion rotation, out Entity entity)
         {
-            entity = default;
-
-            if (!_entityPool.TryGet(entityType, spawnPoint, rotation, out var ent))
-                return false;
-            
-            entity = ent;
-            return true;
-
+            return _entityPool.TryGet(entityType, spawnPoint, rotation, out entity);
         }
-
-        //TODO Add await Delay spawn;
+        
         public bool Spawn(out Entity entity)
         {
             entity = default;

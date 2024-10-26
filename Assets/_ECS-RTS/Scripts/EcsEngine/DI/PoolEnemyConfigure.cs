@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _ECS_RTS.Scripts.EcsEngine.Helpers;
 using _ECS_RTS.Scripts.EcsEngine.Services;
+using _ECS_RTS.Scripts.EcsEngine.Views;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 using VContainer;
@@ -39,6 +40,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.DI
 
         public void Configure(IContainerBuilder builder)
         {
+            builder.Register<CollisionComponentPresenter>(Lifetime.Transient)
+                .AsImplementedInterfaces();
+            
             builder.Register<EnemiesFactory>(Lifetime.Scoped)
                 .WithParameter("teamType", teamType)
                 .WithParameter("container", container)

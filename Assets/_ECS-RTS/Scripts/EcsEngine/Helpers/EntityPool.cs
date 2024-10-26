@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _ECS_RTS.Scripts.EcsEngine.Components;
+using _ECS_RTS.Scripts.EcsEngine.Views;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
+using VContainer;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Helpers
 {
@@ -25,6 +27,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
         private readonly Transform _worldTransform;
         private readonly bool _autoExpand;
         private readonly IReadOnlyDictionary<EntityType, Entity> _prefabs;
+        private readonly IObjectResolver _resolver;
 
         private Queue<Entity> _pool;
         private readonly HashSet<Entity> _actives;
@@ -35,7 +38,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
             Transform container,
             Transform worldTransform,
             bool autoExpand,
-            IReadOnlyDictionary<EntityType, Entity> prefabs)
+            IReadOnlyDictionary<EntityType, Entity> prefabs,
+            IObjectResolver resolver)
         {
             _pool = new Queue<Entity>();
             _actives = new HashSet<Entity>();
@@ -45,6 +49,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
             _worldTransform = worldTransform;
             _autoExpand = autoExpand;
             _prefabs = prefabs;
+            _resolver = resolver;
         }
 
         public void InstantiateDefault(int initialCount)
@@ -57,51 +62,78 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
                 }
             }
         }
-
+        
         private void CreatePool(EntityType prefabKey)
         {
-            if (!_prefabs.TryGetValue(prefabKey, out var prefab))
-            {
-                Debug.LogError($"Prefab with key '{prefabKey}' not found.");
-                return;
-            }
-            
-            var entity = _entityManager.Create(prefab, _container.position, Quaternion.identity, _container);
+            if (!TryGetPrefab(prefabKey, out var prefab)) return;
+
+            var entity = CreateEntity(prefab, _container.position, Quaternion.identity, _container);
             _pool.Enqueue(entity);
             InactiveObject(entity);
         }
-
+        
         public bool TryGet(EntityType prefabKey, Vector3 position, Quaternion rotation, out Entity entity)
         {
             entity = null;
-            
-            if (_pool.TryDequeue(out var obj))
-            {
-                obj.transform.SetParent(_worldTransform);
-                obj.GetData<Position>().Value = position;
-                obj.GetData<Rotation>().Value = rotation;
-                //obj.Initialize(this.world);
-            }
-            else if (_autoExpand)
-            {
-                if (!_prefabs.TryGetValue(prefabKey, out var prefab))
-                {
-                    Debug.LogError($"Prefab with key '{prefabKey}' not found.");
-                    return false;
-                }
 
-                obj = _entityManager.Create(prefab, position, rotation, _worldTransform);
-            }
+            if (!TryDequeueOrCreate(prefabKey, position, rotation, out var obj)) 
+                return false;
 
-            if (obj == null) return false;
-            
+            ActivateEntity(obj, position, rotation);
             _actives.Add(obj);
+
             if (obj.HasData<Inactive>())
                 obj.RemoveData<Inactive>();
-            
+
             entity = obj;
-            
             return true;
+        }
+
+        private bool TryDequeueOrCreate(EntityType prefabKey, Vector3 position, Quaternion rotation, out Entity entity)
+        {
+            // Попробуем взять из пула
+            if (_pool.TryDequeue(out entity))
+                return true;
+
+            // Если авторасширение включено, пробуем создать новый объект
+            if (_autoExpand && TryGetPrefab(prefabKey, out var prefab))
+            {
+                entity = CreateEntity(prefab, position, rotation, _worldTransform);
+                return entity != null;
+            }
+
+            // Не удалось получить или создать объект
+            entity = null;
+            return false;
+        }
+
+        private bool TryGetPrefab(EntityType prefabKey, out Entity prefab)
+        {
+            if (_prefabs.TryGetValue(prefabKey, out prefab)) return true;
+            
+            Debug.LogError($"Prefab with key '{prefabKey}' not found.");
+            return false;
+        }
+
+        private Entity CreateEntity(Entity prefab, Vector3 position, Quaternion rotation, Transform parent)
+        {
+            var entity = _entityManager.Create(prefab, position, rotation, parent);
+
+            //TODO ?? Maybe Form To Something ???
+            var collisionView = entity.GetComponentInChildren<CollisionComponentView>(true);
+            if (collisionView != null)
+            {
+                collisionView.Inject(_resolver.Resolve<ICollisionComponentPresenter>());
+            }
+
+            return entity;
+        }
+
+        private void ActivateEntity(Entity entity, Vector3 position, Quaternion rotation)
+        {
+            entity.transform.SetParent(_worldTransform);
+            entity.GetData<Position>().Value = position;
+            entity.GetData<Rotation>().Value = rotation;
         }
 
         public void InactiveObject(Entity obj)

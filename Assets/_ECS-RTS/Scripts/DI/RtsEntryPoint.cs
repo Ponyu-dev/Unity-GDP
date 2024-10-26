@@ -11,7 +11,7 @@ namespace _ECS_RTS.Scripts.DI
         [BoxGroup("Team Red"), SerializeField] private PoolEnemyConfigure poolEnemyRedConfigure;
         [BoxGroup("Team Blue"), SerializeField] private PoolEnemyConfigure poolEnemyBlueConfigure;
 
-        private EcsSystemConfigure _ecsSystemConfigure = new();
+        private readonly EcsSystemConfigure _ecsSystemConfigure = new();
         
         protected override void Awake()
         {

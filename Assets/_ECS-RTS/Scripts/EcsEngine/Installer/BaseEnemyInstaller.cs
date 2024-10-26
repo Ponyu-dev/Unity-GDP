@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Installer
 {
+    [RequireComponent(typeof(Entity))]
     public abstract class BaseEnemyInstaller : EntityInstaller
     {
         [SerializeField] private LayerMask attackLayerMask;

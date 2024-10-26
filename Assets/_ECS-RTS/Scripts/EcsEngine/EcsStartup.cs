@@ -23,7 +23,6 @@ namespace _ECS_RTS.Scripts.EcsEngine
     internal sealed class EcsStartup : IEcsStartup, IStartable, ITickable, IDisposable
     {
         private readonly EcsWorld _world;
-        private readonly EcsWorld _events;
         private readonly IEcsSystems _systems;
         private readonly EntityManager _entityManager;
         
@@ -40,10 +39,9 @@ namespace _ECS_RTS.Scripts.EcsEngine
             EnemyDestroySystem enemyDestroySystem)
         {
             _entityManager = entityManager;
-            _world = new EcsWorld ();
-            _events = new EcsWorld ();
-            _systems = new EcsSystems (_world);
-            _systems.AddWorld(_events, EcsWorlds.EVENTS);
+            _world = new EcsWorld();
+            _systems = new EcsSystems(_world);
+            _systems.AddWorld(new EcsWorld(), EcsWorlds.EVENTS);
             _systems
                 // Game Logic
                 .Add(firstArmySpawnSystem)
@@ -54,6 +52,8 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 .Add(new FinderAttackTargetSystem())
                 .Add(new AttackRequestSystem())
                 .Add(new AttackSystem())
+                .Add(new CollisionRequestSystem())
+                .Add(new TakeDamageRequestSystem())
                 .Add(new HealthEmptySystem())
                 .Add(new DeathRequestSystem())
                 .Add(enemyDestroySystem)
