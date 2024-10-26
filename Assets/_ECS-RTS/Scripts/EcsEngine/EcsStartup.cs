@@ -77,6 +77,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 .DelHere<IdleEvent>()
                 .DelHere<WalkEvent>()
                 .DelHere<AttackEvent>()
+                .DelHere<TakeDamageEvent>()
                 .DelHere<DeathEvent>();
         }
 

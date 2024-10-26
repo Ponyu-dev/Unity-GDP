@@ -11,6 +11,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
         private readonly EcsWorldInject _worldEvent = EcsWorlds.EVENTS;
         
         private readonly EcsPoolInject<Health> _healthPool;
+        private readonly EcsPoolInject<TakeDamageEvent> _animatorViewPool;
         
         public void Run(IEcsSystems systems)
         {
@@ -30,6 +31,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 
                 ref var health = ref _healthPool.Value.Get(targetId).Value;
                 health = Mathf.Max(0, health - damage);
+
+                _animatorViewPool.Value.Add(targetId) = new TakeDamageEvent();
+                
                 
                 _worldEvent.Value.DelEntity(entity);
             }
