@@ -4,7 +4,6 @@ using _ECS_RTS.Scripts.EcsEngine.Helpers;
 using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using VContainer;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
 {
@@ -14,8 +13,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
         
         private readonly IReadOnlyList<IEnemiesFactory> _enemiesFactories;
         private bool _firstSpawn;
-
-        [Inject]
+        
         public FirstArmySpawnSystem(IReadOnlyList<IEnemiesFactory> enemiesFactories)
         {
             _enemiesFactories = enemiesFactories;

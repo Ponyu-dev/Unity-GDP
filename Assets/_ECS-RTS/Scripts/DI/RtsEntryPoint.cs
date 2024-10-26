@@ -8,6 +8,7 @@ namespace _ECS_RTS.Scripts.DI
 {
     public class RtsEntryPoint : LifetimeScope
     {
+        [BoxGroup("SFX"), SerializeField] private SfxConfigure sfxConfigure;
         [BoxGroup("Team Red"), SerializeField] private PoolEnemyConfigure poolEnemyRedConfigure;
         [BoxGroup("Team Blue"), SerializeField] private PoolEnemyConfigure poolEnemyBlueConfigure;
 
@@ -21,6 +22,8 @@ namespace _ECS_RTS.Scripts.DI
 
         protected override void Configure(IContainerBuilder builder)
         {
+            sfxConfigure.Configure(builder);
+            
             _ecsSystemConfigure.Configure(builder);
             
             poolEnemyRedConfigure.Configure(builder);

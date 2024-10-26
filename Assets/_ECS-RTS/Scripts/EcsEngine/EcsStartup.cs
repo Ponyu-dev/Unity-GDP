@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using _ECS_RTS.Scripts.EcsEngine.Components;
+using _ECS_RTS.Scripts.EcsEngine.Services;
 using _ECS_RTS.Scripts.EcsEngine.Systems;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Animators;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Finder;
@@ -34,9 +36,8 @@ namespace _ECS_RTS.Scripts.EcsEngine
         [Inject]
         public EcsStartup(
             EntityManager entityManager,
-            FirstArmySpawnSystem firstArmySpawnSystem,
-            DelayArmySpawnSystem delayArmySpawnSystem,
-            EnemyDestroySystem enemyDestroySystem)
+            IReadOnlyList<IEnemiesFactory> enemiesFactories,
+            ISfxFactory sfxFactory)
         {
             _entityManager = entityManager;
             _world = new EcsWorld();
@@ -44,8 +45,8 @@ namespace _ECS_RTS.Scripts.EcsEngine
             _systems.AddWorld(new EcsWorld(), EcsWorlds.EVENTS);
             _systems
                 // Game Logic
-                .Add(firstArmySpawnSystem)
-                .Add(delayArmySpawnSystem)
+                .Add(new FirstArmySpawnSystem(enemiesFactories))
+                .Add(new DelayArmySpawnSystem(enemiesFactories))
                 .Add(new FinderNearestTargetSystem())
                 .Add(new MoveTargetRequestSystem())
                 .Add(new MovementSystem())
@@ -53,10 +54,10 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 .Add(new AttackRequestSystem())
                 .Add(new AttackSystem())
                 .Add(new CollisionRequestSystem())
-                .Add(new TakeDamageRequestSystem())
+                .Add(new TakeDamageRequestSystem(sfxFactory))
                 .Add(new HealthEmptySystem())
                 .Add(new DeathRequestSystem())
-                .Add(enemyDestroySystem)
+                .Add(new EnemyDestroySystem(enemiesFactories))
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())

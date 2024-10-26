@@ -4,7 +4,6 @@ using _ECS_RTS.Scripts.EcsEngine.Helpers;
 using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using VContainer;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
 {
@@ -15,7 +14,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
         
         private const float SpawnDelay = 4f;
         
-        [Inject]
         public DelayArmySpawnSystem(IReadOnlyList<IEnemiesFactory> enemiesFactories)
             : base(SpawnDelay)
         {

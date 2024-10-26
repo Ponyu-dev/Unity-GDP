@@ -4,7 +4,6 @@ using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using VContainer;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems
 {
@@ -12,8 +11,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
     {
         private readonly EcsFilterInject<Inc<TeamTag, EntityTag, Inactive, DeathEvent>> _filter;
         private readonly IReadOnlyList<IEnemiesFactory> _enemiesFactories;
-
-        [Inject]
+        
         public EnemyDestroySystem(IReadOnlyList<IEnemiesFactory> enemiesFactories)
         {
             _enemiesFactories = enemiesFactories;

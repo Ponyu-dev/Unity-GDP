@@ -1,4 +1,5 @@
 using _ECS_RTS.Scripts.EcsEngine.Components;
+using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -12,12 +13,19 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
         
         private readonly EcsPoolInject<Health> _healthPool;
         private readonly EcsPoolInject<TakeDamageEvent> _animatorViewPool;
+
+        private readonly ISfxFactory _sfxFactory;
         
+        public TakeDamageRequestSystem(ISfxFactory sfxFactory)
+        {
+            _sfxFactory = sfxFactory;
+        }
+
         public void Run(IEcsSystems systems)
         {
             var targetEntityPool = _filterRequest.Pools.Inc2;
             var damagePool = _filterRequest.Pools.Inc3;
-            var positionPool = _filterRequest.Pools.Inc4;
+            var pointBloodPool = _filterRequest.Pools.Inc4;
             
             foreach (var entity in _filterRequest.Value)
             {
@@ -33,7 +41,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 health = Mathf.Max(0, health - damage);
 
                 _animatorViewPool.Value.Add(targetId) = new TakeDamageEvent();
-                
+
+                var pointBlood = pointBloodPool.Get(entity).Value;
+                _sfxFactory.PlaySfx(SfxType.Blood, pointBlood);                
                 
                 _worldEvent.Value.DelEntity(entity);
             }
