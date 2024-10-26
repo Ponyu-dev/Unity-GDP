@@ -1,5 +1,6 @@
 using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Helpers;
+using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 
@@ -29,6 +30,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
             entity.AddData(new TransformView {Value = transform});
             entity.AddData(new AnimatorView {Value = animator});
             entity.AddData(new Health {Value = health});
+            entity.AddData(new SfxTakeDamage {Value = SfxType.Blood});
             //entity.AddData(new RangeFinder {Value = rangeFinder});
             entity.AddData(new RangeAttacker {Value = rangeAttacker});
             entity.AddData(new AttackLayerMaskView {Value = attackLayerMask});

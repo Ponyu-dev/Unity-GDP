@@ -1,5 +1,6 @@
 using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Helpers;
+using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
             entity.AddData(new TeamTag {Value = teamType});
             entity.AddData(new Health {Value = health});
             entity.AddData(new Position {Value = transform.position});
+            entity.AddData(new SfxTakeDamage { Value = SfxType.BuildingBurning } );
+            entity.AddData(new SfxDestroy { Value = SfxType.BuildingDestroyed } );
         }
 
         protected override void Dispose(Entity entity) { }

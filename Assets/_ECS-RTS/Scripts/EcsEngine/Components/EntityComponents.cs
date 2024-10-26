@@ -1,4 +1,5 @@
 using System;
+using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 
@@ -29,6 +30,18 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     public struct Health
     {
         public int Value;
+    }
+    
+    [Serializable]
+    public struct SfxTakeDamage
+    {
+        public SfxType Value;
+    }
+    
+    [Serializable]
+    public struct SfxDestroy
+    {
+        public SfxType Value;
     }
     
     [Serializable]

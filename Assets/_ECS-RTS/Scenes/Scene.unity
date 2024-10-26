@@ -638,7 +638,7 @@ MonoBehaviour:
       Value: {fileID: 5437282377768545641, guid: 64a79c807463d4dd9939de6d7e62350a,
         type: 3}
     - Key: 2
-      Value: {fileID: 4273517258055814070, guid: a10835d2209fe43ca9b087c53101c53b,
+      Value: {fileID: 5437282377768545641, guid: 64a79c807463d4dd9939de6d7e62350a,
         type: 3}
     spawnPoints:
     - {fileID: 1102707269}
@@ -653,7 +653,7 @@ MonoBehaviour:
       Value: {fileID: 8216383241918748612, guid: 8a1b3f94a28b14461b5d1c6e2a773062,
         type: 3}
     - Key: 2
-      Value: {fileID: 652521778951814711, guid: c598c55e7f6af4566b80420bda81bb04,
+      Value: {fileID: 8216383241918748612, guid: 8a1b3f94a28b14461b5d1c6e2a773062,
         type: 3}
     spawnPoints:
     - {fileID: 36653714}

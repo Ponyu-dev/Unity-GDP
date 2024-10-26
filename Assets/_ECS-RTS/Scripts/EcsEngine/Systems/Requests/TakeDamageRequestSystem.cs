@@ -12,7 +12,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
         private readonly EcsWorldInject _worldEvent = EcsWorlds.EVENTS;
         
         private readonly EcsPoolInject<Health> _healthPool;
-        private readonly EcsPoolInject<TakeDamageEvent> _animatorViewPool;
+        private readonly EcsPoolInject<SfxTakeDamage> _sfxTakeDamagePool;
+        private readonly EcsPoolInject<TakeDamageEvent> _takeDamagePool;
 
         private readonly ISfxFactory _sfxFactory;
         
@@ -31,19 +32,18 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
             {
                 var targetId = targetEntityPool.Get(entity).Value;
                 
+                if (_takeDamagePool.Value.Has(targetId)) continue;
                 if (!_healthPool.Value.Has(targetId)) continue;
 
                 var damage = damagePool.Get(entity).Value;
                 
-                Debug.Log($"[TakeDamageRequestSystem] Run {targetId} damage {damage}");
-                
                 ref var health = ref _healthPool.Value.Get(targetId).Value;
                 health = Mathf.Max(0, health - damage);
 
-                _animatorViewPool.Value.Add(targetId) = new TakeDamageEvent();
+                _takeDamagePool.Value.Add(targetId) = new TakeDamageEvent();
 
                 var pointBlood = pointBloodPool.Get(entity).Value;
-                _sfxFactory.PlaySfx(SfxType.Blood, pointBlood);                
+                _sfxFactory.PlaySfx(_sfxTakeDamagePool.Value.Get(targetId).Value, pointBlood);                
                 
                 _worldEvent.Value.DelEntity(entity);
             }

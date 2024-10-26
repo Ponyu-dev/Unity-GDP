@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamType: 0
-  health: 200
+  health: 100
 --- !u!65 &8734256211448083095
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -63,7 +63,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Services
             particleSystem.Play();
 
             // Используем UniTask для отслеживания завершения
-            HandleParticleCompletionAsync(particleSystem, sfx, sfxType).Forget();
+            if (sfxType == SfxType.Blood || sfxType == SfxType.BuildingDestroyed) 
+                HandleParticleCompletionAsync(particleSystem, sfx, sfxType).Forget();
         }
         
         private async UniTaskVoid HandleParticleCompletionAsync(ParticleSystem particleSystem, GameObject sfx, SfxType sfxType)
