@@ -74,6 +74,7 @@ MonoBehaviour:
   health: 5
   moveSpeed: 5
   rangeAttacker: 20
+  delayAttacker: 2
   animator: {fileID: 1870072544967355838}
   firePoint: {fileID: 7694971974825244630}
 --- !u!136 &7239908113663366143

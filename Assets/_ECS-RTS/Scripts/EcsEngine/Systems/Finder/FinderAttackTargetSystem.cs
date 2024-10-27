@@ -8,7 +8,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
 {
     public class FinderAttackTargetSystem : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<AttackLayerMaskView, Position, RangeAttacker, EntityTag, MoveTag>, Exc<Inactive>> _filterArmy;
+        private readonly EcsFilterInject<Inc<AttackLayerMaskView, Position, RangeAttacker, EntityTag>, Exc<Inactive>> _filterArmy;
         private readonly EcsFilterInject<Inc<AttackTargetRequest, AttackTargetEntity>, Exc<Inactive>> _filterAttack;
         
         public void Run(IEcsSystems systems)

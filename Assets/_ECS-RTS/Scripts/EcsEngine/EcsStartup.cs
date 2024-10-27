@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
-using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Services;
 using _ECS_RTS.Scripts.EcsEngine.Systems;
-using _ECS_RTS.Scripts.EcsEngine.Systems.Animators;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Finder;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Requests;
 using _ECS_RTS.Scripts.EcsEngine.Systems.Spawns;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Entities;
-using Leopotam.EcsLite.ExtendedSystems;
 using Leopotam.EcsLite.Helpers;
 using VContainer;
 using VContainer.Unity;
@@ -55,7 +52,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 .Add(new FinderAttackTargetSystem())
                 .Add(new AttackRequestSystem())
                 .Add(new SpawnArrowSystem(arrowFactory))
-                .Add(new AttackSystem())
+                .Add(new AttackEventSystem())
                 .Add(new CollisionRequestSystem())
                 .Add(new TakeDamageRequestSystem(sfxFactory))
                 .Add(new HealthEmptySystem())
@@ -64,25 +61,14 @@ namespace _ECS_RTS.Scripts.EcsEngine
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())
-                .Add(new AnimatorIdleListenerSystem())
-                .Add(new AnimatorWalkListenerSystem())
-                .Add(new AnimatorRunListenerSystem())
-                .Add(new AnimatorAttackListenerSystem())
-                .Add(new AnimatorTakeDamageListenerSystem())
-                .Add(new AnimatorDeathListenerSystem())
+                .Add(new AnimatorListenerSystem())
                 //Editor:
 #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(EcsWorlds.EVENTS))
-
 #endif
                 //Clean Up:
-                .Add(new OneFrameEventSystem())
-                .DelHere<IdleEvent>()
-                .DelHere<WalkEvent>()
-                .DelHere<AttackEvent>()
-                .DelHere<TakeDamageEvent>()
-                .DelHere<DeathEvent>();
+                .Add(new OneFrameEventSystem());
         }
 
 

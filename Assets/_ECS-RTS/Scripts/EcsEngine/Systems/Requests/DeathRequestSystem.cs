@@ -7,10 +7,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
 {
     internal sealed class DeathRequestSystem : IEcsRunSystem
     {
+        private readonly EcsFilterInject<Inc<TargetEntity, DestroyEvent>> _filterEvent = EcsWorlds.EVENTS;
+        private readonly EcsWorldInject _ecsWorldEvent = EcsWorlds.EVENTS;
+        
         private readonly EcsFilterInject<Inc<DeathRequest>, Exc<Inactive>> _filter;
-
         private readonly EcsPoolInject<Inactive> _inactivePool;
-        private readonly EcsPoolInject<DeathEvent> _eventPool;
 
         private readonly EcsFilterInject<Inc<MoveTag, MoveTarget, EntityTag>, Exc<Inactive>> _filterMoveTags;
         private readonly EcsFilterInject<Inc<AttackTag, AttackTargetEntity, EntityTag>, Exc<Inactive>> _filterAttackTags;
@@ -19,22 +20,25 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
 
         public void Run(IEcsSystems systems)
         {
-            var filter = _filter.Value;
-            var inactivePool = _inactivePool.Value;
-            var eventPool = _eventPool.Value;
-            var firstTargetSelectedPool = _firstTargetSelectedPool.Value;
+            var filterPool = _filter.Pools.Inc1;
+
+            var targetEntityPool = _filterEvent.Pools.Inc1;
+            var destroyEventPool = _filterEvent.Pools.Inc2;
             
-            foreach (var entity in filter)
+            foreach (var entity in _filter.Value)
             {
-                _filter.Pools.Inc1.Del(entity);
+                filterPool.Del(entity);
                 
                 Debug.Log($"[DeathRequestSystem] {entity} DeathEvent");
 
-                eventPool.Add(entity) = new DeathEvent();
-                inactivePool.Add(entity) = new Inactive();
+                var eventId = _ecsWorldEvent.Value.NewEntity();
+                targetEntityPool.Add(eventId) = new TargetEntity { Value = entity };
+                destroyEventPool.Add(eventId) = new DestroyEvent();
+                
+                _inactivePool.Value.Add(entity) = new Inactive();
 
-                ProcessTags(entity, _filterMoveTags, firstTargetSelectedPool);
-                ProcessTags(entity, _filterAttackTags, firstTargetSelectedPool);
+                ProcessTags(entity, _filterMoveTags, _firstTargetSelectedPool.Value);
+                ProcessTags(entity, _filterAttackTags, _firstTargetSelectedPool.Value);
             }
         }
 

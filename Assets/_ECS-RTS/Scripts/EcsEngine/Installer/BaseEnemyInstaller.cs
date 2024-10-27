@@ -17,6 +17,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
         [SerializeField] private float moveSpeed = 5.0f;
         //[SerializeField] private float rangeFinder = 8.0f;
         [SerializeField] private float rangeAttacker = 4.0f;
+        [SerializeField] private float delayAttacker = 2.0f;
         [SerializeField] private Animator animator;
         [SerializeField] private Transform firePoint;
         
@@ -36,6 +37,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
             entity.AddData(new RangeAttacker {Value = rangeAttacker});
             entity.AddData(new AttackLayerMaskView {Value = attackLayerMask});
             entity.AddData(new DamageableTag());
+            entity.AddData(new DelayAttack { Value = delayAttacker });
+            entity.AddData(new LastRunTimeAttack { Value = 0 });
             
             entity.AddData(new LayerMaskView {Value = layerMask});
 

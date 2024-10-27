@@ -55,4 +55,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     {
         public int Value { get; set; } 
     }
+    
+    [Serializable]
+    public struct AnimatorTrigger
+    {
+        public int Value;
+    }
 }

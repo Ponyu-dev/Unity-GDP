@@ -13,4 +13,16 @@ namespace _ECS_RTS.Scripts.EcsEngine.Components
     {
         public int Value;
     }
+
+    [Serializable]
+    public struct DelayAttack
+    {
+        public float Value;
+    }
+    
+    [Serializable]
+    public struct LastRunTimeAttack
+    {
+        public float Value;
+    }
 }

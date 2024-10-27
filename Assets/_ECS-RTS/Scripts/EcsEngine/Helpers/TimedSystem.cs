@@ -27,7 +27,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Helpers
 
             Execute(systems);
         }
-
+        
         protected abstract void Execute(IEcsSystems systems);
     }
 }

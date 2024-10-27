@@ -13,8 +13,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
         private readonly EcsFilterInject<Inc<FinderNearestTargetRequest>, Exc<Inactive>> _filter;
         private readonly EcsFilterInject<Inc<AttackLayerMaskView, Position, EntityTag>, Exc<Inactive>> _filterArmy;
         private readonly EcsFilterInject<Inc<MoveTarget, MoveTag>, Exc<Inactive>> _filterMove;
-        
-        private readonly EcsPoolInject<WalkEvent> _eventPool;
+
+        private static readonly int WalkAnimatorTrigger = Animator.StringToHash("Walk");
+        private readonly EcsPoolInject<AnimatorView> _animatorViewPool;
+        private readonly EcsFilterInject<Inc<AnimatorView, AnimatorTrigger, AnimEvent>> _filterEvent = EcsWorlds.EVENTS;
+        private readonly EcsWorldInject _ecsWorldEvent = EcsWorlds.EVENTS;
         
         public void Run(IEcsSystems systems)
         {
@@ -23,7 +26,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
             
             var moveTargetPool = _filterMove.Pools.Inc1;
             var moveTagPool = _filterMove.Pools.Inc2;
-
+            
+            var animatorViewPool = _filterEvent.Pools.Inc1;
+            var animatorTriggerPool = _filterEvent.Pools.Inc2;
+            var animEventPool = _filterEvent.Pools.Inc3;
+            
             foreach (var entity in _filter.Value)
             {
                 _filter.Pools.Inc1.Del(entity);
@@ -37,7 +44,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
                 moveTargetPool.Add(entity) = new MoveTarget { Value = nearestEnemy };
                 moveTagPool.Add(entity) = new MoveTag();
 
-                _eventPool.Value.Add(entity) = new WalkEvent();
+                var eventAnim = _ecsWorldEvent.Value.NewEntity();
+                var animatorView = _animatorViewPool.Value.Get(entity);
+                animatorViewPool.Add(eventAnim) = animatorView;
+                animatorTriggerPool.Add(eventAnim) = new AnimatorTrigger { Value = WalkAnimatorTrigger};
+                animEventPool.Add(eventAnim) = new AnimEvent();
             }
         }
         
