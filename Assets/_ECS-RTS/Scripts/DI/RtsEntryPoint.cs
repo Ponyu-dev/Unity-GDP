@@ -1,4 +1,5 @@
 using _ECS_RTS.Scripts.EcsEngine.DI;
+using _ECS_RTS.Scripts.EcsEngine.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
@@ -8,9 +9,10 @@ namespace _ECS_RTS.Scripts.DI
 {
     public class RtsEntryPoint : LifetimeScope
     {
-        [BoxGroup("SFX"), SerializeField] private SfxConfigure sfxConfigure;
-        [BoxGroup("Team Red"), SerializeField] private PoolEnemyConfigure poolEnemyRedConfigure;
-        [BoxGroup("Team Blue"), SerializeField] private PoolEnemyConfigure poolEnemyBlueConfigure;
+        [BoxGroup("SFX Pool"), SerializeField] private SfxConfigure sfxConfigure;
+        [BoxGroup("Arrow Pool"), SerializeField] private ArrowPoolConfigure arrowPoolConfigure;
+        [BoxGroup("Team Red Pool"), SerializeField] private PoolEnemyConfigure poolEnemyRedConfigure;
+        [BoxGroup("Team Blue Pool"), SerializeField] private PoolEnemyConfigure poolEnemyBlueConfigure;
 
         private readonly EcsSystemConfigure _ecsSystemConfigure = new();
         
@@ -22,10 +24,14 @@ namespace _ECS_RTS.Scripts.DI
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.Register<CollisionComponentPresenter>(Lifetime.Transient)
+                .AsImplementedInterfaces();
+            
             sfxConfigure.Configure(builder);
+            arrowPoolConfigure.Configure(builder);
             
             _ecsSystemConfigure.Configure(builder);
-            
+
             poolEnemyRedConfigure.Configure(builder);
             poolEnemyBlueConfigure.Configure(builder);
         }

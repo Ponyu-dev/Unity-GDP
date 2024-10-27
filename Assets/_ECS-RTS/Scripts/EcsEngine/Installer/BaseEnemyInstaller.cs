@@ -9,6 +9,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
     [RequireComponent(typeof(Entity))]
     public abstract class BaseEnemyInstaller : EntityInstaller
     {
+        [SerializeField] private LayerMask layerMask;
         [SerializeField] private LayerMask attackLayerMask;
         [SerializeField] private TeamType teamType;
         [SerializeField] private EntityType entityType;
@@ -17,6 +18,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
         //[SerializeField] private float rangeFinder = 8.0f;
         [SerializeField] private float rangeAttacker = 4.0f;
         [SerializeField] private Animator animator;
+        [SerializeField] private Transform firePoint;
         
         protected override void Install(Entity entity)
         {
@@ -31,10 +33,14 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
             entity.AddData(new AnimatorView {Value = animator});
             entity.AddData(new Health {Value = health});
             entity.AddData(new SfxTakeDamage {Value = SfxType.Blood});
-            //entity.AddData(new RangeFinder {Value = rangeFinder});
             entity.AddData(new RangeAttacker {Value = rangeAttacker});
             entity.AddData(new AttackLayerMaskView {Value = attackLayerMask});
             entity.AddData(new DamageableTag());
+            
+            entity.AddData(new LayerMaskView {Value = layerMask});
+
+            if (entityType == EntityType.Archer) 
+                entity.AddData(new FirePointView { Value = firePoint });
         }
 
         protected override void Dispose(Entity entity) { }

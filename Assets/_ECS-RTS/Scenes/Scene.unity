@@ -164,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 175726415}
   m_Layer: 0
-  m_Name: <Archers>
+  m_Name: <Arrows>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -628,6 +628,11 @@ MonoBehaviour:
       Value: {fileID: 127166, guid: 4cc2bcf001dff1841ab60befad39294b, type: 3}
     - Key: 3
       Value: {fileID: 160018, guid: 43cc1a347ac43cd498e91db9fb766337, type: 3}
+  arrowPoolConfigure:
+    container: {fileID: 175726415}
+    worldTransform: {fileID: 800337253}
+    autoExpand: 1
+    arrow: {fileID: 6643306148438950564, guid: 61ccefb95fa264b2a9bdac208b0a818a, type: 3}
   poolEnemyRedConfigure:
     teamType: 1
     container: {fileID: 793594979}

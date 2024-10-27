@@ -1,4 +1,5 @@
 using _ECS_RTS.Scripts.EcsEngine.Components;
+using _ECS_RTS.Scripts.EcsEngine.Helpers;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
         
         private readonly EcsPoolInject<AttackTag> _poolAttackTag;
         private readonly EcsPoolInject<IdleEvent> _eventPool;
+        private readonly EcsPoolInject<EntityTag> _entityPool;
         
         public void Run(IEcsSystems systems)
         {
@@ -39,15 +41,34 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 moveDirection.Value = Vector3.zero.normalized;
 
                 var position = positionPool.Get(entity).Value;
-                var positionEnemy = positionPool.Get(attackTargetEntityPool.Get(entity).Value).Value;
+                var idTarget = attackTargetEntityPool.Get(entity).Value;
+                var positionEnemy = positionPool.Get(idTarget).Value;
                 var directionToEnemy = (positionEnemy - position).normalized;
                 
                 ref var rotationEntity = ref rotationPool.Get(entity);
                 rotationEntity.Value = Quaternion.LookRotation(directionToEnemy);
 
-                _eventPool.Value.Add(entity) = new IdleEvent();
+                if (_entityPool.Value.Get(entity).Value == EntityType.Archer)
+                    AddArrowEvent(entity, idTarget, directionToEnemy);
+                
+                //_eventPool.Value.Add(entity) = new IdleEvent();
                 _poolAttackTag.Value.Add(entity) = new AttackTag();
             }
+        }
+
+        private readonly EcsWorldInject _eventWorld = EcsWorlds.EVENTS;
+        private readonly EcsPoolInject<ArrowRequest> _arrowRequestPool = EcsWorlds.EVENTS;
+        private readonly EcsPoolInject<SourceEntity> _sourceEntityPool = EcsWorlds.EVENTS;
+        private readonly EcsPoolInject<TargetEntity> _targetEntityPool = EcsWorlds.EVENTS;
+        private readonly EcsPoolInject<Position> _positionPool = EcsWorlds.EVENTS;
+        
+        private void AddArrowEvent(int idSource, int idTarget, Vector3 directionToEnemy)
+        {
+            var arrow = _eventWorld.Value.NewEntity();
+            _arrowRequestPool.Value.Add(arrow) = new ArrowRequest();
+            _sourceEntityPool.Value.Add(arrow) = new SourceEntity { Value = idSource };
+            _targetEntityPool.Value.Add(arrow) = new TargetEntity { Value = idTarget };
+            _positionPool.Value.Add(arrow) = new Position { Value = directionToEnemy };
         }
     }
 }

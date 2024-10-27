@@ -18,8 +18,11 @@ namespace _ECS_RTS.Scripts.EcsEngine.Installer
             entity.AddData(new TeamTag {Value = teamType});
             entity.AddData(new Health {Value = health});
             entity.AddData(new Position {Value = transform.position});
+            entity.AddData(new DamageableTag());
             entity.AddData(new SfxTakeDamage { Value = SfxType.BuildingBurning } );
             entity.AddData(new SfxDestroy { Value = SfxType.BuildingDestroyed } );
+            
+            entity.AddData(new LayerMaskView {Value = gameObject.layer});
         }
 
         protected override void Dispose(Entity entity) { }

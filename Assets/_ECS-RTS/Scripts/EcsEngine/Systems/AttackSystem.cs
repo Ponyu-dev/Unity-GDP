@@ -8,7 +8,6 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
     internal sealed class AttackSystem : TimedSystem
     {
         private readonly EcsFilterInject<Inc<AttackTag, AttackTargetEntity>, Exc<Inactive>> _filterAttack;
-        private readonly EcsFilterInject<Inc<Position, EntityTag>, Exc<Inactive>> _filterEnemy;
         
         private readonly EcsPoolInject<AttackEvent> _eventPool;
         

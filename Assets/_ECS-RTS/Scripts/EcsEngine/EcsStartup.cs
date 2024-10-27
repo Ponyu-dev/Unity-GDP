@@ -37,6 +37,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
         public EcsStartup(
             EntityManager entityManager,
             IReadOnlyList<IEnemiesFactory> enemiesFactories,
+            IArrowFactory arrowFactory,
             ISfxFactory sfxFactory)
         {
             _entityManager = entityManager;
@@ -53,6 +54,7 @@ namespace _ECS_RTS.Scripts.EcsEngine
                 .Add(new MovementSystem())
                 .Add(new FinderAttackTargetSystem())
                 .Add(new AttackRequestSystem())
+                .Add(new SpawnArrowSystem(arrowFactory))
                 .Add(new AttackSystem())
                 .Add(new CollisionRequestSystem())
                 .Add(new TakeDamageRequestSystem(sfxFactory))
