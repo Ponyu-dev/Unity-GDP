@@ -1,85 +1,132 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Helpers;
+using _ECS_RTS.Scripts.EcsEngine.Helpers.Pools;
 using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Random = System.Random;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Services
 {
     public interface IEnemiesFactory
     {
         public TeamType GetTeamType();
-        void InactiveObject(int id);
-        public bool TryGetEnemy(EntityType entityType, Vector3 spawnPoint, Quaternion rotation, out Entity entity);
-        public bool Spawn(out Entity entity);
-        public bool FirstSpawn(EntityType entityType, int positionIndex, out Entity entity);
+        public void InactiveObject(EntityType entityType, int id);
+        public bool Spawn(EntityType entityType, int positionIndex, out Entity entity);
     }
     
     public class EnemiesFactory : IEnemiesFactory, IStartable, IDisposable
     {
+        private static readonly EntityType[] _entityTypes = 
+            Enum.GetValues(typeof(EntityType)).Cast<EntityType>().Where(e => e != EntityType.None).ToArray();
+
         //How many enemies will be in the pool at startup.
         private const int DEFAULT_POOL_SIZE_ARMY = 5;
         //How many MAX enemies will be in the Active at game cycle.
-        private const int MAX_ACTIVE_SIZE_ARMY = 2;
+        private const int MAX_ACTIVE_SIZE_ARMY = 3;
         
         private readonly TeamType _teamType;
         public TeamType GetTeamType() => _teamType;
-
-        private readonly IEntityPool _entityPool;
+        
         private readonly Vector3[] _spawnPoints;
+        
+        private readonly Dictionary<EntityType, PoolEntity> _poolDictionary = new();
 
         [Inject]
-        public EnemiesFactory(TeamType teamType, EntityManager entityManager, Transform container, Transform worldTransform, bool autoExpand, Dictionary<EntityType, Entity> prefabs, Vector3[] spawnPoints, IObjectResolver resolver)
+        public EnemiesFactory(
+            TeamType teamType,
+            Transform container,
+            Transform worldTransform,
+            bool autoExpand,
+            Dictionary<EntityType, Entity> army,
+            Vector3[] spawnPoints,
+            EntityManager entityManager,
+            IObjectResolver resolver)
         {
             _teamType = teamType;
             _spawnPoints = spawnPoints;
-            _entityPool = new EntityPool(entityManager, container, worldTransform, autoExpand, prefabs, resolver);
+            //_resolver = resolver;
+            
+            foreach (var prefab in army)
+            {
+                var pool = new PoolEntity(entityManager, resolver, prefab.Value, container, worldTransform, autoExpand);
+                _poolDictionary.Add(prefab.Key, pool);
+            }
         }
 
         public void Start()
         {
-            _entityPool.InstantiateDefault(DEFAULT_POOL_SIZE_ARMY);
+            for (var i = 0; i < DEFAULT_POOL_SIZE_ARMY; i++)
+            {
+                foreach (var pool in _poolDictionary.Values)
+                {
+                    pool.CreateObject(isEnqueue: true);
+                }
+            }
         }
 
-        public bool TryGetEnemy(EntityType entityType, Vector3 spawnPoint, Quaternion rotation, out Entity entity)
+        private bool IsMaxActiveSizeArmy()
         {
-            return _entityPool.TryGet(entityType, spawnPoint, rotation, out entity);
+            var countAll = _poolDictionary.Values.Sum(pool => pool.ActivesCount());
+            Debug.Log($"Spawn ActivesCount1 {countAll}");
+            return countAll >= MAX_ACTIVE_SIZE_ARMY;
         }
-        
-        public bool Spawn(out Entity entity)
+
+        public bool Spawn(EntityType entityType, int positionIndex, out Entity entity)
         {
             entity = default;
             
-            if (_entityPool.GetActivesCount() >= MAX_ACTIVE_SIZE_ARMY)
-                return false;
-
-            if (!TryGetEnemy(EntityType.Archer, _spawnPoints[0], Quaternion.LookRotation(Vector3.forward), out var it))
-                return false;
-
-            entity = it;
-            entity.GetData<Health>().Value = 5;
-
+            if (entityType == EntityType.None)
+                entityType = _entityTypes[new Random().Next(0, _entityTypes.Length)];
+            
+            if (positionIndex == -1)
+                positionIndex = new Random().Next(0, 2);
+            
+            if (!_poolDictionary.TryGetValue(entityType, out var pool)) return false;
+            if (IsMaxActiveSizeArmy()) return false;
+            if (!pool.TryGet(out var obj)) return false;
+            
+            pool.ActiveObject(obj.gameObject);
+            entity = obj;
+            
+            ActivateEntity(entity, _spawnPoints[positionIndex], Quaternion.LookRotation(Vector3.forward));
+            
+            Debug.Log($"[EnemiesFactory] Spawn {_teamType.ToString()} {entityType.ToString()}");
             return true;
         }
         
-        public bool FirstSpawn(EntityType entityType, int positionIndex, out Entity entity)
+        private void ActivateEntity(Entity entity, Vector3 position, Quaternion rotation)
         {
-            return TryGetEnemy(entityType, _spawnPoints[positionIndex], Quaternion.LookRotation(Vector3.forward), out entity);
+            entity.transform.position = position;
+            
+            entity.GetData<Health>().Value = 20;
+            entity.GetData<Position>().Value = position;
+            entity.GetData<Rotation>().Value = rotation;
+            
+            if (entity.HasData<Inactive>())
+                entity.RemoveData<Inactive>();
         }
 
-        public async void InactiveObject(int id)
+        public async void InactiveObject(EntityType entityType, int id)
         {
             await UniTask.Delay(2000);
-            _entityPool.InactiveObject(id);
+            if (_poolDictionary.TryGetValue(entityType, out var pool))
+            {
+                pool.InactiveObject(id);
+            }
         }
 
         public void Dispose()
         {
-            _entityPool.ClearPool();
+            foreach (var pool in _poolDictionary.Values)
+            {
+                pool.ClearPool();
+            }
         }
     }
 }

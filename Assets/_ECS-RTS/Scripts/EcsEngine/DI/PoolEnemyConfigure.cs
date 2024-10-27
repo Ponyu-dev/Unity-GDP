@@ -23,14 +23,15 @@ namespace _ECS_RTS.Scripts.EcsEngine.DI
         public void Configure(IContainerBuilder builder)
         {
             builder.Register<CollisionComponentPresenter>(Lifetime.Transient)
-                .AsImplementedInterfaces();
-            
+                .AsImplementedInterfaces()
+                .AsSelf();
+
             builder.Register<EnemiesFactory>(Lifetime.Scoped)
                 .WithParameter("teamType", teamType)
                 .WithParameter("container", container)
                 .WithParameter("worldTransform", worldTransform)
                 .WithParameter("autoExpand", autoExpand)
-                .WithParameter("prefabs", CustomTypePair<EntityType, Entity>.ConvertPrefabs(prefabsList))
+                .WithParameter("army", CustomTypePair<EntityType, Entity>.ConvertPrefabs(prefabsList))
                 .WithParameter("spawnPoints", spawnPoints.Select(t => t.position).ToArray())
                 .AsImplementedInterfaces()
                 .AsSelf();

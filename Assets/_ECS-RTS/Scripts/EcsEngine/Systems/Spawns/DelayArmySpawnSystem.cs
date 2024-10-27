@@ -24,7 +24,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
         {
             foreach (var factory in _enemiesFactories)
             {
-                if (factory.Spawn(out var entity))
+                if (factory.Spawn(EntityType.None, -1, out var entity))
                     _firstTargetSelectedPool.Value.Add(entity.Id) = new FinderNearestTargetRequest();
             }
         }

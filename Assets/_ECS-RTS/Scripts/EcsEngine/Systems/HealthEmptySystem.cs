@@ -1,6 +1,7 @@
 using _ECS_RTS.Scripts.EcsEngine.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems
 {
@@ -18,6 +19,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
 
                 if (health.Value > 0) continue;
                 
+                Debug.Log($"[HealthEmptySystem] {entity} DeathRequest");
                 _deathPool.Value.Add(entity) = new DeathRequest();
             }
         }

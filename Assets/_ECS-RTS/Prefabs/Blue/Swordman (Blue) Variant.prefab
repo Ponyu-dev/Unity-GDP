@@ -87,6 +87,11 @@ PrefabInstance:
       propertyPath: detectionRadius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6253172247791348470, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
+        type: 3}
+      propertyPath: targetLayer.m_Bits
+      value: 262144
+      objectReference: {fileID: 0}
     - target: {fileID: 7578157547585975226, guid: 9efe60d89fb4b4fa882e16b1af2b6b1a,
         type: 3}
       propertyPath: m_Layer

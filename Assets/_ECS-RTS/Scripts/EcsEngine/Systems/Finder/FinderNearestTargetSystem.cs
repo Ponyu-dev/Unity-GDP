@@ -8,7 +8,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
 {
     public class FinderNearestTargetSystem : IEcsRunSystem
     {
-        private const float RANGE_FINDER = 40;
+        private const float RANGE_FINDER = 50;
         
         private readonly EcsFilterInject<Inc<FinderNearestTargetRequest>, Exc<Inactive>> _filter;
         private readonly EcsFilterInject<Inc<AttackLayerMaskView, Position, EntityTag>, Exc<Inactive>> _filterArmy;

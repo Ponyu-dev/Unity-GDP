@@ -41,8 +41,9 @@ namespace _ECS_RTS.Scripts.EcsEngine
         {
             _entityManager = entityManager;
             _world = new EcsWorld();
+            var eventWorld = new EcsWorld();
             _systems = new EcsSystems(_world);
-            _systems.AddWorld(new EcsWorld(), EcsWorlds.EVENTS);
+            _systems.AddWorld(eventWorld, EcsWorlds.EVENTS);
             _systems
                 // Game Logic
                 .Add(new FirstArmySpawnSystem(enemiesFactories))

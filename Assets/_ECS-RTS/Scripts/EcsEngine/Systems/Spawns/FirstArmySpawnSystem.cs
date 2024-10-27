@@ -26,10 +26,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Spawns
             _firstSpawn = true;
             foreach (var factory in _enemiesFactories)
             {
-                if (factory.FirstSpawn(EntityType.Swordsman, 0, out var entitySwordsman))
+                if (factory.Spawn(EntityType.Swordsman, 0, out var entitySwordsman))
                     _firstTargetSelectedPool.Value.Add(entitySwordsman.Id) = new FinderNearestTargetRequest();
 
-                if (factory.FirstSpawn(EntityType.Archer, 1, out var entityArcher))
+                if (factory.Spawn(EntityType.Archer, 1, out var entityArcher))
                     _firstTargetSelectedPool.Value.Add(entityArcher.Id) = new FinderNearestTargetRequest();
             }
         }

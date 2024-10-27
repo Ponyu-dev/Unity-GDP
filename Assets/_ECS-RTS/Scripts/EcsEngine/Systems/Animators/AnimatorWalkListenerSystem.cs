@@ -9,7 +9,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
     {
         private static readonly int WalkAnimatorTrigger = Animator.StringToHash("Walk");
 
-        private readonly EcsFilterInject<Inc<AnimatorView, WalkEvent>> _filter;
+        private readonly EcsFilterInject<Inc<AnimatorView, WalkEvent>, Exc<Inactive>> _filter;
         
         public void Run(IEcsSystems systems)
         {

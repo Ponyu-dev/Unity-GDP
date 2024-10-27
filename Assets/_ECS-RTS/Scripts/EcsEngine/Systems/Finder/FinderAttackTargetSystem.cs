@@ -24,7 +24,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
                 var rangeAttack = rangeAttackerPool.Get(entity).Value;
                 
                 if (!IsAttackDistance(position, rangeAttack, layerMask, out var enemyId)) continue;
-
+                
                 _filterAttack.Pools.Inc1.Add(entity) = new AttackTargetRequest();
                 _filterAttack.Pools.Inc2.Add(entity) = new AttackTargetEntity { Value = enemyId};
             }
@@ -43,6 +43,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Finder
                     continue;
                 
                 if (entity.HasData<Inactive>()) continue;
+                
+                var distance = Vector3.Distance(currentPosition.normalized, collider.transform.position.normalized);
+                if (distance > detectionRadius) continue;
                 
                 enemyId = entity.Id;
                 break;

@@ -4,6 +4,7 @@ using _ECS_RTS.Scripts.EcsEngine.Components;
 using _ECS_RTS.Scripts.EcsEngine.Services;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems
 {
@@ -20,11 +21,14 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems
         public void Run(IEcsSystems systems)
         {
             var teamTagPool = _filter.Pools.Inc1;
+            var entityTagPool = _filter.Pools.Inc2;
             
             foreach (var @event in _filter.Value)
             {
                 var team = teamTagPool.Get(@event).Value;
-                _enemiesFactories.First(it => it.GetTeamType() == team).InactiveObject(@event);
+                var entityType = entityTagPool.Get(@event).Value;
+                Debug.Log($"[EnemyDestroySystem] {@event} DeathEvent");
+                _enemiesFactories.First(it => it.GetTeamType() == team).InactiveObject(entityType, @event);
             }
         }
     }

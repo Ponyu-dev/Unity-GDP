@@ -16,6 +16,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
         private readonly EcsWorldInject _worldEvent = EcsWorlds.EVENTS;
         
         private readonly EcsPoolInject<DamageableTag> _damageableTagPool;
+        private readonly EcsPoolInject<Inactive> _inactivePool;
+        private readonly EcsPoolInject<OneFrame> _oneFramePool;
         
         public void Run(IEcsSystems systems)
         {
@@ -29,6 +31,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 collisionEnterRequestPool.Del(id);
                 
                 var targetId = targetEntityPool.Get(id);
+                
+                if (_inactivePool.Value.Has(targetId.Value)) continue;
+                
                 var damage = damagePool.Get(id);
                 
                 if (!_damageableTagPool.Value.Has(targetId.Value)) continue;

@@ -9,8 +9,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
     {
         private readonly EcsFilterInject<Inc<AttackTargetRequest, AttackTargetEntity>, Exc<Inactive>> _filterAttackRequest;
         private readonly EcsFilterInject<Inc<MoveTag, MoveTarget, MoveDirection, Position, Rotation>, Exc<Inactive>> _filterMove;
-        private readonly EcsPoolInject<AttackTag> _poolAttackTag;
         
+        private readonly EcsPoolInject<AttackTag> _poolAttackTag;
         private readonly EcsPoolInject<IdleEvent> _eventPool;
         
         public void Run(IEcsSystems systems)
@@ -27,6 +27,8 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
             foreach (var entity in _filterAttackRequest.Value)
             {
                 attackTargetRequestPool.Del(entity);
+                
+                Debug.Log($"[AttackRequestSystem] Run {entity}");
                 
                 if (moveTagPool.Has(entity))
                     moveTagPool.Del(entity);

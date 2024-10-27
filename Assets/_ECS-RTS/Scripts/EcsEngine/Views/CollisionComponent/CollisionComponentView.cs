@@ -1,5 +1,6 @@
 using Leopotam.EcsLite.Entities;
 using UnityEngine;
+using VContainer;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Views
 {
@@ -8,11 +9,12 @@ namespace _ECS_RTS.Scripts.EcsEngine.Views
         [SerializeField] private int damage; 
         private ICollisionComponentPresenter _presenter;
         
+        [Inject]
         public void Inject(ICollisionComponentPresenter presenter)
         {
             _presenter = presenter;
         }
-
+        
         private void OnCollisionEnter(Collision collision)
         {
             if (_presenter == null) return;

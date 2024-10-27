@@ -30,6 +30,12 @@ namespace Leopotam.EcsLite.Entities
             return entity;
         }
 
+        public void AddEntity(Entity entity)
+        {
+            if (entities.TryAdd(entity.Id, entity)) 
+                entity.Initialize(this.world);
+        }
+
         public void Destroy(int id)
         {
             if (this.entities.Remove(id, out Entity entity))

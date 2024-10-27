@@ -9,7 +9,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
     {
         private static readonly int TakeDamageAnimatorTrigger = Animator.StringToHash("TakeDamage");
 
-        private readonly EcsFilterInject<Inc<AnimatorView, TakeDamageEvent>> _filter;
+        private readonly EcsFilterInject<Inc<AnimatorView, TakeDamageEvent>, Exc<Inactive>> _filter;
 
         public void Run(IEcsSystems systems)
         {

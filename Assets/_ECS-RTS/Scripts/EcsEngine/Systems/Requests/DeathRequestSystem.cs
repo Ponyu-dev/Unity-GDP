@@ -1,6 +1,7 @@
 using _ECS_RTS.Scripts.EcsEngine.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
 {
@@ -22,16 +23,16 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
             var inactivePool = _inactivePool.Value;
             var eventPool = _eventPool.Value;
             var firstTargetSelectedPool = _firstTargetSelectedPool.Value;
-
-            // Обработка сущностей в основном фильтре
+            
             foreach (var entity in filter)
             {
                 _filter.Pools.Inc1.Del(entity);
+                
+                Debug.Log($"[DeathRequestSystem] {entity} DeathEvent");
 
-                inactivePool.Add(entity) = new Inactive();
                 eventPool.Add(entity) = new DeathEvent();
+                inactivePool.Add(entity) = new Inactive();
 
-                // Обработка тегов
                 ProcessTags(entity, _filterMoveTags, firstTargetSelectedPool);
                 ProcessTags(entity, _filterAttackTags, firstTargetSelectedPool);
             }
@@ -46,11 +47,9 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
 
             foreach (var entityTag in filter.Value)
             {
-                // Проверяем, есть ли у сущности компонент TTag и соответствующий TTarget
                 if (!tagPool.Has(entityTag) || targetPool.Get(entityTag).Value != entity)
                     continue;
-
-                // Удаляем теги и цели, добавляем новый запрос
+                
                 tagPool.Del(entityTag);
                 targetPool.Del(entityTag);
                 requestPool.Add(entityTag) = new FinderNearestTargetRequest();

@@ -18,6 +18,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
             {
                 var randomIndex = Random.Range(0, 2);
                 var animator = _filter.Pools.Inc1.Get(entity).Value;
+                Debug.Log($"[AnimatorDeathListenerSystem] {entity} DeathEvent");
                 var trigger = randomIndex == 0 ? ADeathAnimatorTrigger : BDeathAnimatorTrigger;
                 animator.SetTrigger(trigger);
             }

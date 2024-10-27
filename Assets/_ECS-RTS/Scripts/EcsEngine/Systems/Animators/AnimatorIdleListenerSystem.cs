@@ -9,7 +9,7 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Animators
     {
         private static readonly int IdleAnimatorTrigger = Animator.StringToHash("Idle");
 
-        private readonly EcsFilterInject<Inc<AnimatorView, IdleEvent>> _filter;
+        private readonly EcsFilterInject<Inc<AnimatorView, IdleEvent>, Exc<Inactive>> _filter;
 
         public void Run(IEcsSystems systems)
         {

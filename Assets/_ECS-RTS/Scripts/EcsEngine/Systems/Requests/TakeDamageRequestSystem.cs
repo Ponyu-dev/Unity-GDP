@@ -39,9 +39,10 @@ namespace _ECS_RTS.Scripts.EcsEngine.Systems.Requests
                 
                 ref var health = ref _healthPool.Value.Get(targetId).Value;
                 health = Mathf.Max(0, health - damage);
+                
+                Debug.Log($"[TakeDamageRequestSystem] Run targetId = {targetId} health = {health}");
 
                 _takeDamagePool.Value.Add(targetId) = new TakeDamageEvent();
-
                 var pointBlood = pointBloodPool.Get(entity).Value;
                 _sfxFactory.PlaySfx(_sfxTakeDamagePool.Value.Get(targetId).Value, pointBlood);                
                 
