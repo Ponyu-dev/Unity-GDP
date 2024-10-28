@@ -16,7 +16,6 @@ namespace Game.Engine
                 !blackboard.TryGetObject(this.targetKey, out GameObject target) ||
                 !blackboard.TryGetStoppingDistance(out float stoppingDistance))
             {
-                Debug.Log("[MoveToTargetBTNode] FAILURE");
                 return BTResult.FAILURE;
             }
 
@@ -24,14 +23,10 @@ namespace Game.Engine
             distanceVector.y = 0;
 
             if (distanceVector.sqrMagnitude <= stoppingDistance * stoppingDistance)
-            {
-                Debug.Log("[MoveToTargetBTNode] SUCCESS", target.gameObject);
                 return BTResult.SUCCESS;
-            }
 
             Vector3 moveDirection = distanceVector.normalized;
             character.GetComponent<MoveComponent>().MoveStep(moveDirection);
-            Debug.Log("[MoveToTargetBTNode] RUNNING", target.gameObject);
             return BTResult.RUNNING;
         }
     }

@@ -1,5 +1,4 @@
 using Atomic.AI;
-using UnityEngine;
 
 namespace Game.Engine.HarvesterWood
 {
@@ -14,18 +13,13 @@ namespace Game.Engine.HarvesterWood
 
             if (!tree.activeInHierarchy && resourceStorageComponent.IsNotFull())
             {
-                Debug.Log("[HarvestTreeBTNode] FAILURE", tree.gameObject);
                 blackboard.DelTargetTree();
                 return BTResult.FAILURE;
             }
 
             if (!resourceStorageComponent.IsNotFull() || !tree.activeInHierarchy)
-            {
-                Debug.Log("[HarvestTreeBTNode] SUCCESS", tree.gameObject);
                 return BTResult.SUCCESS;
-            }
-
-            Debug.Log("[HarvestTreeBTNode] RUNNING", tree.gameObject);
+            
             harvestComponent.StartHarvest();
             return BTResult.RUNNING;
         }

@@ -1,5 +1,4 @@
 using Atomic.AI;
-using UnityEngine;
 
 namespace Game.Engine.HarvesterWood
 {
@@ -15,18 +14,13 @@ namespace Game.Engine.HarvesterWood
             if (!treeServices.FindClosest(character.transform.position, out var target))
             {
                 blackboard.DelTargetTree();
-                Debug.Log("[FindClosestTreeBTNode] FAILURE", target.gameObject);
                 return BTResult.FAILURE;
             }
 
             if (target == null)
-            {
-                Debug.Log("[FindClosestTreeBTNode] FAILURE", target.gameObject);
                 return BTResult.FAILURE;
-            }
 
             blackboard.SetTargetTree(target);
-            Debug.Log("[FindClosestTreeBTNode] SUCCESS", target.gameObject);
             return BTResult.SUCCESS;
         }
     }

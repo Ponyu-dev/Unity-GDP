@@ -14,7 +14,6 @@ namespace Game.Engine
             index = (index + 1) % waypoints.Length;
             
             blackboard.SetWaypointIndex(index);
-            Debug.Log("[NextWaypointBTNode] SUCCESS");
             return BTResult.SUCCESS;
         }
     }
