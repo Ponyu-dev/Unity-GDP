@@ -1566,8 +1566,10 @@ MonoBehaviour:
         nodes:
         - rid: 4987673459479543845
         - rid: 4987673457872601154
+        - rid: 4987673459479543880
         - rid: 4987673459479543867
         - rid: 4987673459479543858
+        - rid: 4987673459479543892
     - rid: 4987673457872601154
       type: {class: BTNodeAborter, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
       data:
@@ -1593,6 +1595,7 @@ MonoBehaviour:
         actions:
         - rid: 4987673459479543812
         - rid: 4987673459479543813
+        - rid: 4987673459479543879
     - rid: 4987673459479543812
       type: {class: SetActiveDialogBTNode, ns: Game.Engine, asm: Assembly-CSharp}
       data:
@@ -1646,19 +1649,7 @@ MonoBehaviour:
       data:
         name: Is Patroll
         condition:
-          rid: 4987673459479543851
-    - rid: 4987673459479543851
-      type: {class: OrBlackboardCondition, ns: Atomic.AI, asm: Atomic.AI.Elements}
-      data:
-        conditions:
-        - rid: 4987673459479543852
-        - rid: 4987673459479543853
-    - rid: 4987673459479543852
-      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
-      data:
-        _storageObject: 1
-    - rid: 4987673459479543853
-      type: {class: IsTreeEmptyCondition, ns: Game.Engine, asm: Assembly-CSharp}
+          rid: 4987673459479543930
     - rid: 4987673459479543858
       type: {class: BTNodeSequence, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
       data:
@@ -1688,18 +1679,8 @@ MonoBehaviour:
       data:
         name: Dialog Character Is Full
         nodes:
-        - rid: 4987673459479543868
+        - rid: 4987673459479543899
         - rid: 4987673459479543870
-    - rid: 4987673459479543868
-      type: {class: BTNodeCondition, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
-      data:
-        name: Character Is Full
-        condition:
-          rid: 4987673459479543869
-    - rid: 4987673459479543869
-      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
-      data:
-        _storageObject: 1
     - rid: 4987673459479543870
       type: {class: BTNodeAction, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
       data:
@@ -1717,6 +1698,7 @@ MonoBehaviour:
         conditions:
         - rid: 4987673459479543873
         - rid: 4987673459479543875
+        - rid: 4987673459479543905
     - rid: 4987673459479543873
       type: {class: IsTreeEmptyCondition, ns: Game.Engine, asm: Assembly-CSharp}
     - rid: 4987673459479543875
@@ -1727,7 +1709,160 @@ MonoBehaviour:
     - rid: 4987673459479543876
       type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
       data:
-        _storageObject: 0
+        _storageObject: 1
+    - rid: 4987673459479543879
+      type: {class: SetActiveDialogBTNode, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        gameObjectKey: 7
+        isActive: 0
+    - rid: 4987673459479543880
+      type: {class: BTNodeAborter, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        node:
+          rid: 4987673459479543881
+        conditions:
+        - rid: 4987673459479543884
+    - rid: 4987673459479543881
+      type: {class: BTNodeSequence, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        name: Filling the barn
+        nodes:
+        - rid: 4987673459479543919
+        - rid: 4987673459479543888
+        - rid: 4987673459479543889
+        - rid: 4987673459479543890
+    - rid: 4987673459479543884
+      type: {class: OrBlackboardCondition, ns: Atomic.AI, asm: Atomic.AI.Elements}
+      data:
+        conditions:
+        - rid: 4987673459479543885
+        - rid: 4987673459479543886
+    - rid: 4987673459479543885
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 6
+    - rid: 4987673459479543886
+      type: {class: NotBlackboardCondition, ns: Atomic.AI, asm: Atomic.AI.Elements}
+      data:
+        condition:
+          rid: 4987673459479543887
+    - rid: 4987673459479543887
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 1
+    - rid: 4987673459479543888
+      type: {class: MoveToTargetBTNode, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        targetKey: 6
+    - rid: 4987673459479543889
+      type: {class: MoveResourcesToBarnBTNode, ns: Game.Engine, asm: Assembly-CSharp}
+    - rid: 4987673459479543890
+      type: {class: BTNodeAction, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        name: Dialog Is Full Hide
+        actions:
+        - rid: 4987673459479543891
+    - rid: 4987673459479543891
+      type: {class: SetActiveDialogBTNode, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        gameObjectKey: 13
+        isActive: 0
+    - rid: 4987673459479543892
+      type: {class: BTNodeSequence, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        name: Dialog Barn Is Full
+        nodes:
+        - rid: 4987673459479543895
+        - rid: 4987673459479543893
+    - rid: 4987673459479543893
+      type: {class: BTNodeAction, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        name: Dialog Show
+        actions:
+        - rid: 4987673459479543894
+        - rid: 4987673459479543897
+        - rid: 4987673459479543898
+    - rid: 4987673459479543894
+      type: {class: SetActiveDialogBTNode, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        gameObjectKey: 7
+        isActive: 1
+    - rid: 4987673459479543895
+      type: {class: BTNodeCondition, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        name: Barn Is Full
+        condition:
+          rid: 4987673459479543896
+    - rid: 4987673459479543896
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 6
+    - rid: 4987673459479543897
+      type: {class: SetActiveDialogBTNode, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        gameObjectKey: 13
+        isActive: 0
+    - rid: 4987673459479543898
+      type: {class: SetActiveDialogBTNode, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        gameObjectKey: 4
+        isActive: 0
+    - rid: 4987673459479543899
+      type: {class: BTNodeCondition, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        name: Character Is Full
+        condition:
+          rid: 4987673459479543900
+    - rid: 4987673459479543900
+      type: {class: AndBlackboardCondition, ns: Atomic.AI, asm: Atomic.AI.Elements}
+      data:
+        conditions:
+        - rid: 4987673459479543901
+        - rid: 4987673459479543902
+    - rid: 4987673459479543901
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 1
+    - rid: 4987673459479543902
+      type: {class: NotBlackboardCondition, ns: Atomic.AI, asm: Atomic.AI.Elements}
+      data:
+        condition:
+          rid: 4987673459479543903
+    - rid: 4987673459479543903
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 6
+    - rid: 4987673459479543905
+      type: {class: NotBlackboardCondition, ns: Atomic.AI, asm: Atomic.AI.Elements}
+      data:
+        condition:
+          rid: 4987673459479543906
+    - rid: 4987673459479543906
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 6
+    - rid: 4987673459479543919
+      type: {class: BTNodeCondition, ns: Atomic.AI, asm: Atomic.AI.BehaviourTree}
+      data:
+        name: Is Character ull
+        condition:
+          rid: 4987673459479543920
+    - rid: 4987673459479543920
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 1
+    - rid: 4987673459479543930
+      type: {class: OrBlackboardCondition, ns: Atomic.AI, asm: Atomic.AI.Elements}
+      data:
+        conditions:
+        - rid: 4987673459479543931
+        - rid: 4987673459479543932
+    - rid: 4987673459479543931
+      type: {class: IsTreeEmptyCondition, ns: Game.Engine, asm: Assembly-CSharp}
+    - rid: 4987673459479543932
+      type: {class: IsStorageFullCondition, ns: Game.Engine, asm: Assembly-CSharp}
+      data:
+        _storageObject: 6
 --- !u!1001 &1163636013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2541,6 +2676,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1829104093}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1912875091 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5310893115516053068, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1969170156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1953193130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2749,10 +2890,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2540389589518119226, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
       propertyPath: installers.Array.size
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
@@ -2793,6 +2939,16 @@ PrefabInstance:
         type: 3}
       propertyPath: installers.Array.data[7]
       value: 4987673457872601167
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: installers.Array.data[8]
+      value: 4987673459479543877
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: installers.Array.data[9]
+      value: 4987673459479543878
       objectReference: {fileID: 0}
     - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
@@ -2867,6 +3023,16 @@ PrefabInstance:
     - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
       propertyPath: managedReferences[4987673457872601167]
+      value: Modules.AI.Blackboard Atomic.AI.GameObjectInstaller
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: managedReferences[4987673459479543877]
+      value: Modules.AI.Blackboard Atomic.AI.GameObjectInstaller
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: managedReferences[4987673459479543878]
       value: Modules.AI.Blackboard Atomic.AI.GameObjectInstaller
       objectReference: {fileID: 0}
     - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
@@ -2946,6 +3112,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
+      propertyPath: managedReferences[4987673459479543877].key
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: managedReferences[4987673459479543878].key
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
       propertyPath: managedReferences[4531774068201095170].value
       value: 
       objectReference: {fileID: 1959699243}
@@ -3016,6 +3192,16 @@ PrefabInstance:
       objectReference: {fileID: 1953193131}
     - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
+      propertyPath: managedReferences[4987673459479543877].value
+      value: 
+      objectReference: {fileID: 1959699243}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: managedReferences[4987673459479543878].value
+      value: 
+      objectReference: {fileID: 1912875091}
+    - target: {fileID: 4455923611556452129, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
       propertyPath: managedReferences[8910567683058040833].value
       value: 
       objectReference: {fileID: 382842414}
@@ -3059,6 +3245,11 @@ PrefabInstance:
       propertyPath: managedReferences[4531774068201095182].value.Array.data[2]
       value: 
       objectReference: {fileID: 1064540796}
+    - target: {fileID: 5310893115516053068, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7455131854162157427, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
       propertyPath: m_Name
