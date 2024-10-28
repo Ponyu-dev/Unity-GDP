@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace _Addressables.Game.Scripts.Gameplay.Services
+namespace SampleGame
 {
     public interface IAddressablesService
     {
         Task<GameObject> SpawnAsync(string address, Transform parent = null);
+        void Clear();
     }
     
     public sealed class AddressablesService : IAddressablesService

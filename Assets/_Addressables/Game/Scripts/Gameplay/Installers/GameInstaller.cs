@@ -1,6 +1,4 @@
-using System;
 using _Addressables.Game.Scripts.Gameplay.Locations.Trigger;
-using _Addressables.Game.Scripts.Gameplay.Services;
 using UnityEngine;
 using Zenject;
 
@@ -22,10 +20,6 @@ namespace SampleGame
 
         public override void InstallBindings()
         {
-            this.Container.BindInterfacesTo<AddressablesService>()
-                .AsSingle()
-                .NonLazy();
-            
             this.Container
                 .Bind<Camera>()
                 .FromInstance(this.camera);
@@ -62,16 +56,6 @@ namespace SampleGame
                 .AsSingle()
                 .WithArguments(worldContainer)
                 .NonLazy();
-        }
-
-        private void OnDestroy()
-        {
-            // Получаем AddressablesService и очищаем его
-            var addressablesService = Container.Resolve<IAddressablesService>();
-            if (addressablesService is AddressablesService service)
-            {
-                service.Clear();
-            }
         }
     }
 }
