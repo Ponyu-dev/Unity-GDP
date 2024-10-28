@@ -11,6 +11,7 @@ namespace Game.Engine
         {
             if (!blackboard.TryGetWaypoints(out Transform[] waypoints))
             {
+                Debug.Log("[AssignWaypointBTNode] FAILURE");
                 return BTResult.FAILURE;
             }
             
@@ -18,6 +19,7 @@ namespace Game.Engine
             GameObject targetWaypoint = waypoints[index].gameObject;
             
             blackboard.SetTarget(targetWaypoint);
+            Debug.Log("[AssignWaypointBTNode] SUCCESS", targetWaypoint);
             return BTResult.SUCCESS;
         }
     }

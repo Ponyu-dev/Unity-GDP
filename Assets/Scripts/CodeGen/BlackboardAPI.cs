@@ -21,8 +21,8 @@ namespace Game
         public const int WaypointPause = 10; // float
         public const int WaypointTime = 11; // float
         public const int Enemy = 12; // GameObject : class
-        public const int CharacterDialogFull = 13; // GameObject : class
-        public const int TargetTree = 14; // GameObject : class
+        public const int TargetTree = 13; // GameObject : class
+        public const int CharacterFullView = 14; // GameObject : class
 
 
         ///Extensions
@@ -219,22 +219,6 @@ namespace Game
 
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool HasCharacterDialogFull(this IBlackboard obj) => obj.HasObject(CharacterDialogFull);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static GameObject  GetCharacterDialogFull(this IBlackboard obj) => obj.GetObject<GameObject >(CharacterDialogFull);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool TryGetCharacterDialogFull(this IBlackboard obj, out GameObject  value) => obj.TryGetObject(CharacterDialogFull, out value);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SetCharacterDialogFull(this IBlackboard obj, GameObject  value) => obj.SetObject(CharacterDialogFull, value);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool DelCharacterDialogFull(this IBlackboard obj) => obj.DelObject(CharacterDialogFull);
-
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool HasTargetTree(this IBlackboard obj) => obj.HasObject(TargetTree);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -248,6 +232,22 @@ namespace Game
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool DelTargetTree(this IBlackboard obj) => obj.DelObject(TargetTree);
+
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool HasCharacterFullView(this IBlackboard obj) => obj.HasObject(CharacterFullView);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static GameObject  GetCharacterFullView(this IBlackboard obj) => obj.GetObject<GameObject >(CharacterFullView);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool TryGetCharacterFullView(this IBlackboard obj, out GameObject  value) => obj.TryGetObject(CharacterFullView, out value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void SetCharacterFullView(this IBlackboard obj, GameObject  value) => obj.SetObject(CharacterFullView, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool DelCharacterFullView(this IBlackboard obj) => obj.DelObject(CharacterFullView);
 
     }
 }

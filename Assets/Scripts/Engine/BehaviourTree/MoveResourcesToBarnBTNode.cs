@@ -1,5 +1,6 @@
 using System;
 using Atomic.AI;
+using UnityEngine;
 
 namespace Game.Engine
 {
@@ -21,13 +22,16 @@ namespace Game.Engine
         {
             if (toStorage.FreeSlots == 0)
             {
+                Debug.Log("[MoveResourcesToBarnBTNode] RUNNING", toStorage.gameObject);
                 return BTResult.FAILURE;
             }
 
             var resourcesToAdd = Math.Min(toStorage.FreeSlots, fromStorage.Current);
             fromStorage.RemoveResources(resourcesToAdd);
             toStorage.AddResources(resourcesToAdd);
-
+            
+            Debug.Log("[MoveResourcesToBarnBTNode] SUCCESS", toStorage.gameObject);
+            
             return BTResult.SUCCESS;
         }
     }

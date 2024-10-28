@@ -58,3 +58,9 @@ MonoBehaviour:
   - id: 12
     name: Enemy
     type: 'GameObject : class'
+  - id: 13
+    name: TargetTree
+    type: 'GameObject : class'
+  - id: 14
+    name: CharacterFullView
+    type: 'GameObject : class'
