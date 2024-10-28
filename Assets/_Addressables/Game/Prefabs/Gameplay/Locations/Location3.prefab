@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1766633194715898542}
   m_Layer: 0
-  m_Name: '[Location3]'
+  m_Name: Location3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
