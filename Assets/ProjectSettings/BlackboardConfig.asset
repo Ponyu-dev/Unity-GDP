@@ -26,8 +26,8 @@ MonoBehaviour:
     name: Character
     type: 'GameObject : class'
   - id: 2
-    name: TreeService
-    type: 'TreeService[] : class'
+    name: TreeServices
+    type: 'TreeServices : class'
   - id: 3
     name: Target
     type: 'GameObject : class'

@@ -10,7 +10,7 @@ namespace Game
     public static class BlackboardAPI
     {
         public const int Character = 1; // GameObject : class
-        public const int TreeService = 2; // TreeService[] : class
+        public const int TreeServices = 2; // TreeServices : class
         public const int Target = 3; // GameObject : class
         public const int NoTreesView = 4; // GameObject : class
         public const int StoppingDistance = 5; // float
@@ -21,6 +21,8 @@ namespace Game
         public const int WaypointPause = 10; // float
         public const int WaypointTime = 11; // float
         public const int Enemy = 12; // GameObject : class
+        public const int CharacterDialogFull = 13; // GameObject : class
+        public const int TargetTree = 14; // GameObject : class
 
 
         ///Extensions
@@ -41,19 +43,19 @@ namespace Game
 
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool HasTreeService(this IBlackboard obj) => obj.HasObject(TreeService);
+		public static bool HasTreeServices(this IBlackboard obj) => obj.HasObject(TreeServices);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static TreeService[]  GetTreeService(this IBlackboard obj) => obj.GetObject<TreeService[] >(TreeService);
+		public static TreeServices  GetTreeServices(this IBlackboard obj) => obj.GetObject<TreeServices >(TreeServices);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool TryGetTreeService(this IBlackboard obj, out TreeService[]  value) => obj.TryGetObject(TreeService, out value);
+		public static bool TryGetTreeServices(this IBlackboard obj, out TreeServices  value) => obj.TryGetObject(TreeServices, out value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SetTreeService(this IBlackboard obj, TreeService[]  value) => obj.SetObject(TreeService, value);
+		public static void SetTreeServices(this IBlackboard obj, TreeServices  value) => obj.SetObject(TreeServices, value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool DelTreeService(this IBlackboard obj) => obj.DelObject(TreeService);
+		public static bool DelTreeServices(this IBlackboard obj) => obj.DelObject(TreeServices);
 
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -214,6 +216,38 @@ namespace Game
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool DelEnemy(this IBlackboard obj) => obj.DelObject(Enemy);
+
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool HasCharacterDialogFull(this IBlackboard obj) => obj.HasObject(CharacterDialogFull);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static GameObject  GetCharacterDialogFull(this IBlackboard obj) => obj.GetObject<GameObject >(CharacterDialogFull);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool TryGetCharacterDialogFull(this IBlackboard obj, out GameObject  value) => obj.TryGetObject(CharacterDialogFull, out value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void SetCharacterDialogFull(this IBlackboard obj, GameObject  value) => obj.SetObject(CharacterDialogFull, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool DelCharacterDialogFull(this IBlackboard obj) => obj.DelObject(CharacterDialogFull);
+
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool HasTargetTree(this IBlackboard obj) => obj.HasObject(TargetTree);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static GameObject  GetTargetTree(this IBlackboard obj) => obj.GetObject<GameObject >(TargetTree);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool TryGetTargetTree(this IBlackboard obj, out GameObject  value) => obj.TryGetObject(TargetTree, out value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void SetTargetTree(this IBlackboard obj, GameObject  value) => obj.SetObject(TargetTree, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool DelTargetTree(this IBlackboard obj) => obj.DelObject(TargetTree);
 
     }
 }
