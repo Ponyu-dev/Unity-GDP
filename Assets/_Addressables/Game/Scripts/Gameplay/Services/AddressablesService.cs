@@ -9,12 +9,11 @@ namespace _Addressables.Game.Scripts.Gameplay.Services
     public interface IAddressablesService
     {
         Task<GameObject> SpawnAsync(string address, Transform parent = null);
-        void Despawn(GameObject obj);
     }
     
     public sealed class AddressablesService : IAddressablesService
     {
-        private readonly List<GameObject> _spawnedObjects = new List<GameObject>();
+        private readonly List<AsyncOperationHandle> _spawnedObjects = new List<AsyncOperationHandle>();
 
         public async Task<GameObject> SpawnAsync(string address, Transform parent = null)
         {
@@ -24,25 +23,12 @@ namespace _Addressables.Game.Scripts.Gameplay.Services
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 var instance = Object.Instantiate(handle.Result, parent);
-                _spawnedObjects.Add(instance);
+                _spawnedObjects.Add(handle);
                 return instance;
             }
 
             Debug.LogError($"Failed to load object at address: {address}");
             return null;
-        }
-
-        public void Despawn(GameObject obj)
-        {
-            if (_spawnedObjects.Contains(obj))
-            {
-                _spawnedObjects.Remove(obj);
-                Addressables.ReleaseInstance(obj);
-            }
-            else
-            {
-                Debug.LogWarning("Object not managed by AddressablesService.");
-            }
         }
         
         public void Clear()
