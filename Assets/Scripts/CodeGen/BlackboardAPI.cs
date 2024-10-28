@@ -10,7 +10,7 @@ namespace Game
     public static class BlackboardAPI
     {
         public const int Character = 1; // GameObject : class
-        public const int TreeService = 2; // TreeService : class
+        public const int TreeService = 2; // TreeService[] : class
         public const int Target = 3; // GameObject : class
         public const int NoTreesView = 4; // GameObject : class
         public const int StoppingDistance = 5; // float
@@ -44,13 +44,13 @@ namespace Game
 		public static bool HasTreeService(this IBlackboard obj) => obj.HasObject(TreeService);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static TreeService  GetTreeService(this IBlackboard obj) => obj.GetObject<TreeService >(TreeService);
+		public static TreeService[]  GetTreeService(this IBlackboard obj) => obj.GetObject<TreeService[] >(TreeService);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool TryGetTreeService(this IBlackboard obj, out TreeService  value) => obj.TryGetObject(TreeService, out value);
+		public static bool TryGetTreeService(this IBlackboard obj, out TreeService[]  value) => obj.TryGetObject(TreeService, out value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SetTreeService(this IBlackboard obj, TreeService  value) => obj.SetObject(TreeService, value);
+		public static void SetTreeService(this IBlackboard obj, TreeService[]  value) => obj.SetObject(TreeService, value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool DelTreeService(this IBlackboard obj) => obj.DelObject(TreeService);
