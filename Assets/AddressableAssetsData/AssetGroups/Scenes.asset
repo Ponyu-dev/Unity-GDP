@@ -10,15 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Scenes Game
+  m_Name: Scenes
   m_EditorClassIdentifier: 
-  m_GroupName: Scenes Game
+  m_GroupName: Scenes
   m_Data:
     m_SerializedData: []
   m_GUID: f8d2e3476a8b8432392c6137c1d03f7a
   m_SerializeEntries:
   - m_GUID: be9bfa09430ff456eb76851b15fa7fd2
     m_Address: Game
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2a971fcbfef4b451f82c4da85c65aee1
+    m_Address: Menu
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
