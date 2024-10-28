@@ -1,11 +1,12 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.Engine
 {
     [Serializable]
-    public sealed class ResourceStorageComponent : MonoBehaviour
+    public sealed class ResourceStorageComponent : EventReceiver
     {
         public event Action OnStateChanged;
 
@@ -77,6 +78,11 @@ namespace Game.Engine
         public bool IsEmpty()
         {
             return this.current == 0;
+        }
+
+        public override void OnEventTriggered()
+        {
+            RemoveResources(Random.Range(0, capacity / 2));
         }
     }
 }

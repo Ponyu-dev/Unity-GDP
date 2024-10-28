@@ -1,48 +1,98 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Tree = Game.Content.Tree;
 
 namespace Game.Engine
 {
     ///Содержит информацию о всех ресурсах на карте
-    public sealed class TreeService : MonoBehaviour
+    public sealed class TreeService : EventReceiver
     {
-        public IReadOnlyList<GameObject> Trees => this.trees;
+        private readonly Queue<GameObject> _pool = new();
+        private readonly HashSet<GameObject> _actives = new();
 
-        private GameObject[] trees;
-        
         private void Awake()
         {
-            this.trees = GameObject.FindGameObjectsWithTag(GameObjectTags.Tree);
+            var trees = GetComponentsInChildren<Transform>(true)
+                .Where(child => child.CompareTag(GameObjectTags.Tree))
+                .Select(child => child.gameObject)
+                .ToArray();
+
+            foreach (var tree in trees)
+            {
+                _pool.Enqueue(tree);
+                tree.SetActive(false);
+            }
+            
+            ActivateHalf();
         }
-        
+
+        private void ActivateHalf()
+        {
+            var halfCount = _pool.Count / 2;
+            for (var i = 0; i < halfCount; i++)
+            {
+                var obj = _pool.Dequeue();
+                Activate(obj);
+            }
+        }
+
+        public override void OnEventTriggered()
+        {
+            if (_pool.Count <= 0) return;
+            var nextObject = _pool.Dequeue();
+            Activate(nextObject);
+        }
+
+        private void Activate(GameObject obj)
+        {
+            if (_actives.Contains(obj)) return;
+            
+            obj.SetActive(true);
+            
+            if (obj.TryGetComponent<Tree>(out var tree))
+            {
+                tree.OnStateInActived += Deactivate;
+                tree.InitDefault();
+            }
+            
+            _actives.Add(obj);
+        }
+
+        private void Deactivate(GameObject obj)
+        {
+            if (obj.TryGetComponent<Tree>(out var tree))
+                tree.OnStateInActived -= Deactivate;
+            
+            obj.SetActive(false);
+            
+            if (_actives.Contains(obj))
+                _actives.Remove(obj);
+            
+            _pool.Enqueue(obj);
+        }
+
         public bool FindClosest(Vector3 position, out GameObject closestResource)
         {
-            float minDistance = float.MaxValue;
-            closestResource = default;
+            var minDistance = float.MaxValue;
+            closestResource = null;
 
-            for (int i = 0, count = this.trees.Length; i < count; i++)
+            foreach (var resource in _actives)
             {
-                GameObject resource = this.trees[i];
                 if (!resource.activeSelf)
-                {
                     continue;
-                }
 
-                Vector3 resourcePosition = resource.transform.position;
-                Vector3 distanceVector = resourcePosition - position;
+                var resourcePosition = resource.transform.position;
+                var distanceVector = resourcePosition - position;
                 distanceVector.y = 0;
 
-                float resourceDistance = distanceVector.sqrMagnitude;
-                if (resourceDistance < minDistance)
-                {
-                    minDistance = resourceDistance;
-                    closestResource = resource;
-                }
+                var resourceDistance = distanceVector.sqrMagnitude;
+                if (!(resourceDistance < minDistance)) continue;
+                minDistance = resourceDistance;
+                closestResource = resource;
             }
 
-            return closestResource != default;
+            return closestResource != null;
         }
-
-        
     }
 }
