@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,20 +6,24 @@ namespace SampleGame
 {
     public sealed class PauseButton : MonoBehaviour
     {
-        [SerializeField]
-        private Button button;
+        public event Action OnClicked;
         
-        [SerializeField]
-        private PauseScreen pauseScreen;
-
+        [SerializeField] private Button button;
+        
         private void OnEnable()
         {
-            this.button.onClick.AddListener(this.pauseScreen.Show);
+            button.onClick.AddListener(InvokeOnClicked);
         }
 
         private void OnDisable()
         {
-            this.button.onClick.RemoveListener(this.pauseScreen.Show);
+            button.onClick.RemoveListener(InvokeOnClicked);
+        }
+
+        private void InvokeOnClicked()
+        {
+            Debug.Log("[PauseButton] InvokeOnClicked()");
+            OnClicked?.Invoke();
         }
     }
 }

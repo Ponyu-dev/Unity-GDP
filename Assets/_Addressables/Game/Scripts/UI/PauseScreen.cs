@@ -13,22 +13,26 @@ namespace SampleGame
         private Button exitButton;
 
         private MenuLoader menuLoader;
+        private PauseButton pauseButton;
 
         [Inject]
-        public void Construct(MenuLoader menuLoader, GameLoader gameLoader)
+        public void Construct(MenuLoader menuLoader, GameLoader gameLoader, PauseButton pauseButton)
         {
             this.menuLoader = menuLoader;
+            this.pauseButton = pauseButton;
             this.gameObject.SetActive(false);
         }
 
         private void OnEnable()
         {
+            this.pauseButton.OnClicked -= Show;
             this.resumeButton.onClick.AddListener(this.Hide);
             this.exitButton.onClick.AddListener(this.menuLoader.LoadMenu);
         }
 
         private void OnDisable()
         {
+            this.pauseButton.OnClicked += Show;
             this.resumeButton.onClick.RemoveListener(this.Hide);
             this.exitButton.onClick.RemoveListener(this.menuLoader.LoadMenu);
         }
@@ -43,6 +47,11 @@ namespace SampleGame
         {
             Time.timeScale = 1; //KISS
             this.gameObject.SetActive(false);
+        }
+
+        public void OnDestroy()
+        {
+            this.pauseButton.OnClicked -= Show;
         }
     }
 }
