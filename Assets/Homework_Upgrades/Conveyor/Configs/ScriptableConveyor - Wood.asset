@@ -17,4 +17,4 @@ MonoBehaviour:
   inputCapacity: 4
   outputResourceType: 1
   outputCapacity: 2
-  workTime: 2
+  workTime: 10

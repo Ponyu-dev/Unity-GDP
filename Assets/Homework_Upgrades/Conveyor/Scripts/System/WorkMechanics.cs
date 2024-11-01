@@ -1,4 +1,5 @@
 using Elementary;
+using UnityEngine;
 
 namespace Homework_Upgrades.Conveyor.Scripts.System
 {
@@ -40,6 +41,8 @@ namespace Homework_Upgrades.Conveyor.Scripts.System
         public void StartWork()
         {
             if (!CanStartWork()) return;
+            
+            Debug.Log("[WorkMechanics] StartWork");
             
             _workTimer.OnFinished += OnWorkFinished;
             _workTimer.OnCanceled += OnWorkFinished;

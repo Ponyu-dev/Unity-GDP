@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 52088612573285892}
   - component: {fileID: 6672744726906466332}
   - component: {fileID: 1323979936564445244}
+  - component: {fileID: 8172103679370729097}
   m_Layer: 0
-  m_Name: WidgetConveyor
+  m_Name: WidgetConveyorWorks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +40,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 40, y: 40}
-  m_SizeDelta: {x: 180, y: 140}
+  m_SizeDelta: {x: 180, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &52088612573285892
 CanvasRenderer:
@@ -105,6 +106,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8172103679370729097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842245868801122027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc5fc4932634720896cba2672a3f7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  root: {fileID: 842245868801122027}
+  btnStart: {fileID: 4049652491497072183}
+  progressBar: {fileID: 2064272373667832304}
 --- !u!1 &4840277844646652695
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +208,7 @@ GameObject:
   - component: {fileID: 4840277846555172084}
   - component: {fileID: 4840277846555172086}
   - component: {fileID: 4840277846555172085}
+  - component: {fileID: 2064272373667832304}
   m_Layer: 0
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -242,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -258,6 +275,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.6
+--- !u!114 &2064272373667832304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840277846555172083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677e3a21d02543d889bacdd4c479e180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  root: {fileID: 4840277846555172083}
+  fillImage: {fileID: 4840277844646652905}
+  hasMask: 0
+  maskImage: {fileID: 0}
 --- !u!1 &5475023199887447593
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,19 +11,30 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
 {
     public class ConveyorModel : DeclarativeModel
     {
-        [Section, SerializeField] public ScriptableConveyor config;
-        [Section, SerializeField, Space] public Core core;
-        [Section, SerializeField] private Visual visual;
+        [Section, SerializeField]
+        public ScriptableConveyor config;
+        
+        [Section, SerializeField, Space]
+        public Core core;
+        
+        [Section, SerializeField]
+        private Visual visual;
+        
+        [Section, SerializeField]
+        private Canvas canvas;
     }
 
     [Serializable]
     public sealed class Core
     {
-        [SerializeField, Space] public IntVariableLimited loadStorage = new();
+        [SerializeField, Space]
+        public IntVariableLimited loadStorage = new();
 
-        [SerializeField] public IntVariableLimited unloadStorage = new();
+        [SerializeField]
+        public IntVariableLimited unloadStorage = new();
 
-        [SerializeField, Space] public Timer workTimer = new();
+        [SerializeField, Space]
+        public Timer workTimer = new();
 
         public WorkMechanics workMechanics;
 
@@ -61,17 +72,38 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         private ZoneVisual unloadZoneView;
 
         private readonly ConveyorVisualAdapter _conveyorViewAdapter = new();
-
         private readonly ZoneVisualAdapter _loadZoneViewAdapter = new();
-
         private readonly ZoneVisualAdapter _unloadZoneViewAdapter = new();
 
         [Construct]
         private void Construct(Core core)
         {
-            this._conveyorViewAdapter.Construct(core.workTimer, this.conveyorView);
-            this._loadZoneViewAdapter.Construct(core.loadStorage, this.loadZoneView);
-            this._unloadZoneViewAdapter.Construct(core.unloadStorage, this.unloadZoneView);
+            _conveyorViewAdapter.Construct(core.workTimer, conveyorView);
+            _loadZoneViewAdapter.Construct(core.loadStorage, loadZoneView);
+            _unloadZoneViewAdapter.Construct(core.unloadStorage, unloadZoneView);
+        }
+    }
+    
+    [Serializable]
+    public sealed class Canvas
+    {
+        [SerializeField]
+        private InfoWidget infoView;
+
+        private readonly InfoWidgetAdapter _infoViewAdapter = new();
+
+        [Construct]
+        private void Construct(ScriptableConveyor config, Core core) //, ResourceInfoCatalog resourceCatalog
+        {
+            _infoViewAdapter.Construct(core.workTimer, core.workMechanics, infoView);
+
+            //var inputType = config.inputResourceType;
+            //var inputIcon = resourceCatalog.FindResource(inputType).icon;
+            //infoView.SetInputIcon(inputIcon);
+
+            //var outputType = config.outputResourceType;
+            //var outputIcon = resourceCatalog.FindResource(outputType).icon;
+            //infoView.SetOutputIcon(outputIcon);
         }
     }
 }
