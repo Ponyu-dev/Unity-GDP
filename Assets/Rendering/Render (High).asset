@@ -58,11 +58,8 @@ MonoBehaviour:
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
       type: 3}
-  m_RendererFeatures:
-  - {fileID: -6088551604455195741}
-  - {fileID: -1344586528338988631}
-  - {fileID: -2401278517541482506}
-  m_RendererFeatureMap: a33bd003931e81aba9319428ad1157edf6cf292be9f1acde
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}

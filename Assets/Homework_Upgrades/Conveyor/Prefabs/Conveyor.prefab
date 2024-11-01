@@ -77,6 +77,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 321564266908410341}
+  - component: {fileID: 4208357210769605556}
+  - component: {fileID: 3024087055465699371}
   m_Layer: 0
   m_Name: Conveyor
   m_TagString: Untagged
@@ -102,6 +104,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4208357210769605556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321564266908410342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c26716e2de7a454499171eefb2a7f6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 3008f689fb5724e49820e86143f12b41, type: 2}
+  core:
+    enableVariable:
+      value: 0
+    loadStorage:
+      currentValue: 0
+      maxValue: 0
+    unloadStorage:
+      currentValue: 0
+      maxValue: 0
+    workTimer:
+      duration: 0
+--- !u!114 &3024087055465699371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321564266908410342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71b8c7538c24aeaa9b02068831ba3c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _model: {fileID: 4208357210769605556}
 --- !u!1 &321564267734251270
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +299,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 480757388216862307, guid: 9f191fd031d89461282b26298e356799,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1314797972833267404, guid: 9f191fd031d89461282b26298e356799,
         type: 3}
@@ -639,6 +683,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383836262100316668, guid: af3e27cbf63d340e89da6f4e11ce5383,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1865703590463253184, guid: af3e27cbf63d340e89da6f4e11ce5383,
         type: 3}
