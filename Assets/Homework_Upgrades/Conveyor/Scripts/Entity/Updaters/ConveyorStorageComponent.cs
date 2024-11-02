@@ -6,11 +6,6 @@ using Sirenix.OdinInspector;
 
 namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
 {
-    public interface IConveyorStorage
-    {
-        
-    }
-    
     [Serializable]
     public class ConveyorStorageComponent : ConveyorUpdate
     {

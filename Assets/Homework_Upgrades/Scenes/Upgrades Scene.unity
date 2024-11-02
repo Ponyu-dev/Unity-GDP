@@ -698,6 +698,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5549081666801751979, guid: c18c524f16f214510ac37b6b2febb7fa,
+        type: 3}
+      propertyPath: _money
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 6201858844711235640, guid: c18c524f16f214510ac37b6b2febb7fa,
         type: 3}
       propertyPath: m_IsActive

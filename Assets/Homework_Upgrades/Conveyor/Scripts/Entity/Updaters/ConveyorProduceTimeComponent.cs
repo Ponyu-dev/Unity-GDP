@@ -1,33 +1,34 @@
+using System;
 using Elementary;
 using Game.GamePlay.Upgrades;
+using Homework_Upgrades.Conveyor.Scripts.Entity.Configs;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
 {
-    public class ConveyorProduceTimeComponent : ConveyorUpdate 
+    [Serializable]
+    public class ConveyorProduceTimeComponent : ConveyorUpdate
     {
-        private float _defaultLoadStorage;
-        private float NewMaxLoadStorage => _defaultLoadStorage * (Level -1);
-
         [ReadOnly, ShowInInspector]
-        private FloatVariableLimited _produceTime;
-        public FloatVariableLimited ProduceTime => _produceTime;
+        private Timer _workTimer;
+        public ITimer WorkTimer => _workTimer;
 
-        public void Constructor(float produceTime, IMoneyStorage moneyStorage)
+        private UpdateTimerConfig _updateTimerConfig;
+
+        public void Constructor(UpdateTimerConfig updateTimerConfig, IMoneyStorage moneyStorage)
         {
-            //base.Constructor(moneyStorage);
+            base.Constructor(updateTimerConfig, moneyStorage);
             
-            _defaultLoadStorage = produceTime;
-            _produceTime = new FloatVariableLimited
-            {
-                Current = 1,
-                MaxValue = NewMaxLoadStorage
-            };
+            _updateTimerConfig = updateTimerConfig;
+
+            _workTimer = new Timer(_updateTimerConfig.startTimerValue);
         }
 
         protected override void UpdateMaxLevel()
         {
-            _produceTime.MaxValue += NewMaxLoadStorage;
+            var newDuration = _workTimer.Duration - _updateTimerConfig.stepTimerValue;
+            _workTimer.Duration = Mathf.Max(newDuration, _updateTimerConfig.minTimerValue);
         }
     }
 }

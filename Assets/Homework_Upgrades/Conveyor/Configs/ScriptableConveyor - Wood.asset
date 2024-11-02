@@ -15,4 +15,4 @@ MonoBehaviour:
   loadStorageConfig: {fileID: 11400000, guid: 6aff9b5c961bb42bf897d701fdde3ace, type: 2}
   unLoadStorageConfig: {fileID: 11400000, guid: 5b875c876d38b4f1e966f7a7dbe978a6,
     type: 2}
-  workTime: 10
+  updateTimerConfig: {fileID: 11400000, guid: 3da6c8aff3c6548a5be0bab7a88b9521, type: 2}

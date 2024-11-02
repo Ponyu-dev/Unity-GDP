@@ -41,7 +41,7 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         public ConveyorStorageComponent conveyorUnloadStorageComponent = new();
 
         [SerializeField, Space]
-        public Timer workTimer = new();
+        public ConveyorProduceTimeComponent conveyorProduceTimeComponent = new();
 
         public WorkMechanics workMechanics;
 
@@ -50,16 +50,16 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         {
             conveyorLoadStorageComponent.Constructor(config.loadStorageConfig, moneyStorage);
             conveyorUnloadStorageComponent.Constructor(config.unLoadStorageConfig, moneyStorage);
+            conveyorProduceTimeComponent.Constructor(config.updateTimerConfig, moneyStorage);
         }
 
         [Construct]
         private void ConstructWork(ConveyorConfig config)
         {
-            workTimer.Duration = config.workTime;
             workMechanics = new WorkMechanics(
                 loadStorage: conveyorLoadStorageComponent.Storage,
                 unloadStorage: conveyorUnloadStorageComponent.Storage,
-                workTimer: workTimer
+                workTimer: conveyorProduceTimeComponent.WorkTimer
             );
         }
     }
@@ -83,7 +83,7 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         [Construct]
         private void Construct(Core core)
         {
-            _conveyorViewAdapter.Construct(core.workTimer, conveyorView);
+            _conveyorViewAdapter.Construct(core.conveyorProduceTimeComponent.WorkTimer, conveyorView);
             _loadZoneViewAdapter.Construct(core.conveyorLoadStorageComponent.Storage, loadZoneView);
             _unloadZoneViewAdapter.Construct(core.conveyorUnloadStorageComponent.Storage, unloadZoneView);
         }
@@ -104,7 +104,7 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         [Construct]
         private void Construct(ConveyorConfig config, Core core)
         {
-            _workWidgetAdapter.Construct(core.workMechanics, core.workTimer, workWidget);
+            _workWidgetAdapter.Construct(core.workMechanics, core.conveyorProduceTimeComponent.WorkTimer, workWidget);
             
             _zoneLoadWidgetAdapter.Construct(core.conveyorLoadStorageComponent.Storage, zoneLoadWidget);
             _zoneUnLoadWidgetAdapter.Construct(core.conveyorUnloadStorageComponent.Storage, zoneUnLoadWidget);

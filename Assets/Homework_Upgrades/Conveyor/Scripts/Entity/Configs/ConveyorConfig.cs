@@ -16,6 +16,6 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Configs
 
         [Header("Work")]
         [SerializeField]
-        public float workTime;
+        public UpdateTimerConfig updateTimerConfig;
     }
 }
