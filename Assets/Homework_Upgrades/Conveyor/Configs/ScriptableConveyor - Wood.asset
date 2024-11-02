@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc4e63c6bf14f25b5763a0fba54991b, type: 3}
   m_Name: ScriptableConveyor - Wood
   m_EditorClassIdentifier: 
-  id: WoodToLumber
-  inputResourceType: 0
-  inputCapacity: 4
-  outputResourceType: 1
-  outputCapacity: 2
+  loadStorageConfig: {fileID: 11400000, guid: 6aff9b5c961bb42bf897d701fdde3ace, type: 2}
+  unLoadStorageConfig: {fileID: 11400000, guid: 5b875c876d38b4f1e966f7a7dbe978a6,
+    type: 2}
   workTime: 10

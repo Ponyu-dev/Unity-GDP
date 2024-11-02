@@ -55,6 +55,7 @@ namespace Homework_Upgrades.Conveyor.Scripts.System
         private void OnWorkFinished()
         {
             _workTimer.OnFinished -= OnWorkFinished;
+            _workTimer.OnCanceled -= OnWorkFinished;
             _unloadStorage.Current++;
         }
     }

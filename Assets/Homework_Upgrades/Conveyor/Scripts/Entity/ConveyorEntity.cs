@@ -1,5 +1,4 @@
 using Entities;
-using Game.GamePlay.Conveyor.Components;
 using UnityEngine;
 
 namespace Homework_Upgrades.Conveyor.Scripts.Entity
@@ -10,9 +9,9 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         
         private void Awake()
         {
-            //Add(new Conveyor_SetLoadStorageComponent(_model.LoadStorageCapacity));            
-            //Add(new Conveyor_SetUnloadStorageComponent(_model.UnloadStorageCapacity));            
-            //Add(new Conveyor_SetProduceTimeComponent(_model.ProduceTime));            
+            //Add(new ConveyorStorageComponent(_model.LoadStorageCapacity));            
+            //Add(new ConveyorUnloadStorageComponent(_model.UnloadStorageCapacity));            
+            //Add(new ConveyorProduceTimeComponent(_model.ProduceTime));            
         }
     }
 }
