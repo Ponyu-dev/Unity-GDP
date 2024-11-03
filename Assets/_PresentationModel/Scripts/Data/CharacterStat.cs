@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
+    [Searchable]
     public sealed class CharacterStat
     {
         public event Action<int> OnValueChanged; 

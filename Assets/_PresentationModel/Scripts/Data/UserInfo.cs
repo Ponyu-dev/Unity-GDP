@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
+    [Searchable]
     public sealed class UserInfo
     {
         public event Action<string> OnNameChanged;

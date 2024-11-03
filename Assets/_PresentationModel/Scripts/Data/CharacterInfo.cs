@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 
 namespace Lessons.Architecture.PM
 {
+    [Searchable]
     public sealed class CharacterInfo
     {
         public event Action<CharacterStat> OnStatAdded;
