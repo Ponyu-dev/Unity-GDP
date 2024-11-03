@@ -1,13 +1,12 @@
 using System;
-using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace Popups.Helpers
 {
     [Serializable]
     public class PresenterType
     {
-        [SerializeField] private string typeName;
-
+        private string typeName;
         public PresenterType() {}
         
         public PresenterType(Type type)

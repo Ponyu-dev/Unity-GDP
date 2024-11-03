@@ -14,13 +14,29 @@ namespace Popups
             where TPresenter : PopupPresenter;
     }
 
+    public class PopupQueueItem
+    {
+        public PresenterType PresenterType { get; }
+        public PopupData PopupData { get; }
+        public Type TView { get; }
+        public Type TPresenter { get; }
+
+        public PopupQueueItem(PresenterType presenterType, PopupData popupData, Type tView, Type tPresenter)
+        {
+            PresenterType = presenterType;
+            PopupData = popupData;
+            TView = tView;
+            TPresenter = tPresenter;
+        }
+    }
+
     public class PopupFactory : IPopupFactory
     {
         private readonly PopupCatalog _catalog;
         private readonly Transform _container;
         private readonly IObjectResolver _resolver;
         
-        private readonly Queue<(PresenterType, PopupData)> _popupQueue = new();
+        private readonly Queue<PopupQueueItem> _popupQueue = new();
         private readonly HashSet<PresenterType> _activePopups = new();
         
         [Inject]
@@ -40,48 +56,75 @@ namespace Popups
             where TPresenter : PopupPresenter
         {
             var presenterType = new PresenterType(typeof(TPresenter));
-            if (_activePopups.Contains(presenterType) || _popupQueue.Contains((presenterType, data)))
+            var viewType = typeof(TView);
+            
+            var popupItem = new PopupQueueItem(presenterType, data, viewType, presenterType.Type);
+            
+            if (_activePopups.Contains(presenterType) || _popupQueue.Contains(popupItem))
             {
                 Debug.LogWarning($"[PopupFactory] Popup {presenterType.Type} is already shown or in queue.");
-                presenterType = null;
                 return false;
             }
             
             if (_activePopups.Count > 0)
             {
-                _popupQueue.Enqueue((presenterType, data));
+                _popupQueue.Enqueue(popupItem);
                 return false;
             }
             
-            ShowPopup<TView, TPresenter>(data, presenterType);
+            ShowPopup(popupItem);
             return true;
         }
         
-        private void ShowPopup<TView, TPresenter>(PopupData data, PresenterType presenterType)
-            where TView : PopupView
-            where TPresenter : PopupPresenter
+        private void ShowPopup(PopupQueueItem popupItem)
         {
-            var popup = _catalog.GetPopup(presenterType);
-            var prefab = Object.Instantiate(popup.prefab, _container);
+            var popup = _catalog.GetPopup(popupItem.PresenterType);
+            var prefab = Object.Instantiate(popup.prefab, _container).gameObject;
 
-            if (!prefab.TryGetComponent<TView>(out var view))
+            if (!TryGetComponents(prefab, popupItem, out var view, out var presenter))
             {
-                Debug.LogError($"[PopupFactory] ShowPopup {typeof(TView).Name} cannot be found on prefab.");
                 return;
             }
 
-            if (!_resolver.TryResolve<TPresenter>(out var presenter))
-            {
-                Debug.LogError($"[PopupFactory] ShowPopup {typeof(TPresenter).Name} cannot resolve for VContainer.");
-                return;
-            }
-            
-            presenter.Init(presenterType, view, data);
+            presenter.Init(popupItem.PresenterType, view, popupItem.PopupData);
             presenter.Show();
-            
-            _activePopups.Add(presenterType);
-            
+
+            _activePopups.Add(popupItem.PresenterType);
             presenter.EventHideFinished += OnPopupClose;
+        }
+
+        private bool TryGetComponents(GameObject prefab, PopupQueueItem popupItem, out PopupView view, out PopupPresenter presenter)
+        {
+            view = null;
+            presenter = null;
+
+            if (!prefab.TryGetComponent(popupItem.TView, out var prefabView))
+            {
+                Debug.LogError($"[PopupFactory] ShowPopup: Unable to find component {popupItem.TView.Name} on prefab {prefab.name}.");
+                return false;
+            }
+
+            if (!_resolver.TryResolve(popupItem.TPresenter, out var pres))
+            {
+                Debug.LogError($"[PopupFactory] ShowPopup: Unable to resolve presenter {popupItem.TPresenter.Name} for VContainer. Make sure it is registered in the container.");
+                return false;
+            }
+
+            if (pres is not PopupPresenter foundPresenter)
+            {
+                Debug.LogError($"[PopupFactory] ShowPopup: Resolved object is not of type {nameof(PopupPresenter)}. Obtained: {pres.GetType().Name}.");
+                return false;
+            }
+
+            if (prefabView is not PopupView foundView)
+            {
+                Debug.LogError($"[PopupFactory] ShowPopup: Resolved view is not of type {nameof(PopupView)}. Obtained: {prefabView.GetType().Name}.");
+                return false;
+            }
+
+            view = foundView;
+            presenter = foundPresenter;
+            return true;
         }
         
         private void OnPopupClose(PresenterType type, PopupView view, IPopupPresenter presenter)
@@ -91,8 +134,8 @@ namespace Popups
             _activePopups.Remove(type);
             if (_popupQueue.Count <= 0) return;
             
-            var (nextPopupType, nextData) = _popupQueue.Dequeue();
-            ShowPopup<PopupView, PopupPresenter>(nextData, nextPopupType);
+            var nextPopupItem = _popupQueue.Dequeue();
+            ShowPopup(nextPopupItem);
         }
     }
 }

@@ -10,7 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c40aeb062e574aafbdc7d7513092f343, type: 3}
-  m_Name: PopupSO
+  m_Name: PopupTwoButton
   m_EditorClassIdentifier: 
-  type: 0
-  prefab: {fileID: 1583215989453960302, guid: 1fbe6d424f00f4e47b994170c6181a47, type: 3}
+  prefab: {fileID: 3833290514498852085, guid: d1f26a2090bf846ef9f1fd229ef0cdaa, type: 3}

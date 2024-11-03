@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86f9c2982fc340c08f91f3341c2a34b7, type: 3}
-  m_Name: PopupCatalog
+  m_Script: {fileID: 11500000, guid: c40aeb062e574aafbdc7d7513092f343, type: 3}
+  m_Name: PopupApply
   m_EditorClassIdentifier: 
-  popupEntries:
-  - {fileID: 11400000, guid: 85bbc9b039e9241fb8b5e81ea0429c78, type: 2}
-  - {fileID: 11400000, guid: 0aeae9129b7c74a88a37176c121719ba, type: 2}
+  type: 0
+  prefab: {fileID: 1583215989453960302, guid: 1fbe6d424f00f4e47b994170c6181a47, type: 3}
