@@ -1,3 +1,4 @@
+using System;
 using Popups;
 using Popups.Helpers;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace _PresentationModel.Popups.Samples
             Debug.Log("[TestPopupTwoButtonPresenter] Constructor");
         }
         
-        public override void Init(PresenterType type, PopupView popupView, PopupData popupData)
+        public override void Init(Type type, PopupView popupView, PopupData popupData)
         {
             base.Init(type, popupView, popupData);
 

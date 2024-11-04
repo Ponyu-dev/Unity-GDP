@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c40aeb062e574aafbdc7d7513092f343, type: 3}
-  m_Name: PopupTwoButton
+  m_Script: {fileID: 11500000, guid: 86f9c2982fc340c08f91f3341c2a34b7, type: 3}
+  m_Name: PopupCatalog
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3833290514498852085, guid: d1f26a2090bf846ef9f1fd229ef0cdaa, type: 3}
+  popupEntries:
+  - {fileID: 11400000, guid: 2dbfb77f3dd1f4f55b9bc39aeba9f8f3, type: 2}
+  - {fileID: 11400000, guid: 57ed05a1b22e8438e8422dc14565acce, type: 2}

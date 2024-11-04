@@ -1,18 +1,21 @@
+using System;
 using System.Collections.Generic;
-using Popups.Helpers;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Popups
 {
     [CreateAssetMenu(menuName = "Popups/New PopupCatalog", fileName = "PopupCatalog")]
-
     public class PopupCatalog : ScriptableObject
     {
-        [SerializeField] private List<PopupSO> popupEntries;
+        [SerializeField] private List<PopupSOBase> popupEntries;
 
-        public PopupSO GetPopup(PresenterType presenterType)
+        public bool CatalogIsEmpty => popupEntries.IsNullOrEmpty();
+        
+        public PopupSOBase GetPopup(Type presenterType)
         {
-            return popupEntries.Find(it => it.presenterType.Equals(presenterType));
+            Debug.Log($"GetPopup {presenterType.Name}");
+            return popupEntries.Find(it => it.PresenterType == presenterType);
         }
     }
 }

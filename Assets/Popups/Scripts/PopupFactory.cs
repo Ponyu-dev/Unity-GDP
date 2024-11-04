@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Popups.Helpers;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
@@ -16,17 +15,15 @@ namespace Popups
 
     public class PopupQueueItem
     {
-        public PresenterType PresenterType { get; }
         public PopupData PopupData { get; }
         public Type TView { get; }
         public Type TPresenter { get; }
 
-        public PopupQueueItem(PresenterType presenterType, PopupData popupData, Type tView, Type tPresenter)
+        public PopupQueueItem(Type presenterType, Type tView, PopupData popupData)
         {
-            PresenterType = presenterType;
-            PopupData = popupData;
+            TPresenter = presenterType;
             TView = tView;
-            TPresenter = tPresenter;
+            PopupData = popupData;
         }
     }
 
@@ -37,7 +34,7 @@ namespace Popups
         private readonly IObjectResolver _resolver;
         
         private readonly Queue<PopupQueueItem> _popupQueue = new();
-        private readonly HashSet<PresenterType> _activePopups = new();
+        private readonly HashSet<Type> _activePopups = new();
         
         [Inject]
         public PopupFactory(
@@ -55,14 +52,20 @@ namespace Popups
             where TView : PopupView
             where TPresenter : PopupPresenter
         {
-            var presenterType = new PresenterType(typeof(TPresenter));
+            if (_catalog.CatalogIsEmpty)
+            {
+                Debug.LogWarning($"[PopupFactory] The popup catalog is empty. Please add the required PopupSO to the catalog.");
+                return false;
+            }
+            
+            var presenterType = typeof(TPresenter);
             var viewType = typeof(TView);
             
-            var popupItem = new PopupQueueItem(presenterType, data, viewType, presenterType.Type);
+            var popupItem = new PopupQueueItem(presenterType, viewType, data);
             
             if (_activePopups.Contains(presenterType) || _popupQueue.Contains(popupItem))
             {
-                Debug.LogWarning($"[PopupFactory] Popup {presenterType.Type} is already shown or in queue.");
+                Debug.LogWarning($"[PopupFactory] Popup {presenterType.Name} is already shown or in queue.");
                 return false;
             }
             
@@ -78,7 +81,7 @@ namespace Popups
         
         private void ShowPopup(PopupQueueItem popupItem)
         {
-            var popup = _catalog.GetPopup(popupItem.PresenterType);
+            var popup = _catalog.GetPopup(popupItem.TPresenter);
             var prefab = Object.Instantiate(popup.prefab, _container).gameObject;
 
             if (!TryGetComponents(prefab, popupItem, out var view, out var presenter))
@@ -86,10 +89,10 @@ namespace Popups
                 return;
             }
 
-            presenter.Init(popupItem.PresenterType, view, popupItem.PopupData);
+            presenter.Init(popupItem.TPresenter, view, popupItem.PopupData);
             presenter.Show();
 
-            _activePopups.Add(popupItem.PresenterType);
+            _activePopups.Add(popupItem.TPresenter);
             presenter.EventHideFinished += OnPopupClose;
         }
 
@@ -127,7 +130,7 @@ namespace Popups
             return true;
         }
         
-        private void OnPopupClose(PresenterType type, PopupView view, IPopupPresenter presenter)
+        private void OnPopupClose(Type type, PopupView view, IPopupPresenter presenter)
         {
             presenter.EventHideFinished -= OnPopupClose;
             Object.Destroy(view.gameObject);

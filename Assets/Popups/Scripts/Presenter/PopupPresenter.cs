@@ -6,20 +6,20 @@ namespace Popups
 {
     public interface IPopupPresenter : IPopupAnimatorCallback, IPopupClickCallback
     {
-        event Action<PresenterType, PopupView, IPopupPresenter> EventHideFinished;
-        void Init(PresenterType popupType, PopupView popupView, PopupData data);
+        event Action<Type, PopupView, IPopupPresenter> EventHideFinished;
+        void Init(Type popupType, PopupView popupView, PopupData data);
         void Show();
     }
     
     public abstract class PopupPresenter : IPopupPresenter, IDisposable
     {
-        protected PresenterType PresenterType;
+        protected Type PresenterType;
         protected PopupView PopupView;
         protected IPopupAnimatorView PopupAnimatorView;
 
-        public event Action<PresenterType, PopupView, IPopupPresenter> EventHideFinished;
+        public event Action<Type, PopupView, IPopupPresenter> EventHideFinished;
 
-        public virtual void Init(PresenterType presenterType, PopupView popupView, PopupData data)
+        public virtual void Init(Type presenterType, PopupView popupView, PopupData data)
         {
             PresenterType = presenterType;
             PopupView = popupView;

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c40aeb062e574aafbdc7d7513092f343, type: 3}
-  m_Name: PopupApply
+  m_Script: {fileID: 11500000, guid: 8f207515f03a4af2844f5b5e62c958cc, type: 3}
+  m_Name: ApplyPopupSO
   m_EditorClassIdentifier: 
-  type: 0
   prefab: {fileID: 1583215989453960302, guid: 1fbe6d424f00f4e47b994170c6181a47, type: 3}
+  presenterTypeName: _PresentationModel.Popups.Samples.TestPopupApplyPresenter, Samples,
+    Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
