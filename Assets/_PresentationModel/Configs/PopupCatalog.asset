@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PopupCatalog
   m_EditorClassIdentifier: 
   popupEntries:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: c1bb280b25976404a844c4fddba25269, type: 2}

@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 
 namespace Lessons.Architecture.PM
 {
-    [Searchable]
+    [Serializable]
     public sealed class PlayerLevel
     {
         public event Action OnLevelUp;

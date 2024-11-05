@@ -1,10 +1,9 @@
 using System;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
-    [Searchable]
+    [Serializable]
     public sealed class CharacterStat
     {
         public event Action<int> OnValueChanged; 
