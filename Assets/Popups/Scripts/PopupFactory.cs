@@ -8,18 +8,19 @@ namespace Popups
 {
     public interface IPopupFactory
     {
-        bool CanShowPopup<TView, TPresenter>(PopupData data)
+        event Action<bool> OnHideFinished;
+        bool CanShowPopup<TView, TPresenter>(IPopupData data)
             where TView : PopupView
             where TPresenter : PopupPresenter;
     }
 
     public class PopupQueueItem
     {
-        public PopupData PopupData { get; }
+        public IPopupData PopupData { get; }
         public Type TView { get; }
         public Type TPresenter { get; }
 
-        public PopupQueueItem(Type presenterType, Type tView, PopupData popupData)
+        public PopupQueueItem(Type presenterType, Type tView, IPopupData popupData)
         {
             TPresenter = presenterType;
             TView = tView;
@@ -35,6 +36,8 @@ namespace Popups
         
         private readonly Queue<PopupQueueItem> _popupQueue = new();
         private readonly HashSet<Type> _activePopups = new();
+
+        public event Action<bool> OnHideFinished;
         
         [Inject]
         public PopupFactory(
@@ -48,7 +51,7 @@ namespace Popups
             _resolver = resolver;
         }
         
-        public bool CanShowPopup<TView, TPresenter>(PopupData data) 
+        public bool CanShowPopup<TView, TPresenter>(IPopupData data) 
             where TView : PopupView
             where TPresenter : PopupPresenter
         {
@@ -130,9 +133,10 @@ namespace Popups
             return true;
         }
         
-        private void OnPopupClose(Type type, PopupView view, IPopupPresenter presenter)
+        private void OnPopupClose(bool isApply, Type type, PopupView view, IPopupPresenter presenter)
         {
             presenter.EventHideFinished -= OnPopupClose;
+            OnHideFinished?.Invoke(isApply);
             Object.Destroy(view.gameObject);
             _activePopups.Remove(type);
             if (_popupQueue.Count <= 0) return;

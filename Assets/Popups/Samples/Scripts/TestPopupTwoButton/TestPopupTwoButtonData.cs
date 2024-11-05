@@ -2,7 +2,7 @@ using Popups;
 
 namespace _PresentationModel.Popups.Samples
 {
-    public class TestPopupTwoButtonData : PopupData
+    public class TestPopupTwoButtonData : IPopupData
     {
         public string Title { get; private set; }
         public string Description { get; private set; }

@@ -6,8 +6,8 @@ namespace Popups
 {
     public interface IPopupPresenter : IPopupAnimatorCallback, IPopupClickCallback
     {
-        event Action<Type, PopupView, IPopupPresenter> EventHideFinished;
-        void Init(Type popupType, PopupView popupView, PopupData data);
+        event Action<bool, Type, PopupView, IPopupPresenter> EventHideFinished;
+        void Init(Type popupType, PopupView popupView, IPopupData data);
         void Show();
     }
     
@@ -16,10 +16,11 @@ namespace Popups
         protected Type PresenterType;
         protected PopupView PopupView;
         protected IPopupAnimatorView PopupAnimatorView;
+        protected bool isApply = false;
 
-        public event Action<Type, PopupView, IPopupPresenter> EventHideFinished;
+        public event Action<bool, Type, PopupView, IPopupPresenter> EventHideFinished;
 
-        public virtual void Init(Type presenterType, PopupView popupView, PopupData data)
+        public virtual void Init(Type presenterType, PopupView popupView, IPopupData data)
         {
             PresenterType = presenterType;
             PopupView = popupView;
@@ -29,8 +30,13 @@ namespace Popups
         }
         
         public virtual void Show() => PopupAnimatorView.Show();
-        
-        public virtual void OnApplyClicked() => PopupAnimatorView.Hide();
+
+        public virtual void OnApplyClicked()
+        {
+            isApply = true;
+            PopupAnimatorView.Hide();
+        }
+
         public virtual void OnCancelClicked() => PopupAnimatorView.Hide();
         public virtual void OnCloseClicked() => PopupAnimatorView.Hide();
         
@@ -41,7 +47,8 @@ namespace Popups
         public virtual void OnHideFinished()
         {
             Debug.Log("[PopupPresenter] OnHideFinished and Object Destroy");
-            EventHideFinished?.Invoke(PresenterType, PopupView, this);
+            EventHideFinished?.Invoke(isApply, PresenterType, PopupView, this);
+            isApply = false;
         }
 
         public virtual void Dispose()

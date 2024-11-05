@@ -13,7 +13,7 @@ namespace _PresentationModel.Popups.Samples
             Debug.Log("[TestPopupApplyPresenter] Constructor");
         }
         
-        public override void Init(Type type, PopupView popupView, PopupData popupData)
+        public override void Init(Type type, PopupView popupView, IPopupData popupData)
         {
             base.Init(type, popupView, popupData);
 
