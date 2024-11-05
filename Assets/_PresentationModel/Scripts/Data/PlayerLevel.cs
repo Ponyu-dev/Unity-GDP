@@ -9,13 +9,13 @@ namespace Lessons.Architecture.PM
         public event Action OnLevelUp;
         public event Action<int> OnExperienceChanged;
 
-        [ShowInInspector, ReadOnly]
+        [ShowInInspector]
         public int CurrentLevel { get; private set; } = 1;
 
-        [ShowInInspector, ReadOnly]
+        [ShowInInspector]
         public int CurrentExperience { get; private set; }
 
-        [ShowInInspector, ReadOnly]
+        [ShowInInspector]
         public int RequiredExperience
         {
             get { return 100 * (this.CurrentLevel + 1); }

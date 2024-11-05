@@ -15,5 +15,6 @@ namespace _PresentationModel.Scripts.LevelUp.Data
 
         public string StringExperience => $"XP: {_currentExperience}/{_requiredExperience}";
         public float ProgressExperience => _requiredExperience > 0 ? (float)_currentExperience / _requiredExperience : 0;
+        public bool CanLevelUp() => _currentExperience == _requiredExperience;
     }
 }

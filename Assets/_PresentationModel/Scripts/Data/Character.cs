@@ -1,21 +1,22 @@
-using System;
 using _PresentationModel.Scripts.LevelUp.Data;
-using Popups;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
-    [Serializable]
-    public sealed class Character : PopupData
+    [CreateAssetMenu(menuName = "Characters/New CharacterData", fileName = "CharacterData")]
+    public sealed class Character : ScriptableObject
     {
-        [SerializeField] public UserInfo userInfo;
-        [SerializeField] public PlayerLevel playerLevel;
-        [SerializeField] public CharacterInfo characterInfo;
-        [SerializeField] public CharacterStat characterStat;
-
-        public PlayerLevel PlayerLevel => playerLevel;
+        [ShowInInspector] public int IncreasePerLevel { get; private set; }
+        [ShowInInspector] public UserInfo UserInfo { get; private set; }
+        [ShowInInspector] public PlayerLevel PlayerLevel  { get; private set; }
+        [ShowInInspector] public CharacterInfo CharacterInfo  { get; private set; }
         
-        public UserInfoData GetUserInfoData() => new UserInfoData(userInfo.Name, userInfo.Description, userInfo.Icon);
-        public PlayerLevelData GetPlayerLevelData() => new PlayerLevelData(playerLevel.CurrentLevel, playerLevel.CurrentExperience, playerLevel.RequiredExperience);
+        public CharacterData ConvertToData()
+        {
+            var level = new PlayerLevelData(PlayerLevel.CurrentLevel, PlayerLevel.CurrentExperience, PlayerLevel.RequiredExperience);
+            
+            return new CharacterData(UserInfo, level, CharacterInfo.GetStats());
+        }
     }
 }

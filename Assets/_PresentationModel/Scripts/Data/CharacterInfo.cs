@@ -6,35 +6,14 @@ using Sirenix.OdinInspector;
 namespace Lessons.Architecture.PM
 {
     [Serializable]
-    public sealed class CharacterInfo
+    public struct CharacterInfo
     {
-        public event Action<CharacterStat> OnStatAdded;
-        public event Action<CharacterStat> OnStatRemoved;
-    
         [ShowInInspector]
-        private readonly HashSet<CharacterStat> stats = new();
-
-        [Button]
-        public void AddStat(CharacterStat stat)
-        {
-            if (this.stats.Add(stat))
-            {
-                this.OnStatAdded?.Invoke(stat);
-            }
-        }
-
-        [Button]
-        public void RemoveStat(CharacterStat stat)
-        {
-            if (this.stats.Remove(stat))
-            {
-                this.OnStatRemoved?.Invoke(stat);
-            }
-        }
+        public List<CharacterStat> Stats { get; private set; }
 
         public CharacterStat GetStat(string name)
         {
-            foreach (var stat in this.stats)
+            foreach (var stat in this.Stats)
             {
                 if (stat.Name == name)
                 {
@@ -47,7 +26,7 @@ namespace Lessons.Architecture.PM
 
         public CharacterStat[] GetStats()
         {
-            return this.stats.ToArray();
+            return this.Stats.ToArray();
         }
     }
 }

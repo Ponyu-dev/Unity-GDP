@@ -1,5 +1,6 @@
 using _PresentationModel.Scripts.LevelUp.Views;
 using Popups;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,11 @@ namespace _PresentationModel.Scripts.LevelUp
 {
     public sealed class LevelUpView : PopupView
     {
-        [SerializeField] private Button btnClose;
-        [SerializeField] private Button btnApply;
-        [SerializeField] private UserInfoView userInfoView;
-        [SerializeField] private PlayerLevelView playerLevelView;
+        [SerializeField, Required] private Button btnClose;
+        [SerializeField, Required] private Button btnApply;
+        [SerializeField, Required] public UserInfoView userInfoView;
+        [SerializeField, Required] public PlayerLevelView playerLevelView;
+        [SerializeField, Required] public Transform statsContainer;
 
         protected override void SetupButtons()
         {
@@ -33,19 +35,6 @@ namespace _PresentationModel.Scripts.LevelUp
         private void OnCloseClicked() => _popupClickCallback?.OnCloseClicked();
         private void OnApplyClicked() => _popupClickCallback?.OnApplyClicked();
 
-        public void SetUserInfoData(string name, string description, Sprite icon)
-        {
-            userInfoView.SetName(name);        
-            userInfoView.SetDescription(description);        
-            userInfoView.SetIcon(icon);        
-        }
-
-        public void SetPlayerLevelData(string level, float progress, string text)
-        {
-            playerLevelView.SetCurrentLevel(level);
-            playerLevelView.SetLevelProgress(progress, text);
-
-            btnApply.interactable = progress >= 1;
-        }
+        public void SetEnableBtnApply(bool value) => btnApply.interactable = value;
     }
 }
