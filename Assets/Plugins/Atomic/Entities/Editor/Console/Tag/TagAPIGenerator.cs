@@ -10,7 +10,7 @@ namespace Atomic.Entities
         private const string NAMESPACE = "Atomic.Entities";
         private const string ENTITY_CLASS = "IEntity";
 
-        internal static void Generate(TagsConfig catalog, bool refresh = true)
+        internal static void Generate(TagConfig catalog, bool refresh = true)
         {
             if (catalog == null)
             {
@@ -58,7 +58,7 @@ namespace Atomic.Entities
             var items = catalog.items;
             for (int i = 0, count = items.Count; i < count; i++)
             {
-                TagsConfig.Item item = items[i];
+                TagConfig.Item item = items[i];
                 writer.WriteLine($"        public const int {item.type} = {item.id};");
             }
 
@@ -69,7 +69,7 @@ namespace Atomic.Entities
             writer.WriteLine("        ///Extensions");
             for (int i = 0, count = items.Count; i < count; i++)
             {
-                TagsConfig.Item item = items[i];
+                TagConfig.Item item = items[i];
                 writer.WriteLine(
                     $"        public static bool Has{item.type}Tag(this {ENTITY_CLASS} obj) => obj.HasTag({item.type});");
 

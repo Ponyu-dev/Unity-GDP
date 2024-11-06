@@ -9,7 +9,7 @@ namespace Atomic.Entities
     {
         private const string DEFAULT_TYPE_NAME = "Enter Type...";
 
-        private TagsConfig catalog;
+        private TagConfig catalog;
 
         private SerializedObject catalogSerialized;
         private SerializedProperty itemsSerialized;
@@ -166,8 +166,8 @@ namespace Atomic.Entities
             Color prevColor = GUI.color;
 
             SerializedProperty key = this.itemsSerialized.GetArrayElementAtIndex(itemIndex);
-            SerializedProperty id = key.FindPropertyRelative(nameof(TagsConfig.Item.id));
-            SerializedProperty type = key.FindPropertyRelative(nameof(TagsConfig.Item.type));
+            SerializedProperty id = key.FindPropertyRelative(nameof(TagConfig.Item.id));
+            SerializedProperty type = key.FindPropertyRelative(nameof(TagConfig.Item.type));
 
             EditorGUILayout.BeginHorizontal();
 

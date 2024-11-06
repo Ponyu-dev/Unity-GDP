@@ -11,7 +11,7 @@ namespace Atomic.Entities
     {
         protected override void DrawPropertyLayout(GUIContent label)
         {
-            TagsConfig catalog = TagManager.GetTagConfig();
+            TagConfig catalog = TagManager.GetTagConfig();
             
             if (catalog == null)
             {

@@ -7,32 +7,32 @@ namespace Atomic.Entities
 {
     public sealed class TagManager
     {
-        private static TagsConfig _configuration;
+        private static TagConfig _configuration;
         
-        public static TagsConfig GetTagConfig()
+        public static TagConfig GetTagConfig()
         {
             if (_configuration != null)
             {
                 return _configuration;
             }
 
-            string[] guids = AssetDatabase.FindAssets("t:" + nameof(TagsConfig));
+            string[] guids = AssetDatabase.FindAssets("t:" + nameof(TagConfig));
             if (guids.Length == 0)
             {
                 return null;
             }
 
             string assetPath = AssetDatabase.GUIDToAssetPath(guids[0]);
-            _configuration = AssetDatabase.LoadAssetAtPath<TagsConfig>(assetPath);
+            _configuration = AssetDatabase.LoadAssetAtPath<TagConfig>(assetPath);
             return _configuration;
         }
 
-        public static TagsConfig CreateTagConfig()
+        public static TagConfig CreateTagConfig()
         {
             string path = EditorUtility.SaveFilePanelInProject("Create Entity Tag Settings", "EntityTagSettings", "asset",
                 "Please enter a file name to save the asset to");
 
-            _configuration = ScriptableObject.CreateInstance<TagsConfig>();
+            _configuration = ScriptableObject.CreateInstance<TagConfig>();
 
             AssetDatabase.CreateAsset(_configuration, path);
             AssetDatabase.SaveAssets();

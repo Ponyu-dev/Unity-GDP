@@ -6,7 +6,7 @@ namespace Atomic.Entities
     {
         public string GetName(int id)
         {
-            TagsConfig config = TagManager.GetTagConfig();
+            TagConfig config = TagManager.GetTagConfig();
             if (config == null)
             {
                 return id.ToString();

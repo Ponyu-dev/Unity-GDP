@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Atomic.Entities
 {
     //TODO: Add catergories!
-    public sealed class TagsConfig : ScriptableObject
+    public sealed class TagConfig : ScriptableObject
     {
         [SerializeField]
         public string @namespace = "Atomic.Entities";
