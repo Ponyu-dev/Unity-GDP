@@ -15,8 +15,8 @@ namespace Atomic.Entities
     {
         ///Keys
         public const int Rotation = 7; // quaternionReactive
-        public const int AngularSpeed = 8; // Const<float>
         public const int Look = 9; // float3Reactive
+        public const int AngularSpeed = 2; // Const<float>
 
 
         ///Extensions
@@ -39,24 +39,6 @@ namespace Atomic.Entities
         public static void SetRotation(this IEntity obj, quaternionReactive value) => obj.SetValue(Rotation, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Const<float> GetAngularSpeed(this IEntity obj) => obj.GetValue<Const<float>>(AngularSpeed);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetAngularSpeed(this IEntity obj, out Const<float> value) => obj.TryGetValue(AngularSpeed, out value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddAngularSpeed(this IEntity obj, Const<float> value) => obj.AddValue(AngularSpeed, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasAngularSpeed(this IEntity obj) => obj.HasValue(AngularSpeed);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool DelAngularSpeed(this IEntity obj) => obj.DelValue(AngularSpeed);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetAngularSpeed(this IEntity obj, Const<float> value) => obj.SetValue(AngularSpeed, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3Reactive GetLook(this IEntity obj) => obj.GetValue<float3Reactive>(Look);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -73,5 +55,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetLook(this IEntity obj, float3Reactive value) => obj.SetValue(Look, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Const<float> GetAngularSpeed(this IEntity obj) => obj.GetValue<Const<float>>(AngularSpeed);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetAngularSpeed(this IEntity obj, out Const<float> value) => obj.TryGetValue(AngularSpeed, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddAngularSpeed(this IEntity obj, Const<float> value) => obj.AddValue(AngularSpeed, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasAngularSpeed(this IEntity obj) => obj.HasValue(AngularSpeed);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelAngularSpeed(this IEntity obj) => obj.DelValue(AngularSpeed);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetAngularSpeed(this IEntity obj, Const<float> value) => obj.SetValue(AngularSpeed, value);
     }
 }

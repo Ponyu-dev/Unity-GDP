@@ -40,14 +40,17 @@ MonoBehaviour:
     - id: 7
       name: Rotation
       type: quaternionReactive
-    - id: 8
-      name: AngularSpeed
-      type: Const<float>
     - id: 9
       name: Look
       type: float3Reactive
+    - id: 2
+      name: AngularSpeed
+      type: Const<float>
   - name: Core
     indexes:
     - id: 10
       name: RootTransform
       type: Transform
+    - id: 1
+      name: CameraMain
+      type: Camera

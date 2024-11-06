@@ -15,6 +15,7 @@ namespace Atomic.Entities
     {
         ///Keys
         public const int RootTransform = 10; // Transform
+        public const int CameraMain = 1; // Camera
 
 
         ///Extensions
@@ -35,5 +36,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetRootTransform(this IEntity obj, Transform value) => obj.SetValue(RootTransform, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Camera GetCameraMain(this IEntity obj) => obj.GetValue<Camera>(CameraMain);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetCameraMain(this IEntity obj, out Camera value) => obj.TryGetValue(CameraMain, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddCameraMain(this IEntity obj, Camera value) => obj.AddValue(CameraMain, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasCameraMain(this IEntity obj) => obj.HasValue(CameraMain);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelCameraMain(this IEntity obj) => obj.DelValue(CameraMain);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetCameraMain(this IEntity obj, Camera value) => obj.SetValue(CameraMain, value);
     }
 }

@@ -24,6 +24,7 @@ namespace Game.Scripts.Contexts.PlayerContext
             //context.AddCameraData(cameraData);
             
             context.AddSystem<CharacterMovementSystem>();
+            context.AddSystem<CharacterRotateSystem>();
             //context.AddSystem<CameraFollowSystem>();
         }
     }

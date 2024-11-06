@@ -8,15 +8,16 @@ namespace Game.Scripts.Entities
 {
     public sealed class CharacterEntityInstaller : SceneEntityInstallerBase
     {
+        [SerializeField] private Camera cameraMain;
         [SerializeField] private float moveSpeed = 3;
-        [SerializeField] private float angularSpeed = 12;
+        [SerializeField] private float angularSpeed = 5f;
         [SerializeField] private float3 initialDirection;
 
         public override void Install(IEntity entity)
         {
             entity.AddCharacterTag();
-            //entity.AddGameObject(gameObject);
             entity.AddRootTransform(transform);
+            entity.AddCameraMain(cameraMain);
             
             entity.AddPosition(new float3Reactive(transform.position));
             entity.AddRotation(new quaternionReactive(transform.rotation));
@@ -26,8 +27,9 @@ namespace Game.Scripts.Entities
             entity.AddMoveDirection(initialDirection);
             entity.AddBehaviour<MovementBehaviour>();
 
-            //entity.AddAngularSpeed(angularSpeed);
-            //entity.AddBehaviour<RotationBehaviour>();
+            entity.AddLook(initialDirection);
+            entity.AddAngularSpeed(angularSpeed);
+            entity.AddBehaviour<RotationBehaviour>();
         }
     }
 }
