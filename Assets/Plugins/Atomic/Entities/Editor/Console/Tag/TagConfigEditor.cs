@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Atomic.Entities
 {
-    [CustomEditor(typeof(TagsConfig))]
+    [CustomEditor(typeof(TagConfig))]
     internal sealed class TagConfigEditor : Editor
     {
         public override void OnInspectorGUI()
@@ -21,7 +21,7 @@ namespace Atomic.Entities
 
             if (GUILayout.Button("Compile"))
             {
-                TagAPIGenerator.Generate(this.target as TagsConfig);
+                TagAPIGenerator.Generate(this.target as TagConfig);
             }
 
             GUI.color = prevColor;
