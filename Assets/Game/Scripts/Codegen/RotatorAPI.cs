@@ -16,7 +16,7 @@ namespace Atomic.Entities
         ///Keys
         public const int Rotation = 7; // quaternionReactive
         public const int AngularSpeed = 8; // Const<float>
-        public const int Look = 9; // quaternionReactive
+        public const int Look = 9; // float3Reactive
 
 
         ///Extensions
@@ -57,13 +57,13 @@ namespace Atomic.Entities
         public static void SetAngularSpeed(this IEntity obj, Const<float> value) => obj.SetValue(AngularSpeed, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static quaternionReactive GetLook(this IEntity obj) => obj.GetValue<quaternionReactive>(Look);
+        public static float3Reactive GetLook(this IEntity obj) => obj.GetValue<float3Reactive>(Look);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetLook(this IEntity obj, out quaternionReactive value) => obj.TryGetValue(Look, out value);
+        public static bool TryGetLook(this IEntity obj, out float3Reactive value) => obj.TryGetValue(Look, out value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddLook(this IEntity obj, quaternionReactive value) => obj.AddValue(Look, value);
+        public static bool AddLook(this IEntity obj, float3Reactive value) => obj.AddValue(Look, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasLook(this IEntity obj) => obj.HasValue(Look);
@@ -72,6 +72,6 @@ namespace Atomic.Entities
         public static bool DelLook(this IEntity obj) => obj.DelValue(Look);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetLook(this IEntity obj, quaternionReactive value) => obj.SetValue(Look, value);
+        public static void SetLook(this IEntity obj, float3Reactive value) => obj.SetValue(Look, value);
     }
 }

@@ -14,23 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   local: 0
   namespace: Atomic.Entities
-  directoryPath: Assets/Game/Codegen
+  directoryPath: Assets/Game/Scripts/Codegen
   suffix: API
   imports:
   - Atomic.Elements
   - Atomic.Extensions
   - Unity.Mathematics
   categories:
-  - name: Core
-    indexes:
-    - id: 1
-      name: Transform
-      type: Transform
-  - name: Visual
-    indexes:
-    - id: 2
-      name: VisualTransform
-      type: Transform
   - name: Movement
     indexes:
     - id: 3
@@ -55,4 +45,9 @@ MonoBehaviour:
       type: Const<float>
     - id: 9
       name: Look
-      type: quaternionReactive
+      type: float3Reactive
+  - name: Core
+    indexes:
+    - id: 10
+      name: RootTransform
+      type: Transform

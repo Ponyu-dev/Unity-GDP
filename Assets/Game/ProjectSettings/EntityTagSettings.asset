@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EntityTagSettings
   m_EditorClassIdentifier: 
   namespace: Atomic.Entities
-  directoryPath: Assets/Game/Codegen
+  directoryPath: Assets/Game/Scripts/Codegen
   className: TagAPI
   items:
   - id: 1

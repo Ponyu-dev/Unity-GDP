@@ -16,22 +16,37 @@ MonoBehaviour:
   categories:
   - Name: Game
     Namespace: Atomic.Contexts
-    DirectoryPath: Assets/Game/Codegen
+    DirectoryPath: Assets/Game/Scripts/Codegen
     ClassSuffix: API
     Imports:
     - Atomic.Entities
     - Atomic.Elements
     - System.Collections.Generic
-    items: []
+    - Game.Scripts.Common.Team
+    items:
+    - id: 3
+      name: PlayerMap
+      type: Dictionary<TeamType, IContext>
+    - id: 5
+      name: WorldTransform
+      type: Transform
   - Name: Player
     Namespace: Atomic.Contexts
-    DirectoryPath: Assets/Game/Codegen
+    DirectoryPath: Assets/Game/Scripts/Codegen
     ClassSuffix: API
     Imports:
     - Atomic.Entities
     - Atomic.Elements
     - System.Collections.Generic
+    - Game.Scripts.Contexts.PlayerContext.InputSystem
+    - Game.Scripts.Common.Team
     items:
     - id: 1
       name: Character
       type: Const<IEntity>
+    - id: 2
+      name: InputMap
+      type: InputMap
+    - id: 4
+      name: TeamType
+      type: Const<TeamType>
