@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44bae1cf0fb645f197e54e0bd53a7b2f, type: 3}
+  m_Name: EntityValueSettings
+  m_EditorClassIdentifier: 
+  local: 0
+  namespace: Atomic.Entities
+  directoryPath: Assets/Game/Codegen
+  suffix: API
+  imports:
+  - Atomic.Elements
+  - Atomic.Extensions
+  - Unity.Mathematics
+  categories:
+  - name: Core
+    indexes:
+    - id: 1
+      name: Transform
+      type: Transform
+  - name: Visual
+    indexes:
+    - id: 2
+      name: VisualTransform
+      type: Transform
+  - name: Movement
+    indexes:
+    - id: 3
+      name: Position
+      type: float3Reactive
+    - id: 4
+      name: MoveDirection
+      type: float3Reactive
+    - id: 5
+      name: MoveSpeed
+      type: Const<float>
+    - id: 6
+      name: CanMove
+      type: AndExpression
+  - name: Rotator
+    indexes:
+    - id: 7
+      name: Rotation
+      type: quaternionReactive
+    - id: 8
+      name: AngularSpeed
+      type: Const<float>
+    - id: 9
+      name: Look
+      type: quaternionReactive
