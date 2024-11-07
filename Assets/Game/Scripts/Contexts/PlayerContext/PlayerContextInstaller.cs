@@ -1,26 +1,19 @@
 using Atomic.Contexts;
-using Atomic.Elements;
-using Atomic.Entities;
 using Game.Scripts.Contexts.PlayerContext.MovementSystem;
-using Game.Scripts.Common.Team;
+using Game.Scripts.Contexts.Base;
 using Game.Scripts.Contexts.PlayerContext.Camera;
 using UnityEngine;
 
 namespace Game.Scripts.Contexts.PlayerContext
 {
-    public sealed class PlayerContextInstaller : SceneContextInstallerBase
+    public sealed class PlayerContextInstaller : EntityContextInstaller
     {
-        [SerializeField] private SceneEntity character;
         [SerializeField] private InputMap inputMap;
         [SerializeField] private CameraData cameraData;
-        [SerializeField] private TeamType teamType;
         
         public override void Install(IContext context)
         {
-            context.GetPlayerMap().Add(teamType, context);
-            context.AddTeamType(teamType);
-
-            context.AddCharacter(new Const<IEntity>(character));
+            base.Install(context);
             context.AddInputMap(inputMap);
             context.AddCameraData(cameraData);
             

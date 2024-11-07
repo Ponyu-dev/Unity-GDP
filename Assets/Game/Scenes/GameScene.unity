@@ -420,9 +420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec52429a2ed84dd0a032c0f71a6284b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombie: {fileID: 7422275388418058727}
-  player: {fileID: 1755356080}
+  entity: {fileID: 7422275388418058727}
   teamType: 1
+  player: {fileID: 1755356080}
 --- !u!1001 &4066079025346027532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -485,6 +485,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4066079026474336901, guid: 2db702897c788473db73e382c901f612,
+        type: 3}
+      propertyPath: entity
+      value: 
+      objectReference: {fileID: 1755356080}
     - target: {fileID: 4066079026474336901, guid: 2db702897c788473db73e382c901f612,
         type: 3}
       propertyPath: character
@@ -649,12 +654,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29299fe1e2654376a26e6b4bd53c1e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  angularSpeed: 5
-  initialDirection:
-    x: 0
-    y: 0
-    z: 0
+  movementComponent:
+    moveSpeed: 1
+    initialDirection:
+      x: 0
+      y: 0
+      z: 0
+  rotateComponent:
+    angularSpeed: 2
+    initialDirection:
+      x: 0
+      y: 0
+      z: 0
 --- !u!1001 &7422275389676192831
 PrefabInstance:
   m_ObjectHideFlags: 0
