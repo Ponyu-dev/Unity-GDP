@@ -22,7 +22,7 @@ namespace Game.Scripts.Common.Mechanics
 
         public void OnUpdate(IEntity entity, float deltaTime)
         {
-            var direction = _lookDirection.Value - _position.Value;
+            var direction = math.normalize(_lookDirection.Value - _position.Value);
             var targetRotation = Quaternion.LookRotation(direction);
             
             _rotation.Value = Quaternion.Slerp(_rotation.Value, targetRotation, deltaTime * _angularSpeed.Value);

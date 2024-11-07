@@ -18,3 +18,5 @@ MonoBehaviour:
   items:
   - id: 1
     type: Character
+  - id: 2
+    type: Zombie

@@ -53,3 +53,15 @@ MonoBehaviour:
     - id: 6
       name: CameraData
       type: CameraData
+  - Name: Zombie
+    Namespace: Atomic.Contexts
+    DirectoryPath: Assets/Game/Scripts/Codegen
+    ClassSuffix: API
+    Imports:
+    - Atomic.Entities
+    - Atomic.Elements
+    - System.Collections.Generic
+    items:
+    - id: 7
+      name: AttackPlayer
+      type: Const<IEntity>

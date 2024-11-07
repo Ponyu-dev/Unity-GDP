@@ -5,7 +5,7 @@ using Game.Scripts.Contexts.PlayerContext.InputSystem;
 
 namespace Game.Scripts.Contexts.PlayerContext.MovementSystem
 {
-    public sealed class CharacterMovementSystem : IContextInit, IContextUpdate
+    public sealed class PlayerMovementSystem : IContextInit, IContextUpdate
     {
         private IValue<IEntity> _character;
         private InputMap _inputMap;

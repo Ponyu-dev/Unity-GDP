@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Scripts.Contexts.PlayerContext.MovementSystem
 {
-    public sealed class CharacterRotateSystem : IContextInit, IContextUpdate
+    public sealed class PlayerRotateSystem : IContextInit, IContextUpdate
     {
         private IValue<IEntity> _character;
         private IValue<float3> _position;
