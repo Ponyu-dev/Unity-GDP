@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using Atomic.Entities;
 using UnityEngine;
 
-namespace Game.Scripts.Contexts.GameContext.EntityPool
+namespace Game.Scripts.Contexts.Base.EntityPool
 {
     public sealed class SceneEntityPool : IEntityPool
     {
@@ -12,6 +13,10 @@ namespace Game.Scripts.Contexts.GameContext.EntityPool
         private readonly Transform _poolContainer;
 
         private readonly Queue<SceneEntity> _queue = new();
+        private readonly HashSet<IEntity> _active = new();
+
+        public IReadOnlyList<IEntity> GetActives() => _active.ToList();
+        public int CountActives() => _active.Count;
 
         public SceneEntityPool(
             SceneEntity prefab,
@@ -34,18 +39,20 @@ namespace Game.Scripts.Contexts.GameContext.EntityPool
         public IEntity Rent()
         {
             if (_queue.TryDequeue(out var entity))
-            {
                 entity.transform.SetParent(_worldContainer);
-                return entity;
-            }
-
-            return SceneEntity.Instantiate(_prefab, _worldContainer);
+            else
+                entity = SceneEntity.Instantiate(_prefab, _worldContainer);
+            
+            _active.Add(entity);
+            
+            return entity;
         }
 
         public void Return(IEntity entity)
         {
             var sceneEntity = SceneEntity.Cast(entity);
             sceneEntity.transform.SetParent(_poolContainer);
+            _active.Remove(entity);
             _queue.Enqueue(sceneEntity);
         }
     }

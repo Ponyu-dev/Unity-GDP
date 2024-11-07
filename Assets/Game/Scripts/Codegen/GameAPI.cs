@@ -17,6 +17,7 @@ namespace Atomic.Contexts
 		///Keys
 		public const int PlayerMap = 3; // Dictionary<TeamType, IContext>
 		public const int WorldTransform = 5; // Transform
+		public const int GameCountdown = 9; // Countdown
 
 
 		///Extensions
@@ -55,5 +56,23 @@ namespace Atomic.Contexts
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool HasWorldTransform(this IContext obj) => obj.HasValue(WorldTransform);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Countdown GetGameCountdown(this IContext obj) => obj.ResolveValue<Countdown>(GameCountdown);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool TryGetGameCountdown(this IContext obj, out Countdown value) => obj.TryResolveValue(GameCountdown, out value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool AddGameCountdown(this IContext obj, Countdown value) => obj.AddValue(GameCountdown, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool DelGameCountdown(this IContext obj) => obj.DelValue(GameCountdown);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void SetGameCountdown(this IContext obj, Countdown value) => obj.SetValue(GameCountdown, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool HasGameCountdown(this IContext obj) => obj.HasValue(GameCountdown);
     }
 }

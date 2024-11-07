@@ -30,6 +30,9 @@ MonoBehaviour:
     - id: 5
       name: WorldTransform
       type: Transform
+    - id: 9
+      name: GameCountdown
+      type: Countdown
   - Name: Player
     Namespace: Atomic.Contexts
     DirectoryPath: Assets/Game/Scripts/Codegen
@@ -53,7 +56,7 @@ MonoBehaviour:
     - id: 6
       name: CameraData
       type: CameraData
-  - Name: Zombie
+  - Name: Zombies
     Namespace: Atomic.Contexts
     DirectoryPath: Assets/Game/Scripts/Codegen
     ClassSuffix: API
@@ -61,7 +64,14 @@ MonoBehaviour:
     - Atomic.Entities
     - Atomic.Elements
     - System.Collections.Generic
+    - Game.Scripts.Contexts.ZombieContext
     items:
     - id: 7
       name: AttackPlayer
       type: Const<IEntity>
+    - id: 8
+      name: ZombieSystemData
+      type: ZombieSystemData
+    - id: 10
+      name: ZombieActiveMax
+      type: Const<int>

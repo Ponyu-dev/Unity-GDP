@@ -57,6 +57,9 @@ MonoBehaviour:
     - id: 1
       name: CameraMain
       type: Camera
+    - id: 18
+      name: IsActive
+      type: IReactiveVariable<bool>
   - name: Life
     indexes:
     - id: 8
@@ -71,3 +74,14 @@ MonoBehaviour:
     - id: 13
       name: CanTakeDamage
       type: AndExpression
+  - name: Shoot
+    indexes:
+    - id: 15
+      name: CanFire
+      type: AndExpression
+    - id: 16
+      name: ShootAction
+      type: BaseEvent
+    - id: 17
+      name: ShootEvent
+      type: BaseEvent

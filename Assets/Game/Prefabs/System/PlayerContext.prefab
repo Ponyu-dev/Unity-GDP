@@ -168,13 +168,13 @@ MonoBehaviour:
   installOnAwake: 0
   initialParent: {fileID: 0}
   installers:
-  - {fileID: 4066079026474336901}
+  - {fileID: 0}
   children: []
   onInstalled:
     m_PersistentCalls:
       m_Calls: []
   dontDestroyOnLoad: 0
-  refreshOnValidate: 1
+  refreshOnValidate: 0
 --- !u!114 &4066079026474336903
 MonoBehaviour:
   m_ObjectHideFlags: 0
