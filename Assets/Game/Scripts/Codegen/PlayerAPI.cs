@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using Atomic.Entities;
 using Atomic.Elements;
 using System.Collections.Generic;
-using Game.Scripts.Contexts.PlayerContext.InputSystem;
+using Game.Scripts.Contexts.PlayerContext;
 using Game.Scripts.Common.Team;
 
 namespace Atomic.Contexts
@@ -19,6 +19,7 @@ namespace Atomic.Contexts
 		public const int Character = 1; // Const<IEntity>
 		public const int InputMap = 2; // InputMap
 		public const int TeamType = 4; // Const<TeamType>
+		public const int CameraData = 6; // CameraData
 
 
 		///Extensions
@@ -75,5 +76,23 @@ namespace Atomic.Contexts
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool HasTeamType(this IContext obj) => obj.HasValue(TeamType);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static CameraData GetCameraData(this IContext obj) => obj.ResolveValue<CameraData>(CameraData);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool TryGetCameraData(this IContext obj, out CameraData value) => obj.TryResolveValue(CameraData, out value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool AddCameraData(this IContext obj, CameraData value) => obj.AddValue(CameraData, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool DelCameraData(this IContext obj) => obj.DelValue(CameraData);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void SetCameraData(this IContext obj, CameraData value) => obj.SetValue(CameraData, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool HasCameraData(this IContext obj) => obj.HasValue(CameraData);
     }
 }

@@ -38,7 +38,7 @@ MonoBehaviour:
     - Atomic.Entities
     - Atomic.Elements
     - System.Collections.Generic
-    - Game.Scripts.Contexts.PlayerContext.InputSystem
+    - Game.Scripts.Contexts.PlayerContext
     - Game.Scripts.Common.Team
     items:
     - id: 1
@@ -50,3 +50,6 @@ MonoBehaviour:
     - id: 4
       name: TeamType
       type: Const<TeamType>
+    - id: 6
+      name: CameraData
+      type: CameraData

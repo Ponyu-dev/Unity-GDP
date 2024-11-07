@@ -10,7 +10,7 @@ namespace Game.Scripts.Contexts.PlayerContext.MovementSystem
     {
         private IValue<IEntity> _character;
         private IValue<float3> _position;
-        private Camera _cameraMain;
+        private UnityEngine.Camera _cameraMain;
         
         public void Init(IContext context)
         {

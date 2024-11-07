@@ -1,9 +1,9 @@
 using Atomic.Contexts;
 using Atomic.Elements;
 using Atomic.Entities;
-using Game.Scripts.Contexts.PlayerContext.InputSystem;
 using Game.Scripts.Contexts.PlayerContext.MovementSystem;
 using Game.Scripts.Common.Team;
+using Game.Scripts.Contexts.PlayerContext.Camera;
 using UnityEngine;
 
 namespace Game.Scripts.Contexts.PlayerContext
@@ -12,6 +12,7 @@ namespace Game.Scripts.Contexts.PlayerContext
     {
         [SerializeField] private SceneEntity character;
         [SerializeField] private InputMap inputMap;
+        [SerializeField] private CameraData cameraData;
         [SerializeField] private TeamType teamType;
         
         public override void Install(IContext context)
@@ -21,11 +22,11 @@ namespace Game.Scripts.Contexts.PlayerContext
 
             context.AddCharacter(new Const<IEntity>(character));
             context.AddInputMap(inputMap);
-            //context.AddCameraData(cameraData);
+            context.AddCameraData(cameraData);
             
             context.AddSystem<CharacterMovementSystem>();
             context.AddSystem<CharacterRotateSystem>();
-            //context.AddSystem<CameraFollowSystem>();
+            context.AddSystem<CameraFollowSystem>();
         }
     }
 }
