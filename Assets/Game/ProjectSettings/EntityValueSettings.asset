@@ -46,6 +46,9 @@ MonoBehaviour:
     - id: 2
       name: AngularSpeed
       type: Const<float>
+    - id: 14
+      name: CanRotate
+      type: AndExpression
   - name: Core
     indexes:
     - id: 10
@@ -54,3 +57,17 @@ MonoBehaviour:
     - id: 1
       name: CameraMain
       type: Camera
+  - name: Life
+    indexes:
+    - id: 8
+      name: HitPoints
+      type: IReactiveVariable<int>
+    - id: 11
+      name: IsDead
+      type: IReactiveVariable<bool>
+    - id: 12
+      name: TakeDamageAction
+      type: BaseEvent<int>
+    - id: 13
+      name: CanTakeDamage
+      type: AndExpression

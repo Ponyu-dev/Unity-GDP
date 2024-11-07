@@ -11,6 +11,7 @@ namespace Game.Scripts.Common.Mechanics
         private IValue<float> _angularSpeed;
         private IValue<float3> _position;
         private IValue<float3> _lookDirection;
+        private IValue<bool> _canRotate;
         
         public void Init(IEntity entity)
         {
@@ -18,10 +19,14 @@ namespace Game.Scripts.Common.Mechanics
             _rotation = entity.GetRotation();
             _angularSpeed = entity.GetAngularSpeed();
             _lookDirection = entity.GetLook();
+            _canRotate = entity.GetCanRotate();
         }
 
         public void OnUpdate(IEntity entity, float deltaTime)
         {
+            if (!_canRotate.Value)
+                return;
+            
             var direction = math.normalize(_lookDirection.Value - _position.Value);
             var targetRotation = Quaternion.LookRotation(direction);
             

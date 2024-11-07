@@ -17,6 +17,7 @@ namespace Atomic.Entities
         public const int Rotation = 7; // quaternionReactive
         public const int Look = 9; // float3Reactive
         public const int AngularSpeed = 2; // Const<float>
+        public const int CanRotate = 14; // AndExpression
 
 
         ///Extensions
@@ -73,5 +74,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetAngularSpeed(this IEntity obj, Const<float> value) => obj.SetValue(AngularSpeed, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static AndExpression GetCanRotate(this IEntity obj) => obj.GetValue<AndExpression>(CanRotate);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetCanRotate(this IEntity obj, out AndExpression value) => obj.TryGetValue(CanRotate, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddCanRotate(this IEntity obj, AndExpression value) => obj.AddValue(CanRotate, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasCanRotate(this IEntity obj) => obj.HasValue(CanRotate);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelCanRotate(this IEntity obj) => obj.DelValue(CanRotate);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetCanRotate(this IEntity obj, AndExpression value) => obj.SetValue(CanRotate, value);
     }
 }

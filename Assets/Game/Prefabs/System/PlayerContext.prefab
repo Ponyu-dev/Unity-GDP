@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 4066079026474336903}
   - component: {fileID: 4066079026474336901}
   m_Layer: 0
-  m_Name: _PlayerContext_
+  m_Name: PlayerContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,7 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0d757c10664db6b19845c7fd261fed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  entity: {fileID: 0}
+  teamType: 0
   inputMap:
     forward: 119
     back: 115
@@ -212,4 +213,3 @@ MonoBehaviour:
       x: 0
       y: 10
       z: -10
-  teamType: 0
