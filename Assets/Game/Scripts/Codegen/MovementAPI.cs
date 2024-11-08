@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using Atomic.Elements;
 using Atomic.Extensions;
 using Unity.Mathematics;
+using Game.Scripts.Common.Trigger;
 
 namespace Atomic.Entities
 {

@@ -9,6 +9,7 @@ namespace Game.Scripts.Entities
     {
         [SerializeField] private RangeAttackComponent rangeAttackComponent;
         [SerializeField] private MeleeAttackComponent meleeAttackComponent;
+        [SerializeField] private TriggerEventComponent triggerEventComponent;
         
         public override void Install(IEntity entity)
         {
@@ -17,6 +18,7 @@ namespace Game.Scripts.Entities
             
             rangeAttackComponent.Install(entity);
             meleeAttackComponent.Install(entity);
+            triggerEventComponent.Install(entity);
         }
 
         protected override Func<bool> ConditionMove()

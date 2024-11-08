@@ -10,11 +10,12 @@ namespace Game.Scripts.Common.Components
     public sealed class MeleeAttackComponent : IComponentInstaller
     {
         [SerializeField] private Cycle periodAttack;
+        [SerializeField] private int damage;
         
         public void Install(IEntity entity)
         {
             entity.AddAttackPeroid(periodAttack);
-
+            entity.AddDamage(new Const<int>(damage));
             entity.AddBehaviour(new MeleeAttackBehaviour());
         }
     }

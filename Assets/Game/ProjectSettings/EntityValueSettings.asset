@@ -20,6 +20,7 @@ MonoBehaviour:
   - Atomic.Elements
   - Atomic.Extensions
   - Unity.Mathematics
+  - Game.Scripts.Common.Trigger
   categories:
   - name: Movement
     indexes:
@@ -60,6 +61,9 @@ MonoBehaviour:
     - id: 18
       name: IsActive
       type: IReactiveVariable<bool>
+    - id: 27
+      name: TriggerEventReceiver
+      type: TriggerEventReceiver
   - name: Life
     indexes:
     - id: 8
@@ -100,6 +104,9 @@ MonoBehaviour:
     - id: 26
       name: AttackPeroid
       type: Cycle
+    - id: 28
+      name: Damage
+      type: Const<int>
   - name: Animation
     indexes:
     - id: 19

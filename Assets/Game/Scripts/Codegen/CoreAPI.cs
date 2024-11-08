@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using Atomic.Elements;
 using Atomic.Extensions;
 using Unity.Mathematics;
+using Game.Scripts.Common.Trigger;
 
 namespace Atomic.Entities
 {
@@ -17,6 +18,7 @@ namespace Atomic.Entities
         public const int RootTransform = 10; // Transform
         public const int CameraMain = 1; // Camera
         public const int IsActive = 18; // IReactiveVariable<bool>
+        public const int TriggerEventReceiver = 27; // TriggerEventReceiver
 
 
         ///Extensions
@@ -73,5 +75,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetIsActive(this IEntity obj, IReactiveVariable<bool> value) => obj.SetValue(IsActive, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TriggerEventReceiver GetTriggerEventReceiver(this IEntity obj) => obj.GetValue<TriggerEventReceiver>(TriggerEventReceiver);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetTriggerEventReceiver(this IEntity obj, out TriggerEventReceiver value) => obj.TryGetValue(TriggerEventReceiver, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddTriggerEventReceiver(this IEntity obj, TriggerEventReceiver value) => obj.AddValue(TriggerEventReceiver, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasTriggerEventReceiver(this IEntity obj) => obj.HasValue(TriggerEventReceiver);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelTriggerEventReceiver(this IEntity obj) => obj.DelValue(TriggerEventReceiver);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetTriggerEventReceiver(this IEntity obj, TriggerEventReceiver value) => obj.SetValue(TriggerEventReceiver, value);
     }
 }
