@@ -77,17 +77,29 @@ MonoBehaviour:
     - id: 22
       name: DeadAction
       type: BaseEvent<IEntity>
-  - name: Shoot
+  - name: Attack
     indexes:
     - id: 15
-      name: CanFire
+      name: CanAttack
       type: AndExpression
     - id: 16
-      name: ShootAction
+      name: AttackAction
       type: BaseEvent
     - id: 17
-      name: ShootEvent
+      name: AttackEvent
       type: BaseEvent
+    - id: 23
+      name: AttackRange
+      type: Const<float>
+    - id: 24
+      name: AttackEntity
+      type: Const<IEntity>
+    - id: 25
+      name: IsRangeAttack
+      type: IReactiveVariable<bool>
+    - id: 26
+      name: AttackPeroid
+      type: Cycle
   - name: Animation
     indexes:
     - id: 19

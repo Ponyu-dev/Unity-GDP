@@ -33,6 +33,9 @@ namespace Game.Scripts.Contexts.ZombieContext.MovementSystem
             if (_zombiePool.CountActives() >= _zombieSpawnMax.Value)
                 return;
             var zombie = _gameContext.SpawnZombieInPosition();
+            if (!zombie.HasAttackEntity())
+                zombie.AddAttackEntity(_gameContext.GetAttackPlayer());
+            zombie.GetIsDead().Value = false;
             zombie.GetDeadAction().Subscribe(OnDead);
         }
 
@@ -41,7 +44,6 @@ namespace Game.Scripts.Contexts.ZombieContext.MovementSystem
             zombie.GetDeadAction().Unsubscribe(OnDead);
             await UniTask.Delay(1500);
             _zombiePool.Return(zombie);
-            zombie.GetIsDead().Value = false;
         }
 
         public void Disable(IContext context)

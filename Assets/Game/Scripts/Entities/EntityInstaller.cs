@@ -10,17 +10,17 @@ namespace Game.Scripts.Entities
 {
     public abstract class EntityInstaller : SceneEntityInstallerBase
     {
-        [SerializeField] private ReactiveVariable<bool> isActive;
+        [Header("Expressions")]
+        [SerializeField] private AndExpression canTakeDamage;
+        [SerializeField] private AndExpression canMove;
+        [SerializeField] private AndExpression canRotate;
         
+        [SerializeField] private ReactiveVariable<bool> isActive;
         [SerializeField] private LifeComponent lifeComponent;
         [SerializeField] private MovementComponent movementComponent;
         [SerializeField] private RotationComponent rotateComponent;
         [SerializeField] private AnimatorComponent animatorComponent;
 
-        [Header("Expressions")]
-        [SerializeField] private AndExpression canTakeDamage;
-        [SerializeField] private AndExpression canMove;
-        [SerializeField] private AndExpression canRotate;
 
         public override void Install(IEntity entity)
         {
@@ -41,10 +41,15 @@ namespace Game.Scripts.Entities
             entity.AddCanRotate(canRotate);
             
             canTakeDamage.Append(Condition());
-            canMove.Append(Condition());
-            canRotate.Append(Condition());
+            canMove.Append(ConditionMove());
+            canRotate.Append(ConditionMove());
 
             entity.AddBehaviour(new DeadBehaviour());
+        }
+
+        protected virtual Func<bool> ConditionMove()
+        {
+            return Condition();
         }
 
         private Func<bool> Condition()

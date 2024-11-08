@@ -99,6 +99,13 @@ MonoBehaviour:
       z: 0
   animatorComponent:
     animator: {fileID: 2143502341257796649}
+  rangeAttackComponent:
+    range: 1
+    isRangeAttack:
+      value: 0
+  meleeAttackComponent:
+    periodAttack:
+      duration: 2
 --- !u!1001 &2913154929923844110
 PrefabInstance:
   m_ObjectHideFlags: 0
