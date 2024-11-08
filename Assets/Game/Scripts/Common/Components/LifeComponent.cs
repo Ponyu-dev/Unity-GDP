@@ -12,6 +12,7 @@ namespace Game.Scripts.Common.Components
         [SerializeField] private ReactiveVariable<int> hitPoints;
         [SerializeField] private ReactiveVariable<bool> isDead;
         [SerializeField] private BaseEvent<int> takeDamageAction;
+        [SerializeField] private BaseEvent<IEntity> deadAction;
         public IReactiveVariable<bool> IsDead => isDead;
         
         public void Install(IEntity entity)
@@ -19,6 +20,7 @@ namespace Game.Scripts.Common.Components
             entity.AddHitPoints(hitPoints);
             entity.AddIsDead(isDead);
             entity.AddTakeDamageAction(takeDamageAction);
+            entity.AddDeadAction(deadAction);
             
             entity.AddBehaviour(new TakeDamageBehaviour());
         }

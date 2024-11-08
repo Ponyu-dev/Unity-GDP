@@ -18,6 +18,7 @@ namespace Atomic.Entities
         public const int IsDead = 11; // IReactiveVariable<bool>
         public const int TakeDamageAction = 12; // BaseEvent<int>
         public const int CanTakeDamage = 13; // AndExpression
+        public const int DeadAction = 22; // BaseEvent<IEntity>
 
 
         ///Extensions
@@ -92,5 +93,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetCanTakeDamage(this IEntity obj, AndExpression value) => obj.SetValue(CanTakeDamage, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static BaseEvent<IEntity> GetDeadAction(this IEntity obj) => obj.GetValue<BaseEvent<IEntity>>(DeadAction);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetDeadAction(this IEntity obj, out BaseEvent<IEntity> value) => obj.TryGetValue(DeadAction, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddDeadAction(this IEntity obj, BaseEvent<IEntity> value) => obj.AddValue(DeadAction, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasDeadAction(this IEntity obj) => obj.HasValue(DeadAction);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelDeadAction(this IEntity obj) => obj.DelValue(DeadAction);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetDeadAction(this IEntity obj, BaseEvent<IEntity> value) => obj.SetValue(DeadAction, value);
     }
 }

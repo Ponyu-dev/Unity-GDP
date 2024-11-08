@@ -15,6 +15,7 @@ namespace Game.Scripts.Entities
         [SerializeField] private LifeComponent lifeComponent;
         [SerializeField] private MovementComponent movementComponent;
         [SerializeField] private RotationComponent rotateComponent;
+        [SerializeField] private AnimatorComponent animatorComponent;
 
         [Header("Expressions")]
         [SerializeField] private AndExpression canTakeDamage;
@@ -33,6 +34,7 @@ namespace Game.Scripts.Entities
             movementComponent.Install(entity);
             rotateComponent.Install(entity);
             lifeComponent.Install(entity);
+            animatorComponent.Install(entity);
             
             entity.AddCanTakeDamage(canTakeDamage);
             entity.AddCanMove(canMove);
@@ -41,6 +43,8 @@ namespace Game.Scripts.Entities
             canTakeDamage.Append(Condition());
             canMove.Append(Condition());
             canRotate.Append(Condition());
+
+            entity.AddBehaviour(new DeadBehaviour());
         }
 
         private Func<bool> Condition()

@@ -78,6 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df295f603ab54546896b29042942363b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive:
+    value: 0
   lifeComponent:
     hitPoints:
       value: 0
@@ -95,6 +97,8 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+  animatorComponent:
+    animator: {fileID: 0}
   cameraMain: {fileID: 0}
 --- !u!1001 &5018135226623313118
 PrefabInstance:
@@ -103,6 +107,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5018135225869248792}
     m_Modifications:
+    - target: {fileID: 3878403007874495527, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8e7fad07881604ff6b867f81b105c728, type: 2}
     - target: {fileID: 3878403007878761191, guid: e5bfb4e1a1a4d4f059efedc672db885b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -247,6 +247,12 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 4066079025346027532}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1204066167 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8102298549815587065, guid: aa7846cb01ae74fc99594dc95e88e3c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 5018135227607757494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1411256940
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +367,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: <ZombieContext>
+      objectReference: {fileID: 0}
+    - target: {fileID: 1347037996043893732, guid: 5a2341572b2d04872af2a09780dbffec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1347037996043893738, guid: 5a2341572b2d04872af2a09780dbffec,
         type: 3}
@@ -535,6 +546,11 @@ PrefabInstance:
       objectReference: {fileID: 844891769}
     - target: {fileID: 5018135225869248775, guid: aa7846cb01ae74fc99594dc95e88e3c2,
         type: 3}
+      propertyPath: animatorComponent.animator
+      value: 
+      objectReference: {fileID: 1204066167}
+    - target: {fileID: 5018135225869248775, guid: aa7846cb01ae74fc99594dc95e88e3c2,
+        type: 3}
       propertyPath: lifeComponent.hitPoints.value
       value: 10
       objectReference: {fileID: 0}
@@ -672,6 +688,11 @@ PrefabInstance:
       propertyPath: worldTransform
       value: 
       objectReference: {fileID: 1411256941}
+    - target: {fileID: 8181086256780848399, guid: 9387ce18e179149c4b0173bfdb7caa08,
+        type: 3}
+      propertyPath: children.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8181086256780848399, guid: 9387ce18e179149c4b0173bfdb7caa08,
         type: 3}
       propertyPath: children.Array.data[0]

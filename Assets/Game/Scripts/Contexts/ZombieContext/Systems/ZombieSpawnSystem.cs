@@ -1,5 +1,7 @@
 using Atomic.Contexts;
 using Atomic.Elements;
+using Atomic.Entities;
+using Cysharp.Threading.Tasks;
 using Game.Scripts.Contexts.Base.EntityPool;
 using Game.Scripts.Contexts.ZombieContext.Pool;
 
@@ -11,7 +13,7 @@ namespace Game.Scripts.Contexts.ZombieContext.MovementSystem
         private Cycle _spawnPeriod;
         private IEntityPool _zombiePool;
         private Const<int> _zombieSpawnMax;
-        
+
         public void Init(IContext context)
         {
             _gameContext = context;
@@ -25,13 +27,21 @@ namespace Game.Scripts.Contexts.ZombieContext.MovementSystem
             _spawnPeriod.Start();
             _spawnPeriod.OnCycle += Spawn;
         }
-        
+
         private void Spawn()
         {
             if (_zombiePool.CountActives() >= _zombieSpawnMax.Value)
                 return;
-            
-            _gameContext.SpawnZombieInPosition();
+            var zombie = _gameContext.SpawnZombieInPosition();
+            zombie.GetDeadAction().Subscribe(OnDead);
+        }
+
+        private async void OnDead(IEntity zombie)
+        {
+            zombie.GetDeadAction().Unsubscribe(OnDead);
+            await UniTask.Delay(1500);
+            _zombiePool.Return(zombie);
+            zombie.GetIsDead().Value = false;
         }
 
         public void Disable(IContext context)

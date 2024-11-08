@@ -52,7 +52,7 @@ namespace Game.Scripts.Contexts.Base.EntityPool
         {
             var sceneEntity = SceneEntity.Cast(entity);
             sceneEntity.transform.SetParent(_poolContainer);
-            _active.Remove(entity);
+            _active.Remove(sceneEntity);
             _queue.Enqueue(sceneEntity);
         }
     }

@@ -74,6 +74,9 @@ MonoBehaviour:
     - id: 13
       name: CanTakeDamage
       type: AndExpression
+    - id: 22
+      name: DeadAction
+      type: BaseEvent<IEntity>
   - name: Shoot
     indexes:
     - id: 15
@@ -85,3 +88,14 @@ MonoBehaviour:
     - id: 17
       name: ShootEvent
       type: BaseEvent
+  - name: Animation
+    indexes:
+    - id: 19
+      name: Animator
+      type: Animator
+    - id: 20
+      name: AnimBoolEvent
+      type: BaseEvent<string, bool>
+    - id: 21
+      name: AnimTriggerEvent
+      type: BaseEvent<string>

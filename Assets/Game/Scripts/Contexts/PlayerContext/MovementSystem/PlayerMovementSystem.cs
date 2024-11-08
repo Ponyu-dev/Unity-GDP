@@ -2,6 +2,8 @@ using Atomic.Contexts;
 using Atomic.Elements;
 using Atomic.Entities;
 using Game.Scripts.Contexts.PlayerContext.InputSystem;
+using Game.Scripts.Helpers;
+using Unity.Mathematics;
 
 namespace Game.Scripts.Contexts.PlayerContext.MovementSystem
 {
@@ -18,7 +20,9 @@ namespace Game.Scripts.Contexts.PlayerContext.MovementSystem
 
         public void Update(IContext context, float deltaTime)
         {
-            _character.Value.GetMoveDirection().Value = _inputMap.GetMoveDirection();
+            var direction = _inputMap.GetMoveDirection();
+            _character.Value.GetMoveDirection().Value = direction;
+            _character.Value.GetAnimBoolEvent().Invoke(AnimationProperties.IS_MOVING, math.length(direction) > 0);
         }
     }
 }
