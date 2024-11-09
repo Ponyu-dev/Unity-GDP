@@ -14,7 +14,8 @@ namespace Game.Scripts.Contexts.PlayerContext
         [SerializeField] private SceneEntity entity;
         [SerializeField] private TeamType teamType;
         [SerializeField] private InputMap inputMap;
-        [SerializeField] private CameraData cameraData;
+        //TODO Решил убрать свой код для слежения камерой за персонажа и использовать com.unity.cinemachine
+        //[SerializeField] private CameraData cameraData;
         
         public override void Install(IContext context)
         {
@@ -23,11 +24,12 @@ namespace Game.Scripts.Contexts.PlayerContext
             context.GetPlayerMap().Add(teamType, context);
             
             context.AddInputMap(inputMap);
-            context.AddCameraData(cameraData);
-            
+
             context.AddSystem<PlayerMovementSystem>();
             context.AddSystem<PlayerRotateSystem>();
-            context.AddSystem<CameraFollowSystem>();
+            
+            //context.AddCameraData(cameraData);
+            //context.AddSystem<CameraFollowSystem>();
         }
     }
 }
