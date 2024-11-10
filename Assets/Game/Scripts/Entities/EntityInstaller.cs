@@ -15,7 +15,6 @@ namespace Game.Scripts.Entities
         [SerializeField] private AndExpression canMove;
         [SerializeField] private AndExpression canRotate;
         
-        [SerializeField] private ReactiveVariable<bool> isActive;
         [SerializeField] private LifeComponent lifeComponent;
         [SerializeField] private MovementComponent movementComponent;
         [SerializeField] private RotationComponent rotateComponent;
@@ -25,8 +24,7 @@ namespace Game.Scripts.Entities
         public override void Install(IEntity entity)
         {
             entity.AddRootTransform(transform);
-
-            entity.AddIsActive(isActive);
+            
             entity.AddPosition(new float3Reactive(transform.position));
             entity.AddRotation(new quaternionReactive(transform.rotation));
             entity.AddBehaviour<TransformBehaviour>();
@@ -54,7 +52,7 @@ namespace Game.Scripts.Entities
 
         protected Func<bool> BaseCondition()
         {
-            return () => !lifeComponent.IsDead.Value && !isActive.Value;
+            return () => !lifeComponent.IsDead.Value;
         } 
     }
 }

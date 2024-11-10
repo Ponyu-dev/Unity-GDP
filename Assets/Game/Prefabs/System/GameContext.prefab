@@ -49,9 +49,7 @@ MonoBehaviour:
   initialParent: {fileID: 0}
   installers:
   - {fileID: 8181086256780848398}
-  children:
-  - {fileID: 0}
-  - {fileID: 0}
+  children: []
   onInstalled:
     m_PersistentCalls:
       m_Calls: []

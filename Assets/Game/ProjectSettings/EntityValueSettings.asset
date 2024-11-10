@@ -58,9 +58,6 @@ MonoBehaviour:
     - id: 1
       name: CameraMain
       type: Camera
-    - id: 18
-      name: IsActive
-      type: IReactiveVariable<bool>
     - id: 27
       name: TriggerEventReceiver
       type: TriggerEventReceiver

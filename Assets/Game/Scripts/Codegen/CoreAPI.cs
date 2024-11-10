@@ -17,7 +17,6 @@ namespace Atomic.Entities
         ///Keys
         public const int RootTransform = 10; // Transform
         public const int CameraMain = 1; // Camera
-        public const int IsActive = 18; // IReactiveVariable<bool>
         public const int TriggerEventReceiver = 27; // TriggerEventReceiver
         public const int Rigidbody = 35; // Rigidbody
 
@@ -58,24 +57,6 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetCameraMain(this IEntity obj, Camera value) => obj.SetValue(CameraMain, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IReactiveVariable<bool> GetIsActive(this IEntity obj) => obj.GetValue<IReactiveVariable<bool>>(IsActive);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetIsActive(this IEntity obj, out IReactiveVariable<bool> value) => obj.TryGetValue(IsActive, out value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddIsActive(this IEntity obj, IReactiveVariable<bool> value) => obj.AddValue(IsActive, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasIsActive(this IEntity obj) => obj.HasValue(IsActive);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool DelIsActive(this IEntity obj) => obj.DelValue(IsActive);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetIsActive(this IEntity obj, IReactiveVariable<bool> value) => obj.SetValue(IsActive, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TriggerEventReceiver GetTriggerEventReceiver(this IEntity obj) => obj.GetValue<TriggerEventReceiver>(TriggerEventReceiver);

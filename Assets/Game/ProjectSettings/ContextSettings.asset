@@ -30,9 +30,6 @@ MonoBehaviour:
     - id: 5
       name: WorldTransform
       type: Transform
-    - id: 9
-      name: GameCountdown
-      type: Countdown
   - Name: Player
     Namespace: Atomic.Contexts
     DirectoryPath: Assets/Game/Scripts/Codegen

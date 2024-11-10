@@ -20,6 +20,8 @@ namespace Game.Scripts.Contexts.PlayerContext.MovementSystem
 
         public void Update(IContext context, float deltaTime)
         {
+            if (_character.Value.GetIsDead().Value)
+                return;
             var direction = _inputMap.GetMoveDirection();
             _character.Value.GetMoveDirection().Value = direction;
             _character.Value.GetAnimBoolEvent().Invoke(AnimationProperties.IS_MOVING, math.length(direction) > 0);
