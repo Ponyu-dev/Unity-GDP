@@ -1548,7 +1548,7 @@ GameObject:
   - component: {fileID: 1795411381}
   - component: {fileID: 1795411379}
   m_Layer: 0
-  m_Name: <BulletContext>
+  m_Name: BulletContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1866,7 +1866,7 @@ PrefabInstance:
     - target: {fileID: 1347037996043893732, guid: 5a2341572b2d04872af2a09780dbffec,
         type: 3}
       propertyPath: m_Name
-      value: <ZombieContext>
+      value: ZombieContext
       objectReference: {fileID: 0}
     - target: {fileID: 1347037996043893732, guid: 5a2341572b2d04872af2a09780dbffec,
         type: 3}
@@ -2033,7 +2033,7 @@ PrefabInstance:
     - target: {fileID: 4066079026474336907, guid: 2db702897c788473db73e382c901f612,
         type: 3}
       propertyPath: m_Name
-      value: <PlayerContext>
+      value: PlayerContext
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2db702897c788473db73e382c901f612, type: 3}
@@ -3152,7 +3152,7 @@ PrefabInstance:
     - target: {fileID: 8181086256780848392, guid: 9387ce18e179149c4b0173bfdb7caa08,
         type: 3}
       propertyPath: m_Name
-      value: <GameContext>
+      value: GameContext
       objectReference: {fileID: 0}
     - target: {fileID: 8181086256780848393, guid: 9387ce18e179149c4b0173bfdb7caa08,
         type: 3}
