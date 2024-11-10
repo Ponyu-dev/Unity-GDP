@@ -1,7 +1,7 @@
 using System;
 using Atomic.Entities;
 using Game.Scripts.Common.Mechanics;
-using Game.Scripts.Common.Trigger;
+using Game.Scripts.Helpers;
 using UnityEngine;
 
 namespace Game.Scripts.Common.Components

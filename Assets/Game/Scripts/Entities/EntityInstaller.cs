@@ -40,19 +40,19 @@ namespace Game.Scripts.Entities
             entity.AddCanMove(canMove);
             entity.AddCanRotate(canRotate);
             
-            canTakeDamage.Append(Condition());
-            canMove.Append(ConditionMove());
-            canRotate.Append(ConditionMove());
+            canTakeDamage.Append(BaseCondition());
+            canMove.Append(Condition());
+            canRotate.Append(Condition());
 
             entity.AddBehaviour(new DeadBehaviour());
         }
 
-        protected virtual Func<bool> ConditionMove()
+        protected virtual Func<bool> Condition()
         {
-            return Condition();
+            return BaseCondition();
         }
 
-        private Func<bool> Condition()
+        protected Func<bool> BaseCondition()
         {
             return () => !lifeComponent.IsDead.Value && !isActive.Value;
         } 

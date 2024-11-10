@@ -3,8 +3,7 @@ using Atomic.Elements;
 using Atomic.Entities;
 using Game.Scripts.Common.Team;
 using Game.Scripts.Contexts.PlayerContext.MovementSystem;
-using Game.Scripts.Contexts.Base;
-using Game.Scripts.Contexts.PlayerContext.Camera;
+using Game.Scripts.Contexts.PlayerContext.InputSystem;
 using UnityEngine;
 
 namespace Game.Scripts.Contexts.PlayerContext
@@ -27,6 +26,7 @@ namespace Game.Scripts.Contexts.PlayerContext
 
             context.AddSystem<PlayerMovementSystem>();
             context.AddSystem<PlayerRotateSystem>();
+            context.AddSystem<PlayerAttackSystem>();
             
             //context.AddCameraData(cameraData);
             //context.AddSystem<CameraFollowSystem>();

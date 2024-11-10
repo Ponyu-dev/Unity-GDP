@@ -45,8 +45,7 @@ namespace Game.Scripts.Common.Mechanics
 
         public void OnUpdate(IEntity entity, float deltaTime)
         {
-            if (_isRangeAttack.Value)
-                _attackPeriod.Tick(deltaTime);
+            _attackPeriod.Tick(deltaTime);
         }
     }
 }

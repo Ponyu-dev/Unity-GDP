@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using Atomic.Elements;
 using Atomic.Extensions;
 using Unity.Mathematics;
-using Game.Scripts.Common.Trigger;
+using Game.Scripts.Helpers;
 
 namespace Atomic.Entities
 {
@@ -19,6 +19,7 @@ namespace Atomic.Entities
         public const int CameraMain = 1; // Camera
         public const int IsActive = 18; // IReactiveVariable<bool>
         public const int TriggerEventReceiver = 27; // TriggerEventReceiver
+        public const int Rigidbody = 35; // Rigidbody
 
 
         ///Extensions
@@ -93,5 +94,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetTriggerEventReceiver(this IEntity obj, TriggerEventReceiver value) => obj.SetValue(TriggerEventReceiver, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rigidbody GetRigidbody(this IEntity obj) => obj.GetValue<Rigidbody>(Rigidbody);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetRigidbody(this IEntity obj, out Rigidbody value) => obj.TryGetValue(Rigidbody, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddRigidbody(this IEntity obj, Rigidbody value) => obj.AddValue(Rigidbody, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasRigidbody(this IEntity obj) => obj.HasValue(Rigidbody);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelRigidbody(this IEntity obj) => obj.DelValue(Rigidbody);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetRigidbody(this IEntity obj, Rigidbody value) => obj.SetValue(Rigidbody, value);
     }
 }

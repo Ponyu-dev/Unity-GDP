@@ -21,7 +21,7 @@ namespace Game.Scripts.Entities
             triggerEventComponent.Install(entity);
         }
 
-        protected override Func<bool> ConditionMove()
+        protected override Func<bool> Condition()
         {
             return rangeAttackComponent.ConditionRange();
         }

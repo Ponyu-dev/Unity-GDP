@@ -30,7 +30,7 @@ namespace Game.Scripts.Contexts.ZombieContext
             var worldTransform = context.GetWorldTransform();
             var zombieSystemData = new ZombieSystemData
             {
-                pool = new SceneEntityPool(prefabZombie, poolTransform, worldTransform, initialPoolCount),
+                pool = new ScenePool(prefabZombie, poolTransform, worldTransform, initialPoolCount),
                 spawnAreas = spawnAreas,
                 spawnCycle = new Cycle(spawnPeriod)
             };

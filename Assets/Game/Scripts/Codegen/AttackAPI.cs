@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using Atomic.Elements;
 using Atomic.Extensions;
 using Unity.Mathematics;
-using Game.Scripts.Common.Trigger;
+using Game.Scripts.Helpers;
 
 namespace Atomic.Entities
 {
@@ -23,6 +23,14 @@ namespace Atomic.Entities
         public const int IsRangeAttack = 25; // IReactiveVariable<bool>
         public const int AttackPeroid = 26; // Cycle
         public const int Damage = 28; // Const<int>
+        public const int ShootAnimationReceiver = 29; // IShootAnimationReceiver
+        public const int AttackCountdown = 30; // Countdown
+        public const int ShootFX = 31; // ParticleSystem
+        public const int MaxAmmo = 33; // Const<int>
+        public const int CurrentAmmo = 34; // IReactiveVariable<int>
+        public const int FirePoint = 32; // Transform
+        public const int ShootAction = 37; // BaseEvent<Transform>
+        public const int BulletSpeed = 38; // Const<float>
 
 
         ///Extensions
@@ -169,5 +177,149 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetDamage(this IEntity obj, Const<int> value) => obj.SetValue(Damage, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IShootAnimationReceiver GetShootAnimationReceiver(this IEntity obj) => obj.GetValue<IShootAnimationReceiver>(ShootAnimationReceiver);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetShootAnimationReceiver(this IEntity obj, out IShootAnimationReceiver value) => obj.TryGetValue(ShootAnimationReceiver, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddShootAnimationReceiver(this IEntity obj, IShootAnimationReceiver value) => obj.AddValue(ShootAnimationReceiver, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasShootAnimationReceiver(this IEntity obj) => obj.HasValue(ShootAnimationReceiver);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelShootAnimationReceiver(this IEntity obj) => obj.DelValue(ShootAnimationReceiver);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetShootAnimationReceiver(this IEntity obj, IShootAnimationReceiver value) => obj.SetValue(ShootAnimationReceiver, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Countdown GetAttackCountdown(this IEntity obj) => obj.GetValue<Countdown>(AttackCountdown);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetAttackCountdown(this IEntity obj, out Countdown value) => obj.TryGetValue(AttackCountdown, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddAttackCountdown(this IEntity obj, Countdown value) => obj.AddValue(AttackCountdown, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasAttackCountdown(this IEntity obj) => obj.HasValue(AttackCountdown);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelAttackCountdown(this IEntity obj) => obj.DelValue(AttackCountdown);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetAttackCountdown(this IEntity obj, Countdown value) => obj.SetValue(AttackCountdown, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ParticleSystem GetShootFX(this IEntity obj) => obj.GetValue<ParticleSystem>(ShootFX);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetShootFX(this IEntity obj, out ParticleSystem value) => obj.TryGetValue(ShootFX, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddShootFX(this IEntity obj, ParticleSystem value) => obj.AddValue(ShootFX, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasShootFX(this IEntity obj) => obj.HasValue(ShootFX);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelShootFX(this IEntity obj) => obj.DelValue(ShootFX);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetShootFX(this IEntity obj, ParticleSystem value) => obj.SetValue(ShootFX, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Const<int> GetMaxAmmo(this IEntity obj) => obj.GetValue<Const<int>>(MaxAmmo);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetMaxAmmo(this IEntity obj, out Const<int> value) => obj.TryGetValue(MaxAmmo, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddMaxAmmo(this IEntity obj, Const<int> value) => obj.AddValue(MaxAmmo, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasMaxAmmo(this IEntity obj) => obj.HasValue(MaxAmmo);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelMaxAmmo(this IEntity obj) => obj.DelValue(MaxAmmo);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetMaxAmmo(this IEntity obj, Const<int> value) => obj.SetValue(MaxAmmo, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IReactiveVariable<int> GetCurrentAmmo(this IEntity obj) => obj.GetValue<IReactiveVariable<int>>(CurrentAmmo);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetCurrentAmmo(this IEntity obj, out IReactiveVariable<int> value) => obj.TryGetValue(CurrentAmmo, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddCurrentAmmo(this IEntity obj, IReactiveVariable<int> value) => obj.AddValue(CurrentAmmo, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasCurrentAmmo(this IEntity obj) => obj.HasValue(CurrentAmmo);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelCurrentAmmo(this IEntity obj) => obj.DelValue(CurrentAmmo);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetCurrentAmmo(this IEntity obj, IReactiveVariable<int> value) => obj.SetValue(CurrentAmmo, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Transform GetFirePoint(this IEntity obj) => obj.GetValue<Transform>(FirePoint);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetFirePoint(this IEntity obj, out Transform value) => obj.TryGetValue(FirePoint, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddFirePoint(this IEntity obj, Transform value) => obj.AddValue(FirePoint, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasFirePoint(this IEntity obj) => obj.HasValue(FirePoint);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelFirePoint(this IEntity obj) => obj.DelValue(FirePoint);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetFirePoint(this IEntity obj, Transform value) => obj.SetValue(FirePoint, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static BaseEvent<Transform> GetShootAction(this IEntity obj) => obj.GetValue<BaseEvent<Transform>>(ShootAction);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetShootAction(this IEntity obj, out BaseEvent<Transform> value) => obj.TryGetValue(ShootAction, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddShootAction(this IEntity obj, BaseEvent<Transform> value) => obj.AddValue(ShootAction, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasShootAction(this IEntity obj) => obj.HasValue(ShootAction);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelShootAction(this IEntity obj) => obj.DelValue(ShootAction);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetShootAction(this IEntity obj, BaseEvent<Transform> value) => obj.SetValue(ShootAction, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Const<float> GetBulletSpeed(this IEntity obj) => obj.GetValue<Const<float>>(BulletSpeed);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetBulletSpeed(this IEntity obj, out Const<float> value) => obj.TryGetValue(BulletSpeed, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddBulletSpeed(this IEntity obj, Const<float> value) => obj.AddValue(BulletSpeed, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasBulletSpeed(this IEntity obj) => obj.HasValue(BulletSpeed);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelBulletSpeed(this IEntity obj) => obj.DelValue(BulletSpeed);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetBulletSpeed(this IEntity obj, Const<float> value) => obj.SetValue(BulletSpeed, value);
     }
 }

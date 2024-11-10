@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using Atomic.Elements;
 using Atomic.Extensions;
 using Unity.Mathematics;
-using Game.Scripts.Common.Trigger;
+using Game.Scripts.Helpers;
 
 namespace Atomic.Entities
 {
@@ -20,6 +20,7 @@ namespace Atomic.Entities
         public const int TakeDamageAction = 12; // BaseEvent<int>
         public const int CanTakeDamage = 13; // AndExpression
         public const int DeadAction = 22; // BaseEvent<IEntity>
+        public const int LifeTime = 36; // Cycle
 
 
         ///Extensions
@@ -112,5 +113,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetDeadAction(this IEntity obj, BaseEvent<IEntity> value) => obj.SetValue(DeadAction, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Cycle GetLifeTime(this IEntity obj) => obj.GetValue<Cycle>(LifeTime);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetLifeTime(this IEntity obj, out Cycle value) => obj.TryGetValue(LifeTime, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddLifeTime(this IEntity obj, Cycle value) => obj.AddValue(LifeTime, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasLifeTime(this IEntity obj) => obj.HasValue(LifeTime);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelLifeTime(this IEntity obj) => obj.DelValue(LifeTime);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetLifeTime(this IEntity obj, Cycle value) => obj.SetValue(LifeTime, value);
     }
 }

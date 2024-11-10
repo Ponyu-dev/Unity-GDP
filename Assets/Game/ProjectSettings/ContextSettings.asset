@@ -75,3 +75,20 @@ MonoBehaviour:
     - id: 10
       name: ZombieActiveMax
       type: Const<int>
+  - Name: BulletPool
+    Namespace: Atomic.Contexts
+    DirectoryPath: Assets/Game/Scripts/Codegen
+    ClassSuffix: API
+    Imports:
+    - Atomic.Entities
+    - Atomic.Elements
+    - Atomic.Extensions
+    - System.Collections.Generic
+    - Game.Scripts.Contexts.Base.EntityPool
+    items:
+    - id: 12
+      name: BulletPool
+      type: IEntityPool
+    - id: 13
+      name: Player
+      type: Const<IEntity>

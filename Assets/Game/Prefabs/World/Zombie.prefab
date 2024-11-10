@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2913154929034495446}
   - component: {fileID: 2913154929034495433}
   - component: {fileID: 2913154929034495434}
-  - component: {fileID: 8436016653034756261}
   - component: {fileID: 6625502815647141452}
+  - component: {fileID: 279586832629322348}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -111,20 +111,6 @@ MonoBehaviour:
     damage: 1
   triggerEventComponent:
     triggerEventReceiver: {fileID: 1442731792374536479}
---- !u!136 &8436016653034756261
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2913154929034495435}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.16846612
-  m_Height: 1.9263673
-  m_Direction: 1
-  m_Center: {x: -0.003656447, y: 0.8955133, z: -0.004243344}
 --- !u!54 &6625502815647141452
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,6 +127,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &279586832629322348
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2913154929034495435}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.63087994, y: 1.8568859, z: 0.5979223}
+  m_Center: {x: 0.000000029802322, y: 0.9228003, z: 0.0098872185}
 --- !u!1 &8330406951108497438
 GameObject:
   m_ObjectHideFlags: 0

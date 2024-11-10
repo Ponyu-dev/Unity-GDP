@@ -20,7 +20,7 @@ MonoBehaviour:
   - Atomic.Elements
   - Atomic.Extensions
   - Unity.Mathematics
-  - Game.Scripts.Common.Trigger
+  - Game.Scripts.Helpers
   categories:
   - name: Movement
     indexes:
@@ -64,6 +64,9 @@ MonoBehaviour:
     - id: 27
       name: TriggerEventReceiver
       type: TriggerEventReceiver
+    - id: 35
+      name: Rigidbody
+      type: Rigidbody
   - name: Life
     indexes:
     - id: 8
@@ -81,6 +84,9 @@ MonoBehaviour:
     - id: 22
       name: DeadAction
       type: BaseEvent<IEntity>
+    - id: 36
+      name: LifeTime
+      type: Cycle
   - name: Attack
     indexes:
     - id: 15
@@ -107,6 +113,30 @@ MonoBehaviour:
     - id: 28
       name: Damage
       type: Const<int>
+    - id: 29
+      name: ShootAnimationReceiver
+      type: IShootAnimationReceiver
+    - id: 30
+      name: AttackCountdown
+      type: Countdown
+    - id: 31
+      name: ShootFX
+      type: ParticleSystem
+    - id: 33
+      name: MaxAmmo
+      type: Const<int>
+    - id: 34
+      name: CurrentAmmo
+      type: IReactiveVariable<int>
+    - id: 32
+      name: FirePoint
+      type: Transform
+    - id: 37
+      name: ShootAction
+      type: BaseEvent<Transform>
+    - id: 38
+      name: BulletSpeed
+      type: Const<float>
   - name: Animation
     indexes:
     - id: 19
