@@ -44,27 +44,25 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         public ConveyorProduceTimeComponent conveyorProduceTimeComponent = new();
 
         public WorkMechanics workMechanics;
+        public LoadZoneTick loadZoneTick;
 
         public SaleData saleData;
 
         [Construct]
-        private void ConstructStorages(ConveyorConfig config)
+        private void Construct(ConveyorConfig config)
         {
             saleData = config.saleData;
             conveyorLoadStorageComponent.Constructor(config.loadStorageConfig, moneyStorageModel.core.moneyStorage);
             conveyorUnloadStorageComponent.Constructor(config.unLoadStorageConfig, moneyStorageModel.core.moneyStorage);
             conveyorProduceTimeComponent.Constructor(config.updateTimerConfig, moneyStorageModel.core.moneyStorage);
-        }
-
-        [Construct]
-        private void ConstructWork(ConveyorConfig config)
-        {
-            saleData = config.saleData;
+            
             workMechanics = new WorkMechanics(
                 loadStorage: conveyorLoadStorageComponent.Storage,
                 unloadStorage: conveyorUnloadStorageComponent.Storage,
                 workTimer: conveyorProduceTimeComponent.WorkTimer
             );
+
+            loadZoneTick = new LoadZoneTick(conveyorLoadStorageComponent.Storage);
         }
     }
     
