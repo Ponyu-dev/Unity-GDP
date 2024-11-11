@@ -15,6 +15,8 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
 
         private UpdateStorageConfig _config;
 
+        public override string GetInfoUpdater => $"MaxStorage: {_storage.MaxValue} (+{_config.stepMaxValue})";
+
         public void Constructor(UpdateStorageConfig loadStorageConfig, IMoneyStorage moneyStorage)
         {
             base.Constructor(loadStorageConfig, moneyStorage);

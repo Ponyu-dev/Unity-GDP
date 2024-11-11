@@ -9,6 +9,10 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
     public interface IConveyorUpdate
     {
         public bool GetUpdateMaxLevel(out int level);
+        public int NextPrice { get; }
+        public string GetInfoLevel { get; }
+        public string GetInfoUpdater { get; }
+        public bool CanUpdateMaxLevel();
     }
     
     [Serializable]
@@ -16,10 +20,12 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
     {
         [ReadOnly, ShowInInspector] public int NextPrice => DefaultPrice * Level;
         [ReadOnly, ShowInInspector] protected int DefaultPrice;
-        
+
         [ReadOnly, ShowInInspector] protected int Level;
         [ReadOnly, ShowInInspector] protected int MaxLevel;
-        
+        public string GetInfoLevel => $"Level: {Level} / {MaxLevel}";
+        public virtual string GetInfoUpdater => "";
+
         private IMoneyStorage _moneyStorage;
         private UpdateLevelConfig _updateConfig;
 
@@ -33,7 +39,7 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
             Level = 1;
         }
         
-        private bool CanUpdateMaxLevel()
+        public bool CanUpdateMaxLevel()
         {
             return Level < MaxLevel && _moneyStorage.CanSpendMoney(NextPrice);
         }

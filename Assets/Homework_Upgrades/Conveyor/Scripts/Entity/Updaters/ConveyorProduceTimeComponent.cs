@@ -14,21 +14,22 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
         private Timer _workTimer;
         public ITimer WorkTimer => _workTimer;
 
-        private UpdateTimerConfig _updateTimerConfig;
+        private UpdateTimerConfig _config;
+        public override string GetInfoUpdater => $"SpeedWork: {_workTimer.Duration} (-{_config.stepTimerValue})";
 
         public void Constructor(UpdateTimerConfig updateTimerConfig, IMoneyStorage moneyStorage)
         {
             base.Constructor(updateTimerConfig, moneyStorage);
             
-            _updateTimerConfig = updateTimerConfig;
+            _config = updateTimerConfig;
 
-            _workTimer = new Timer(_updateTimerConfig.startTimerValue);
+            _workTimer = new Timer(_config.startTimerValue);
         }
 
         protected override void UpdateMaxLevel()
         {
-            var newDuration = _workTimer.Duration - _updateTimerConfig.stepTimerValue;
-            _workTimer.Duration = Mathf.Max(newDuration, _updateTimerConfig.minTimerValue);
+            var newDuration = _workTimer.Duration - _config.stepTimerValue;
+            _workTimer.Duration = Mathf.Max(newDuration, _config.minTimerValue);
         }
     }
 }

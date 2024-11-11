@@ -1,6 +1,5 @@
 using System;
 using Declarative;
-using Game.GamePlay.Upgrades;
 using Homework_Upgrades.Conveyor.Scripts.App;
 using Homework_Upgrades.Conveyor.Scripts.Entity.Configs;
 using Homework_Upgrades.Conveyor.Scripts.Entity.Updaters;
@@ -11,7 +10,6 @@ using Homework_Upgrades.Conveyor.Scripts.Visual.Work;
 using Homework_Upgrades.Conveyor.Scripts.Visual.Zone;
 using Homework_Upgrades.MoneyStorage.Scripts;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Homework_Upgrades.Conveyor.Scripts.Entity
 {
