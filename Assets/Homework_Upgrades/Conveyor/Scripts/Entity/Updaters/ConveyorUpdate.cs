@@ -1,6 +1,6 @@
 using System;
-using Game.GamePlay.Upgrades;
 using Homework_Upgrades.Conveyor.Scripts.Entity.Configs;
+using Homework_Upgrades.MoneyStorage.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

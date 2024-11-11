@@ -1,15 +1,17 @@
 using System;
 using Declarative;
-using Elementary;
 using Game.GamePlay.Upgrades;
+using Homework_Upgrades.Conveyor.Scripts.App;
 using Homework_Upgrades.Conveyor.Scripts.Entity.Configs;
 using Homework_Upgrades.Conveyor.Scripts.Entity.Updaters;
 using Homework_Upgrades.Conveyor.Scripts.System;
-using Homework_Upgrades.Conveyor.Scripts.Visual;
 using Homework_Upgrades.Conveyor.Scripts.Visual.Conveyor;
+using Homework_Upgrades.Conveyor.Scripts.Visual.Widgets.Sale;
 using Homework_Upgrades.Conveyor.Scripts.Visual.Work;
 using Homework_Upgrades.Conveyor.Scripts.Visual.Zone;
+using Homework_Upgrades.MoneyStorage.Scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Homework_Upgrades.Conveyor.Scripts.Entity
 {
@@ -32,7 +34,7 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
     public sealed class Core
     {
         [SerializeField, Space]
-        public MoneyStorage moneyStorage = new();
+        public MoneyStorageModel moneyStorageModel;
         
         [SerializeField, Space]
         public ConveyorStorageComponent conveyorLoadStorageComponent = new();
@@ -45,17 +47,21 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
 
         public WorkMechanics workMechanics;
 
+        public SaleData saleData;
+
         [Construct]
         private void ConstructStorages(ConveyorConfig config)
         {
-            conveyorLoadStorageComponent.Constructor(config.loadStorageConfig, moneyStorage);
-            conveyorUnloadStorageComponent.Constructor(config.unLoadStorageConfig, moneyStorage);
-            conveyorProduceTimeComponent.Constructor(config.updateTimerConfig, moneyStorage);
+            saleData = config.saleData;
+            conveyorLoadStorageComponent.Constructor(config.loadStorageConfig, moneyStorageModel.core.moneyStorage);
+            conveyorUnloadStorageComponent.Constructor(config.unLoadStorageConfig, moneyStorageModel.core.moneyStorage);
+            conveyorProduceTimeComponent.Constructor(config.updateTimerConfig, moneyStorageModel.core.moneyStorage);
         }
 
         [Construct]
         private void ConstructWork(ConveyorConfig config)
         {
+            saleData = config.saleData;
             workMechanics = new WorkMechanics(
                 loadStorage: conveyorLoadStorageComponent.Storage,
                 unloadStorage: conveyorUnloadStorageComponent.Storage,
@@ -100,14 +106,17 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity
         
         [SerializeField] public ZoneWidget zoneUnLoadWidget;
         private readonly ZoneWidgetAdapter _zoneUnLoadWidgetAdapter = new();
+        
+        [SerializeField] public SaleWidget saleWidget;
+        private readonly SaleWidgetAdapter _saleWidgetAdapter = new();
 
         [Construct]
         private void Construct(ConveyorConfig config, Core core)
         {
             _workWidgetAdapter.Construct(core.workMechanics, core.conveyorProduceTimeComponent.WorkTimer, workWidget);
-            
             _zoneLoadWidgetAdapter.Construct(core.conveyorLoadStorageComponent.Storage, zoneLoadWidget);
             _zoneUnLoadWidgetAdapter.Construct(core.conveyorUnloadStorageComponent.Storage, zoneUnLoadWidget);
+            _saleWidgetAdapter.Construct(core, saleWidget);
         }
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using Elementary;
-using Game.GamePlay.Upgrades;
 using Homework_Upgrades.Conveyor.Scripts.Entity.Configs;
+using Homework_Upgrades.MoneyStorage.Scripts;
 using Sirenix.OdinInspector;
 
 namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
@@ -31,6 +31,11 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Updaters
         protected override void UpdateMaxLevel()
         {
             _storage.MaxValue += _config.stepMaxValue;
+        }
+
+        public void SaleProduct(int count)
+        {
+            _storage.Current -= count;
         }
 
 //#if UNITY_EDITOR

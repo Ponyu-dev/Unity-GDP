@@ -1,3 +1,4 @@
+using Homework_Upgrades.Conveyor.Scripts.App;
 using UnityEngine;
 
 namespace Homework_Upgrades.Conveyor.Scripts.Entity.Configs
@@ -17,5 +18,8 @@ namespace Homework_Upgrades.Conveyor.Scripts.Entity.Configs
         [Header("Work")]
         [SerializeField]
         public UpdateTimerConfig updateTimerConfig;
+
+        [Header("Sale")]
+        public SaleData saleData;
     }
 }

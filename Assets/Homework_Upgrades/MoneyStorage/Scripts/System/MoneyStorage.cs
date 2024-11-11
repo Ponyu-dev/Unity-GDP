@@ -1,27 +1,33 @@
 using System;
 using UnityEngine;
 
-namespace Game.GamePlay.Upgrades
+namespace Homework_Upgrades.MoneyStorage.Scripts
 {
-    public class MoneyStorage : MonoBehaviour, IMoneyStorage
+    [Serializable]
+    public sealed class MoneyStorage : IMoneyStorage
     {
         public event Action<int> OnMoneyChanged;
         public event Action<int> OnMoneyEarned;
         public event Action<int> OnMoneySpent;
-        public int Money => _money;
         
-        [SerializeField]
-        private int _money;
+        [SerializeField] private int _money;
         
         public void EarnMoney(int amount)
         {
+            Debug.Log($"EarnMoney {amount}");
             _money += amount;
+            OnMoneyEarned?.Invoke(_money);
+            OnMoneyChanged?.Invoke(_money);
         }
 
         public void SpendMoney(int amount)
         {
             _money -= amount;
+            OnMoneySpent?.Invoke(_money);
+            OnMoneyChanged?.Invoke(_money);
         }
+
+        public int Money => _money;
 
         public bool CanSpendMoney(int amount)
         {

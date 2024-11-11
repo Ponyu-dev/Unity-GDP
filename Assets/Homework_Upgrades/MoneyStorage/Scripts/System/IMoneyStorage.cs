@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.GamePlay.Upgrades
+namespace Homework_Upgrades.MoneyStorage.Scripts
 {
     public interface IMoneyStorage
     {
@@ -8,11 +8,9 @@ namespace Game.GamePlay.Upgrades
         event Action<int> OnMoneyEarned;
         event Action<int> OnMoneySpent;
 
-        int Money { get; }
-
         void EarnMoney(int amount);
         void SpendMoney(int amount);
- 
+        int Money { get; }
         bool CanSpendMoney(int amount);
     }
 }
