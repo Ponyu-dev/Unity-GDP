@@ -25,7 +25,7 @@ namespace Atomic.Entities
         public const int Damage = 28; // Const<int>
         public const int ShootAnimationReceiver = 29; // IShootAnimationReceiver
         public const int AttackCountdown = 30; // Countdown
-        public const int ShootFX = 31; // ParticleSystem
+        public const int ShootVFX = 31; // ParticleSystem
         public const int MaxAmmo = 33; // Const<int>
         public const int CurrentAmmo = 34; // IReactiveVariable<int>
         public const int FirePoint = 32; // Transform
@@ -215,22 +215,22 @@ namespace Atomic.Entities
         public static void SetAttackCountdown(this IEntity obj, Countdown value) => obj.SetValue(AttackCountdown, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ParticleSystem GetShootFX(this IEntity obj) => obj.GetValue<ParticleSystem>(ShootFX);
+        public static ParticleSystem GetShootVFX(this IEntity obj) => obj.GetValue<ParticleSystem>(ShootVFX);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetShootFX(this IEntity obj, out ParticleSystem value) => obj.TryGetValue(ShootFX, out value);
+        public static bool TryGetShootVFX(this IEntity obj, out ParticleSystem value) => obj.TryGetValue(ShootVFX, out value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddShootFX(this IEntity obj, ParticleSystem value) => obj.AddValue(ShootFX, value);
+        public static bool AddShootVFX(this IEntity obj, ParticleSystem value) => obj.AddValue(ShootVFX, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasShootFX(this IEntity obj) => obj.HasValue(ShootFX);
+        public static bool HasShootVFX(this IEntity obj) => obj.HasValue(ShootVFX);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool DelShootFX(this IEntity obj) => obj.DelValue(ShootFX);
+        public static bool DelShootVFX(this IEntity obj) => obj.DelValue(ShootVFX);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetShootFX(this IEntity obj, ParticleSystem value) => obj.SetValue(ShootFX, value);
+        public static void SetShootVFX(this IEntity obj, ParticleSystem value) => obj.SetValue(ShootVFX, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Const<int> GetMaxAmmo(this IEntity obj) => obj.GetValue<Const<int>>(MaxAmmo);

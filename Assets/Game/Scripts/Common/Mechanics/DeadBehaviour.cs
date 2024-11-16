@@ -1,6 +1,7 @@
 using Atomic.Elements;
 using Atomic.Entities;
 using Game.Scripts.Helpers;
+using UnityEngine;
 
 namespace Game.Scripts.Common.Mechanics
 {
@@ -21,8 +22,12 @@ namespace Game.Scripts.Common.Mechanics
         private void OnDead(bool isDead)
         {
             _animBoolEvent?.Invoke(AnimationProperties.IS_DEAD, isDead);
+
             if (isDead)
+            {
+                Debug.Log("OnDead");
                 _deadAction.Invoke(_entity);
+            }
         }
 
         public void Dispose(IEntity entity)

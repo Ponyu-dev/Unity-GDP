@@ -4,24 +4,25 @@ using Atomic.Entities;
 using Game.Scripts.Common.Mechanics;
 using UnityEngine;
 
-namespace Game.Scripts.Common.Components
+namespace Game.Scripts.Common.ComponentInstallers
 {
     [Serializable]
-    public sealed class RangeAttackComponent : IComponentInstaller
+    public sealed class RangeAttackComponentInstaller : IComponentInstaller
     {
-        [SerializeField] private float range;
+        [SerializeField] private Const<float> range = new(1);
         [SerializeField] private ReactiveVariable<bool> isRangeAttack;
-        
+
+        public Func<bool> IsRangeAttack()
+        {
+            return () => isRangeAttack.Value;
+        }
+
         public void Install(IEntity entity)
         {
-            entity.AddAttackRange(new Const<float>(range));
+            entity.AddAttackRange(range);
             entity.AddBehaviour(new RangeAttackBehaviour());
+            
             entity.AddIsRangeAttack(isRangeAttack);
         }
-        
-        public Func<bool> ConditionRange()
-        {
-            return () => !isRangeAttack.Value;
-        } 
     }
 }

@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Game.Scripts.Common.Mechanics
 {
-    public sealed class ShootSfxBehaviour : IEntityInit, IEntityEnable, IEntityDisable
+    public sealed class ShootVfxBehaviour : IEntityInit, IEntityEnable, IEntityDisable
     {
         private ParticleSystem _particleSystem;
         
         public void Init(IEntity entity)
         {
-            _particleSystem = entity.GetShootFX();
+            _particleSystem = entity.GetShootVFX();
         }
 
         public void Enable(IEntity entity)

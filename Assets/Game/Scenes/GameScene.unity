@@ -1940,7 +1940,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a2341572b2d04872af2a09780dbffec, type: 3}
---- !u!114 &1918602349496520040 stripped
+--- !u!4 &1918602349496520042 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1347037996043893739, guid: 5a2341572b2d04872af2a09780dbffec,
+    type: 3}
+  m_PrefabInstance: {fileID: 581418726585153153}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1918602349496520045 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1347037996043893737, guid: 5a2341572b2d04872af2a09780dbffec,
     type: 3}
@@ -1952,12 +1958,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7ec72f0dfc41099626eca8f3353622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1918602349496520042 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1347037996043893739, guid: 5a2341572b2d04872af2a09780dbffec,
-    type: 3}
-  m_PrefabInstance: {fileID: 581418726585153153}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4066079025346027532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3228,7 +3228,7 @@ PrefabInstance:
         type: 3}
       propertyPath: children.Array.data[1]
       value: 
-      objectReference: {fileID: 1918602349496520040}
+      objectReference: {fileID: 1918602349496520045}
     - target: {fileID: 8181086256780848399, guid: 9387ce18e179149c4b0173bfdb7caa08,
         type: 3}
       propertyPath: children.Array.data[2]

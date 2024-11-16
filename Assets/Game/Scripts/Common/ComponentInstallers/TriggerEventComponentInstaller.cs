@@ -4,10 +4,10 @@ using Game.Scripts.Common.Mechanics;
 using Game.Scripts.Helpers;
 using UnityEngine;
 
-namespace Game.Scripts.Common.Components
+namespace Game.Scripts.Common.ComponentInstallers
 {
     [Serializable]
-    public sealed class TriggerEventComponent : IComponentInstaller
+    public sealed class TriggerEventComponentInstaller : IComponentInstaller
     {
         [SerializeField] private TriggerEventReceiver triggerEventReceiver;
         

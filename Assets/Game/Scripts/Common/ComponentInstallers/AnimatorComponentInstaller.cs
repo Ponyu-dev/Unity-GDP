@@ -4,10 +4,10 @@ using Atomic.Entities;
 using Game.Scripts.Common.Mechanics.Animations;
 using UnityEngine;
 
-namespace Game.Scripts.Common.Components
+namespace Game.Scripts.Common.ComponentInstallers
 {
     [Serializable]
-    public sealed class AnimatorComponent : IComponentInstaller
+    public sealed class AnimatorComponentInstaller : IComponentInstaller
     {
         [SerializeField] private Animator animator;
         [SerializeField] private BaseEvent<string> animTriggerEvent;

@@ -171,6 +171,7 @@ MonoBehaviour:
   bulletSpeed:
     value: 10
   triggerEventReceiver: {fileID: 3115441336450154288}
+  rigidbody: {fileID: 5909276298368165540}
 --- !u!135 &362910468
 SphereCollider:
   m_ObjectHideFlags: 0

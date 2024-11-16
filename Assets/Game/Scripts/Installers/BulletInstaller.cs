@@ -4,9 +4,8 @@ using Game.Scripts.Common.Mechanics;
 using Game.Scripts.Helpers;
 using UnityEngine;
 
-namespace Game.Scripts.Entities
+namespace Game.Scripts.Installers
 {
-    [RequireComponent(typeof(Rigidbody))]
     public sealed class BulletInstaller : SceneEntityInstallerBase
     {
         [SerializeField] private Cycle periodLife;
@@ -14,11 +13,12 @@ namespace Game.Scripts.Entities
         [SerializeField] private Const<float> bulletSpeed;
         [SerializeField] private BaseEvent<IEntity> deadAction;
         [SerializeField] private TriggerEventReceiver triggerEventReceiver;
+        [SerializeField] private Rigidbody rigidbody;
         
         public override void Install(IEntity entity)
         {
             entity.AddRootTransform(transform);
-            entity.AddRigidbody(GetComponent<Rigidbody>());
+            entity.AddRigidbody(rigidbody);
             entity.AddLifeTime(periodLife);
             entity.AddDamage(damage);
             entity.AddBulletSpeed(bulletSpeed);

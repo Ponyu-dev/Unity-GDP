@@ -117,7 +117,7 @@ MonoBehaviour:
       name: AttackCountdown
       type: Countdown
     - id: 31
-      name: ShootFX
+      name: ShootVFX
       type: ParticleSystem
     - id: 33
       name: MaxAmmo

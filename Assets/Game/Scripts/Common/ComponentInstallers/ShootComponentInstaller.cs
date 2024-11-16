@@ -6,39 +6,50 @@ using Game.Scripts.Helpers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.Scripts.Common.Components
+namespace Game.Scripts.Common.ComponentInstallers
 {
     [Serializable]
-    public sealed class ShootComponent : IComponentInstaller
+    public sealed class ShootComponentInstaller : IComponentInstaller, IAddExpression
     {
         [SerializeField] private AnimationEventsHandler animationEventsHandler;
         [SerializeField] private BaseEvent attackAction;
         [SerializeField] private Countdown countdown;
         [SerializeField] private ParticleSystem particleSystem;
+        [SerializeField] private AndExpression canAttack;
 
+        //TODO Maybe move to AmmoInstaller ?
         [BoxGroup("Ammo"), SerializeField] private Const<int> maxAmmo;
         [BoxGroup("Ammo"), SerializeField] private ReactiveVariable<int> currentAmmo;
         [BoxGroup("Ammo"), SerializeField] private Transform firePoint;
         [BoxGroup("Ammo"), SerializeField] private Cycle cycle;
         [BoxGroup("Ammo"), SerializeField] private BaseEvent<Transform> shootAction;
-
-        public IValue<int> CurrentAmmo => currentAmmo;
         
         public void Install(IEntity entity)
         {
             entity.AddShootAnimationReceiver(animationEventsHandler);
             entity.AddAttackCountdown(countdown);
             entity.AddAttackAction(attackAction);
+            entity.AddCanAttack(canAttack);
+            canAttack.Append(() => currentAmmo.Value > 0);
+            
+            entity.AddBehaviour(new ShootActionBehaviour());
+            
+            //TODO Move to AmmoInstaller ?
             entity.AddShootAction(shootAction);
-            entity.AddShootFX(particleSystem);
             entity.AddMaxAmmo(maxAmmo);
             entity.AddCurrentAmmo(currentAmmo);
             entity.AddAttackPeroid(cycle);
             entity.AddFirePoint(firePoint);
-
-            entity.AddBehaviour(new ShootActionBehaviour());
             entity.AddBehaviour(new ShootAmmoBehaviour());
-            entity.AddBehaviour(new ShootSfxBehaviour());
+            
+            //TODO Move to VisualInstaller
+            entity.AddShootVFX(particleSystem);
+            entity.AddBehaviour(new ShootVfxBehaviour());
+        }
+
+        public void Append(Func<bool> func)
+        {
+            canAttack.Append(func);
         }
     }
 }

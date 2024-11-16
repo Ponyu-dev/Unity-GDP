@@ -80,37 +80,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29299fe1e2654376a26e6b4bd53c1e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive:
-    value: 0
-  lifeComponent:
+  lifeComponentInstaller:
     hitPoints:
       value: 1
     isDead:
       value: 0
-  movementComponent:
-    moveSpeed: 0.5
+  movementComponentInstaller:
+    moveSpeed:
+      value: 0.5
     initialDirection:
-      x: 0
-      y: 0
-      z: 0
-  rotateComponent:
-    angularSpeed: 1
+      value:
+        x: 0
+        y: 0
+        z: 0
+  rotateComponentInstaller:
+    angularSpeed:
+      value: 0.25
     initialDirection:
-      x: 0
-      y: 0
-      z: 0
-  animatorComponent:
-    animator: {fileID: 2143502341257796649}
-  rangeAttackComponent:
-    range: 1
+      value:
+        x: 0
+        y: 0
+        z: 0
+  rangeAttackComponentInstaller:
+    range:
+      value: 1
     isRangeAttack:
       value: 0
-  meleeAttackComponent:
+  meleeAttackComponentInstaller:
     periodAttack:
-      duration: 2
-    damage: 1
-  triggerEventComponent:
+      duration: 0
+    damage:
+      value: 1
+  triggerEventComponentInstaller:
     triggerEventReceiver: {fileID: 1442731792374536479}
+  animatorComponentInstaller:
+    animator: {fileID: 2143502341257796649}
 --- !u!54 &6625502815647141452
 Rigidbody:
   m_ObjectHideFlags: 0
