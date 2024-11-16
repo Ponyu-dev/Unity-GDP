@@ -108,7 +108,7 @@ MonoBehaviour:
       value: 0
   meleeAttackComponentInstaller:
     periodAttack:
-      duration: 0
+      duration: 1
     damage:
       value: 1
   triggerEventComponentInstaller:

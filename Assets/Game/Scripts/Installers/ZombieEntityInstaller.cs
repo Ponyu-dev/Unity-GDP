@@ -11,8 +11,7 @@ namespace Game.Scripts.Entities
         [SerializeField] private LifeComponentInstaller lifeComponentInstaller;
         [SerializeField] private MovementComponentInstaller movementComponentInstaller;
         [SerializeField] private RotationComponentInstaller rotateComponentInstaller;
-
-        //TODO maybe move MeleeInstaller
+        
         [SerializeField] private RangeAttackComponentInstaller rangeAttackComponentInstaller;
         [SerializeField] private MeleeAttackComponentInstaller meleeAttackComponentInstaller;
         [SerializeField] private TriggerEventComponentInstaller triggerEventComponentInstaller;

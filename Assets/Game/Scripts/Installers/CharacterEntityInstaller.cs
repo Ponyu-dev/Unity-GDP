@@ -2,7 +2,6 @@ using Atomic.Entities;
 using Atomic.Extensions;
 using Game.Scripts.Common.ComponentInstallers;
 using Game.Scripts.Common.Mechanics;
-using Game.Scripts.Helpers;
 using UnityEngine;
 
 namespace Game.Scripts.Entities
@@ -11,11 +10,12 @@ namespace Game.Scripts.Entities
     {
         [SerializeField] private Camera cameraMain;
         
-        [SerializeField] private LifeComponentInstaller lifeComponent;
-        [SerializeField] private MovementComponentInstaller movementComponent;
-        [SerializeField] private RotationComponentInstaller rotateComponent;
+        [SerializeField] private LifeComponentInstaller lifeComponentInstaller;
+        [SerializeField] private MovementComponentInstaller movementComponentInstaller;
+        [SerializeField] private RotationComponentInstaller rotateComponentInstaller;
         
-        [SerializeField] private ShootComponentInstaller shootComponent;
+        [SerializeField] private ShootComponentInstaller shootComponentInstaller;
+        [SerializeField] private AmmoComponentInstaller ammoComponentInstaller;
 
         //TODO Maybe move to VisualInstaller.
         [SerializeField] private AnimatorComponentInstaller animatorComponent;
@@ -30,15 +30,17 @@ namespace Game.Scripts.Entities
 
             entity.AddBehaviour<TransformBehaviour>();
             
-            lifeComponent.Install(entity);
-            movementComponent.Install(entity);
-            rotateComponent.Install(entity);
-            shootComponent.Install(entity);
+            lifeComponentInstaller.Install(entity);
+            movementComponentInstaller.Install(entity);
+            rotateComponentInstaller.Install(entity);
+            shootComponentInstaller.Install(entity);
+            ammoComponentInstaller.Install(entity);
             animatorComponent.Install(entity);
             
-            movementComponent.Append(lifeComponent.IsNotDead());
-            rotateComponent.Append(lifeComponent.IsNotDead());
-            shootComponent.Append(lifeComponent.IsNotDead());
+            movementComponentInstaller.Append(lifeComponentInstaller.IsNotDead());
+            rotateComponentInstaller.Append(lifeComponentInstaller.IsNotDead());
+            shootComponentInstaller.Append(lifeComponentInstaller.IsNotDead());
+            shootComponentInstaller.Append(ammoComponentInstaller.IsNotEmptyAmmo());
         }
     }
 }
