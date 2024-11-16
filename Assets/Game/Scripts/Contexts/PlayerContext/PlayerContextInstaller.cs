@@ -26,7 +26,7 @@ namespace Game.Scripts.Contexts.PlayerContext
 
             context.AddSystem<PlayerMovementSystem>();
             context.AddSystem<PlayerRotateSystem>();
-            context.AddSystem<PlayerAttackSystem>();
+            context.AddSystem<InputAttackHandler>();
             
             //context.AddCameraData(cameraData);
             //context.AddSystem<CameraFollowSystem>();
