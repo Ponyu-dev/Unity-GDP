@@ -2,6 +2,7 @@ using Atomic.Entities;
 using Atomic.Extensions;
 using Game.Scripts.Common.ComponentInstallers;
 using Game.Scripts.Common.Mechanics;
+using Game.Scripts.Helpers;
 using UnityEngine;
 
 namespace Game.Scripts.Entities

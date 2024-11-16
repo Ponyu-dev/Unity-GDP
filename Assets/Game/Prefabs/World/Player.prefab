@@ -80,34 +80,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df295f603ab54546896b29042942363b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive:
-    value: 0
+  cameraMain: {fileID: 0}
   lifeComponent:
     hitPoints:
       value: 0
     isDead:
       value: 0
   movementComponent:
-    moveSpeed: 3
+    moveSpeed:
+      value: 3
     initialDirection:
-      x: 0
-      y: 0
-      z: 0
+      value:
+        x: 0
+        y: 0
+        z: 0
   rotateComponent:
-    angularSpeed: 5
+    angularSpeed:
+      value: 5
     initialDirection:
-      x: 0
-      y: 0
-      z: 0
-  animatorComponent:
-    animator: {fileID: 8102298549815587065}
-  cameraMain: {fileID: 0}
+      value:
+        x: 0
+        y: 0
+        z: 0
   shootComponent:
-    animationEventsHandler: {fileID: 5131887158183012305}
     countdown:
       duration: 1
       loop: 0
     particleSystem: {fileID: 4155968339345506340}
+    maxAmmo:
+      value: 0
+    currentAmmo:
+      value: 0
+    firePoint: {fileID: 0}
+    cycle:
+      duration: 0
+  animatorComponent:
+    animator: {fileID: 8102298549815587065}
+    animatorDispatcher: {fileID: 595207252479580533}
 --- !u!136 &5979752423947538871
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -388,7 +397,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5018135226623313118}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5131887158183012305
+--- !u!114 &595207252479580533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -397,7 +406,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8102298549808186199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f3f446c83f74e9fa4535da30e077f9a, type: 3}
+  m_Script: {fileID: 11500000, guid: d77229ded69d4f2889bdb00f7922ffa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8102298549808357133 stripped

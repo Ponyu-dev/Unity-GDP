@@ -18,6 +18,7 @@ namespace Atomic.Entities
         public const int Animator = 19; // Animator
         public const int AnimBoolEvent = 20; // BaseEvent<string, bool>
         public const int AnimTriggerEvent = 21; // BaseEvent<string>
+        public const int AnimatorDispatcher = 18; // AnimatorDispatcher
 
 
         ///Extensions
@@ -74,5 +75,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetAnimTriggerEvent(this IEntity obj, BaseEvent<string> value) => obj.SetValue(AnimTriggerEvent, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static AnimatorDispatcher GetAnimatorDispatcher(this IEntity obj) => obj.GetValue<AnimatorDispatcher>(AnimatorDispatcher);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetAnimatorDispatcher(this IEntity obj, out AnimatorDispatcher value) => obj.TryGetValue(AnimatorDispatcher, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddAnimatorDispatcher(this IEntity obj, AnimatorDispatcher value) => obj.AddValue(AnimatorDispatcher, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasAnimatorDispatcher(this IEntity obj) => obj.HasValue(AnimatorDispatcher);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelAnimatorDispatcher(this IEntity obj) => obj.DelValue(AnimatorDispatcher);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetAnimatorDispatcher(this IEntity obj, AnimatorDispatcher value) => obj.SetValue(AnimatorDispatcher, value);
     }
 }

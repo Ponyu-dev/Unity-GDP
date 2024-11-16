@@ -2,7 +2,6 @@ using System;
 using Atomic.Elements;
 using Atomic.Entities;
 using Game.Scripts.Common.Mechanics;
-using Game.Scripts.Helpers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ namespace Game.Scripts.Common.ComponentInstallers
     [Serializable]
     public sealed class ShootComponentInstaller : IComponentInstaller, IAddExpression
     {
-        [SerializeField] private AnimationEventsHandler animationEventsHandler;
         [SerializeField] private BaseEvent attackAction;
         [SerializeField] private Countdown countdown;
         [SerializeField] private ParticleSystem particleSystem;
@@ -26,14 +24,13 @@ namespace Game.Scripts.Common.ComponentInstallers
         
         public void Install(IEntity entity)
         {
-            entity.AddShootAnimationReceiver(animationEventsHandler);
             entity.AddAttackCountdown(countdown);
             entity.AddAttackAction(attackAction);
             entity.AddCanAttack(canAttack);
             canAttack.Append(() => currentAmmo.Value > 0);
-            
+
             entity.AddBehaviour(new ShootActionBehaviour());
-            
+
             //TODO Move to AmmoInstaller ?
             entity.AddShootAction(shootAction);
             entity.AddMaxAmmo(maxAmmo);

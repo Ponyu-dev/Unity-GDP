@@ -1,4 +1,5 @@
 using Atomic.Entities;
+using Game.Scripts.Helpers;
 using UnityEngine;
 
 namespace Game.Scripts.Common.Mechanics
@@ -14,7 +15,7 @@ namespace Game.Scripts.Common.Mechanics
 
         public void Enable(IEntity entity)
         {
-            entity.GetShootAnimationReceiver().OnShoot += OnShoot;
+            entity.GetAnimatorDispatcher().SubscribeOnEvent(ActionType.SHOOT, OnShoot);
         }
 
         private void OnShoot()
@@ -24,7 +25,7 @@ namespace Game.Scripts.Common.Mechanics
 
         public void Disable(IEntity entity)
         {
-            entity.GetShootAnimationReceiver().OnShoot -= OnShoot;
+            entity.GetAnimatorDispatcher().UnsubscribeOnEvent(ActionType.SHOOT, OnShoot);
         }
     }
 }

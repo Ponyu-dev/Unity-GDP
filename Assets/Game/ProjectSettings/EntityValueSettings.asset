@@ -110,9 +110,6 @@ MonoBehaviour:
     - id: 28
       name: Damage
       type: Const<int>
-    - id: 29
-      name: ShootAnimationReceiver
-      type: IShootAnimationReceiver
     - id: 30
       name: AttackCountdown
       type: Countdown
@@ -145,3 +142,6 @@ MonoBehaviour:
     - id: 21
       name: AnimTriggerEvent
       type: BaseEvent<string>
+    - id: 18
+      name: AnimatorDispatcher
+      type: AnimatorDispatcher

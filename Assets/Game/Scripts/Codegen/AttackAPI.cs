@@ -23,7 +23,6 @@ namespace Atomic.Entities
         public const int IsRangeAttack = 25; // IReactiveVariable<bool>
         public const int AttackPeroid = 26; // Cycle
         public const int Damage = 28; // Const<int>
-        public const int ShootAnimationReceiver = 29; // IShootAnimationReceiver
         public const int AttackCountdown = 30; // Countdown
         public const int ShootVFX = 31; // ParticleSystem
         public const int MaxAmmo = 33; // Const<int>
@@ -177,24 +176,6 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetDamage(this IEntity obj, Const<int> value) => obj.SetValue(Damage, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IShootAnimationReceiver GetShootAnimationReceiver(this IEntity obj) => obj.GetValue<IShootAnimationReceiver>(ShootAnimationReceiver);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetShootAnimationReceiver(this IEntity obj, out IShootAnimationReceiver value) => obj.TryGetValue(ShootAnimationReceiver, out value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddShootAnimationReceiver(this IEntity obj, IShootAnimationReceiver value) => obj.AddValue(ShootAnimationReceiver, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasShootAnimationReceiver(this IEntity obj) => obj.HasValue(ShootAnimationReceiver);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool DelShootAnimationReceiver(this IEntity obj) => obj.DelValue(ShootAnimationReceiver);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetShootAnimationReceiver(this IEntity obj, IShootAnimationReceiver value) => obj.SetValue(ShootAnimationReceiver, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Countdown GetAttackCountdown(this IEntity obj) => obj.GetValue<Countdown>(AttackCountdown);

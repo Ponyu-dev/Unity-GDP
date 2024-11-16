@@ -115,6 +115,7 @@ MonoBehaviour:
     triggerEventReceiver: {fileID: 1442731792374536479}
   animatorComponentInstaller:
     animator: {fileID: 2143502341257796649}
+    animatorDispatcher: {fileID: 4218823811282328830}
 --- !u!54 &6625502815647141452
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -288,6 +289,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2913154929923844110}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2143502341250412423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3878403007883970441, guid: e5bfb4e1a1a4d4f059efedc672db885b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2913154929923844110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4218823811282328830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143502341250412423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77229ded69d4f2889bdb00f7922ffa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2143502341250577351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3878403007884073929, guid: e5bfb4e1a1a4d4f059efedc672db885b,
