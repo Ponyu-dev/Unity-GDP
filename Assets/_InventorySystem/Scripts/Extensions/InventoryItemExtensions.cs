@@ -14,5 +14,15 @@ namespace _InventorySystem.Scripts.Extensions
         {
             return (it.Flags & flags) == flags;
         }
+        
+        public static bool TryGetComponentSafe<T>(
+            this InventoryItem item,
+            InventoryItemFlags requiredFlag,
+            out T component
+        ) where T : class
+        {
+            component = default;
+            return item.FlagsExists(requiredFlag) && item.TryGetComponent(out component);
+        }
     }
 }

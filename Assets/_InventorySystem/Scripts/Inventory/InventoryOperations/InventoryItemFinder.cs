@@ -9,7 +9,7 @@ using _InventorySystem.Scripts.Item;
 
 namespace _InventorySystem.Scripts.Inventory.InventoryOperations
 {
-    public sealed class InventoryItemFinder
+    /*public sealed class InventoryItemFinder
     {
         private readonly ListInventory _listInventory;
         
@@ -62,5 +62,5 @@ namespace _InventorySystem.Scripts.Inventory.InventoryOperations
             
             return string.Equals(item1.Id, item2.Id, StringComparison.Ordinal);
         }
-    }
+    }*/
 }

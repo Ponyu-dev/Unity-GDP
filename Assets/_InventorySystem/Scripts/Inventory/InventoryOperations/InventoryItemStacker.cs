@@ -15,10 +15,10 @@ namespace _InventorySystem.Scripts.Inventory.InventoryOperations
     {
         public bool TryIncrement(InventoryItem targetItem, InventoryItem stackItem)
         {
-            if (!HasStackableItem(targetItem, out var targetItemComponent))
+            if (!targetItem.TryGetComponentSafe<IInventoryItemComponentStackable>(InventoryItemFlags.STACKABLE, out var targetItemComponent))
                 return false;
             
-            if (!HasStackableItem(stackItem, out var stackItemComponent))
+            if (!stackItem.TryGetComponentSafe<IInventoryItemComponentStackable>(InventoryItemFlags.STACKABLE, out var stackItemComponent))
                 return false;
             
             targetItemComponent.Increment(stackItemComponent.Count);
@@ -30,7 +30,7 @@ namespace _InventorySystem.Scripts.Inventory.InventoryOperations
 
         public bool TryDecrement(InventoryItem targetItem, int decrementValue)
         {
-            if (!HasStackableItem(targetItem, out var targetComponent))
+            if (!targetItem.TryGetComponentSafe<IInventoryItemComponentStackable>(InventoryItemFlags.STACKABLE, out var targetComponent))
             {
                 return false;
             }
@@ -38,25 +38,6 @@ namespace _InventorySystem.Scripts.Inventory.InventoryOperations
             targetComponent.Decrement(decrementValue);
 
             return targetComponent.IsNotEmpty();
-        }
-
-        private bool HasStackableItem(InventoryItem item, out IInventoryItemComponentStackable component)
-        {
-            if (!item.FlagsExists(InventoryItemFlags.STACKABLE))
-            {
-                Debug.LogWarning($"Item {item.Id} cannot be stacked because it is not stackable.");
-                component = default;
-                return false;
-            }
-            
-            if (!item.TryGetComponent(out component))
-            {
-                Debug.LogWarning($"Item {item.Id} does not have a stackable component.");
-                component = default;
-                return false;
-            }
-            
-            return true;
         }
     }
 }

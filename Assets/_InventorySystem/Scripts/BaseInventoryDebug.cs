@@ -41,12 +41,6 @@ namespace _InventorySystem.Scripts
         }
         
         [Button]
-        private void DecrementItem(InventoryItemConfig itemConfig, int decrementValue)
-        {
-            baseInventory.DecrementItem(itemConfig.Clone, decrementValue);
-        }
-        
-        [Button]
         private void RemoveItem(InventoryItemConfig itemConfig, bool removeAllStack)
         {
             baseInventory.RemoveItem(itemConfig.Clone, removeAllStack);

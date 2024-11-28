@@ -11,7 +11,7 @@ using Sirenix.OdinInspector;
 
 namespace _InventorySystem.Scripts.Inventory
 {
-    [Serializable]
+    /*[Serializable]
     public sealed class ListInventory
     {
         [ReadOnly, ShowInInspector]
@@ -33,9 +33,14 @@ namespace _InventorySystem.Scripts.Inventory
             _items.Add(inventoryItem);
         }
 
+        public void RemoveAt(int itemIndex)
+        {
+            _items.RemoveAt(itemIndex);
+        }
+
         public bool Remove(InventoryItem inventoryItem)
         {
             return _items.Remove(inventoryItem);
         }
-    }
+    }*/
 }

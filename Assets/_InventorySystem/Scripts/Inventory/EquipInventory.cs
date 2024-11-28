@@ -10,7 +10,6 @@ using _InventorySystem.Scripts.Extensions;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace _InventorySystem.Scripts.Inventory
 {
@@ -29,7 +28,6 @@ namespace _InventorySystem.Scripts.Inventory
             oldEquipItem = default;
             if (!CanEquip(equipItem, out var componentEquippable))
             {
-                Log("Smth");
                 return false;
             }
             
@@ -37,30 +35,16 @@ namespace _InventorySystem.Scripts.Inventory
             {
                 oldEquipItem = _equipmentSlots[componentEquippable.EquipmentSlot];
                 _equipmentSlots[componentEquippable.EquipmentSlot] = equipItem;
-                Log($"Заменили {oldEquipItem} на {equipItem} в слоте {componentEquippable.EquipmentSlot}");
                 return true;
             }
             
             _equipmentSlots[componentEquippable.EquipmentSlot] = equipItem;
-            Log($"Экипирован {equipItem} в слот {componentEquippable.EquipmentSlot}");
             return true;
         }
 
         private bool CanEquip(InventoryItem equipItem, out IInventoryItemComponentEquippable componentEquippable)
         {
-            componentEquippable = default;
-            
-            if (!equipItem.FlagsExists(InventoryItemFlags.EQUIPPABLE))
-            {
-                return false;
-            }
-
-            if (!equipItem.TryGetComponent(out componentEquippable))
-            {
-                return false;
-            }
-
-            return true;
+            return equipItem.TryGetComponentSafe(InventoryItemFlags.EQUIPPABLE, out componentEquippable);
         }
         
         public bool TryUnEquipItem(EquipmentSlot unEquipSlot, out InventoryItem unEquipItem)
@@ -69,17 +53,11 @@ namespace _InventorySystem.Scripts.Inventory
             {
                 _equipmentSlots.Remove(unEquipSlot);
                 unEquipItem = equipItem;
-                Log($"Снято {equipItem} с слота {unEquipSlot}");
                 return true;
             }
 
             unEquipItem = default;
             return false;
-        }
-
-        private void Log(string message)
-        {
-            Debug.Log(message);
         }
     }
 }

@@ -5,6 +5,7 @@
 // ------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using _InventorySystem.Scripts.Extensions;
 using _InventorySystem.Scripts.Inventory.InventoryOperations;
 using _InventorySystem.Scripts.Item;
@@ -25,7 +26,6 @@ namespace _InventorySystem.Scripts.Inventory
         void ConsumeItem(InventoryItem inventoryItem);
         void EquipItem(InventoryItem inventoryItem);
         void UnEquipItem(EquipmentSlot unEquipSlot);
-        void DecrementItem(InventoryItem inventoryItem, int decrementItem);
         void RemoveItem(InventoryItem inventoryItem, bool removeAllStack);
     }
     
@@ -37,63 +37,56 @@ namespace _InventorySystem.Scripts.Inventory
         public event Action<InventoryItem> OnItemConsumed;
         public event Action<InventoryItem> OnItemRemoved;
 
-        [ReadOnly, ShowInInspector] private readonly ListInventory _listInventory;
+        [ReadOnly, ShowInInspector]
+        private readonly List<InventoryItem> _items;
+        public IReadOnlyList<InventoryItem> Items => _items;
+        
         [ReadOnly, ShowInInspector] private readonly EquipInventory _equipInventory;
         
-        private readonly InventoryItemAdder _adder;
         private readonly InventoryItemStacker _stacker;
-        private readonly InventoryItemRemover _remover;
-        private readonly InventoryItemFinder _finder;
 
         public BaseInventory()
         {
-            _listInventory = new ListInventory();
+            _items = new List<InventoryItem>();
             _equipInventory = new EquipInventory();
-            
-            _adder = new InventoryItemAdder(_listInventory);
             _stacker = new InventoryItemStacker();
-            _remover = new InventoryItemRemover(_listInventory);
-            _finder = new InventoryItemFinder(_listInventory);
         }
 
         public void AddItem(InventoryItem inventoryItem)
         {
-            if (_finder.TryFindItem(inventoryItem, out var foundItem))
+            if (inventoryItem is null)
+                return;
+            
+            var item = _items.Find(it => it.Id == inventoryItem.Id);
+            if (item is not null)
             {
-                if (_stacker.TryIncrement(foundItem, inventoryItem))
-                {
-                    OnItemStackChanged?.Invoke(foundItem);
-                }
-                
+                _stacker.TryIncrement(item, inventoryItem);
+                OnItemStackChanged?.Invoke(item);
                 return;
             }
-
-            _adder.Add(inventoryItem);
+            
+            _items.Add(inventoryItem);
             OnItemAdded?.Invoke(inventoryItem);
         }
         
         public void ConsumeItem(InventoryItem inventoryItem)
         {
-            if (!inventoryItem.FlagsExists(InventoryItemFlags.CONSUMABLE))
-            {
-                Log("smth");
-                return;
-            }
-
-            if (!_finder.TryFindItem(inventoryItem, out var foundItem))
+            var item = _items.Find(it => it.Id == inventoryItem.Id);
+            
+            if (item is null)
             {
                 Log($"Item with ID '{inventoryItem.Id}' NOT found. Cannot consume.");
                 return;
             }
 
-            if (!foundItem.TryGetComponent<IInventoryItemComponentConsumable>(out var componentConsumable))
+            if (!inventoryItem.TryGetComponentSafe<IInventoryItemComponentConsumable>(InventoryItemFlags.CONSUMABLE,
+                    out var componentConsumable))
             {
-                Log("smth");
                 return;
             }
             
-            DecrementItem(foundItem, componentConsumable.ConsumeAmount);
-            OnItemConsumed?.Invoke(foundItem);
+            DecrementItem(item, componentConsumable.ConsumeAmount);
+            OnItemConsumed?.Invoke(item);
         }
 
         public void EquipItem(InventoryItem inventoryItem)
@@ -101,7 +94,7 @@ namespace _InventorySystem.Scripts.Inventory
             if (!_equipInventory.EquipItem(inventoryItem, out var oldEquipItem))
                 return;
             
-            RemoveItem(inventoryItem);
+            RemoveAt(inventoryItem);
             AddItem(oldEquipItem);
         }
 
@@ -111,24 +104,6 @@ namespace _InventorySystem.Scripts.Inventory
             {
                 AddItem(unEquipItem);
             }
-        }
-
-        public void DecrementItem(InventoryItem inventoryItem, int decrementValue)
-        {
-            if (!_finder.TryFindItem(inventoryItem, out var foundItem))
-            {
-                Log($"Item with ID '{inventoryItem.Id}' NOT found. Cannot remove.");
-                return;
-            }
-            
-            if (_stacker.TryDecrement(foundItem, decrementValue))
-            {
-                Log($"Item with ID '{foundItem.Id}' decremented successfully.");
-                OnItemStackChanged?.Invoke(foundItem);
-                return;
-            }
-            
-            Remove(foundItem);
         }
 
         public void RemoveItem(InventoryItem inventoryItem, bool removeAllStack = false)
@@ -143,19 +118,26 @@ namespace _InventorySystem.Scripts.Inventory
                 DecrementItem(inventoryItem, 1);
                 return;
             }
-            
-            if (!_finder.TryFindItem(inventoryItem, out var foundItem))
+
+            RemoveAt(inventoryItem);
+        }
+        
+        private void DecrementItem(InventoryItem item, int decrementValue)
+        {
+            if (_stacker.TryDecrement(item, decrementValue))
             {
-                Log($"Item with ID '{inventoryItem.Id}' NOT found. Cannot remove.");
+                Log($"Item with ID '{item.Id}' decremented successfully.");
+                OnItemStackChanged?.Invoke(item);
                 return;
             }
-
-            Remove(foundItem);
+            
+            RemoveAt(item);
         }
 
-        private void Remove(InventoryItem removeItem)
+        private void RemoveAt(InventoryItem removeItem)
         {
-            _remover.Remove(removeItem);
+            var index = _items.FindIndex(it => it.Id == removeItem.Id);
+            _items.RemoveAt(index);
             OnItemRemoved?.Invoke(removeItem);
             Log($"Item with ID '{removeItem.Id}' removed successfully.");
         }

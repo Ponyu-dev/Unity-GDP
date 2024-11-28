@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using _InventorySystem.Scripts.Item.Components;
-using Sirenix.Serialization;
 using UnityEngine;
 
 namespace _InventorySystem.Scripts.Item
@@ -41,52 +40,6 @@ namespace _InventorySystem.Scripts.Item
             this.flags = flags;
             this.metadata = metadata;
             this.components = components;
-        }
-
-        public T GetComponent<T>()
-        {
-            for (int i = 0, count = components.Count; i < count; i++)
-            {
-                var component = components[i];
-                if (component is T result)
-                {
-                    return result;
-                }
-            }
-
-            throw new Exception($"Component {typeof(T).Name} is not found!");
-        }
-
-        public T[] GetComponents<T>()
-        {
-            var result = new List<T>();
-            for (int i = 0, count = components.Count; i < count; i++)
-            {
-                var component = components[i];
-                if (component is T tComponent)
-                {
-                    result.Add(tComponent);
-                }
-            }
-
-            return result.ToArray();
-        }
-
-        public IReadOnlyList<IInventoryItemComponent> GetAllComponents()
-        {
-            return components;
-        }
-
-        public bool HasComponent<T>()
-        {
-            for (int i = 0, count = components.Count; i < count; i++)
-            {
-                if (components[i] is not T)
-                    continue;
-                return true;
-            }
-            
-            return false;
         }
         
         public bool TryGetComponent<T>(out T result)
