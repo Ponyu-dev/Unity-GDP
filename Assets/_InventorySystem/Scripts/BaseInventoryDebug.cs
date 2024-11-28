@@ -6,6 +6,7 @@
 
 using _InventorySystem.Scripts.Inventory;
 using _InventorySystem.Scripts.Item;
+using _InventorySystem.Scripts.Item.Components;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -25,6 +26,18 @@ namespace _InventorySystem.Scripts
         private void ConsumeItem(InventoryItemConfig itemConfig)
         {
             baseInventory.ConsumeItem(itemConfig.Clone);
+        }
+        
+        [Button]
+        private void EquipItem(InventoryItemConfig itemConfig)
+        {
+            baseInventory.EquipItem(itemConfig.Clone);
+        }
+        
+        [Button]
+        private void UnEquipItem(EquipmentSlot unEquipSlot)
+        {
+            baseInventory.UnEquipItem(unEquipSlot);
         }
         
         [Button]

@@ -77,6 +77,18 @@ namespace _InventorySystem.Scripts.Item
             return components;
         }
 
+        public bool HasComponent<T>()
+        {
+            for (int i = 0, count = components.Count; i < count; i++)
+            {
+                if (components[i] is not T)
+                    continue;
+                return true;
+            }
+            
+            return false;
+        }
+        
         public bool TryGetComponent<T>(out T result)
         {
             for (int i = 0, count = components.Count; i < count; i++)

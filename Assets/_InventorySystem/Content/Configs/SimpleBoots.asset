@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 997c2c9dba34482da32df3e99281c8f5, type: 3}
-  m_Name: ArcaneBoots
+  m_Name: SimpleBoots
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -22,12 +22,12 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   origin:
-    id: ArcaneBoots
+    id: SimpleBoots
     flags: 4
     metadata:
-      title: Arcane Boots
-      decription: Arcane Boots Description
-      icon: {fileID: 21300000, guid: c5293f68508574aa4aeb4f018b580f2b, type: 3}
+      title: Simple Boots
+      decription: Simple Boots Description
+      icon: {fileID: 21300000, guid: 345cfbcc2796f458eba0947ea191ebf0, type: 3}
     components:
     - rid: 3368030159005810692
   references:
@@ -38,4 +38,4 @@ MonoBehaviour:
         asm: Assembly-CSharp}
       data:
         equipmentSlot: 2
-        increaseAmount: 10
+        increaseAmount: 5

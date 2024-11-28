@@ -23,6 +23,8 @@ namespace _InventorySystem.Scripts.Inventory
         
         void AddItem(InventoryItem inventoryItem);
         void ConsumeItem(InventoryItem inventoryItem);
+        void EquipItem(InventoryItem inventoryItem);
+        void UnEquipItem(EquipmentSlot unEquipSlot);
         void DecrementItem(InventoryItem inventoryItem, int decrementItem);
         void RemoveItem(InventoryItem inventoryItem, bool removeAllStack);
     }
@@ -35,8 +37,8 @@ namespace _InventorySystem.Scripts.Inventory
         public event Action<InventoryItem> OnItemConsumed;
         public event Action<InventoryItem> OnItemRemoved;
 
-        [ReadOnly, ShowInInspector]
-        private readonly ListInventory _listInventory;
+        [ReadOnly, ShowInInspector] private readonly ListInventory _listInventory;
+        [ReadOnly, ShowInInspector] private readonly EquipInventory _equipInventory;
         
         private readonly InventoryItemAdder _adder;
         private readonly InventoryItemStacker _stacker;
@@ -46,6 +48,8 @@ namespace _InventorySystem.Scripts.Inventory
         public BaseInventory()
         {
             _listInventory = new ListInventory();
+            _equipInventory = new EquipInventory();
+            
             _adder = new InventoryItemAdder(_listInventory);
             _stacker = new InventoryItemStacker();
             _remover = new InventoryItemRemover(_listInventory);
@@ -66,7 +70,6 @@ namespace _InventorySystem.Scripts.Inventory
 
             _adder.Add(inventoryItem);
             OnItemAdded?.Invoke(inventoryItem);
-            Log($"Item with ID '{inventoryItem.Id}' added successfully.");
         }
         
         public void ConsumeItem(InventoryItem inventoryItem)
@@ -93,6 +96,23 @@ namespace _InventorySystem.Scripts.Inventory
             OnItemConsumed?.Invoke(foundItem);
         }
 
+        public void EquipItem(InventoryItem inventoryItem)
+        {
+            if (!_equipInventory.EquipItem(inventoryItem, out var oldEquipItem))
+                return;
+            
+            RemoveItem(inventoryItem);
+            AddItem(oldEquipItem);
+        }
+
+        public void UnEquipItem(EquipmentSlot unEquipSlot)
+        {
+            if (_equipInventory.TryUnEquipItem(unEquipSlot, out var unEquipItem))
+            {
+                AddItem(unEquipItem);
+            }
+        }
+
         public void DecrementItem(InventoryItem inventoryItem, int decrementValue)
         {
             if (!_finder.TryFindItem(inventoryItem, out var foundItem))
@@ -111,8 +131,13 @@ namespace _InventorySystem.Scripts.Inventory
             Remove(foundItem);
         }
 
-        public void RemoveItem(InventoryItem inventoryItem, bool removeAllStack)
+        public void RemoveItem(InventoryItem inventoryItem, bool removeAllStack = false)
         {
+            if (inventoryItem == null)
+            {
+                return;
+            }
+            
             if (inventoryItem.FlagsExists(InventoryItemFlags.STACKABLE) && !removeAllStack)
             {
                 DecrementItem(inventoryItem, 1);

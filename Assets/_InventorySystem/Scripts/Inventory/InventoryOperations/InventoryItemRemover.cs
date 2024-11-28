@@ -17,9 +17,9 @@ namespace _InventorySystem.Scripts.Inventory.InventoryOperations
             _listInventory = listInventory;
         }
 
-        public void Remove(InventoryItem foundItem)
+        public void Remove(InventoryItem item)
         {
-            _listInventory.Remove(foundItem);
+            _listInventory.Remove(item);
         }
     }
 }
