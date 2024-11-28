@@ -20,8 +20,7 @@ namespace _InventorySystem.Scripts.Item.Components
     [Serializable]
     public sealed class InventoryItemComponentStackable : IInventoryItemComponentStackable
     {
-        [SerializeField]
-        private int count;
+        [SerializeField] private int count;
         public int Count => count;
         
         public void Increment(int step)

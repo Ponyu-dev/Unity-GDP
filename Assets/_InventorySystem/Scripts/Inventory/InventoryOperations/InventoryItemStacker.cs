@@ -13,13 +13,6 @@ namespace _InventorySystem.Scripts.Inventory.InventoryOperations
 {
     public sealed class InventoryItemStacker
     {
-        private readonly ListInventory _listInventory;
-        
-        public InventoryItemStacker(ListInventory listInventory)
-        {
-            _listInventory = listInventory;
-        }
-
         public bool TryIncrement(InventoryItem targetItem, InventoryItem stackItem)
         {
             if (!HasStackableItem(targetItem, out var targetItemComponent))
@@ -35,19 +28,14 @@ namespace _InventorySystem.Scripts.Inventory.InventoryOperations
             return true;
         }
 
-        public bool TryDecrement(InventoryItem targetItem, InventoryItem decrementItem)
+        public bool TryDecrement(InventoryItem targetItem, int decrementValue)
         {
             if (!HasStackableItem(targetItem, out var targetComponent))
             {
                 return false;
             }
             
-            if (!HasStackableItem(decrementItem, out var decrementComponent))
-            {
-                return false;
-            }
-            
-            targetComponent.Decrement(decrementComponent.Count);
+            targetComponent.Decrement(decrementValue);
 
             return targetComponent.IsNotEmpty();
         }
