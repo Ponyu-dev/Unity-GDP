@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _InventorySystem.Scripts.Item
 {
@@ -18,7 +17,7 @@ namespace _InventorySystem.Scripts.Item
         public InventoryItemFlags Flags => flags;
         public InventoryItemMetadata Metadata => metadata;
 
-        [FormerlySerializedAs("name")] [SerializeField] private string id;
+        [SerializeField] private string id;
         [SerializeField] private InventoryItemFlags flags;
         [SerializeField] private InventoryItemMetadata metadata;
         [SerializeField, Space] private object[] components;

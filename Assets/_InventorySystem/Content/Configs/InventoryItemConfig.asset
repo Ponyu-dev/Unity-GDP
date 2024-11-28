@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997c2c9dba34482da32df3e99281c8f5, type: 3}
+  m_Name: InventoryItemConfig
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: c5293f68508574aa4aeb4f018b580f2b, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: origin
+      Entry: 7
+      Data: 0|_InventorySystem.Scripts.Item.InventoryItem, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: ArcaneBoots
+    - Name: flags
+      Entry: 3
+      Data: 0
+    - Name: metadata
+      Entry: 7
+      Data: 1|_InventorySystem.Scripts.Item.InventoryItemMetadata, Assembly-CSharp
+    - Name: title
+      Entry: 1
+      Data: Arcane Boots
+    - Name: decription
+      Entry: 1
+      Data: Arcane Boots Description
+    - Name: icon
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: components
+      Entry: 7
+      Data: 2|System.Object[], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

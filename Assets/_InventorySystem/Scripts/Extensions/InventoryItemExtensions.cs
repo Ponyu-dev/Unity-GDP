@@ -14,10 +14,5 @@ namespace _InventorySystem.Scripts.Extensions
         {
             return (it.Flags & flags) == flags;
         }
-        
-        public static bool FlagsExists(this InventoryItemConfig it, InventoryItemFlags flags)
-        {
-            return (it.Flags & flags) == flags;
-        }
     }
 }
