@@ -6,6 +6,8 @@
 
 using System;
 using System.Collections.Generic;
+using _InventorySystem.Scripts.Item.Components;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace _InventorySystem.Scripts.Item
@@ -20,15 +22,20 @@ namespace _InventorySystem.Scripts.Item
         [SerializeField] private string id;
         [SerializeField] private InventoryItemFlags flags;
         [SerializeField] private InventoryItemMetadata metadata;
-        [SerializeField, Space] private object[] components;
+        [SerializeReference] private List<IInventoryItemComponent> components;
         
         public InventoryItem()
         {
             id = string.Empty;
-            components = Array.Empty<object>();
+            components = new List<IInventoryItemComponent>();
         }
-
-        public InventoryItem(string id, InventoryItemFlags flags, InventoryItemMetadata metadata, params object[] components)
+        
+        public InventoryItem(
+            string id,
+            InventoryItemFlags flags,
+            InventoryItemMetadata metadata,
+            List<IInventoryItemComponent> components
+        )
         {
             this.id = id;
             this.flags = flags;
@@ -38,7 +45,7 @@ namespace _InventorySystem.Scripts.Item
 
         public T GetComponent<T>()
         {
-            for (int i = 0, count = components.Length; i < count; i++)
+            for (int i = 0, count = components.Count; i < count; i++)
             {
                 var component = components[i];
                 if (component is T result)
@@ -53,7 +60,7 @@ namespace _InventorySystem.Scripts.Item
         public T[] GetComponents<T>()
         {
             var result = new List<T>();
-            for (int i = 0, count = components.Length; i < count; i++)
+            for (int i = 0, count = components.Count; i < count; i++)
             {
                 var component = components[i];
                 if (component is T tComponent)
@@ -65,14 +72,14 @@ namespace _InventorySystem.Scripts.Item
             return result.ToArray();
         }
 
-        public object[] GetAllComponents()
+        public IReadOnlyList<IInventoryItemComponent> GetAllComponents()
         {
             return components;
         }
 
         public bool TryGetComponent<T>(out T result)
         {
-            for (int i = 0, count = components.Length; i < count; i++)
+            for (int i = 0, count = components.Count; i < count; i++)
             {
                 var component = components[i];
                 if (component is not T tComponent)
@@ -96,20 +103,13 @@ namespace _InventorySystem.Scripts.Item
             );
         }
 
-        private object[] CloneComponents()
+        private List<IInventoryItemComponent> CloneComponents()
         {
-            var count = components.Length;
-            var result = new object[count];
+            var result = new List<IInventoryItemComponent>();
 
-            for (var i = 0; i < count; i++)
+            for (int i = 0, count = components.Count; i < count; i++)
             {
-                var component = components[i];
-                if (component is ICloneable cloneable)
-                {
-                    component = cloneable.Clone();
-                }
-
-                result[i] = component;
+                result.Add(components[i].Clone());
             }
 
             return result;

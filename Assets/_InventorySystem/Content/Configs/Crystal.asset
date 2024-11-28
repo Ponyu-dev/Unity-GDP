@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997c2c9dba34482da32df3e99281c8f5, type: 3}
+  m_Name: Crystal
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  origin:
+    id: Crystal
+    flags: 1
+    metadata:
+      title: Crystal
+      decription: Crystal Description
+      icon: {fileID: 21300000, guid: e6b939eadb09749b6ac22d22654ec972, type: 3}
+    components:
+    - rid: 3368030159005810688
+  references:
+    version: 2
+    RefIds:
+    - rid: 3368030159005810688
+      type: {class: InventoryItemComponentStackable, ns: _InventorySystem.Scripts.Item.Components,
+        asm: Assembly-CSharp}
+      data:
+        count: 1
