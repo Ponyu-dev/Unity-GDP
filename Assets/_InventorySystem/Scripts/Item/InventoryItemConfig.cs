@@ -11,7 +11,7 @@ namespace _InventorySystem.Scripts.Item
 {
     [CreateAssetMenu(
         fileName = "InventoryItemConfig",
-        menuName = "Inventory/New InventoryItem"
+        menuName = "Inventory/New InventoryItemConfig"
     )]
     public sealed class InventoryItemConfig : SerializedScriptableObject
     {

@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using _InventorySystem.Scripts.Item;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using UnityEngine;
 
 namespace _InventorySystem.Scripts.Inventory
 {

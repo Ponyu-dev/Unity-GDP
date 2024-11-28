@@ -5,8 +5,6 @@
 // ------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using _InventorySystem.Scripts.Extensions;
 using _InventorySystem.Scripts.Inventory.InventoryOperations;
 using _InventorySystem.Scripts.Item;
 using Sirenix.OdinInspector;
