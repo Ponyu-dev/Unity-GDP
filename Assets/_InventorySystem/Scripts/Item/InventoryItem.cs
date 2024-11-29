@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using _InventorySystem.Scripts.Item.Components;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _InventorySystem.Scripts.Item
@@ -15,10 +16,12 @@ namespace _InventorySystem.Scripts.Item
     public sealed class InventoryItem
     {
         public string Id => id;
+        public string InstanceId => _instanceId;
         public InventoryItemFlags Flags => flags;
         public InventoryItemMetadata Metadata => metadata;
 
         [SerializeField] private string id;
+        [ReadOnly, ShowInInspector] private readonly string _instanceId = Guid.NewGuid().ToString();
         [SerializeField] private InventoryItemFlags flags;
         [SerializeField] private InventoryItemMetadata metadata;
         [SerializeReference] private List<IInventoryItemComponent> components;
@@ -26,17 +29,20 @@ namespace _InventorySystem.Scripts.Item
         public InventoryItem()
         {
             id = string.Empty;
+            flags = InventoryItemFlags.NONE;
+            metadata = new InventoryItemMetadata();
             components = new List<IInventoryItemComponent>();
         }
         
         public InventoryItem(
             string id,
+            string instanceId,
             InventoryItemFlags flags,
             InventoryItemMetadata metadata,
-            List<IInventoryItemComponent> components
-        )
+            List<IInventoryItemComponent> components)
         {
             this.id = id;
+            this._instanceId = instanceId;
             this.flags = flags;
             this.metadata = metadata;
             this.components = components;
@@ -61,9 +67,10 @@ namespace _InventorySystem.Scripts.Item
         public InventoryItem Clone()
         {
             return new InventoryItem(
-                id,
-                flags,
-                metadata,
+                Id,
+                InstanceId,
+                Flags,
+                Metadata,
                 CloneComponents()
             );
         }

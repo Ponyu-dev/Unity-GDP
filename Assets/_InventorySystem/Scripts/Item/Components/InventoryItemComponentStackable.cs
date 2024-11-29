@@ -22,6 +22,11 @@ namespace _InventorySystem.Scripts.Item.Components
     {
         [SerializeField] private int count;
         public int Count => count;
+
+        public InventoryItemComponentStackable(int count)
+        {
+            this.count = count;
+        }
         
         public void Increment(int step)
         {
@@ -31,21 +36,15 @@ namespace _InventorySystem.Scripts.Item.Components
 
         public void Decrement(int step)
         {
-            Debug.Log($"[InventoryItemComponentStackable] Decrement step = {step}");
             step = Math.Clamp(step, 0, count);
             count -= step;
-            
-            Debug.Log($"[InventoryItemComponentStackable] Decrement count = {count}");
         }
 
         public bool IsNotEmpty() => Count > 0;
         
         public IInventoryItemComponent Clone()
         {
-            return new InventoryItemComponentStackable
-            {
-                count = count
-            };
+            return new InventoryItemComponentStackable(Count);
         }
     }
 }

@@ -16,6 +16,8 @@ namespace _InventorySystem.Scripts.Inventory
         event Action<InventoryItem> OnItemAdded;
         event Action<InventoryItem> OnItemStackChanged;
         event Action<InventoryItem> OnItemRemoved;
+        
+        IReadOnlyList<InventoryItem> Items { get; }
 
         void AddItem(InventoryItem inventoryItem);
         void RemoveItem(InventoryItem inventoryItem, bool removeAllStack = false);
@@ -41,46 +43,59 @@ namespace _InventorySystem.Scripts.Inventory
         {
             if (inventoryItem is null)
                 return;
-            
-            var item = _items.Find(it => it.Id == inventoryItem.Id);
-            if (item is not null)
-            {
-                item.TryIncrement(inventoryItem);
-                OnItemStackChanged?.Invoke(item);
+
+            if (TryIncrementItem(inventoryItem))
                 return;
-            }
-            
+
             _items.Add(inventoryItem);
             OnItemAdded?.Invoke(inventoryItem);
         }
+        
 
         public void RemoveItem(InventoryItem inventoryItem, bool removeAllStack = false)
         {
-            if (inventoryItem.FlagsExists(InventoryItemFlags.STACKABLE) && !removeAllStack)
-            {
-                DecrementItem(inventoryItem, 1);
+            if (TryDecrementItem(inventoryItem, 1) && !removeAllStack)
                 return;
-            }
 
             RemoveAt(inventoryItem);
         }
-        
-        private void DecrementItem(InventoryItem findItem, int decrementValue)
+
+        private bool TryIncrementItem(InventoryItem inventoryItem)
         {
+            if (!inventoryItem.FlagsExists(InventoryItemFlags.STACKABLE))
+                return false;
+            
+            var item = _items.Find(it => it.Id == inventoryItem.Id);
+            if (item is null)
+                return false;
+
+            if (!item.TryIncrement(inventoryItem))
+                return false;
+            
+            OnItemStackChanged?.Invoke(item);
+            return true;
+        }
+        
+        private bool TryDecrementItem(InventoryItem findItem, int decrementValue)
+        {
+            if (!findItem.FlagsExists(InventoryItemFlags.STACKABLE))
+                return false;
+            
             var item = _items.Find(it => it.Id == findItem.Id);
             
-            if (item.TryDecrement(decrementValue))
-            {
-                OnItemStackChanged?.Invoke(item);
-                return;
-            }
+            if (item is null)
+                return false;
             
-            RemoveAt(item);
+            if (!item.TryDecrement(decrementValue))
+                return false;
+            
+            OnItemStackChanged?.Invoke(item);
+            return true;
         }
 
         private void RemoveAt(InventoryItem removeItem)
         {
-            var index = _items.FindIndex(it => it.Id == removeItem.Id);
+            var index = _items.FindIndex(it => it.InstanceId == removeItem.InstanceId);
             
             if (index < 0)
                 return;

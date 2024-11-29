@@ -17,7 +17,7 @@ namespace _InventorySystem.Tests.Editor.ItemComponents
         [SetUp]
         public void SetUp()
         {
-            item = new InventoryItemComponentStackable();
+            item = new InventoryItemComponentStackable(0);
         }
 
         [Test]
