@@ -32,14 +32,54 @@ namespace _InventorySystem.Tests.Editor.Helpers
             new InventoryItemMetadata { title = "STACKABLE", decription = "STACKABLE", icon = default },
             new List<IInventoryItemComponent>());
         
-        public InventoryItem ItemEquippable = new InventoryItem(
-            "EQUIPPABLE",
+        public InventoryItem ItemEquippableBody = new InventoryItem(
+            "EQUIPPABLE-Body",
             Guid.NewGuid().ToString(),
             InventoryItemFlags.EQUIPPABLE,
-            new InventoryItemMetadata { title = "EQUIPPABLE", decription = "EQUIPPABLE", icon = default },
+            new InventoryItemMetadata { title = "EQUIPPABLE-Body", decription = "EQUIPPABLE-Body", icon = default },
             new List<IInventoryItemComponent>
             {
-                new InventoryItemComponentEquippable()
+                new InventoryItemComponentEquippable(EquipmentSlot.Body)
+            });
+        
+        public InventoryItem ItemEquippableLegs = new InventoryItem(
+            "EQUIPPABLE-Legs",
+            Guid.NewGuid().ToString(),
+            InventoryItemFlags.EQUIPPABLE,
+            new InventoryItemMetadata { title = "EQUIPPABLE-Legs", decription = "EQUIPPABLE-Legs", icon = default },
+            new List<IInventoryItemComponent>
+            {
+                new InventoryItemComponentEquippable(EquipmentSlot.Legs)
+            });
+        
+        public InventoryItem ItemEquippableHead = new InventoryItem(
+            "EQUIPPABLE-Head",
+            Guid.NewGuid().ToString(),
+            InventoryItemFlags.EQUIPPABLE,
+            new InventoryItemMetadata { title = "EQUIPPABLE-Head", decription = "EQUIPPABLE-Head", icon = default },
+            new List<IInventoryItemComponent>
+            {
+                new InventoryItemComponentEquippable(EquipmentSlot.Head)
+            });
+        
+        public InventoryItem ItemEquippableLeftHand = new InventoryItem(
+            "EQUIPPABLE-LeftHand",
+            Guid.NewGuid().ToString(),
+            InventoryItemFlags.EQUIPPABLE,
+            new InventoryItemMetadata { title = "EQUIPPABLE-LeftHand", decription = "EQUIPPABLE-LeftHand", icon = default },
+            new List<IInventoryItemComponent>
+            {
+                new InventoryItemComponentEquippable(EquipmentSlot.LeftHand)
+            });
+        
+        public InventoryItem ItemEquippableRightHand = new InventoryItem(
+            "EQUIPPABLE-RightHand",
+            Guid.NewGuid().ToString(),
+            InventoryItemFlags.EQUIPPABLE,
+            new InventoryItemMetadata { title = "EQUIPPABLE-RightHand", decription = "EQUIPPABLE-RightHand", icon = default },
+            new List<IInventoryItemComponent>
+            {
+                new InventoryItemComponentEquippable(EquipmentSlot.RightHand)
             });
         
         public InventoryItem ItemConsume = new InventoryItem(

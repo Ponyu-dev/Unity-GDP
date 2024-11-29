@@ -21,7 +21,6 @@ namespace _InventorySystem.Scripts.Item.Components
     public interface IInventoryItemComponentEquippable : IInventoryItemComponent
     {
         EquipmentSlot EquipmentSlot { get; }
-        int IncreaseAmount { get; }
     }
     
     [Serializable]
@@ -29,16 +28,19 @@ namespace _InventorySystem.Scripts.Item.Components
     {
         [SerializeField] private EquipmentSlot equipmentSlot;
         public EquipmentSlot EquipmentSlot => equipmentSlot;
-        
-        [SerializeField] private int increaseAmount;
-        public int IncreaseAmount => increaseAmount;
+
+        public InventoryItemComponentEquippable() { }
+
+        public InventoryItemComponentEquippable(EquipmentSlot equipmentSlot)
+        {
+            this.equipmentSlot = equipmentSlot;
+        }
 
         public IInventoryItemComponent Clone()
         {
             return new InventoryItemComponentEquippable
             {
-                equipmentSlot = EquipmentSlot,
-                increaseAmount = IncreaseAmount
+                equipmentSlot = EquipmentSlot
             };
         }
     }

@@ -9,7 +9,7 @@ using _InventorySystem.Scripts.Inventory;
 using _InventorySystem.Tests.Editor.Helpers;
 using NUnit.Framework;
 
-namespace _InventorySystem.Tests.Editor.Inventory.BaseInventory
+namespace _InventorySystem.Tests.Editor.Inventory
 {
     [TestFixture]
     public sealed class BaseInventoryAddItemTests
@@ -82,7 +82,7 @@ namespace _InventorySystem.Tests.Editor.Inventory.BaseInventory
             _inventory.OnItemStackChanged += _ => eventItemStackChanged = true;
 
             _inventory.AddItem(_helpersForTests.ItemStackable);
-            _inventory.AddItem(_helpersForTests.ItemEquippable);
+            _inventory.AddItem(_helpersForTests.ItemEquippableBody);
 
             Assert.IsTrue(eventItemAddedFired);
             Assert.IsFalse(eventItemStackChanged);
