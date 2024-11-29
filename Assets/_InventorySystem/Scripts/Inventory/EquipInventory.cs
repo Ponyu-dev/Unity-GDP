@@ -6,17 +6,25 @@
 
 using System;
 using System.Collections.Generic;
-using _InventorySystem.Scripts.Extensions;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
 using Sirenix.OdinInspector;
 
 namespace _InventorySystem.Scripts.Inventory
 {
-    [Serializable]
-    public sealed class EquipInventory
+    public interface IEquipInventory
     {
-        [ReadOnly, ShowInInspector] private readonly Dictionary<EquipmentSlot, InventoryItem> _equipmentSlots;
+        public IReadOnlyDictionary<EquipmentSlot, InventoryItem> EquipmentSlots { get; }
+        bool EquipItem(InventoryItem equipItem, out InventoryItem oldEquipItem);
+        bool TryUnEquipItem(EquipmentSlot unEquipSlot, out InventoryItem unEquipItem);
+    }
+    
+    [Serializable]
+    public sealed class EquipInventory : IEquipInventory
+    {
+        [ReadOnly, ShowInInspector]
+        private readonly Dictionary<EquipmentSlot, InventoryItem> _equipmentSlots;
+        public IReadOnlyDictionary<EquipmentSlot, InventoryItem> EquipmentSlots => _equipmentSlots;
 
         public EquipInventory()
         {
@@ -26,7 +34,7 @@ namespace _InventorySystem.Scripts.Inventory
         public bool EquipItem(InventoryItem equipItem, out InventoryItem oldEquipItem)
         {
             oldEquipItem = default;
-            if (!CanEquip(equipItem, out var componentEquippable))
+            if (!equipItem.TryGetComponentSafe<IInventoryItemComponentEquippable>(InventoryItemFlags.EQUIPPABLE, out var componentEquippable))
             {
                 return false;
             }
@@ -40,11 +48,6 @@ namespace _InventorySystem.Scripts.Inventory
             
             _equipmentSlots[componentEquippable.EquipmentSlot] = equipItem;
             return true;
-        }
-
-        private bool CanEquip(InventoryItem equipItem, out IInventoryItemComponentEquippable componentEquippable)
-        {
-            return equipItem.TryGetComponentSafe(InventoryItemFlags.EQUIPPABLE, out componentEquippable);
         }
         
         public bool TryUnEquipItem(EquipmentSlot unEquipSlot, out InventoryItem unEquipItem)

@@ -31,8 +31,11 @@ namespace _InventorySystem.Scripts.Item.Components
 
         public void Decrement(int step)
         {
+            Debug.Log($"[InventoryItemComponentStackable] Decrement step = {step}");
             step = Math.Clamp(step, 0, count);
             count -= step;
+            
+            Debug.Log($"[InventoryItemComponentStackable] Decrement count = {count}");
         }
 
         public bool IsNotEmpty() => Count > 0;

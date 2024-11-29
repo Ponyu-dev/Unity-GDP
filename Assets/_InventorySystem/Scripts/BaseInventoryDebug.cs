@@ -5,6 +5,7 @@
 // ------------------------------------------------------------------------------
 
 using _InventorySystem.Scripts.Inventory;
+using _InventorySystem.Scripts.Inventory.System;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
 using Sirenix.OdinInspector;
@@ -15,6 +16,16 @@ namespace _InventorySystem.Scripts
     public class BaseInventoryDebug : MonoBehaviour
     {
         [SerializeField] private BaseInventory baseInventory;
+        [SerializeField] private EquipInventory equipInventory;
+        
+        private EquipmentSystem _equipmentSystem;
+        private ConsumableSystem _consumableSystem;
+
+        private void Awake()
+        {
+            _equipmentSystem = new EquipmentSystem(equipInventory, baseInventory);
+            _consumableSystem = new ConsumableSystem(baseInventory);
+        }
 
         [Button]
         private void AddItem(InventoryItemConfig itemConfig)
@@ -25,19 +36,19 @@ namespace _InventorySystem.Scripts
         [Button]
         private void ConsumeItem(InventoryItemConfig itemConfig)
         {
-            baseInventory.ConsumeItem(itemConfig.Clone);
+            _consumableSystem.ConsumeItem(itemConfig.Clone);
         }
         
         [Button]
         private void EquipItem(InventoryItemConfig itemConfig)
         {
-            baseInventory.EquipItem(itemConfig.Clone);
+            _equipmentSystem.EquipItem(itemConfig.Clone);
         }
         
         [Button]
         private void UnEquipItem(EquipmentSlot unEquipSlot)
         {
-            baseInventory.UnEquipItem(unEquipSlot);
+            _equipmentSystem.UnEquipItem(unEquipSlot);
         }
         
         [Button]
