@@ -32,6 +32,7 @@ namespace _InventorySystem.Scripts.Item.Components
         {
             step = Math.Max(step, 0);
             count += step;
+            Debug.Log($"[Test] Increment {count}");
         }
 
         public void Decrement(int step)

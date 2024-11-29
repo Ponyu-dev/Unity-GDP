@@ -4,23 +4,23 @@
 // <file>: InventoryItemCatalog.cs
 // ------------------------------------------------------------------------------
 
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _InventorySystem.Scripts.Item
 {
     [CreateAssetMenu(
-        fileName = "InventoryItemCatalog",
-        menuName = "Inventory/New InventoryItemCatalog"
+        fileName = "InventoryItemCatalogConfig",
+        menuName = "Inventory/New InventoryItemCatalogConfig"
     )]
     public sealed class InventoryItemCatalog : ScriptableObject
     {
-        /*[SerializeField]
-        private InventoryItemConfig[] items;
+        [SerializeField]
+        private List<InventoryItemConfig> items;
 
-        public InventoryItemConfig[] GetAllItems()
+        public IReadOnlyList<InventoryItemConfig> GetAllItems()
         {
             return items;
-        }*/
+        }
     }
 }

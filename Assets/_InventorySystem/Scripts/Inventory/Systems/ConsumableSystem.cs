@@ -6,6 +6,7 @@
 
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
+using VContainer;
 
 namespace _InventorySystem.Scripts.Inventory.System
 {
@@ -18,6 +19,7 @@ namespace _InventorySystem.Scripts.Inventory.System
     {
         private readonly IBaseInventory _baseInventory;
 
+        [Inject]
         public ConsumableSystem(IBaseInventory baseInventory)
         {
             _baseInventory = baseInventory;

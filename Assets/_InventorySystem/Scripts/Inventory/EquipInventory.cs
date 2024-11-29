@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
 using Sirenix.OdinInspector;
+using VContainer;
 
 namespace _InventorySystem.Scripts.Inventory
 {
@@ -26,6 +27,7 @@ namespace _InventorySystem.Scripts.Inventory
         private readonly Dictionary<EquipmentSlot, InventoryItem> _equipmentSlots;
         public IReadOnlyDictionary<EquipmentSlot, InventoryItem> EquipmentSlots => _equipmentSlots;
 
+        [Inject]
         public EquipInventory()
         {
             _equipmentSlots = new Dictionary<EquipmentSlot, InventoryItem>();

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using _InventorySystem.Scripts.Item;
 using Sirenix.OdinInspector;
+using VContainer;
 
 namespace _InventorySystem.Scripts.Inventory
 {
@@ -24,7 +25,7 @@ namespace _InventorySystem.Scripts.Inventory
     }
     
     [Serializable]
-    public sealed class BaseInventory : IBaseInventory
+    public sealed class BaseInventory : IBaseInventory, IDisposable
     {
         public event Action<InventoryItem> OnItemAdded;
         public event Action<InventoryItem> OnItemStackChanged;
@@ -34,6 +35,7 @@ namespace _InventorySystem.Scripts.Inventory
         private readonly List<InventoryItem> _items;
         public IReadOnlyList<InventoryItem> Items => _items;
 
+        [Inject]
         public BaseInventory()
         {
             _items = new List<InventoryItem>();
@@ -102,6 +104,11 @@ namespace _InventorySystem.Scripts.Inventory
             
             _items.RemoveAt(index);
             OnItemRemoved?.Invoke(removeItem);
+        }
+
+        public void Dispose()
+        {
+            _items.Clear();
         }
     }
 }

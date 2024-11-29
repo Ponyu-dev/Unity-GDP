@@ -16,12 +16,12 @@ namespace _InventorySystem.Scripts.Item
     public sealed class InventoryItem
     {
         public string Id => id;
-        public string InstanceId => _instanceId;
+        public Guid InstanceId => _instanceId;
         public InventoryItemFlags Flags => flags;
         public InventoryItemMetadata Metadata => metadata;
 
         [SerializeField] private string id;
-        [ReadOnly, ShowInInspector] private readonly string _instanceId = Guid.NewGuid().ToString();
+        [ReadOnly, ShowInInspector] private readonly Guid _instanceId;
         [SerializeField] private InventoryItemFlags flags;
         [SerializeField] private InventoryItemMetadata metadata;
         [SerializeReference] private List<IInventoryItemComponent> components;
@@ -29,6 +29,7 @@ namespace _InventorySystem.Scripts.Item
         public InventoryItem()
         {
             id = string.Empty;
+            _instanceId = Guid.NewGuid();
             flags = InventoryItemFlags.NONE;
             metadata = new InventoryItemMetadata();
             components = new List<IInventoryItemComponent>();
@@ -36,7 +37,7 @@ namespace _InventorySystem.Scripts.Item
         
         public InventoryItem(
             string id,
-            string instanceId,
+            Guid instanceId,
             InventoryItemFlags flags,
             InventoryItemMetadata metadata,
             List<IInventoryItemComponent> components)
@@ -46,6 +47,20 @@ namespace _InventorySystem.Scripts.Item
             this.flags = flags;
             this.metadata = metadata;
             this.components = components;
+        }
+
+        public bool HasComponent<T>()
+        {
+            for (int i = 0, count = components.Count; i < count; i++)
+            {
+                var component = components[i];
+                if (component is not T)
+                    continue;
+                
+                return true;
+            }
+            
+            return false;
         }
         
         public bool TryGetComponent<T>(out T result)
@@ -68,7 +83,7 @@ namespace _InventorySystem.Scripts.Item
         {
             return new InventoryItem(
                 Id,
-                InstanceId,
+                Guid.NewGuid(),
                 Flags,
                 Metadata,
                 CloneComponents()
