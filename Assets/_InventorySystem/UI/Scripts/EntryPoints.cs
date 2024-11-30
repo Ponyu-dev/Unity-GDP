@@ -8,6 +8,7 @@ using _InventorySystem.Scripts.Inventory;
 using _InventorySystem.Scripts.Inventory.System;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.UI.Scripts.InventorySlot;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -19,6 +20,12 @@ namespace _InventorySystem.UI.Scripts
         [SerializeField] private InventoryItemCatalog inventoryItemCatalog;
         [SerializeField] private InventorySlotView inventorySlotView;
         [SerializeField] private Transform gridInventoryTransform;
+
+        [BoxGroup("EquipmentSlotView"), SerializeField] private EquipmentSlotView slotViewHead;
+        [BoxGroup("EquipmentSlotView"), SerializeField] private EquipmentSlotView slotViewBody;
+        [BoxGroup("EquipmentSlotView"), SerializeField] private EquipmentSlotView slotViewLegs;
+        [BoxGroup("EquipmentSlotView"), SerializeField] private EquipmentSlotView slotViewLeftHand;
+        [BoxGroup("EquipmentSlotView"), SerializeField] private EquipmentSlotView slotViewRightHand;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -42,6 +49,31 @@ namespace _InventorySystem.UI.Scripts
                 .WithParameter(inventorySlotView)
                 .WithParameter(gridInventoryTransform)
                 .AsImplementedInterfaces();
+
+            builder.Register<EquipmentSlotPresenter>(Lifetime.Scoped)
+                .WithParameter(slotViewHead)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<EquipmentSlotPresenter>(Lifetime.Scoped)
+                .WithParameter(slotViewBody)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<EquipmentSlotPresenter>(Lifetime.Scoped)
+                .WithParameter(slotViewLegs)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<EquipmentSlotPresenter>(Lifetime.Scoped)
+                .WithParameter(slotViewLeftHand)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<EquipmentSlotPresenter>(Lifetime.Scoped)
+                .WithParameter(slotViewRightHand)
+                .AsImplementedInterfaces()
+                .AsSelf();
         }
     }
 }

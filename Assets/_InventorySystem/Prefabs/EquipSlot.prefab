@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 241127777733844703}
   - component: {fileID: 241127777733844701}
   - component: {fileID: 241127777733844700}
+  - component: {fileID: 6620395988610734924}
   m_Layer: 5
   m_Name: EquipSlot
   m_TagString: Untagged
@@ -78,6 +79,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6620395988610734924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241127777733844702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b677e2e7bc9542688c519f5b3db9bb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slot: 0
+  iconItemSlot: {fileID: 241127777826581472}
+  txtSlot: {fileID: 2447852518197737655}
+  btnUnEquip: {fileID: 2447852518628933063}
 --- !u!1 &241127777826581474
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &241127777826581475
 RectTransform:
   m_ObjectHideFlags: 0
@@ -137,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

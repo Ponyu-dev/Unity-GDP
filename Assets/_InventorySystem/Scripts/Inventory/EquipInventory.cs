@@ -9,24 +9,33 @@ using System.Collections.Generic;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using VContainer;
 
 namespace _InventorySystem.Scripts.Inventory
 {
+    public interface IEquipInventoryAction
+    {
+        event Action<InventoryItem> OnEquipChanged;
+        event Action<EquipmentSlot> OnUnEquipChanged;
+    }
+    
     public interface IEquipInventory
     {
-        public IReadOnlyDictionary<EquipmentSlot, InventoryItem> EquipmentSlots { get; }
         bool EquipItem(InventoryItem equipItem, out InventoryItem oldEquipItem);
         bool TryUnEquipItem(EquipmentSlot unEquipSlot, out InventoryItem unEquipItem);
     }
     
     [Serializable]
-    public sealed class EquipInventory : IEquipInventory
+    public sealed class EquipInventory : IEquipInventory, IEquipInventoryAction
     {
         [ReadOnly, ShowInInspector]
         private readonly Dictionary<EquipmentSlot, InventoryItem> _equipmentSlots;
-        public IReadOnlyDictionary<EquipmentSlot, InventoryItem> EquipmentSlots => _equipmentSlots;
-
+        public IDictionary<EquipmentSlot, InventoryItem> EquipmentSlots => _equipmentSlots;
+        
+        public event Action<InventoryItem> OnEquipChanged;
+        public event Action<EquipmentSlot> OnUnEquipChanged;
+        
         [Inject]
         public EquipInventory()
         {
@@ -45,10 +54,12 @@ namespace _InventorySystem.Scripts.Inventory
             {
                 oldEquipItem = _equipmentSlots[componentEquippable.EquipmentSlot];
                 _equipmentSlots[componentEquippable.EquipmentSlot] = equipItem;
+                OnEquipChanged?.Invoke(equipItem);
                 return true;
             }
             
             _equipmentSlots[componentEquippable.EquipmentSlot] = equipItem;
+            OnEquipChanged?.Invoke(equipItem);
             return true;
         }
         
@@ -58,6 +69,7 @@ namespace _InventorySystem.Scripts.Inventory
             {
                 _equipmentSlots.Remove(unEquipSlot);
                 unEquipItem = equipItem;
+                OnUnEquipChanged?.Invoke(unEquipSlot);
                 return true;
             }
 
