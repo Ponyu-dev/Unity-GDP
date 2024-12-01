@@ -4,6 +4,7 @@
 // <file>: EntryPoints.cs
 // ------------------------------------------------------------------------------
 
+using _InventorySystem.HeroStatsDebug.Scripts;
 using _InventorySystem.Scripts.Inventory;
 using _InventorySystem.Scripts.Inventory.System;
 using _InventorySystem.Scripts.Item;
@@ -20,6 +21,7 @@ namespace _InventorySystem.UI.Scripts
         [SerializeField] private InventoryItemCatalog inventoryItemCatalog;
         [SerializeField] private InventorySlotView inventorySlotView;
         [SerializeField] private Transform gridInventoryTransform;
+        [SerializeField] private HeroStats heroStats;
 
         [BoxGroup("EquipmentSlotView"), SerializeField] private EquipmentSlotView slotViewHead;
         [BoxGroup("EquipmentSlotView"), SerializeField] private EquipmentSlotView slotViewBody;
@@ -31,6 +33,10 @@ namespace _InventorySystem.UI.Scripts
         {
             builder.RegisterInstance(inventoryItemCatalog);
 
+            builder.RegisterInstance<HeroStats>(heroStats)
+                .AsImplementedInterfaces()
+                .AsSelf();
+
             builder.Register<InventorySlotPresenter>(Lifetime.Transient)
                 .AsImplementedInterfaces()
                 .AsSelf();
@@ -41,9 +47,14 @@ namespace _InventorySystem.UI.Scripts
                 .AsImplementedInterfaces();
             
             builder.Register<EquipmentSystem>(Lifetime.Singleton)
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .AsSelf();
             builder.Register<ConsumableSystem>(Lifetime.Singleton)
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .AsSelf();
+            builder.Register<EffectibleSystem>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
 
             builder.Register<GridInventoryPresenter>(Lifetime.Singleton)
                 .WithParameter(inventorySlotView)

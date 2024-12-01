@@ -63,6 +63,21 @@ namespace _InventorySystem.Scripts.Item
             return false;
         }
         
+        public T[] GetComponents<T>()
+        {
+            var result = new List<T>();
+            for (int i = 0, count = components.Count; i < count; i++)
+            {
+                var component = components[i];
+                if (component is T tComponent)
+                {
+                    result.Add(tComponent);
+                }
+            }
+
+            return result.ToArray();
+        }
+        
         public bool TryGetComponent<T>(out T result)
         {
             for (int i = 0, count = components.Count; i < count; i++)

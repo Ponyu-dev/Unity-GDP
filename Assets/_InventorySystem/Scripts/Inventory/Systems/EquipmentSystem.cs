@@ -4,20 +4,30 @@
 // <file>: EquipmentSystem.cs
 // ------------------------------------------------------------------------------
 
+using System;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
 using VContainer;
 
 namespace _InventorySystem.Scripts.Inventory.System
 {
+    public interface IEquipmentSystemAction
+    {
+        event Action<InventoryItem> OnEquipItem;
+        event Action<InventoryItem> OnUnEquipItem;
+    }
+    
     public interface IEquipmentSystem
     {
         void EquipItem(InventoryItem inventoryItem);
         void UnEquipItem(EquipmentSlot unEquipSlot);
     }
     
-    public sealed class EquipmentSystem : IEquipmentSystem
+    public sealed class EquipmentSystem : IEquipmentSystem, IEquipmentSystemAction
     {
+        public event Action<InventoryItem> OnEquipItem;
+        public event Action<InventoryItem> OnUnEquipItem;
+        
         private readonly IEquipInventory _equipInventory;
         private readonly IBaseInventory _baseInventory;
 
@@ -33,6 +43,9 @@ namespace _InventorySystem.Scripts.Inventory.System
             if (!_equipInventory.EquipItem(inventoryItem, out var oldEquipItem))
                 return;
             
+            OnEquipItem?.Invoke(inventoryItem);
+            OnUnEquipItem?.Invoke(oldEquipItem);
+            
             _baseInventory.RemoveItem(inventoryItem, true);
             
             if (oldEquipItem != null)
@@ -41,8 +54,11 @@ namespace _InventorySystem.Scripts.Inventory.System
 
         public void UnEquipItem(EquipmentSlot unEquipSlot)
         {
-            if (_equipInventory.TryUnEquipItem(unEquipSlot, out var unEquipItem))
-                _baseInventory.AddItem(unEquipItem);
+            if (!_equipInventory.TryUnEquipItem(unEquipSlot, out var unEquipItem))
+                return;
+            
+            OnUnEquipItem?.Invoke(unEquipItem);
+            _baseInventory.AddItem(unEquipItem);
         }
     }
 }

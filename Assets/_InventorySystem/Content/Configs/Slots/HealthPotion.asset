@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes: []
   origin:
     id: HealthPotion
-    flags: 3
+    flags: 11
     metadata:
       title: Health Potion
       decription: Health Potion Description
@@ -31,9 +31,15 @@ MonoBehaviour:
     components:
     - rid: 3368030159005810689
     - rid: 3368030159005810691
+    - rid: 192205659578564608
   references:
     version: 2
     RefIds:
+    - rid: 192205659578564608
+      type: {class: InventoryItemComponentEffectibleHealingHitPoint, ns: _InventorySystem.Scripts.Item.Components,
+        asm: Assembly-CSharp}
+      data:
+        amountHill: 2
     - rid: 3368030159005810689
       type: {class: InventoryItemComponentStackable, ns: _InventorySystem.Scripts.Item.Components,
         asm: Assembly-CSharp}
@@ -44,4 +50,3 @@ MonoBehaviour:
         asm: Assembly-CSharp}
       data:
         consumeAmount: 1
-        increaseAmount: 5

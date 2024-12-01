@@ -23,16 +23,28 @@ MonoBehaviour:
     SerializationNodes: []
   origin:
     id: CrystalSword
-    flags: 4
+    flags: 12
     metadata:
       title: Crystal Sword
       decription: Crystal Sword Description
       icon: {fileID: 21300000, guid: 7ba8d06b2948c45049d8da0d4c4067a4, type: 3}
     components:
     - rid: 3368030205101998080
+    - rid: 192205659578564609
+    - rid: 192205659578564610
   references:
     version: 2
     RefIds:
+    - rid: 192205659578564609
+      type: {class: InventoryItemComponentEffectibleUpdateMaxHitPoint, ns: _InventorySystem.Scripts.Item.Components,
+        asm: Assembly-CSharp}
+      data:
+        stepMaxHitPoints: 5
+    - rid: 192205659578564610
+      type: {class: InventoryItemComponentEffectibleUpdateAttack, ns: _InventorySystem.Scripts.Item.Components,
+        asm: Assembly-CSharp}
+      data:
+        amountDamage: 10
     - rid: 3368030205101998080
       type: {class: InventoryItemComponentEquippable, ns: _InventorySystem.Scripts.Item.Components,
         asm: Assembly-CSharp}

@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using _InventorySystem.Scripts.Item;
 using _InventorySystem.Scripts.Item.Components;
 using Sirenix.OdinInspector;
-using UnityEngine;
 using VContainer;
 
 namespace _InventorySystem.Scripts.Inventory

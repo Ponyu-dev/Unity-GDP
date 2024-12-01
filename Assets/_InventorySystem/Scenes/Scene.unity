@@ -1267,6 +1267,16 @@ MonoBehaviour:
   inventorySlotView: {fileID: 8099714287423209385, guid: 08198bb8fdbca4c2f90e7b544dfccbbb,
     type: 3}
   gridInventoryTransform: {fileID: 791523077}
+  heroStats:
+    hitPointsComponent:
+      hitPoints: 15
+      maxHitPoints: 20
+    speedComponent:
+      speed: 5
+    defenseComponent:
+      defense: 5
+    attackComponent:
+      attack: 5
   slotViewHead: {fileID: 2495043167939834116}
   slotViewBody: {fileID: 1548698474}
   slotViewLegs: {fileID: 1683496570}
@@ -1372,7 +1382,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.8
+  m_fontSize: 51.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1886,7 +1896,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.8
+  m_fontSize: 51.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

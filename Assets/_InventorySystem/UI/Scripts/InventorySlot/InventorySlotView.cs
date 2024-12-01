@@ -32,7 +32,6 @@ namespace _InventorySystem.UI.Scripts.InventorySlot
 
         public void UpdateStack(string stackCount, bool isStackNotEmpty)
         {
-            Debug.Log($"[Test] View UpdateStack {stackCount} {isStackNotEmpty}");
             goStack.SetActive(isStackNotEmpty);
             txtStackCount.text = stackCount;
         }

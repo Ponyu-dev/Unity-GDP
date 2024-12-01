@@ -23,16 +23,22 @@ MonoBehaviour:
     SerializationNodes: []
   origin:
     id: Simple Sword
-    flags: 4
+    flags: 12
     metadata:
       title: Simple Sword
       decription: Simple Sword Description
       icon: {fileID: 21300000, guid: bde8c09b493bc465a98a7db64653e784, type: 3}
     components:
     - rid: 3368030205101998081
+    - rid: 192205659578564616
   references:
     version: 2
     RefIds:
+    - rid: 192205659578564616
+      type: {class: InventoryItemComponentEffectibleUpdateAttack, ns: _InventorySystem.Scripts.Item.Components,
+        asm: Assembly-CSharp}
+      data:
+        amountDamage: 2
     - rid: 3368030205101998081
       type: {class: InventoryItemComponentEquippable, ns: _InventorySystem.Scripts.Item.Components,
         asm: Assembly-CSharp}
